@@ -3,10 +3,32 @@ __author__ = 'tom'
 from asyncore import file_dispatcher, loop
 from threading import Thread
 
+from approxeng.input import Axis, Button, Buttons
+
 try:
     from evdev import InputDevice, list_devices, ecodes
 except ImportError:
+    # Ignore this error, it happens when building the documentation on OSX (as evdev won't build there) but is otherwise
+    # not significant. Obviously if it's actually failing to import in real systems that would be a problem!
     print 'Not importing evdev, expected during sphinx generation on OSX'
+
+BUTTON_SELECT = Button("Select", 288)  #: The Select button
+BUTTON_LEFT_STICK = Button("Left Stick", 289)  #: Left stick click button
+BUTTON_RIGHT_STICK = Button("Right Stick", 290)  #: Right stick click button
+BUTTON_START = Button("Start", 291)  #: Start button
+BUTTON_D_UP = Button("D Up", 292)  #: D-pad up
+BUTTON_D_RIGHT = Button("D Right", 293)  #: D-pad right
+BUTTON_D_DOWN = Button("D Down", 294)  #: D-pad down
+BUTTON_D_LEFT = Button("D Left", 295)  #: D-pad left
+BUTTON_L2 = Button("L2", 296)  #: L2 lower shoulder trigger
+BUTTON_R2 = Button("R2", 297)  #: R2 lower shoulder trigger
+BUTTON_L1 = Button("L1", 298)  #: L1 upper shoulder trigger
+BUTTON_R1 = Button("R1", 299)  #: R1 upper shoulder trigger
+BUTTON_TRIANGLE = Button("Triangle", 300)  #: Triangle
+BUTTON_CIRCLE = Button("Circle", 301)  #: Circle
+BUTTON_CROSS = Button("Cross", 302)  #: Cross
+BUTTON_SQUARE = Button("Square", 303)  #: Square
+BUTTON_PS = Button("Home (PS)", 704)  #: PS button
 
 
 class SixAxisResource:
@@ -56,27 +78,9 @@ class SixAxis:
     to the SixAxis class for processing. There is no need to poll the event queue manually.
 
     Consuming code can get the current position of any of the sticks from this class through the `axes` instance
-    property. This contains a list of :class:`approxeng.input.sixaxis.SixAxis.Axis` objects, one for each distinct axis on the
-    controller. The list of axes is, in order: left x, left y, right x, right y.
+    property. This contains a list of :class:`approxeng.input.Axis` objects, one for each distinct axis
+    on the controller. The list of axes is, in order: left x, left y, right x, right y.
     """
-
-    BUTTON_SELECT = 0  #: The Select button
-    BUTTON_LEFT_STICK = 1  #: Left stick click button
-    BUTTON_RIGHT_STICK = 2  #: Right stick click button
-    BUTTON_START = 3  #: Start button
-    BUTTON_D_UP = 4  #: D-pad up
-    BUTTON_D_RIGHT = 5  #: D-pad right
-    BUTTON_D_DOWN = 6  #: D-pad down
-    BUTTON_D_LEFT = 7  #: D-pad left
-    BUTTON_L2 = 8  #: L2 lower shoulder trigger
-    BUTTON_R2 = 9  #: R2 lower shoulder trigger
-    BUTTON_L1 = 10  #: L1 upper shoulder trigger
-    BUTTON_R1 = 11  #: R1 upper shoulder trigger
-    BUTTON_TRIANGLE = 12  #: Triangle
-    BUTTON_CIRCLE = 13  #: Circle
-    BUTTON_CROSS = 14  #: Cross
-    BUTTON_SQUARE = 15  #: Square
-    BUTTON_PS = 16  #: PS button
 
     def __init__(self, dead_zone=0.05, hot_zone=0.0, connect=False):
         """
@@ -109,12 +113,14 @@ class SixAxis:
         """
 
         self._stop_function = None
-        self.axes = [SixAxis.Axis('left_x', dead_zone=dead_zone, hot_zone=hot_zone),
-                     SixAxis.Axis('left_y', dead_zone=dead_zone, hot_zone=hot_zone, invert=True),
-                     SixAxis.Axis('right_x', dead_zone=dead_zone, hot_zone=hot_zone),
-                     SixAxis.Axis('right_y', dead_zone=dead_zone, hot_zone=hot_zone, invert=True)]
-        self.button_handlers = []
-        self.buttons_pressed = 0
+        self.axes = [Axis('left_x', dead_zone=dead_zone, hot_zone=hot_zone),
+                     Axis('left_y', dead_zone=dead_zone, hot_zone=hot_zone, invert=True),
+                     Axis('right_x', dead_zone=dead_zone, hot_zone=hot_zone),
+                     Axis('right_y', dead_zone=dead_zone, hot_zone=hot_zone, invert=True)]
+        self.buttons = Buttons(
+            [BUTTON_SELECT, BUTTON_LEFT_STICK, BUTTON_RIGHT_STICK, BUTTON_START, BUTTON_D_UP, BUTTON_D_RIGHT,
+             BUTTON_D_DOWN, BUTTON_D_LEFT, BUTTON_L2, BUTTON_R2, BUTTON_L1, BUTTON_R1, BUTTON_TRIANGLE, BUTTON_CROSS,
+             BUTTON_SQUARE, BUTTON_CIRCLE, BUTTON_PS])
         if connect:
             self.connect()
 
@@ -129,18 +135,6 @@ class SixAxis:
             return True
         else:
             return False
-
-    def get_and_clear_button_press_history(self):
-        """
-        Return the button press bitfield, clearing it as we do.
-
-        :return:
-            A bit-field where bits are set to 1 if the corresponding button has been pressed since the last call to
-            this method. Test with e.g. 'if button_press_field & SixAxis.BUTTON_CIRCLE:...'
-        """
-        old_buttons = self.buttons_pressed
-        self.buttons_pressed = 0
-        return old_buttons
 
     def connect(self):
         """
@@ -161,7 +155,7 @@ class SixAxis:
         if self._stop_function:
             return False
         for device in [InputDevice(fn) for fn in list_devices()]:
-            if device.name == 'PLAYSTATION(R)3 Controller':
+            if device.name == 'Sony PLAYSTATION(R)3 Controller':
                 parent = self
 
                 class InputDeviceDispatcher(file_dispatcher):
@@ -227,34 +221,7 @@ class SixAxis:
         Resets any previously defined axis calibration to 0.0 for all axes
         """
         for axis in self.axes:
-            axis._reset()
-
-    def register_button_handler(self, button_handler, buttons):
-        """
-        Register a handler function which will be called when a button is pressed
-
-        :param handler: a function which will be called when any of the specified buttons are pressed. The function is
-            called with the integer code for the button as the sole argument.
-        :param [int] buttons: a list or one or more buttons which should trigger the handler when pressed. Buttons are
-            specified as ints, for convenience the PS3 button assignments are mapped to names in SixAxis, i.e.
-            SixAxis.BUTTON_CIRCLE. This includes the buttons in each of the analogue sticks. A bare int value is also
-            accepted here and will be treated as if a single element list was supplied.
-        :return: a no-arg function which can be used to remove this registration
-        """
-        mask = 0
-        if isinstance(buttons, list):
-            for button in buttons:
-                mask += 1 << button
-        else:
-            mask += 1 << buttons
-        h = {'handler': button_handler,
-             'mask': mask}
-        self.button_handlers.append(h)
-
-        def remove():
-            self.button_handlers.remove(h)
-
-        return remove
+            axis.reset()
 
     def handle_event(self, event):
         """
@@ -267,6 +234,7 @@ class SixAxis:
             The evdev event object to parse
         """
         if event.type == ecodes.EV_ABS:
+            # Absolute axis value
             value = float(event.value) / 255.0
             if value < 0:
                 value = 0
@@ -274,156 +242,21 @@ class SixAxis:
                 value = 1.0
             if event.code == 0:
                 # Left stick, X axis
-                self.axes[0]._set(value)
+                self.axes[0].set_raw_value(value)
             elif event.code == 1:
                 # Left stick, Y axis
-                self.axes[1]._set(value)
+                self.axes[1].set_raw_value(value)
             elif event.code == 2:
                 # Right stick, X axis
-                self.axes[2]._set(value)
+                self.axes[2].set_raw_value(value)
             elif event.code == 5:
                 # Right stick, Y axis (yes, 5...)
-                self.axes[3]._set(value)
+                self.axes[3].set_raw_value(value)
         elif event.type == ecodes.EV_KEY:
+            # Button event
             if event.value == 1:
-                if event.code == 288:
-                    button = SixAxis.BUTTON_SELECT
-                elif event.code == 291:
-                    button = SixAxis.BUTTON_START
-                elif event.code == 289:
-                    button = SixAxis.BUTTON_LEFT_STICK
-                elif event.code == 290:
-                    button = SixAxis.BUTTON_RIGHT_STICK
-                elif event.code == 295:
-                    button = SixAxis.BUTTON_D_LEFT
-                elif event.code == 292:
-                    button = SixAxis.BUTTON_D_UP
-                elif event.code == 293:
-                    button = SixAxis.BUTTON_D_RIGHT
-                elif event.code == 294:
-                    button = SixAxis.BUTTON_D_DOWN
-                elif event.code == 704:
-                    button = SixAxis.BUTTON_PS
-                elif event.code == 303:
-                    button = SixAxis.BUTTON_SQUARE
-                elif event.code == 300:
-                    button = SixAxis.BUTTON_TRIANGLE
-                elif event.code == 301:
-                    button = SixAxis.BUTTON_CIRCLE
-                elif event.code == 302:
-                    button = SixAxis.BUTTON_CROSS
-                elif event.code == 299:
-                    button = SixAxis.BUTTON_R1
-                elif event.code == 297:
-                    button = SixAxis.BUTTON_R2
-                elif event.code == 298:
-                    button = SixAxis.BUTTON_L1
-                elif event.code == 296:
-                    button = SixAxis.BUTTON_L2
-                else:
-                    button = None
-                if button is not None:
-                    self.buttons_pressed |= 1 << button
-                    for button_handler in self.button_handlers:
-                        if button_handler['mask'] & (1 << button) != 0:
-                            button_handler['handler'](button)
-
-    class Axis():
-        """A single analogue axis on the SixAxis controller"""
-
-        def __init__(self, name, invert=False, dead_zone=0.0, hot_zone=0.0):
-            self.name = name
-            self.centre = 0.5
-            self.max = 0.9
-            self.min = 0.1
-            self.value = 0.5
-            self.invert = invert
-            self.dead_zone = dead_zone
-            self.hot_zone = hot_zone
-
-        def corrected_value(self):
-            """
-            Get a centre-compensated, scaled, value for the axis, taking any dead-zone into account. The value will
-            scale from 0.0 at the edge of the dead-zone to 1.0 (positive) or -1.0 (negative) at the extreme position of
-            the controller or the edge of the hot zone, if defined as other than 1.0. The axis will auto-calibrate for
-            maximum value, initially it will behave as if the highest possible value from the hardware is 0.9 in each
-            direction, and will expand this as higher values are observed. This is scaled by this function and should
-            always return 1.0 or -1.0 at the extreme ends of the axis.
-
-            :return: a float value, negative to the left or down and ranging from -1.0 to 1.0
-            """
-
-            high_range = self.max - self.centre
-            high_start = self.centre + self.dead_zone * high_range
-            high_end = self.max - self.hot_zone * high_range
-
-            low_range = self.centre - self.min
-            low_start = self.centre - self.dead_zone * low_range
-            low_end = self.min + self.hot_zone * low_range
-
-            if self.value > high_start:
-                if self.value > high_end:
-                    result = 1.0
-                else:
-                    result = (self.value - high_start) / (high_end - high_start)
-            elif self.value < low_start:
-                if self.value < low_end:
-                    result = -1.0
-                else:
-                    result = (self.value - low_start) / (low_start - low_end)
-            else:
-                result = 0
-
-            if not self.invert:
-                return result
-            else:
-                return -result
-
-        def _reset(self):
-            """
-            Reset calibration (max, min and centre values) for this axis specifically. Not generally needed, you can just
-            call the reset method on the SixAxis instance.
-
-            :internal:
-            """
-            self.centre = 0.5
-            self.max = 0.9
-            self.min = 0.1
-
-        def _set(self, new_value):
-            """
-            Set a new value, called from within the SixAxis class when parsing the event queue.
-
-            :param new_value: the raw value from the joystick hardware
-            :internal:
-            """
-            self.value = new_value
-            if new_value > self.max:
-                self.max = new_value
-            elif new_value < self.min:
-                self.min = new_value
-
-
-if __name__ == '__main__':
-    from input import SixAxis
-    import time
-
-    controller = SixAxis(dead_zone=0.0, hot_zone=0.0)
-
-
-    def handler(button):
-        print 'Button! {}'.format(button)
-
-
-    controller.register_button_handler(handler, SixAxis.BUTTON_CIRCLE)
-    controller.register_button_handler(controller.reset_axis_calibration, SixAxis.BUTTON_START)
-    controller.register_button_handler(controller.set_axis_centres, SixAxis.BUTTON_SELECT)
-
-    current_milli_time = lambda: int(round(time.time() * 1000))
-    last_time = current_milli_time()
-    while 1:
-        controller.handle_events()
-        now = current_milli_time()
-        if now > (last_time + 100):
-            last_time = now
-            print controller
+                # Button down
+                self.buttons.button_pressed(event.code)
+            elif event.value == 0:
+                # Button up
+                self.buttons.button_released(event.code)

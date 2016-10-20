@@ -1,10 +1,8 @@
 API Documentation
 =================
 
-Triangula's code is intended to be useful, both directly for cases where you may have similar requirements, and
-indirectly as an example of how to solve the kinds of problems I've encountered while building her. As such the code
-is very heavily commented - you should hopefully find it largely self explanatory although you'll need at least a
-reasonable level of Python knowledge.
+This code is intended to be help as well as useful, as such it is very heavily commented - you should hopefully find it
+largely self explanatory although you'll need at least a reasonable level of Python knowledge.
 
 * :ref:`modindex`
 
@@ -13,4 +11,3 @@ reasonable level of Python knowledge.
     :glob:
 
     api/*
-    sixaxis

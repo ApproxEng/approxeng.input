@@ -26,6 +26,7 @@ Follow me on twitter (approx_eng_) for updates!
     :maxdepth: 4
     :glob:
 
+        howtouse
     sixaxis
     api
 

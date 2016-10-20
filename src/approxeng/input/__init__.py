@@ -138,6 +138,7 @@ class Buttons:
 
         :param buttons:
             a list of :class:`approxeng.input.Button` instances which will be managed by this class
+
         """
         self.buttons = {button: Buttons.ButtonState(button) for button in buttons}
         self.buttons_by_code = {button.key_code: state for button, state in self.buttons.items()}
@@ -201,7 +202,7 @@ class Buttons:
         """
         Determines whether a button is currently held down
 
-        :param :approxeng.input.Button: button:
+        :param approxeng.input.Button button:
             a Button to check
         :return:
             None if the button is not held down, or the number of seconds as a floating point value since it was
@@ -217,13 +218,16 @@ class Buttons:
         """
         Register a handler function which will be called when a button is pressed
 
-        :param button_handler: a function which will be called when any of the specified buttons are pressed. The
+        :param button_handler:
+            A function which will be called when any of the specified buttons are pressed. The
             function is called with the Button that was pressed as the sole argument.
-        :param [Button] buttons: a list or one or more buttons which should trigger the handler when pressed. Buttons
+        :param [Button] buttons:
+            A list or one or more buttons which should trigger the handler when pressed. Buttons
             are specified as :class:`approxeng.input.Button` instances, in general controller implementations will
             expose these as constants such as SixAxis.BUTTON_CIRCLE. A single Button can be specified if only one button
             binding is required.
-        :return: a no-arg function which can be used to remove this registration
+        :return:
+            A no-arg function which can be used to remove this registration
         """
         if not isinstance(buttons, list):
             buttons = [buttons]

@@ -1,16 +1,14 @@
-__author__ = 'tom'
-
-from asyncore import file_dispatcher, loop
-from threading import Thread
-
 from approxeng.input import Axis, Button, Buttons
+from approxeng.input.asyncorebinder import bind_controller
 
 try:
-    from evdev import InputDevice, list_devices, ecodes
+    from evdev import ecodes
 except ImportError:
     # Ignore this error, it happens when building the documentation on OSX (as evdev won't build there) but is otherwise
     # not significant. Obviously if it's actually failing to import in real systems that would be a problem!
     print 'Not importing evdev, expected during sphinx generation on OSX'
+
+CONTROLLER_NAME = "Sony PLAYSTATION(R)3 Controller"
 
 BUTTON_SELECT = Button("Select", 288)  #: The Select button
 BUTTON_LEFT_STICK = Button("Left Stick", 289)  #: Left stick click button
@@ -56,14 +54,14 @@ class SixAxisResource:
 
     def __enter__(self):
         self.joystick = SixAxis(dead_zone=self.dead_zone, hot_zone=self.hot_zone)
-        self.joystick.connect()
+        self.unbind = bind_controller(self.joystick, CONTROLLER_NAME)
         if self.bind_defaults:
-            self.joystick.register_button_handler(self.joystick.reset_axis_calibration, SixAxis.BUTTON_START)
-            self.joystick.register_button_handler(self.joystick.set_axis_centres, SixAxis.BUTTON_SELECT)
+            self.joystick.buttons.register_button_handler(self.joystick.reset_axis_calibration, BUTTON_START)
+            self.joystick.buttons.register_button_handler(self.joystick.set_axis_centres, BUTTON_SELECT)
         return self.joystick
 
     def __exit__(self, exc_type, exc_value, traceback):
-        self.joystick.disconnect()
+        self.unbind()
 
 
 class SixAxis:
@@ -82,7 +80,7 @@ class SixAxis:
     on the controller. The list of axes is, in order: left x, left y, right x, right y.
     """
 
-    def __init__(self, dead_zone=0.05, hot_zone=0.0, connect=False):
+    def __init__(self, dead_zone=0.05, hot_zone=0.0):
         """
         Discover and initialise a PS3 SixAxis controller connected to this computer.
 
@@ -105,10 +103,6 @@ class SixAxis:
             min are 1.0 and -1.0 respectively). As with the dead zone, these are applied separately to each axis, so in
             the case where the hot zone is set to 1/sqrt(2), a circular motion of the stick will map to x and y values
             which trace the outline of a square of unit size, allowing for all values to be emitted from the stick.
-        :param connect:
-            If true, call connect(), otherwise you need to call it elsewhere. Note that connect() may raise IOError if
-            it can't find a PS3 controller, so it's best to call it explicitly yourself and handle the error. Defaults
-            to False.
         :return: an initialised link to an attached PS3 SixAxis controller.
         """
 
@@ -121,84 +115,6 @@ class SixAxis:
             [BUTTON_SELECT, BUTTON_LEFT_STICK, BUTTON_RIGHT_STICK, BUTTON_START, BUTTON_D_UP, BUTTON_D_RIGHT,
              BUTTON_D_DOWN, BUTTON_D_LEFT, BUTTON_L2, BUTTON_R2, BUTTON_L1, BUTTON_R1, BUTTON_TRIANGLE, BUTTON_CROSS,
              BUTTON_SQUARE, BUTTON_CIRCLE, BUTTON_PS])
-        if connect:
-            self.connect()
-
-    def is_connected(self):
-        """
-        Check whether we have a connection
-
-        :return:
-            True if we're connected to a controller, False otherwise.
-        """
-        if self._stop_function:
-            return True
-        else:
-            return False
-
-    def connect(self):
-        """
-        Connect to the first PS3 controller available within /dev/inputX, identifying it by name (this may mean
-        that the code doesn't work with non-genuine PS3 controllers, I only have original ones so haven't had
-        a chance to test).
-
-        This also creates a new thread to run the asyncore loop, and uses a file dispatcher monitoring the corresponding
-        device to handle input events. All events are passed to the handle_event function in the parent, this is then
-        responsible for interpreting the events and updating any internal state, calling button handlers etc.
-
-        :return:
-            True if a controller was found and connected, False if we already had a connection
-        :raises IOError:
-            If we didn't already have a controller but couldn't find a new one, this normally means
-            there's no controller paired with the Pi
-        """
-        if self._stop_function:
-            return False
-        for device in [InputDevice(fn) for fn in list_devices()]:
-            if device.name == 'Sony PLAYSTATION(R)3 Controller':
-                parent = self
-
-                class InputDeviceDispatcher(file_dispatcher):
-                    def __init__(self):
-                        self.device = device
-                        file_dispatcher.__init__(self, device)
-
-                    def recv(self, ign=None):
-                        return self.device.read()
-
-                    def handle_read(self):
-                        for event in self.recv():
-                            parent.handle_event(event)
-
-                    def handle_error(self):
-                        pass
-
-                class AsyncLoop(Thread):
-                    def __init__(self, channel):
-                        Thread.__init__(self, name='InputDispatchThread')
-                        self._set_daemon()
-                        self.channel = channel
-
-                    def run(self):
-                        loop()
-
-                    def stop(self):
-                        self.channel.close()
-
-                loop_thread = AsyncLoop(InputDeviceDispatcher())
-                self._stop_function = loop_thread.stop
-                loop_thread.start()
-                return True
-        raise IOError('Unable to find a SixAxis controller')
-
-    def disconnect(self):
-        """
-        Disconnect from any controllers, shutting down the channel and allowing the monitoring thread to terminate
-        if there's nothing else bound into the evdev loop. Doesn't do anything if we're not connected to a controller
-        """
-        if self._stop_function:
-            self._stop_function()
-            self._stop_function = None
 
     def __str__(self):
         """
@@ -223,7 +139,7 @@ class SixAxis:
         for axis in self.axes:
             axis.reset()
 
-    def handle_event(self, event):
+    def handle_evdev_event(self, event):
         """
         Handle a single evdev event, this updates the internal state of the Axis objects as well as calling any
         registered button handlers.

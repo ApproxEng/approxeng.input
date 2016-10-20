@@ -13,7 +13,7 @@ on Windows or OSX due to missing underlying support libraries. If you need to ha
 recomment taking a look at PyGame_, which includes joystick support amongst its other functionality.
 
 The controller support code is written in Python. To get the code from
-PyPi you can run ``pip install approxeng.gamecontrollers``, although this will only work properly when run on a
+PyPi you can run ``pip install approxeng.input``, although this will only work properly when run on a
 Raspberry Pi as it depends on some native libraries which are exclusive to Linux. I haven't tried using it on other
 Linux systems.
 
@@ -29,7 +29,7 @@ Follow me on twitter (approx_eng_) for updates!
     sixaxis
     api
 
-.. _GitHub: https://github.com/ApproxEng/python-game-controllers
+.. _GitHub: https://github.com/ApproxEng/approxeng.input
 
 .. _PiWars: http://piwars.org
 

@@ -18,7 +18,7 @@ class SixAxisResource:
 
     def __init__(self, bind_defaults=False, dead_zone=0.05, hot_zone=0.0):
         """
-        Resource class, produces a :class:`triangula.input.SixAxis` for use in a 'with' binding.
+        Resource class, produces an :class:`approxeng.input.SixAxis` for use in a 'with' binding.
 
         :param float dead_zone:
             See SixAxis class documentation
@@ -56,7 +56,7 @@ class SixAxis:
     to the SixAxis class for processing. There is no need to poll the event queue manually.
 
     Consuming code can get the current position of any of the sticks from this class through the `axes` instance
-    property. This contains a list of :class:`triangula.input.SixAxis.Axis` objects, one for each distinct axis on the
+    property. This contains a list of :class:`approxeng.input.sixaxis.SixAxis.Axis` objects, one for each distinct axis on the
     controller. The list of axes is, in order: left x, left y, right x, right y.
     """
 

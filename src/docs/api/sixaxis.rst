@@ -6,13 +6,13 @@ calibration, centering and dead-zones, and the ability to bind functions to butt
 handling, attempting to use this on any other platform than Linux will probably not work.
 
 .. autoclass:: approxeng.input.sixaxis.SixAxis
-:members:
+    :members:
 
     An additional class allows for use within a 'with' binding. The connection and disconnection is managed automatically
     by the resource, so there's no need to call connect() on the generated :class:`approxeng.input.sixaxis.SixAxis` instance.
 
 .. autoclass:: approxeng.input.sixaxis.SixAxisResource
-:members:
+    :members:
 
     As an example, the following code will bind to an already paired PS3 controller and continuously print its axes:
 

@@ -124,10 +124,10 @@ APIs
 ----
 
 .. autoclass:: approxeng.input.Axis
-:members:
+    :members:
 
 .. autoclass:: approxeng.input.Button
-:members:
+    :members:
 
 .. autoclass:: approxeng.input.Buttons
-:members:
+    :members:

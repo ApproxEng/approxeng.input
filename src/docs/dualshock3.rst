@@ -37,13 +37,9 @@ it to this list:
 Software
 --------
 
-Note 1 - this assumes you've set up git and installed a public key with github, you don't have to do this but you'll
-need to modify some of the git commands below if you haven't. You can set up public keys using the instructions at
-https://help.github.com/articles/generating-ssh-keys/#platform-all
-
 .. note::
 
-    This is also assuming you're starting from a clean installation of the Jessie based Raspbian. Other
+    This is assuming you're starting from a clean installation of the Jessie based Raspbian. Other
     distributions may need varying combinations of dev libraries etc. For testing I was using the minimal installation with
     filename ``2015-11-21-raspbian-jessie-lite.zip`` but these instructions should apply to any recent version. As always,
     it's not a bad idea to run ``sudo apt-get update`` and ``sudo apt-get upgrade`` to get any changes to packages since
@@ -158,47 +154,3 @@ If a new device has appeared here then congratulations, you have successfully pa
 dongle and SixAxis controller. This will persist across reboots, so from now on you can just connect by pressing the PS
 button on the controller. Pressing and holding this button will shut the controller down - at the moment there's no
 timeout so be sure to turn the controller off when you're not going to be using it for a while.
-
-Accessing the SixAxis from Python
----------------------------------
-
-You now have a joystick device in /dev/input, but how do you use it in your Python code?
-
-There are two different approaches I've tried. You can use PyGame - this has the advantage that you might be using it
-already (in which case it's the simplest solution) and it's already installed in the system Python on your Pi. It has
-the drawback though that it requires a display - while I'm aware there are workarounds for this they're not really
-very satisfactory. The second option is to use the Python bindings for evdev - this is lightweight, but has drawback
-of being more complex to use and only working on linux, even if you're on a unix-like system such as OSX you can't use
-it whereas PyGame is generally suitable for cross-platform use. Because I only want to run this on the Pi and because I
-really need it to work cleanly in a headless environment I've gone with evdev, but there are arguments for both.
-
-Actually using evdev isn't trivial, the best documentation I have is the code I wrote to handle it. I've created a
-Python class :class:`approxeng.input.sixaxis.SixAxis` and corresponding resource
-:class:`approxeng.input.sixaxis.SixAxisResource` to
-make this simpler to work with. The class uses asyncore to poll the evdev device, updating internal state within the
-object. It also allows you to register button handlers which will be called, handles centering, hot zones (regions in
-the axis range which clamp to 1.0 or -1.0) and dead zones (regions near the centre point which clamp to 0.0).
-
-By way of an example, the following code will connect to the controller (you'll get an exception if you don't have one
-connected) and print out the values of the two analogue sticks:
-
-.. code-block:: python
-
-    from approxeng.input.sixaxis import SixAxis, SixAxisResource, BUTTON_SQUARE
-
-    # Button handler, will be bound to the square button later
-    def handler(button):
-      print 'Button {} pressed'.format(button)
-
-    # Get a joystick, this will fail unless the SixAxis controller is paired and active
-    # The bind_defaults argument specifies that we should bind actions to the SELECT and START buttons to
-    # centre the controller and reset the calibration respectively.
-    with SixAxisResource(bind_defaults=True) as joystick:
-        # Register a button handler for the square button
-        joystick.register_button_handler(handler, BUTTON_SQUARE)
-        while 1:
-            # Read the x and y axes of the left hand stick, the right hand stick has axes 2 and 3
-            x = joystick.axes[0].corrected_value()
-            y = joystick.axes[1].corrected_value()
-            print(x,y)
-

@@ -8,17 +8,29 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
     right, and also because I plan in the long term to add support for other controllers as and when I feel like I need
     them for my own projects!
 
-The code here is intended to run on the Raspberry Pi. It might work on other Linux based systems, but it won't work
-on Windows or OSX due to missing underlying support libraries. If you need to handle joysticks on those platforms I
-recomment taking a look at PyGame_, which includes joystick support amongst its other functionality.
+Getting the code
+----------------
 
-The controller support code is written in Python. To get the code from
-PyPi you can run ``pip install approxeng.input``, although this will only work properly when run on a
-Raspberry Pi as it depends on some native libraries which are exclusive to Linux. I haven't tried using it on other
-Linux systems.
+You can install the code using pip, you'll have to add a few native libraries first though:
+
+.. code-block:: bash
+
+    $ sudo apt-get install python-dev python-pip gcc
+    $ pip install approxeng.input
+
+(The exact dependencies may vary depending on your operating system, they come from using evdev and having to compile
+that particular python module against whatever underlying libraries your OS is using). I *strongly* recommend using a
+virtual environment (virtualenv) so you don't have to install python libraries as root.
+
+.. note::
+
+    The controller support code is written in Python, but relies on some underlying operating system functionality which
+    is exclusive to Linux based computers like the Pi. As a result, it won't work on Windows or OSX. If you need to
+    handle joysticks on those platforms I recommend taking a look at PyGame_, which includes joystick support amongst
+    its other functionality.
 
 To work with the code on other platforms you'll want to clone it from GitHub_, it's available under the ASL, the same as
-almost everything Python based.
+almost everything Python based. Documentation (this site) is generated using Sphinx.
 
 Follow me on twitter (approx_eng_) for updates!
 
@@ -27,7 +39,7 @@ Follow me on twitter (approx_eng_) for updates!
     :glob:
 
     howtouse
-    sixaxis
+    dualshock3
     api
 
 .. _GitHub: https://github.com/ApproxEng/approxeng.input

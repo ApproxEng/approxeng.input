@@ -39,7 +39,7 @@ to worry about explicitly unbinding the controller!):
     from approxeng.input.asyncorebinder import ControllerResource
     from approxeng.input.dualshock3 import DualShock3, CONTROLLER_NAMES
 
-    with ControllerResource(controller=DualShock3(), device_name=CONTROLLER_NAMES) as joystick:
+    with ControllerResource(DualShock3(), device_name=CONTROLLER_NAMES) as joystick:
         # .... do stuff, the controller is bound to 'joystick' which is a DualShock3 instance....
 
 On exit from the 'with' block the binder is automatically unbound, this includes cases where we break out of the block

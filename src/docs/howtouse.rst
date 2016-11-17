@@ -55,7 +55,7 @@ Handling Button Presses as Events
     from approxeng.input.asyncorebinder import ControllerResource
     from approxeng.input.dualshock3 import DualShock3
     # Get a joystick
-    with ControllerResource(controller=DualShock3()) as joystick:
+    with ControllerResource(DualShock3()) as joystick:
         # Create a handler function
         def button_handler(button):
             print 'Button clicked {}'.format(button)
@@ -108,7 +108,7 @@ was pressed since the last time you asked. The return value from this function i
     from approxeng.input.dualshock3 import DualShock3
     from approxeng.input.asyncorebinder import ControllerResource
     # Get a joystick as before
-    with ControllerResource(controller=DualShock3()) as joystick:
+    with ControllerResource(DualShock3()) as joystick:
         # No need for any button handlers, go straight into our loop
         while 1:
             buttons_pressed = joystick.buttons.get_and_clear_button_press_history()
@@ -131,7 +131,7 @@ None if the button isn't held down.
     from approxeng.input.dualshock3 import DualShock3
     from approxeng.input.asyncorebinder import ControllerResource
     # Get a joystick as before
-    with ControllerResource(controller=DualShock3()) as joystick:
+    with ControllerResource(DualShock3()) as joystick:
         while 1:
             # Get the amount of time the circle button has been held
             held_time = joystick.buttons.is_held(joystick.BUTTON_CIRCLE)
@@ -204,7 +204,7 @@ a loop printing the corrected value of the left horizontal axis:
     from approxeng.input.dualshock3 import DualShock3, CONTROLLER_NAMES
     from approxeng.input.asyncorebinder import ControllerResource
 
-    with ControllerResource(controller=DualShock3(dead_zone=0.1, hot_zone=0.2), device_name=CONTROLLER_NAMES) as joystick:
+    with ControllerResource(DualShock3(dead_zone=0.1, hot_zone=0.2), device_name=CONTROLLER_NAMES) as joystick:
 
         # Bind the square button to call the set_axis_centres function
         joystick.buttons.register_button_handler(joystick.axes.set_axis_centres, joystick.BUTTON_SQUARE)

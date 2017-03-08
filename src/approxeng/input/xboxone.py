@@ -65,7 +65,9 @@ class XBoxOneSPad(Controller):
         self.AXIS_RIGHT_VERTICAL = CentredAxis("Right Vertical", -32768, 32768, 4, invert=True)
         self.AXIS_TRIGGER_LEFT = TriggerAxis("Left Trigger", 0, 1023, 2)
         self.AXIS_TRIGGER_RIGHT = TriggerAxis("Right Trigger", 0, 1023, 5)
-        super(XBoxOneSPad, self).__init__(name=CONTROLLER_NAME,
+        super(XBoxOneSPad, self).__init__(vendor_id=1118,
+                                          product_id=746,
+                                          name=CONTROLLER_NAME,
                                           axes=[self.AXIS_LEFT_HORIZONTAL, self.AXIS_LEFT_VERTICAL,
                                                 self.AXIS_RIGHT_HORIZONTAL, self.AXIS_RIGHT_VERTICAL,
                                                 self.AXIS_TRIGGER_LEFT, self.AXIS_TRIGGER_RIGHT],

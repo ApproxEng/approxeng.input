@@ -1,7 +1,7 @@
 from time import time
 
 try:
-    from evdev import ecodes
+    from evdevsupport import ecodes, InputDevice
 except ImportError:
     # Ignore this error, it happens when building the documentation on OSX (as evdev won't build there) but is otherwise
     # not significant. Obviously if it's actually failing to import in real systems that would be a problem!
@@ -107,6 +107,10 @@ class Controller(object):
     """
     Superclass for controller implementations which use evdev for their event handling
 
+    :ivar int vendor_id:
+        Vendor ID used to identify the controller type.
+    :ivar int product_id:
+        Product ID used to idenfity the controller type.
     :ivar approxeng.input.Axes axes:
         All analogue axes, whether :class:`approxeng.input.CentredAxis` or :class:`approxeng.input.TriggerAxis` are
         managed by this object. It can be used to reset calibration information or set centres for all axes at once.
@@ -115,14 +119,26 @@ class Controller(object):
     :ivar approxeng.input.Buttons buttons:
         All buttons are managed by this object. It can be used to query which buttons are held (and for how long) and
         to bind event handlers to buttons.
+    :ivar string[] names:
+        Contains an array of names by which this controller class can be identified in the evdev system. Multiple names
+        are sometimes required for controllers which identify differently depending on whether they're connected over
+        bluetooth or USB, for example.
+    :ivar evdev.InputDevice device:
+        If the controller is bound, this value will contain an instance of :class:`evdev.InputDevice`, otherwise it will
+        be None
     """
 
-    def __init__(self, name, axes, buttons, dead_zone=None, hot_zone=None):
+    def __init__(self, vendor_id, product_id, name=None, names=None, axes=None, buttons=None, dead_zone=None,
+                 hot_zone=None, print_events=False):
         """
         Populate the controller name, button set and axis set.
 
+        :param int vendor_id:
+            The USB vendor ID for the controller
+        :param int product_id:
+            The USB product ID for the controller
         :param name:
-            A friendly name for the controller
+            A friendly name or names for the controller
         :param axes:
             A sequence of axis objects, which can be either CentredAxis or TriggerAxis instances
         :param buttons:
@@ -131,10 +147,27 @@ class Controller(object):
             If specified, this is applied to all axes
         :param hot_zone:
             If specified, this is applied to all axes
+        :param print_events:
+            If True, events passed to this controller instance will be printed to the console. Defaults to False
         """
-        self.name = name
-        self.axes = Axes(axes)
-        self.buttons = Buttons(buttons)
+        self.vendor_id = vendor_id
+        self.product_id = product_id
+        self.print_events = print_events
+        if name is not None:
+            self.names = [name]
+        elif names is not None:
+            self.names = names
+        else:
+            self.names = ["UNKNOWN_NAME"]
+        if axes is not None:
+            self.axes = Axes(axes)
+        else:
+            self.axes = Axes([])
+        if buttons is not None:
+            self.buttons = Buttons(buttons)
+        else:
+            self.buttons = Buttons([])
+        self.device = None
         if dead_zone is not None:
             for axis in axes:
                 axis.dead_zone = dead_zone
@@ -149,6 +182,8 @@ class Controller(object):
         :param event:
             The evdev event to handle
         """
+        if self.print_events:
+            print event
         if event.type == ecodes.EV_ABS:
             self.axes.axis_updated(event)
         elif event.type == ecodes.EV_KEY:
@@ -161,7 +196,7 @@ class Controller(object):
                 self.buttons.button_released(event.code)
 
     def __str__(self):
-        return "{}, axes={}, buttons={}".format(self.name, self.axes, self.buttons.buttons.keys())
+        return "{}, axes={}, buttons={}".format(self.names, self.axes, self.buttons.buttons.keys())
 
 
 class Axes(object):

@@ -66,7 +66,9 @@ class DualShock4(Controller):
         self.AXIS_TRIGGER_RIGHT = TriggerAxis("Right Trigger", 0, 255, 4)
         self.AXIS_D_HORIZONTAL = CentredAxis("D-pad Horizontal", -1, 1, 16)
         self.AXIS_D_VERTICAL = CentredAxis("D-pad Vertical", -1, 1, 17, invert=True)
-        super(DualShock4, self).__init__(name="DualShock4",
+        super(DualShock4, self).__init__(vendor_id=1356,
+                                         product_id=2508,
+                                         name=CONTROLLER_NAME,
                                          buttons=[self.BUTTON_CIRCLE, self.BUTTON_CROSS, self.BUTTON_SQUARE,
                                                   self.BUTTON_TRIANGLE,
                                                   self.BUTTON_HOME, self.BUTTON_SHARE, self.BUTTON_OPTIONS,

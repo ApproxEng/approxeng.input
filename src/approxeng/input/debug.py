@@ -1,5 +1,5 @@
 try:
-    from evdev import ecodes
+    from evdevsupport import ecodes
 except ImportError:
     # Ignore this error, it happens when building the documentation on OSX (as evdev won't build there) but is otherwise
     # not significant. Obviously if it's actually failing to import in real systems that would be a problem!

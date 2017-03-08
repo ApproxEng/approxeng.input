@@ -1,12 +1,7 @@
 from asyncore import file_dispatcher, loop
 from threading import Thread
 
-try:
-    from evdev import InputDevice, list_devices
-except ImportError:
-    # Ignore this error, it happens when building the documentation on OSX (as evdev won't build there) but is otherwise
-    # not significant. Obviously if it's actually failing to import in real systems that would be a problem!
-    print 'Not importing evdev, expected during sphinx generation on OSX'
+from approxeng.input.evdevsupport import find_device
 
 
 class ControllerResource:
@@ -72,44 +67,45 @@ def bind_controller(event_receiver, device_name=None, device_path=None):
         If we didn't already have a controller but couldn't find a new one, this normally means
         there's no controller paired with the Pi
     """
-    if device_name is None and device_path is None:
-        device_name = event_receiver.name
-    if device_name is not None and isinstance(device_name, basestring):
-        device_name = [device_name]
-    for device in [InputDevice(fn) for fn in list_devices()]:
-        if (device_name is not None and device.name in device_name) or (
-                        device_path is not None and device.fn == device_path):
+    device = find_device(event_receiver, device_name=device_name, device_path=device_path, fail=True)
 
-            print "Binding to {} at {}".format(device.name, device.fn)
+    print "Binding to {} at {}".format(device.name, device.fn)
+    event_receiver.device = device
+    device.grab()
 
-            class InputDeviceDispatcher(file_dispatcher):
-                def __init__(self):
-                    self.device = device
-                    file_dispatcher.__init__(self, device)
+    class InputDeviceDispatcher(file_dispatcher):
+        def __init__(self):
+            self.device = device
+            file_dispatcher.__init__(self, device)
 
-                def recv(self, ign=None):
-                    return self.device.read()
+        def recv(self, ign=None):
+            return self.device.read()
 
-                def handle_read(self):
-                    for event in self.recv():
-                        event_receiver.handle_evdev_event(event)
+        def handle_read(self):
+            for event in self.recv():
+                event_receiver.handle_evdev_event(event)
 
-                def handle_error(self):
-                    pass
+        def handle_error(self):
+            pass
 
-            class AsyncLoop(Thread):
-                def __init__(self, channel):
-                    Thread.__init__(self, name='InputDispatchThread[{}]'.format(device_name))
-                    self._set_daemon()
-                    self.channel = channel
+    class AsyncLoop(Thread):
+        def __init__(self, channel):
+            Thread.__init__(self, name='InputDispatchThread[{}]'.format(device.name))
+            self._set_daemon()
+            self.channel = channel
 
-                def run(self):
-                    loop()
+        def run(self):
+            loop()
 
-                def stop(self):
-                    self.channel.close()
+        def stop(self):
+            self.channel.close()
 
-            loop_thread = AsyncLoop(InputDeviceDispatcher())
-            loop_thread.start()
-            return loop_thread.stop
-    raise IOError('Unable to find a device with name {}.'.format(device_name))
+    loop_thread = AsyncLoop(InputDeviceDispatcher())
+    loop_thread.start()
+
+    def stop():
+        loop_thread.stop()
+        event_receiver.device = None
+        device.ungrab()
+
+    return stop

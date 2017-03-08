@@ -64,7 +64,9 @@ class DualShock3(Controller):
         self.AXIS_RIGHT_VERTICAL = CentredAxis("Right Vertical", 0, 255, 5, invert=True)
         self.AXIS_LEFT_HORIZONTAL = CentredAxis("Left Horizontal", 0, 255, 0, )
         self.AXIS_RIGHT_HORIZONTAL = CentredAxis("Right Horizontal", 0, 255, 2)
-        super(DualShock3, self).__init__(name=CONTROLLER_NAMES[0],
+        super(DualShock3, self).__init__(vendor_id=1356,
+                                         product_id=616,
+                                         names=CONTROLLER_NAMES,
                                          axes=[self.AXIS_LEFT_HORIZONTAL, self.AXIS_LEFT_VERTICAL,
                                                self.AXIS_RIGHT_HORIZONTAL,
                                                self.AXIS_RIGHT_VERTICAL],

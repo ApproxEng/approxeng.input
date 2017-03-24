@@ -3,12 +3,12 @@ Simple joystick test, waits to bind to a PS3 controller and prints out its axes
 """
 
 from approxeng.input.asyncorebinder import ControllerResource
-from approxeng.input.dualshock3 import DualShock3, CONTROLLER_NAMES
+from approxeng.input.dualshock4 import DualShock4, CONTROLLER_NAME
 from time import sleep
 
 while 1:
     try:
-        with ControllerResource(controller=DualShock3(), device_name=CONTROLLER_NAMES) as joystick:
+        with ControllerResource(controller=DualShock4(), device_name=CONTROLLER_NAME) as joystick:
             print "Found joystick {}".format(joystick)
             while 1:
                 sleep(0.3)

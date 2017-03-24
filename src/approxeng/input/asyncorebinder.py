@@ -51,7 +51,7 @@ def bind_controller(event_receiver, device_name=None, device_path=None):
 
     :param event_receiver:
         A class which can receive raw evdev events and interpret them. Typically this will be a controller class
-        such as :class:`approxeng.input.sixaxis.SixAxis`. The receiver must implement a 'handle_evdev_event(e)'
+        such as :class:`approxeng.input.dualshock3.DualShock3`. The receiver must implement a 'handle_evdev_event(e)'
         method.
     :param device_name:
         The name of the device to search for in the udev tree, i.e. 'Microsoft X-Box One S pad'. If this is specified

@@ -11,8 +11,7 @@ print_joystick = False
 
 while 1:
     try:
-        with ControllerResource(controller=debug,
-                                device_name='Valve Software Steam Controller') as joystick:
+        with ControllerResource(controller=ds4) as joystick:
             print "Found joystick {}".format(joystick)
             while 1:
                 now = time()

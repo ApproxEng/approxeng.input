@@ -142,7 +142,7 @@ class Controller(object):
         :param axes:
             A sequence of axis objects, which can be either CentredAxis or TriggerAxis instances
         :param buttons:
-            A sequence of Button instances
+            A sequence of Button or BinaryAxis instances
         :param dead_zone:
             If specified, this is applied to all axes
         :param hot_zone:
@@ -215,6 +215,7 @@ class Axes(object):
             the axes the controller supports.
         """
         self.axes_by_code = {axis.axis_event_code: axis for axis in axes}
+        self.axes_by_sname = {axis.sname: axis for axis in axes}
 
     def axis_updated(self, event):
         """
@@ -247,6 +248,9 @@ class Axes(object):
     def __str__(self):
         return list("{}={}".format(axis.name, axis.corrected_value()) for axis in self.axes_by_code.values()).__str__()
 
+    def get_value(self, sname):
+        return self.axes_by_sname.get(sname).corrected_value()
+
 
 class TriggerAxis(object):
     """
@@ -256,7 +260,7 @@ class TriggerAxis(object):
     axes.
     """
 
-    def __init__(self, name, min_raw_value, max_raw_value, axis_event_code, dead_zone=0.0, hot_zone=0.0):
+    def __init__(self, name, min_raw_value, max_raw_value, axis_event_code, dead_zone=0.0, hot_zone=0.0, sname=None):
         """
         Create a new TriggerAxis - this will be done internally within the controller classes i.e.
         :class:`approxeng.input.xboxone.XBoxOneSPad`
@@ -273,6 +277,8 @@ class TriggerAxis(object):
             The proportion of the trigger range which will be treated as equivalent to no press
         :param hot_zone:
             The proportion of the trigger range which will be treated as equivalent to fully depressing the trigger
+        :param sname:
+            The standard name for this trigger, if specified
         """
         self.name = name
         self.max = 0.9
@@ -283,6 +289,7 @@ class TriggerAxis(object):
         self.min_raw_value = min_raw_value
         self.max_raw_value = max_raw_value
         self.axis_event_code = axis_event_code
+        self.sname = sname
 
     def _input_to_raw_value(self, value):
         """
@@ -342,13 +349,41 @@ class TriggerAxis(object):
             self.min = new_value
 
 
+class BinaryAxis(object):
+    """
+    A fake 'analogue' axis which actually corresponds to a pair of buttons. Once associated with a Buttons instance
+    it routes events through to the Buttons instance to create button presses corresponding to axis movements.
+    """
+
+    def __init__(self, name, axis_event_code, b1name=None, b2name=None):
+        self.name = name
+        self.axis_event_code = axis_event_code
+        self.b1 = Button('{}_left_button'.format(name), key_code='{}_left'.format(axis_event_code), sname=b1name)
+        self.b2 = Button('{}_right_button'.format(name), key_code='{}_right'.format(axis_event_code), sname=b2name)
+        self.buttons = None
+        self.last_value = 0
+
+    def set_raw_value(self, raw_value):
+        if self.buttons is not None:
+            if self.last_value < 0:
+                self.buttons.button_released(self.b2.key_code)
+            elif self.last_value > 0:
+                self.buttons.button_released(self.b1.key_code)
+            self.last_value = raw_value
+            if raw_value < 0:
+                self.buttons.button_pressed(self.b1.key_code)
+            elif raw_value > 0:
+                self.buttons.button_pressed(self.b2.key_code)
+
+
 class CentredAxis(object):
     """
     A single analogue axis on a controller where the expected output range is -1.0 to 1.0 and the resting position of
     the control is at 0.0, at least in principle.
     """
 
-    def __init__(self, name, min_raw_value, max_raw_value, axis_event_code, invert=False, dead_zone=0.0, hot_zone=0.0):
+    def __init__(self, name, min_raw_value, max_raw_value, axis_event_code, invert=False, dead_zone=0.0, hot_zone=0.0,
+                 sname=None):
         """
         Create a new CentredAxis - this will be done internally within the controller classes i.e.
         :class:`approxeng.input.sixaxis.SixAxis`
@@ -367,6 +402,8 @@ class CentredAxis(object):
             Size of the dead zone in the centre of the axis, within which all values will be mapped to 0.0
         :param hot_zone:
             Size of the hot zones at the ends of the axis, where values will be mapped to -1.0 or 1.0
+        :param sname:
+            The standard name for this axis, if specified
         """
         self.name = name
         self.centre = 0.0
@@ -379,6 +416,7 @@ class CentredAxis(object):
         self.min_raw_value = float(min_raw_value)
         self.max_raw_value = float(max_raw_value)
         self.axis_event_code = axis_event_code
+        self.sname = sname
 
     def _input_to_raw_value(self, value):
         """
@@ -456,7 +494,7 @@ class Button(object):
     A single button on a controller
     """
 
-    def __init__(self, name, key_code=None):
+    def __init__(self, name, key_code=None, sname=None):
         """
         Create a new Button - this will be done by the controller implementation classes, you shouldn't create your own
         unless you're writing such a class.
@@ -466,12 +504,37 @@ class Button(object):
         :param key_code:
             The key code for the button, typically an integer used within the button press and release events. Defaults
             to None if not used.
+        :param sname:
+            The standard name for the button, if available.
         """
         self.name = name
         self.key_code = key_code
+        self.sname = sname
 
     def __repr__(self):
-        return "Button(name={}, code={})".format(self.name, self.key_code)
+        return "Button(name={}, code={}, sname={})".format(self.name, self.key_code, self.sname)
+
+
+class ButtonPresses(object):
+    """
+    Stores the set of buttons pressed within a given time interval
+    """
+
+    def __init__(self, buttons):
+        self.buttons = buttons
+        self.names = list([button.sname for button in buttons])
+
+    def was_pressed(self, sname):
+        """
+        Return true if a button was pressed, referencing by standard name
+        
+        :param sname: the name to check
+        :return: true if contained within the press set, false otherwise
+        """
+        return sname in self.names
+
+    def __repr__(self):
+        return str(self.names)
 
 
 class Buttons(object):
@@ -483,16 +546,25 @@ class Buttons(object):
     user code (i.e. your code if you're reading this) uses the methods on this object to react to button presses.
     """
 
-    def __init__(self, buttons):
+    def __init__(self, buttons_and_axes, ):
         """
         Instantiate a new button manager
 
-        :param buttons:
+        :param buttons_and_axes:
             a list of :class:`approxeng.input.Button` instances which will be managed by this class
 
         """
+        buttons = []
+        for thing in buttons_and_axes:
+            if isinstance(thing, Button):
+                buttons.append(thing)
+            elif isinstance(thing, BinaryAxis):
+                buttons.append(thing.b1)
+                buttons.append(thing.b2)
+                thing.buttons = self
         self.buttons = {button: Buttons.ButtonState(button) for button in buttons}
         self.buttons_by_code = {button.key_code: state for button, state in self.buttons.items()}
+        self.buttons_by_sname = {button.sname: state for button, state in self.buttons.items()}
 
     class ButtonState:
         """
@@ -540,14 +612,14 @@ class Buttons(object):
         Return the set of Buttons which have been pressed since this call was last made, clearing it as we do.
 
         :return:
-            A list of Button instances which were pressed since this call was last made.
+            A ButtonPresses instance which contains buttons which were pressed since this call was last made.
         """
         pressed = []
         for button, state in self.buttons.items():
             if state.was_pressed_since_last_check:
                 pressed.append(button)
                 state.was_pressed_since_last_check = False
-        return pressed
+        return ButtonPresses(pressed)
 
     def is_held(self, button):
         """
@@ -564,6 +636,32 @@ class Buttons(object):
             if state.is_pressed and state.last_pressed is not None:
                 return time() - state.last_pressed
         return None
+
+    def is_held_name(self, button_name):
+        """
+        Determines whether a button is currently held, identifying it by standard name
+        
+        :param button_name: 
+            The standard name of the button
+        :return: 
+            None if the button is not held down, or is not available, otherwise the number of seconds as a floating
+            point value since it was pressed
+        """
+        state = self.buttons_by_sname.get(button_name)
+        if state is not None:
+            if state.is_pressed and state.last_pressed is not None:
+                return time() - state.last_pressed
+        return None
+
+    def for_name(self, sname):
+        """
+        Get a button by sname, if present
+        
+        :param sname: 
+            The standard name to search
+        :return: 
+        """
+        return self.buttons_by_sname.get(sname).button
 
     def register_button_handler(self, button_handler, buttons):
         """

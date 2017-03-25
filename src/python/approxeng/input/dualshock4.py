@@ -1,4 +1,4 @@
-from approxeng.input import Controller, Button, CentredAxis, TriggerAxis
+from approxeng.input import Controller, Button, CentredAxis, TriggerAxis, BinaryAxis
 
 CONTROLLER_NAME = "Wireless Controller"
 """Names used to find the controller when searching evdev devices
@@ -45,27 +45,27 @@ class DualShock4(Controller):
         :param float hot_zone:
             Used to set the hot zone for each :class:`approxeng.input.CentredAxis` in the controller.
         """
-        self.BUTTON_CIRCLE = Button("Circle", 306)
-        self.BUTTON_CROSS = Button("Cross", 305)
-        self.BUTTON_SQUARE = Button("Square", 304)
-        self.BUTTON_TRIANGLE = Button("Triangle", 307)
-        self.BUTTON_HOME = Button("Home (PS)", 316)
-        self.BUTTON_SHARE = Button("Share", 312)
-        self.BUTTON_OPTIONS = Button("Options", 313)
-        self.BUTTON_L1 = Button("L1", 308)
-        self.BUTTON_R1 = Button("R1", 309)
-        self.BUTTON_L2 = Button("L2", 310)
-        self.BUTTON_R2 = Button("R2", 311)
-        self.BUTTON_LEFT_STICK = Button("Left Stick", 314)
-        self.BUTTON_RIGHT_STICK = Button("Right Stick", 315)
-        self.AXIS_LEFT_HORIZONTAL = CentredAxis("Left Horizontal", 0, 255, 0)
-        self.AXIS_LEFT_VERTICAL = CentredAxis("Left Vertical", 0, 255, 1, invert=True)
-        self.AXIS_RIGHT_HORIZONTAL = CentredAxis("Right Horizontal", 0, 255, 2)
-        self.AXIS_RIGHT_VERTICAL = CentredAxis("Right Vertical", 0, 255, 5, invert=True)
-        self.AXIS_TRIGGER_LEFT = TriggerAxis("Left Trigger", 0, 255, 3)
-        self.AXIS_TRIGGER_RIGHT = TriggerAxis("Right Trigger", 0, 255, 4)
-        self.AXIS_D_HORIZONTAL = CentredAxis("D-pad Horizontal", -1, 1, 16)
-        self.AXIS_D_VERTICAL = CentredAxis("D-pad Vertical", -1, 1, 17, invert=True)
+        self.BUTTON_CIRCLE = Button("Circle", 306, sname='circle')
+        self.BUTTON_CROSS = Button("Cross", 305, sname='cross')
+        self.BUTTON_SQUARE = Button("Square", 304, sname='square')
+        self.BUTTON_TRIANGLE = Button("Triangle", 307, sname='triangle')
+        self.BUTTON_HOME = Button("Home (PS)", 316, sname='home')
+        self.BUTTON_SHARE = Button("Share", 312, sname='start')
+        self.BUTTON_OPTIONS = Button("Options", 313, sname='select')
+        self.BUTTON_L1 = Button("L1", 308, sname='l1')
+        self.BUTTON_R1 = Button("R1", 309, sname='r1')
+        self.BUTTON_L2 = Button("L2", 310, sname='l2')
+        self.BUTTON_R2 = Button("R2", 311, sname='r2')
+        self.BUTTON_LEFT_STICK = Button("Left Stick", 314, sname='ls')
+        self.BUTTON_RIGHT_STICK = Button("Right Stick", 315, sname='rs')
+        self.AXIS_LEFT_HORIZONTAL = CentredAxis("Left Horizontal", 0, 255, 0, sname='lx')
+        self.AXIS_LEFT_VERTICAL = CentredAxis("Left Vertical", 0, 255, 1, invert=True, sname='ly')
+        self.AXIS_RIGHT_HORIZONTAL = CentredAxis("Right Horizontal", 0, 255, 2, sname='rx')
+        self.AXIS_RIGHT_VERTICAL = CentredAxis("Right Vertical", 0, 255, 5, invert=True, sname='ry')
+        self.AXIS_TRIGGER_LEFT = TriggerAxis("Left Trigger", 0, 255, 3, sname='lt')
+        self.AXIS_TRIGGER_RIGHT = TriggerAxis("Right Trigger", 0, 255, 4, sname='rt')
+        self.AXIS_D_HORIZONTAL = BinaryAxis("D-pad Horizontal", 16, b1name='dleft', b2name='dright')
+        self.AXIS_D_VERTICAL = BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown')
         super(DualShock4, self).__init__(vendor_id=1356,
                                          product_id=2508,
                                          name=CONTROLLER_NAME,
@@ -74,10 +74,10 @@ class DualShock4(Controller):
                                                   self.BUTTON_HOME, self.BUTTON_SHARE, self.BUTTON_OPTIONS,
                                                   self.BUTTON_L1, self.BUTTON_R1,
                                                   self.BUTTON_L2, self.BUTTON_R2, self.BUTTON_LEFT_STICK,
-                                                  self.BUTTON_RIGHT_STICK],
+                                                  self.BUTTON_RIGHT_STICK, self.AXIS_D_HORIZONTAL,
+                                                  self.AXIS_D_VERTICAL],
                                          axes=[self.AXIS_LEFT_HORIZONTAL, self.AXIS_LEFT_VERTICAL,
-                                               self.AXIS_RIGHT_VERTICAL,
-                                               self.AXIS_RIGHT_HORIZONTAL, self.AXIS_D_HORIZONTAL, self.AXIS_D_VERTICAL,
+                                               self.AXIS_RIGHT_VERTICAL, self.AXIS_RIGHT_HORIZONTAL,
                                                self.AXIS_TRIGGER_LEFT, self.AXIS_TRIGGER_RIGHT],
                                          dead_zone=dead_zone,
                                          hot_zone=hot_zone)

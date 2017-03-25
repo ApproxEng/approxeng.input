@@ -9,7 +9,7 @@ from setuptools import setup
 
 setup(
     name='approxeng.input',
-    version='0.5',
+    version='0.6',
     description='Python game controller support using evDev for Raspberry Pi and other Linux systems',
     classifiers=['Programming Language :: Python :: 2.7'],
     url='https://github.com/ApproxEng/approxeng.input/',

@@ -1,12 +1,9 @@
 from time import time
 
 try:
-    from evdevsupport import ecodes, InputDevice
+    from evdevsupport import InputDevice, ecodes
 except ImportError:
-    # Ignore this error, it happens when building the documentation on OSX (as evdev won't build there) but is otherwise
-    # not significant. Obviously if it's actually failing to import in real systems that would be a problem!
     print 'Not importing evdev, expected during sphinx generation on OSX'
-
 
 def map_into_range(low, high, raw_value):
     """
@@ -362,8 +359,11 @@ class BinaryAxis(object):
         self.b2 = Button('{}_right_button'.format(name), key_code='{}_right'.format(axis_event_code), sname=b2name)
         self.buttons = None
         self.last_value = 0
+	self.sname = ''
+	self.value = 0
 
     def set_raw_value(self, raw_value):
+	self.value = raw_value
         if self.buttons is not None:
             if self.last_value < 0:
                 self.buttons.button_released(self.b2.key_code)
@@ -375,6 +375,8 @@ class BinaryAxis(object):
             elif raw_value > 0:
                 self.buttons.button_pressed(self.b2.key_code)
 
+    def corrected_value(self):
+	return self.value
 
 class CentredAxis(object):
     """

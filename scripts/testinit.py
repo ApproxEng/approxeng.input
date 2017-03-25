@@ -11,14 +11,14 @@ while 1:
         with ControllerResource(controller=DualShock4(), device_name=CONTROLLER_NAME) as joystick:
             print "Found joystick {}".format(joystick)
             while 1:
-                sleep(0.3)
+                sleep(1)
                 presses = joystick.buttons.get_and_clear_button_press_history()
-                if len(presses) > 0:
+                if len(presses.buttons) > 0:
                     print presses
                 held_time = joystick.buttons.is_held_name('circle')
                 if held_time is not None:
                     print "Circle held for {} seconds".format(held_time)
-                #print joystick
+                print joystick
     except IOError:
         print "No joystick yet."
         sleep(0.3)

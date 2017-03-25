@@ -1,5 +1,5 @@
 try:
-    from evdev import InputDevice, list_devices
+    from evdev import InputDevice, list_devices, ecodes
 except ImportError as e:
     pass
 

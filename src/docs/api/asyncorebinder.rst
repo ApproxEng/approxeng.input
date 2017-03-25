@@ -47,4 +47,4 @@ because of exceptions or other error conditions. It's a simpler and more robust 
 you use it instead of explicitly binding it yourself.
 
 .. automodule:: approxeng.input.asyncorebinder
-    :members:
+:members:

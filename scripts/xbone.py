@@ -1,6 +1,7 @@
-from approxeng.input.xboxone import XBoxOneSPad
-from approxeng.input.asyncorebinder import ControllerResource
 from time import time, sleep
+
+from approxeng.input.asyncorebinder import ControllerResource
+from approxeng.input.xboxone import XBoxOneSPad
 
 last_print = time()
 print_joystick = False

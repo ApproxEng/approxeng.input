@@ -1,7 +1,8 @@
+from time import time, sleep
+
 from approxeng.input.asyncorebinder import ControllerResource
 from approxeng.input.debug import DebugController
 from approxeng.input.dualshock4 import DualShock4
-from time import time, sleep
 
 last_print = time()
 

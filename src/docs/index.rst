@@ -35,12 +35,12 @@ almost everything Python based. Documentation (this site) is generated using Sph
 Follow me on twitter (approx_eng_) for updates!
 
 .. toctree::
-    :maxdepth: 4
-    :glob:
+:maxdepth: 4
+        :glob:
 
-    howtouse
-    dualshock3
-    api
+        howtouse
+        dualshock3
+        api
 
 .. _GitHub: https://github.com/ApproxEng/approxeng.input
 

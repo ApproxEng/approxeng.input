@@ -70,6 +70,7 @@ def bind_controller(event_receiver, device_name=None, device_path=None):
     device = find_device(event_receiver, device_name=device_name, device_path=device_path, fail=True)
 
     print "Binding to {} at {}".format(device.name, device.fn)
+    print "Foo!"
     event_receiver.device = device
     device.grab()
 
@@ -83,9 +84,11 @@ def bind_controller(event_receiver, device_name=None, device_path=None):
 
         def handle_read(self):
             for event in self.recv():
+                print event
                 event_receiver.handle_evdev_event(event)
 
         def handle_error(self):
+            print "Error!"
             pass
 
     class AsyncLoop(Thread):

@@ -2,19 +2,19 @@ Common APIs
 ===========
 
 .. autoclass:: approxeng.input.Controller
-    :members:
+:members:
 
 .. autoclass:: approxeng.input.CentredAxis
-    :members:
+:members:
 
 .. autoclass:: approxeng.input.TriggerAxis
-    :members:
+:members:
 
 .. autoclass:: approxeng.input.Axes
-    :members:
+:members:
 
 .. autoclass:: approxeng.input.Button
-    :members:
+:members:
 
 .. autoclass:: approxeng.input.Buttons
-    :members:
+:members:

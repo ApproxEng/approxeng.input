@@ -78,6 +78,7 @@ class DualShock4(Controller):
                                                   self.AXIS_D_VERTICAL],
                                          axes=[self.AXIS_LEFT_HORIZONTAL, self.AXIS_LEFT_VERTICAL,
                                                self.AXIS_RIGHT_VERTICAL, self.AXIS_RIGHT_HORIZONTAL,
-                                               self.AXIS_TRIGGER_LEFT, self.AXIS_TRIGGER_RIGHT, self.AXIS_D_VERTICAL, self.AXIS_D_HORIZONTAL],
+                                               self.AXIS_TRIGGER_LEFT, self.AXIS_TRIGGER_RIGHT, self.AXIS_D_VERTICAL,
+                                               self.AXIS_D_HORIZONTAL],
                                          dead_zone=dead_zone,
                                          hot_zone=hot_zone)

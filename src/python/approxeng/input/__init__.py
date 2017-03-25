@@ -5,6 +5,7 @@ try:
 except ImportError:
     print 'Not importing evdev, expected during sphinx generation on OSX'
 
+
 def map_into_range(low, high, raw_value):
     """
     Map an input function into an output value, clamping such that the magnitude of the output is at most 1.0
@@ -359,11 +360,11 @@ class BinaryAxis(object):
         self.b2 = Button('{}_right_button'.format(name), key_code='{}_right'.format(axis_event_code), sname=b2name)
         self.buttons = None
         self.last_value = 0
-	self.sname = ''
-	self.value = 0
+        self.sname = ''
+        self.value = 0
 
     def set_raw_value(self, raw_value):
-	self.value = raw_value
+        self.value = raw_value
         if self.buttons is not None:
             if self.last_value < 0:
                 self.buttons.button_released(self.b2.key_code)
@@ -376,7 +377,8 @@ class BinaryAxis(object):
                 self.buttons.button_pressed(self.b2.key_code)
 
     def corrected_value(self):
-	return self.value
+        return self.value
+
 
 class CentredAxis(object):
     """

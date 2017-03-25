@@ -17,7 +17,7 @@ setup(
     author_email='tomoinn@gmail.com',
     license='ASL2.0',
     packages=['approxeng.input'],
-    install_requires=['evdev==0.5.0'],
+    install_requires=['evdev==0.6.4'],
     include_package_data=True,
     test_suite='nose.collector',
     tests_require=['nose'],

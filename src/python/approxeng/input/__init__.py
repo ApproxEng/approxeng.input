@@ -193,6 +193,9 @@ class Controller(object):
                 # Button up
                 self.buttons.button_released(event.code)
 
+    def get_axis_value(self, sname):
+        return self.axes.get_value(sname)
+
     def __str__(self):
         return "{}, axes={}, buttons={}".format(self.names, self.axes, self.buttons.buttons.keys())
 

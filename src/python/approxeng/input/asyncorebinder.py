@@ -84,7 +84,6 @@ def bind_controller(event_receiver, device_name=None, device_path=None):
 
         def handle_read(self):
             for event in self.recv():
-                print event
                 event_receiver.handle_evdev_event(event)
 
         def handle_error(self):

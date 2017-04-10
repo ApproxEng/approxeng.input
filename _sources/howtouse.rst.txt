@@ -166,7 +166,7 @@ tracks whether buttons were pressed since the last call to this function and ret
                 print('SQUARE pressed since last check')
 
             # If we had any presses, print the list of pressed buttons by standard name
-            if presses.has_presses:
+            if presses.has_presses():
                 print(presses)
 
 Checking for Held Buttons

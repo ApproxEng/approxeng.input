@@ -5,11 +5,14 @@ This module contains general support for game controllers. It includes the top l
 joystick axes which are used for any kind of controller, particular controllers and binding mechanisms are implemented
 in sub-modules. The key classes shared across all controllers are:
 
-- :class:`approxeng.input.CentredAxis` and :class:`approxeng.input.TriggerAxis` represents a different kinds of axis of
-  an analogue control. The centred axis is used for joysticks with a negative value at one end of the range and positive
-  at the other, whereas the trigger axis is used for axes with zero at the resting position and increasingly positive
-  values as the control is pressed. As the names suggest, these are used for centred and trigger controls respectively -
-  a PS3 joystick consists of two centred axes, an XBox One front trigger consists of a single trigger axis.
+- :class:`approxeng.input.CentredAxis` :class:`approxeng.input.TriggerAxis` and :class:`approxeng.input.BinaryAxis`
+  represent different kinds of axis of an analogue control. The centred axis is used for joysticks with a negative value
+  at one end of the range and positive at the other, whereas the trigger axis is used for axes with zero at the resting
+  position and increasingly positive values as the control is pressed. As the names suggest, these are used for centred
+  and trigger controls respectively - a PS3 joystick consists of two centred axes, an XBox One front trigger consists of
+  a single trigger axis. The BinaryAxis is used for controllers which export buttons as axes (both the PS4 and the XBox
+  controller D-pads are actually a pair of axes in terms of implementation, although they don't have any analogue
+  control, they just emit either -1, 0 or 1)
 
 - :class:`approxeng.input.Button` represents a single button. As with the Axis class you don't create these, instead you
   need to use the instances provided by the driver classes.
@@ -20,10 +23,7 @@ in sub-modules. The key classes shared across all controllers are:
 
 - Finally, all controller classes inherit from :class:`approxeng.input.Controller`. This provides a
   :class:`approxeng.input.Buttons` instance called 'buttons', and an :class:`approxeng.input.Axes` instance called
-  'axes'. Controller-specific implementations will also provide :class:`approxeng.input.Button`,
-  :class:`approxeng.input.CentredAxis` and :class:`approxeng.input.TriggerAxis` instances corresponding to each physical
-  control on the controller hardware, you should check the class documentation for the particular controller you're
-  using to find out exactly what these are.
+  'axes'. These will come in handy later!
 
 Constructing and Binding a Controller
 -------------------------------------
@@ -37,32 +37,178 @@ be a subclass of :class:`approxeng.input.Controller`, currently there are three 
 
 - :class:`approxeng.input.dualshock4.DualShock4` is for PS4 controllers
 
-- :class:`approxeng.input.xboxone.XBoxOneSPad` is for the newer XBox One controllers, but is still incomplete.
+- :class:`approxeng.input.xboxone.WiredXBoxOneSPad` and :class:`approxeng.input.xboxone.WirelessXBoxOneSPad` are for the
+  newer XBox One controllers. For whatever reason this controller reports different axes and buttons when connected over
+  bluetooth to when it's connected with a wire, so you'll need to use the correct one!
 
-You'll create one of these objects, and then use the method described at :ref:`binding-reference-label` to connect it to
-the event stream. From that point, you use the classes described on this page to read analogue axes and buttons.
+In general you will not explicitly create these objects yourself, instead you can use the binding layer to discover a
+connected controller (optionally supplying a particular kind of controller you want, otherwise it just finds the first
+one it can). This will create the controller object from which you can read things like axis values, and also set up the
+necessary logic to pull events out of the evdev linux system and update the values without you having to do anything.
+
+The details of the binding process are described at :ref:`binding-reference-label`.
+
+Standard Names
+--------------
+
+All the controllers supported by this library are fairly similar - they have two analogue joysticks, a bunch of buttons,
+some triggers etc. It would be helpful therefore to be able to make use of one controller type but make it as easy as
+possible to use others without substantial code changes in your own code.
+
+To do this the library assigns a standard name, or 'sname' to each button and axis on every controller. These are based
+loosely on the buttons found on a PS3 controller, at the cost of minor confusion for the XBox users (where, for example,
+the 'X' button is referred to by the name 'square'). As long as you use controls which are common to all three
+controllers you should be able to transparently make use of whichever of them is available at the time. You can also
+choose to make use of facilities which are only available on specific hardware (such as the analogue triggers on the PS4
+and XBoxOne controllers) but you should bear in mind that this will preclude use of a less well equipped controller. Up
+to you.
+
+A look at the source for each of the controller subclasses should make it obvious what names are available, but the
+standard ones are as follows:
+
+Button Names
+************
+
+=============  =============  =============  =============
+Standard name  PS3            PS4            XBoxOne
+-------------  -------------  -------------  -------------
+square         Square         Square         X
+triangle       Triangle       Triangle       Y
+circle         Circle         Circle         B
+cross          Cross          Cross          A
+ls             Left Stick     Left Stick     Left Stick
+rs             Right Stick    Right Stick    Right Stick
+select         Select         Share          View
+start          Start          Options        Menu
+home           PS             PS             XBox
+dleft          DPad Left      DPad Left      DPad Left
+dup            DPad Up        DPad Up        DPad Up
+dright         DPad Right     DPad Right     DPad Right
+ddown          DPad Down      DPad Down      Dpad Down
+l1             L1 Trigger     L1 Trigger     LB Trigger
+l2             L2 Trigger     L2 Trigger     ---
+r1             R1 Trigger     R1 Trigger     RB Trigger
+r2             R2 Trigger     R2 Trigger     ---
+ps4_pad        ---            Trackpad       ---
+=============  =============  =============  =============
+
+
+.. note::
+
+    The lack of l2 and r2 for the XBoxOne controller is because these buttons don't appear as buttons in the event
+    stream. This is actually a fairly easy fix but in the current code you can't access them as buttons.
+
+.. note::
+
+    The DualShock4 trackpad only works as a single button. It doesn't have an equivalent on the other controllers so
+    only use if you're happy to be locked into this particular hardware.
+
+Axis Names
+**********
+
+=============  =============  =============  =============
+Standard name  PS3            PS4            XBoxOne
+-------------  -------------  -------------  -------------
+lx             Left X         Left X         Left X
+ly             Left Y         Left Y         Left Y
+rx             Right X        Right X        Right X
+ry             Right Y        Right Y        Right Y
+lt             ---            L2 Trigger     LT Trigger
+rt             ---            R2 Trigger     RT Trigger
+=============  =============  =============  =============
+
+
+.. note::
+
+    The triggers on the DualShock3 can't be used as analogue axes, only use lt and rt if you're happy you won't need to
+    use a PS3 controller in your project.
 
 Handling Buttons
 ----------------
 
-You can read from buttons on the controller either by attaching an event handler, or by polling the buttons:
+There are two styles of button handler. The simplest, and the one you're likely to use in almost all cases, is a polling
+mechanism - you can ask the Controller object what buttons have been pressed since you last asked that question. This
+is easy to use, you don't have to worry you'll miss a button press because you were off doing something else, and it
+uses the standard name system. At its simplest you get back an array of standard names of buttons which were pressed
+since last time. This part of the API also allows you to test for held buttons, including the duration for which the
+button has been held. Handy for where you want the magnitude of a response to be determined by how long a button is held
+(could be useful for simulating a 'power charge' or similar).
+
+The second kind is to register a callback function which should be called when a button is pressed. In general you no
+longer need to do this - it was used primarily for cases where e.g. a button should interrupt whatever was going on with
+a robot and bounce the system back to some safe state, but there are better ways to do this. Nonetheless, this mechanism
+is still present and you can use it if you really need to.
+
+Querying Button Presses
+***********************
+
+The most common requirement you'll have will be to find out whether the user pressed a button. This sounds obvious, but
+in fact it's slightly more subtle - what you really want to know is whether the user pressed a button at any point since
+you last asked this question! That way, even if you don't ask very often you won't miss button presses and you don't
+have to worry about the user pressing so fast you can't detect it.
+
+You can do this with the get_and_clear_button_press_history function. The :class:`approxeng.input.Buttons` instance
+tracks whether buttons were pressed since the last call to this function and returns a
+:class:`approxeng.input.ButtonPresses` with the pressed buttons:
+
+.. code-block:: python
+
+    from approxeng.input.dualshock3 import DualShock3
+    from approxeng.input.selectbinder import ControllerResource
+
+    # Get a joystick
+    with ControllerResource(controller_class = DualShock3) as joystick:
+        # Loop forever
+        while 1:
+            # This is an instance of approxeng.input.ButtonPresses
+            presses = joystick.buttons.get_and_clear_button_press_history()
+            if presses.was_pressed('square')
+                print('SQUARE pressed since last check')
+
+            # If we had any presses, print the list of pressed buttons by standard name
+            if presses.has_presses:
+                print(presses)
+
+Checking for Held Buttons
+*************************
+
+You can also check whether a button is currently held, and, if so, how long it's been held for to date:
+
+.. code-block:: python
+
+    from approxeng.input.dualshock3 import DualShock3
+    from approxeng.input.selectbinder import ControllerResource
+
+    # Get a joystick
+    with ControllerResource(controller_class = DualShock3) as joystick:
+        # Loop forever
+        while 1:
+            # Use is_held_name to refer to a button by name, the old form 'is_held' needs you to
+            # have the Button instance
+            held = joystick.buttons.is_held_name('circle')
+            # If the button isn't held at the moment this will be None
+            if held is not None:
+                # If the button was held, this is the number of seconds since it was initially pressed
+                print('Circle held for {} seconds'.format(held))
+
 
 Handling Button Presses as Events
 *********************************
 
 .. code-block:: python
 
-    from approxeng.input.asyncorebinder import ControllerResource
+    from approxeng.input.selectbinder import ControllerResource
     from approxeng.input.dualshock3 import DualShock3
     # Get a joystick
-    with ControllerResource(DualShock3()) as joystick:
+    with ControllerResource(controller_class = DualShock3) as joystick:
         # Create a handler function
         def button_handler(button):
-            print 'Button clicked {}'.format(button)
+            print('Button clicked {}'.format(button))
         # Register the handler to the SQUARE button
-        joystick.buttons.register_button_handler(button_handler, joystick.BUTTON_SQUARE)
+        joystick.buttons.register_button_handler(button_handler, joystick.buttons.for_name('square'))
         # We can also register a handler to multiple buttons in one call
-        joystick.buttons.register_button_handler(button_handler, [joystick.BUTTON_CIRCLE, joystick.BUTTON_TRIANGLE])
+        joystick.buttons.register_button_handler(button_handler, [joystick.buttons.for_name('circle'),
+                                                                  joystick.buttons.for_name('triangle')])
         while 1:
             # Do stuff here, only register the button handlers once, not in this loop!
             # If the buttons are pressed, your handlers will be called but not from this thread.
@@ -82,62 +228,6 @@ way to do things (for example, you might want a handler which reset the centre p
 be best done as a handler because it could be called at any time from anywhere else in your code and you wouldn't have
 to worry about it). If, however, you're in a polling loop such as Triangula's task framework or PyGame's event loop you
 probably just want to know whether a button was pressed since you last checked.
-
-Checking for Button Presses
-***************************
-
-The most common requirement you'll have will be to find out whether the user pressed a button. This sounds obvious, but
-in fact it's slightly more subtle - what you really want to know is whether the user pressed a button at any point since
-you last asked this question! That way, even if you don't ask very often you won't miss button presses and you don't
-have to worry about the user pressing so fast you can't detect it.
-
-You can do this with the get_and_clear_button_press_history function. The :class:`approxeng.input.Buttons` instance
-maintains a set of flags, one for each button, indicating whether that button has been pressed. These flags are set
-when the button is pressed, and all cleared when the function is called, so in effect a flag will be set if the button
-was pressed since the last time you asked. The return value from this function is a list of
-:class:`approxeng.input.Button` objects representing the buttons that were pressed since you last asked.
-
-.. note::
-
-    Note - previous versions of this code, in particular all of the versions that were part of Triangula's code, worked
-    slightly differently. They returned a bit-mask, and you then had to use that to work out what buttons were pressed.
-    Hopefully this version is a bit easier to use!
-
-.. code-block:: python
-
-    from approxeng.input.dualshock3 import DualShock3
-    from approxeng.input.asyncorebinder import ControllerResource
-    # Get a joystick as before
-    with ControllerResource(DualShock3()) as joystick:
-        # No need for any button handlers, go straight into our loop
-        while 1:
-            buttons_pressed = joystick.buttons.get_and_clear_button_press_history()
-            if joystick.BUTTON_SQUARE in buttons_pressed:
-                print 'SQUARE pressed since last check'
-
-Checking for Held Buttons
-*************************
-
-You might want to check to see whether a button is being pressed right now, and, if so, how long it has been pressed -
-you could have an effect which requires a long press, accelerate your robot more if the button is held down for more
-than a second etc etc.
-
-The :class:`approxeng.input.Buttons` class provides a button_pressed() function you can use to do exactly this. You give
-it a :class:`approxeng.input.Button` and it tells you how long the button has been held down (in seconds) or returns
-None if the button isn't held down.
-
-.. code-block:: python
-
-    from approxeng.input.dualshock3 import DualShock3
-    from approxeng.input.asyncorebinder import ControllerResource
-    # Get a joystick as before
-    with ControllerResource(DualShock3()) as joystick:
-        while 1:
-            # Get the amount of time the circle button has been held
-            held_time = joystick.buttons.is_held(joystick.BUTTON_CIRCLE)
-            if held_time is not None:
-                # If not none, the time will be the number of seconds it's been held. If None the button isn't pressed.
-                print "Circle held for {} seconds".format(held_time)
 
 Reading and Configuring Analogue Axes
 -------------------------------------
@@ -167,8 +257,9 @@ we might want to do first, and which the code provides:
   controller noise.
 
 Different controllers report different ranges (for example, the PS3 controller range is from 0 to 255 whereas the XBox
-controller is from -32768 to 32768), but you don't have to worry about this as the controller implementations specify
-this internally and you'll only ever see values between -1.0 and 1.0.
+controller is from -32768 to 32768 when plugged in and, for some ungodly reason, 0 to 65335 when wireless), but you
+don't have to worry about this as the controller implementations specify this internally and you'll only ever see values
+between -1.0 and 1.0, or between 0.0 and 1.0 for trigger axes.
 
 The :class:`approxeng.input.CentredAxis` and :class:`approxeng.input.TriggerAxis` both auto-range, in that they start
 off with a maximum and minimum value that's well within the theoretical range, and expand this out when they see higher
@@ -196,22 +287,22 @@ Dead zones and hot zones are defined as a proportion of the range of the axis:
 To obtain the corrected values for an axis you need to call the corrected_value() function on the axis object.
 
 As an example, the PS3 controller exposes four axes, two for each analogue stick. The following code will get a
-controller, bind an event handler to a button which will reset the centre points of all axes, and will run around in
-a loop printing the corrected value of the left horizontal axis:
+controller, and will run around in a loop printing the corrected value of the left analogue stick:
 
 .. code-block:: python
 
-    from approxeng.input.dualshock3 import DualShock3, CONTROLLER_NAMES
-    from approxeng.input.asyncorebinder import ControllerResource
+    from approxeng.input.dualshock3 import DualShock3
+    from approxeng.input.selectbinder import ControllerResource
+    from time import sleep
 
-    with ControllerResource(DualShock3(dead_zone=0.1, hot_zone=0.2), device_name=CONTROLLER_NAMES) as joystick:
-
-        # Bind the square button to call the set_axis_centres function
-        joystick.buttons.register_button_handler(joystick.axes.set_axis_centres, joystick.BUTTON_SQUARE)
-        # Bind the triangle button to reset any auto-calibration for all axes
-        joystick.buttons.register_button_handler(joystick.axes.reset_axis_calibration, joystick.BUTTON_TRIANGLE)
-
+    # We can pass any additional keyword arguments here, they'll be passed on to the controller class constructor.
+    # All controller subclasses understand dead_zone and hot_zone, specific controller types may accept other args.
+    with ControllerResource(controller_class = DualShock3, dead_zone=0.1, hot_zone=0.2) as joystick:
         while 1:
-            # Loop, printing the corrected value from the left axis
-            print joystick.AXIS_LEFT_HORIZONTAL.corrected_value()
+            # Loop, printing the corrected value from the left stick
+            x = joystick.axes.get_value('lx')
+            y = joystick.axes.get_value('ly')
+            print('Left stick: x={}, y={}'.format(x,y))
+            # Don't be too spammy!
+            sleep(0.1)
 

@@ -4,9 +4,8 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
 .. note::
 
     This documentation, and the code it documents, is the original SixAxis controller code from my PiWars_ robot,
-    Triangula. I've moved this code in particular out of the main repository because it should be useful in its own
-    right, and also because I plan in the long term to add support for other controllers as and when I feel like I need
-    them for my own projects!
+    Triangula. It has subsequently been extensively modified, and now supports the PS4 and XBox One controllers in
+    addition to the original support for PS3 controllers.
 
 Getting the code
 ----------------
@@ -35,12 +34,12 @@ almost everything Python based. Documentation (this site) is generated using Sph
 Follow me on twitter (approx_eng_) for updates!
 
 .. toctree::
-:maxdepth: 4
-        :glob:
+    :maxdepth: 4
+    :glob:
 
-        howtouse
-        dualshock3
-        api
+    howtouse
+    dualshock3
+    api
 
 .. _GitHub: https://github.com/ApproxEng/approxeng.input
 

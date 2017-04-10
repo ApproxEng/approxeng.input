@@ -596,7 +596,7 @@ class Buttons(object):
             state.last_pressed = time()
             state.was_pressed_since_last_check = True
         else:
-            print('Unknown button code {}'.format(key_code))
+            print('Unknown button code {}'.format(key))
 
     def button_released(self, key_code):
         """

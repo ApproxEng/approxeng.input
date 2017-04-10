@@ -67,6 +67,7 @@ class ControllerResource:
 def bind_controller(devices, controller, print_events=False):
     """
     Bind a controller to a set of evdev InputDevice instances
+    
     :param devices: 
         A list of InputDevice instance which should be polled for events
     :param controller: 

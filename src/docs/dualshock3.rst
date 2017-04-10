@@ -1,6 +1,12 @@
 Configuring Playstation 3 Controllers
 =====================================
 
+.. note::
+
+    If you are starting from scratch and don't have any PS3 controllers I recommend using the PS4 controller instead.
+    It's a better piece of hardware, and pairing is considerably simpler. The most recent XBox One controllers are also
+    an option. This guide therefore is largely for those who have existing controllers and want to make use of them.
+
 If you're building a robot you will at some point probably want a way to manually drive it around. The Playstation3
 controller, also known as the SixAxis, makes for a great option - it connects over bluetooth, has a bundle of different
 buttons, sticks and motion sensors, and is readily available. You'll probably google for how to make it work with the
@@ -22,7 +28,8 @@ Hardware
 
 This guide assumes you're using a Raspberry Pi (I'm using a Pi 2, but there's no reason this wouldn't work with older
 ones). You'll also need a USB bluetooth dongle and, obviously, a SixAxis controller. I've only tried this with genuine
-Sony ones, many of the cheaper ones you'll find online are clones, they should work but YMMV.
+Sony ones, many of the cheaper ones you'll find online are clones, they should work but YMMV (experimentation suggests
+that you'll be extremely lucky to make one of the clones work, go for the genuine ones!)
 
 Bluetooth dongles
 _________________
@@ -33,6 +40,7 @@ standards. If you get this to work with a different dongle can you let me know o
 it to this list:
 
 * Asus USB-BT400
+* Pi3 built-in bluetooth
 
 Software
 --------
@@ -44,11 +52,6 @@ Software
     filename ``2015-11-21-raspbian-jessie-lite.zip`` but these instructions should apply to any recent version. As always,
     it's not a bad idea to run ``sudo apt-get update`` and ``sudo apt-get upgrade`` to get any changes to packages since
     your distribution was built.
-
-.. note::
-
-    This section will be updated with instructions on getting up and running with the built-in bluetooth on the
-    Raspberry Pi 3.
 
 You'll need to install some packages on your Pi first, and enable the bluetooth services:
 

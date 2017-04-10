@@ -6,6 +6,17 @@ A Python (2 or 3) library to handle game controllers. At the moment it can work 
 2) DualShock4, as used by the Sony Playstation 4
 3) XBox One, the most recent version with bluetooth
 
+See the full documentation [here](http://approxeng.github.io/approxeng.input/)
+
+Get the code using pip:
+
+```
+> pip install approxeng.input
+```
+
+Note - you may need to install some prerequisites first, and this will only work on Linux based 
+operating systems. See the full docs for more details.
+
 All three controllers can be used either over USB or bluetooth, the library handles event management 
 and lets you simply query an object model to get button presses, hold times, and axis values. It also
 deals with analogue axis concerns such as dead and hot zones, centering, for both triggers (where the

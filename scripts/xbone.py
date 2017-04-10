@@ -1,15 +1,14 @@
 from time import time, sleep
 
-from approxeng.input.asyncorebinder import ControllerResource
-from approxeng.input.xboxone import XBoxOneSPad
+from approxeng.input.selectbinder import ControllerResource
+from approxeng.input.xboxone import WiredXBoxOneSPad
 
 last_print = time()
 print_joystick = False
 
 while 1:
     try:
-        with ControllerResource(controller=XBoxOneSPad(),
-                                device_name='Xbox Wireless Controller') as joystick:
+        with ControllerResource(controller_class=WiredXBoxOneSPad) as joystick:
             print "Found joystick {}".format(joystick)
             while 1:
                 now = time()

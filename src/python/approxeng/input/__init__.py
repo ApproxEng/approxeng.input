@@ -1,9 +1,7 @@
 from time import time
 
-try:
-    from evdevsupport import InputDevice, ecodes
-except ImportError:
-    print 'Not importing evdev, expected during sphinx generation on OSX'
+EV_KEY = 1
+EV_ABS = 3
 
 
 def map_into_range(low, high, raw_value):
@@ -117,17 +115,10 @@ class Controller(object):
     :ivar approxeng.input.Buttons buttons:
         All buttons are managed by this object. It can be used to query which buttons are held (and for how long) and
         to bind event handlers to buttons.
-    :ivar string[] names:
-        Contains an array of names by which this controller class can be identified in the evdev system. Multiple names
-        are sometimes required for controllers which identify differently depending on whether they're connected over
-        bluetooth or USB, for example.
-    :ivar evdev.InputDevice device:
-        If the controller is bound, this value will contain an instance of :class:`evdev.InputDevice`, otherwise it will
-        be None
     """
 
-    def __init__(self, vendor_id, product_id, name=None, names=None, axes=None, buttons=None, dead_zone=None,
-                 hot_zone=None, print_events=False):
+    def __init__(self, vendor_id, product_id, controls, dead_zone=None,
+                 hot_zone=None):
         """
         Populate the controller name, button set and axis set.
 
@@ -135,42 +126,27 @@ class Controller(object):
             The USB vendor ID for the controller
         :param int product_id:
             The USB product ID for the controller
-        :param name:
-            A friendly name or names for the controller
-        :param axes:
-            A sequence of axis objects, which can be either CentredAxis or TriggerAxis instances
-        :param buttons:
-            A sequence of Button or BinaryAxis instances
+        :param controls:
+            A sequence of Button, CentredAxis, TriggerAxis and BinaryAxis instances
         :param dead_zone:
             If specified, this is applied to all axes
         :param hot_zone:
             If specified, this is applied to all axes
-        :param print_events:
-            If True, events passed to this controller instance will be printed to the console. Defaults to False
         """
         self.vendor_id = vendor_id
         self.product_id = product_id
-        self.print_events = print_events
-        if name is not None:
-            self.names = [name]
-        elif names is not None:
-            self.names = names
-        else:
-            self.names = ["UNKNOWN_NAME"]
-        if axes is not None:
-            self.axes = Axes(axes)
-        else:
-            self.axes = Axes([])
-        if buttons is not None:
-            self.buttons = Buttons(buttons)
-        else:
-            self.buttons = Buttons([])
-        self.device = None
+        self.axes = Axes([control for control in controls if
+                          isinstance(control, CentredAxis) or
+                          isinstance(control, BinaryAxis) or
+                          isinstance(control, TriggerAxis)])
+        self.buttons = Buttons([control for control in controls if
+                                isinstance(control, Button) or
+                                isinstance(control, BinaryAxis)])
         if dead_zone is not None:
-            for axis in axes:
+            for axis in self.axes.axes:
                 axis.dead_zone = dead_zone
         if hot_zone is not None:
-            for axis in axes:
+            for axis in self.axes.axes:
                 axis.hot_zone = hot_zone
 
     def handle_evdev_event(self, event):
@@ -180,11 +156,9 @@ class Controller(object):
         :param event:
             The evdev event to handle
         """
-        if self.print_events:
-            print event
-        if event.type == ecodes.EV_ABS:
+        if event.type == EV_ABS:
             self.axes.axis_updated(event)
-        elif event.type == ecodes.EV_KEY:
+        elif event.type == EV_KEY:
             # Button event
             if event.value == 1:
                 # Button down
@@ -197,7 +171,7 @@ class Controller(object):
         return self.axes.get_value(sname)
 
     def __str__(self):
-        return "{}, axes={}, buttons={}".format(self.names, self.axes, self.buttons.buttons.keys())
+        return "{}, axes={}, buttons={}".format(self.__str__(), self.axes, self.buttons.buttons.keys())
 
 
 class Axes(object):
@@ -212,11 +186,13 @@ class Axes(object):
         instantiate this yourself.
 
         :param axes:
-            a sequence of :class:`approxeng.input.TriggerAxis` or :class:`approxeng.input.CentredAxis` containing all
-            the axes the controller supports.
+            a sequence of :class:`approxeng.input.TriggerAxis` or :class:`approxeng.input.CentredAxis` or 
+            :class:`approxeng.input.BinaryAxis` containing all the axes the controller supports.
         """
+        self.axes = axes
         self.axes_by_code = {axis.axis_event_code: axis for axis in axes}
         self.axes_by_sname = {axis.sname: axis for axis in axes}
+        self.axes_calibration = {axis.axis_event_code:{'min':10000, 'max':-10000} for axis in axes}
 
     def axis_updated(self, event):
         """
@@ -227,6 +203,9 @@ class Axes(object):
         """
         axis = self.axes_by_code.get(event.code)
         if axis is not None:
+            cal = self.axes_calibration.get(event.code)
+            cal['min'] = min(cal['min'], event.value)
+            cal['max'] = max(cal['max'], event.value)
             axis.set_raw_value(float(event.value))
 
     def set_axis_centres(self, *args):
@@ -251,6 +230,12 @@ class Axes(object):
 
     def get_value(self, sname):
         return self.axes_by_sname.get(sname).corrected_value()
+
+    def active_axes(self):
+        """
+        Return a sequence of all Axis objects which are not in their resting positions
+        """
+        return [axis for axis in self.axes if axis.corrected_value() != 0]
 
 
 class TriggerAxis(object):
@@ -349,6 +334,9 @@ class TriggerAxis(object):
         elif new_value < self.min:
             self.min = new_value
 
+    def __str__(self):
+        return "TriggerAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.corrected_value())
+
 
 class BinaryAxis(object):
     """
@@ -381,6 +369,9 @@ class BinaryAxis(object):
 
     def corrected_value(self):
         return self.value
+
+    def __str__(self):
+        return "BinaryAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.corrected_value())
 
 
 class CentredAxis(object):
@@ -493,7 +484,7 @@ class CentredAxis(object):
             self.min = new_value
 
     def __str__(self):
-        return "CentredAxis name={}, corrected_value={}".format(self.name, self.corrected_value())
+        return "CentredAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.corrected_value())
 
 
 class Button(object):
@@ -539,6 +530,9 @@ class ButtonPresses(object):
         :return: true if contained within the press set, false otherwise
         """
         return sname in self.names
+
+    def has_presses(self):
+        return len(self.names) > 0
 
     def __repr__(self):
         return str(self.names)
@@ -601,6 +595,8 @@ class Buttons(object):
             state.is_pressed = True
             state.last_pressed = time()
             state.was_pressed_since_last_check = True
+        else:
+            print('Unknown button code {}'.format(key_code))
 
     def button_released(self, key_code):
         """

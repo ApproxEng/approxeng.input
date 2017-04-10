@@ -1,15 +1,15 @@
 """
-Simple joystick test, waits to bind to a PS3 controller and prints out its axes
+Simple joystick test, waits to bind to a PS4 controller then shows button presses and hold times for the circle button
 """
 
 from time import sleep
 
-from approxeng.input.asyncorebinder import ControllerResource
-from approxeng.input.dualshock4 import DualShock4, CONTROLLER_NAME
+from approxeng.input.dualshock4 import DualShock4
+from approxeng.input.selectbinder import ControllerResource
 
 while 1:
     try:
-        with ControllerResource(controller=DualShock4(), device_name=CONTROLLER_NAME) as joystick:
+        with ControllerResource(controller_class=DualShock4) as joystick:
             print "Found joystick {}".format(joystick)
             while 1:
                 sleep(1)

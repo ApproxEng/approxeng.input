@@ -5,7 +5,8 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
 
     This documentation, and the code it documents, is the original SixAxis controller code from my PiWars_ robot,
     Triangula. It has subsequently been extensively modified, and now supports the PS4 and XBox One controllers in
-    addition to the original support for PS3 controllers.
+    addition to the original support for PS3 controllers. As of version 1.0.2 we have support for the Rock Candy PS3
+    clones thanks to Keith Ellis.
 
 Getting the code
 ----------------

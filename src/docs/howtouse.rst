@@ -41,6 +41,9 @@ be a subclass of :class:`approxeng.input.Controller`, currently there are three 
   newer XBox One controllers. For whatever reason this controller reports different axes and buttons when connected over
   bluetooth to when it's connected with a wire, so you'll need to use the correct one!
 
+- :class:`approxeng.input.rockcandy.RockCandy` for the Rock Candy PS4 controller clone (it appears to describe itself as
+  a PS3 controller, but has the controls of a PS4 one!). Contribution from Keith Ellis (pitutorials_ on twitter).
+
 In general you will not explicitly create these objects yourself, instead you can use the binding layer to discover a
 connected controller (optionally supplying a particular kind of controller you want, otherwise it just finds the first
 one it can). This will create the controller object from which you can read things like axis values, and also set up the
@@ -69,28 +72,28 @@ standard ones are as follows:
 Button Names
 ************
 
-=============  =============  =============  =============
-Standard name  PS3            PS4            XBoxOne
--------------  -------------  -------------  -------------
-square         Square         Square         X
-triangle       Triangle       Triangle       Y
-circle         Circle         Circle         B
-cross          Cross          Cross          A
-ls             Left Stick     Left Stick     Left Stick
-rs             Right Stick    Right Stick    Right Stick
-select         Select         Share          View
-start          Start          Options        Menu
-home           PS             PS             XBox
-dleft          DPad Left      DPad Left      DPad Left
-dup            DPad Up        DPad Up        DPad Up
-dright         DPad Right     DPad Right     DPad Right
-ddown          DPad Down      DPad Down      Dpad Down
-l1             L1 Trigger     L1 Trigger     LB Trigger
-l2             L2 Trigger     L2 Trigger     ---
-r1             R1 Trigger     R1 Trigger     RB Trigger
-r2             R2 Trigger     R2 Trigger     ---
-ps4_pad        ---            Trackpad       ---
-=============  =============  =============  =============
+=============  =============  ===============  =============
+Standard name  PS3            PS4 / RockCandy  XBoxOne
+-------------  -------------  ---------------  -------------
+square         Square         Square           X
+triangle       Triangle       Triangle         Y
+circle         Circle         Circle           B
+cross          Cross          Cross            A
+ls             Left Stick     Left Stick       Left Stick
+rs             Right Stick    Right Stick      Right Stick
+select         Select         Share            View
+start          Start          Options          Menu
+home           PS             PS               XBox
+dleft          DPad Left      DPad Left        DPad Left
+dup            DPad Up        DPad Up          DPad Up
+dright         DPad Right     DPad Right       DPad Right
+ddown          DPad Down      DPad Down        Dpad Down
+l1             L1 Trigger     L1 Trigger       LB Trigger
+l2             L2 Trigger     L2 Trigger       ---
+r1             R1 Trigger     R1 Trigger       RB Trigger
+r2             R2 Trigger     R2 Trigger       ---
+ps4_pad        ---            Trackpad         ---
+=============  =============  ===============  =============
 
 
 .. note::
@@ -106,16 +109,16 @@ ps4_pad        ---            Trackpad       ---
 Axis Names
 **********
 
-=============  =============  =============  =============
-Standard name  PS3            PS4            XBoxOne
--------------  -------------  -------------  -------------
-lx             Left X         Left X         Left X
-ly             Left Y         Left Y         Left Y
-rx             Right X        Right X        Right X
-ry             Right Y        Right Y        Right Y
-lt             ---            L2 Trigger     LT Trigger
-rt             ---            R2 Trigger     RT Trigger
-=============  =============  =============  =============
+=============  =============  ===============  =============
+Standard name  PS3            PS4 / RockCandy  XBoxOne
+-------------  -------------  ---------------  -------------
+lx             Left X         Left X           Left X
+ly             Left Y         Left Y           Left Y
+rx             Right X        Right X          Right X
+ry             Right Y        Right Y          Right Y
+lt             ---            L2 Trigger       LT Trigger
+rt             ---            R2 Trigger       RT Trigger
+=============  =============  ===============  =============
 
 
 .. note::
@@ -306,3 +309,5 @@ controller, and will run around in a loop printing the corrected value of the le
             # Don't be too spammy!
             sleep(0.1)
 
+
+.. _pitutorials: https://twitter.com/pitutorials

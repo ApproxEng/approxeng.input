@@ -171,7 +171,7 @@ class Controller(object):
         return self.axes.get_value(sname)
 
     def __str__(self):
-        return "{}, axes={}, buttons={}".format(self.__str__(), self.axes, self.buttons.buttons.keys())
+        return "{}, axes={}, buttons={}".format(self.__class__.__name__, self.axes, self.buttons.buttons.keys())
 
 
 class Axes(object):

@@ -100,7 +100,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Binding - approxeng.input.selectbinder</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Binding - approxeng.input.selectbinder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-an-unsupported-controller">Using an Unsupported Controller</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="xboxone.html">XBox-One S Controller Support</a></li>
@@ -181,7 +184,7 @@ don&#8217;t need to care about any of these things though, you just need to know
 use!</p>
 </div>
 <p>The binder provides a bridge between the low level operating system representation of your connected controller and the
-high level python classes such as <a class="reference internal" href="dualshock3.html#approxeng.input.dualshock3.DualShock3" title="approxeng.input.dualshock3.DualShock3"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.dualshock3.DualShock3</span></code></a> which your code uses. The binder starts
+high level python classes such as <code class="xref py py-class docutils literal"><span class="pre">approxeng.input.dualshock3.DualShock3</span></code> which your code uses. The binder starts
 a new thread to pull events out of the operating system and update your controller object, this is the bit that means
 you don&#8217;t have to continuously poll the controller, it just updates in the background. It&#8217;s also the thread which calls
 any functions you&#8217;ve bound to buttons as event handlers. You can either manually bind the controller yourself (in which
@@ -246,73 +249,35 @@ next table along...</p>
     <span class="c1"># a PS3, PS4, XBoxOne....</span>
 </pre></div>
 </div>
-<span class="target" id="module-approxeng.input.selectbinder"></span><dl class="class">
-<dt id="approxeng.input.selectbinder.ControllerResource">
-<em class="property">class </em><code class="descclassname">approxeng.input.selectbinder.</code><code class="descname">ControllerResource</code><span class="sig-paren">(</span><em>controller_class=None</em>, <em>devices=None</em>, <em>controller=None</em>, <em>print_events=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#ControllerResource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.selectbinder.ControllerResource" title="Permalink to this definition">¶</a></dt>
-<dd><p>General resource which binds a controller on entry and unbinds it on exit. Either a device name (or list of names)
-or a path to a device node, typically in /dev/input, can be specified. If neither are supplied, the binding uses
-the name property of the controller object.</p>
-<dl class="method">
-<dt id="approxeng.input.selectbinder.ControllerResource.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>controller_class=None</em>, <em>devices=None</em>, <em>controller=None</em>, <em>print_events=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#ControllerResource.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.selectbinder.ControllerResource.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new controller resource. The type of the resource is the controller class, so when used in a with block
-the bound resource will be a controller from which axis and button values can be read. Note - if all of 
-controller_class, devices and controller are None this will attempt to bind to the first controller it can find
-which we support. Use this if you&#8217;re feeling lazy, or need to be agnostic about what kind of controller your
-code uses. Obviously you&#8217;ll need to use the standard names for buttons and axes, and make sure you&#8217;re not
-relying on a particular controller&#8217;s physical features, but doing this does give you the option to make use of
-any controller you have at the time, whether you developed for that device or not.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>controller_class</strong> &#8211; If specified, this class is used to locate the first matching controller of this kind anywhere on the evdev
-bus. If this is not None then devices and controller are ignored, and IOError will be raised if we can&#8217;t
-find an appropriate controller.</li>
-<li><strong>devices</strong> &#8211; If controller_classes is None, this can be non-None and should contain at least one instance of InputDevice
-to which we should bind to extract evdev events</li>
-<li><strong>controller</strong> &#8211; If controller_classes is None, this can be an instance of Controller to which events can be pushed</li>
-<li><strong>print_events</strong> &#8211; Defaults to False, if set to True then all events picked up by the binder will be printed to stdout. Use
-this when you&#8217;re trying to figure out what events correspond to what axes and buttons!</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><strong>IOError</strong> &#8211; If a controller class is specified but we can&#8217;t find a connected instance of the class, or nothing has been
-specified and we can&#8217;t find any controller at all.</li>
-<li><strong>ValueError</strong> &#8211; If the controller class is not specified, and we have no devices or controller is None</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<div class="section" id="using-an-unsupported-controller">
+<h2>Using an Unsupported Controller<a class="headerlink" href="#using-an-unsupported-controller" title="Permalink to this headline">¶</a></h2>
+<p>The library&#8217;s automatic detection of controllers relies on vendor and product identifiers. These are IDs allocated by
+the USB consortium and won&#8217;t be duplicated in, for example, a clone PS3 controller like the Rock Candy ones. These
+controllers therefore won&#8217;t be detected as PS3 controllers even though they&#8217;d respond to the same events. You can,
+however, explicitly tell the library to route events from a particular evdev InputDevice to a previously constructed
+controller instance. This works with either the explicit binding mechanism or with the resource. You&#8217;ll have to acquire
+the appropriate InputDevice from the evdev APIs first, that part&#8217;s up to you, but when you have one you can do this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
 
-</dd></dl>
+<span class="c1"># This is an InputDevice from which events should be pulled</span>
+<span class="n">input_device</span> <span class="o">=</span> <span class="o">....</span>
 
-<dl class="function">
-<dt id="approxeng.input.selectbinder.bind_controller">
-<code class="descclassname">approxeng.input.selectbinder.</code><code class="descname">bind_controller</code><span class="sig-paren">(</span><em>devices</em>, <em>controller</em>, <em>print_events=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#bind_controller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.selectbinder.bind_controller" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bind a controller to a set of evdev InputDevice instances</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>devices</strong> &#8211; A list of InputDevice instance which should be polled for events</li>
-<li><strong>controller</strong> &#8211; A Controller instance to which events can be pushed</li>
-<li><strong>print_events</strong> &#8211; Defaults to False, if set to True then all events picked up by this binder will be printed to stdout</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A function which can be used to stop the event reading thread and unbind from the device</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<span class="c1"># Explicitly construct a controller, in this case a PS3 sixaxis. This will receive events from the InputDevice</span>
+<span class="c1"># and interpret them. As long as your controller uses the same event codes and axes as those expected by the</span>
+<span class="c1"># controller class you should be good to do</span>
+<span class="n">controller</span> <span class="o">=</span> <span class="n">DualShock3</span><span class="p">(</span><span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 
+<span class="c1"># Now just use the controller resource to bind the two together, your explicitly created controller instance will</span>
+<span class="c1"># be fed events from your InputDevice. The with block returns the controller, so in this case it&#39;s actually the</span>
+<span class="c1"># same reference as you just created. You could create the controller instance anonymously as an argument here and</span>
+<span class="c1"># use the returned type</span>
+<span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">devices</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_device</span><span class="p">],</span> <span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span><span class="p">)</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
+    <span class="c1"># joystick and controller are the same object!</span>
+    <span class="c1"># Do stuff as before, if your hardware uses the same codes as the controller class expects it&#39;ll just work.</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -338,7 +303,7 @@ specified and we can&#8217;t find any controller at all.</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, Tom Oinn.
-      Last updated on Apr 10, 2017.
+      Last updated on Apr 11, 2017.
 
     </p>
   </div>

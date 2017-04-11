@@ -168,8 +168,65 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="xbox-one-s-controller-support">
-<h1>XBox-One S Controller Support<a class="headerlink" href="#xbox-one-s-controller-support" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-approxeng.input.xboxone">
+<span id="xbox-one-s-controller-support"></span><h1>XBox-One S Controller Support<a class="headerlink" href="#module-approxeng.input.xboxone" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="approxeng.input.xboxone.WiredXBoxOneSPad">
+<em class="property">class </em><code class="descclassname">approxeng.input.xboxone.</code><code class="descname">WiredXBoxOneSPad</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WiredXBoxOneSPad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WiredXBoxOneSPad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wired XBox One controller, tested with the newer controllers that use bluetooth and are supplied with the XBox One S
+but may work with older versions. Note that the codes and axis mappings for the wired controller are not the same
+as for the wireless!</p>
+<dl class="method">
+<dt id="approxeng.input.xboxone.WiredXBoxOneSPad.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WiredXBoxOneSPad.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WiredXBoxOneSPad.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new xbox one s controller instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="approxeng.input.xboxone.WirelessXBoxOneSPad">
+<em class="property">class </em><code class="descclassname">approxeng.input.xboxone.</code><code class="descname">WirelessXBoxOneSPad</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WirelessXBoxOneSPad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WirelessXBoxOneSPad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wireless over bluetooth - for some reason the control ranges on this are different to when wired and all the buttons
+are different.</p>
+<p>To make the wireless pair work with linux you need to set a kernel module option on the bluetooth module. This can
+be done by creating a file in /etc/modprobe.d with the line &#8216;options bluetooth disable_ertm=Y&#8217; and rebooting.</p>
+<dl class="method">
+<dt id="approxeng.input.xboxone.WirelessXBoxOneSPad.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WirelessXBoxOneSPad.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WirelessXBoxOneSPad.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new xbox one s controller instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

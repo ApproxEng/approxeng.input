@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PlayStation 4 Controller Support &mdash; Approximate Engineering - Input 1.0 documentation</title>
+  <title>Rock Candy Controller Support &mdash; Approximate Engineering - Input 1.0 documentation</title>
   
 
   
@@ -41,8 +41,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="Approximate Engineering - Input 1.0 documentation" href="../index.html"/>
         <link rel="up" title="API Documentation" href="../api.html"/>
-        <link rel="next" title="XBox-One S Controller Support" href="xboxone.html"/>
-        <link rel="prev" title="PlayStation 3 Controller Support" href="dualshock3.html"/> 
+        <link rel="prev" title="XBox-One S Controller Support" href="xboxone.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -102,9 +101,9 @@
 <li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">PlayStation 4 Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="xboxone.html">XBox-One S Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rockcandy.html">Rock Candy Controller Support</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Rock Candy Controller Support</a></li>
 </ul>
 </li>
 </ul>
@@ -153,7 +152,7 @@
         
           <li><a href="../api.html">API Documentation</a> &raquo;</li>
         
-      <li>PlayStation 4 Controller Support</li>
+      <li>Rock Candy Controller Support</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -170,16 +169,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-approxeng.input.dualshock4">
-<span id="playstation-4-controller-support"></span><h1>PlayStation 4 Controller Support<a class="headerlink" href="#module-approxeng.input.dualshock4" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="approxeng.input.dualshock4.DualShock4">
-<em class="property">class </em><code class="descclassname">approxeng.input.dualshock4.</code><code class="descname">DualShock4</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock4.html#DualShock4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock4.DualShock4" title="Permalink to this definition">¶</a></dt>
-<dd><p>Driver for the Sony PlayStation 4 controller, the DualShock4</p>
+  <div class="section" id="rock-candy-controller-support">
+<h1>Rock Candy Controller Support<a class="headerlink" href="#rock-candy-controller-support" title="Permalink to this headline">¶</a></h1>
+<p>Support class kindly contributed by Keith Ellis</p>
+<span class="target" id="module-approxeng.input.rockcandy"></span><dl class="class">
+<dt id="approxeng.input.rockcandy.RockCandy">
+<em class="property">class </em><code class="descclassname">approxeng.input.rockcandy.</code><code class="descname">RockCandy</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/rockcandy.html#RockCandy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.rockcandy.RockCandy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Driver for the Rock Candy PS3 controller, courtesy of Keith Ellis (keithellis74 on github)</p>
 <dl class="method">
-<dt id="approxeng.input.dualshock4.DualShock4.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock4.html#DualShock4.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock4.DualShock4.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new DualShock4 driver</p>
+<dt id="approxeng.input.rockcandy.RockCandy.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/rockcandy.html#RockCandy.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.rockcandy.RockCandy.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Rock Candy driver</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -208,10 +208,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="xboxone.html" class="btn btn-neutral float-right" title="XBox-One S Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="dualshock3.html" class="btn btn-neutral" title="PlayStation 3 Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="xboxone.html" class="btn btn-neutral" title="XBox-One S Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

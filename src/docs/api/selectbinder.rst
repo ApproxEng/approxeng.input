@@ -92,3 +92,34 @@ next table along...
 
 .. automodule:: approxeng.input.selectbinder
     :members:
+
+Using an Unsupported Controller
+-------------------------------
+
+The library's automatic detection of controllers relies on vendor and product identifiers. These are IDs allocated by
+the USB consortium and won't be duplicated in, for example, a clone PS3 controller like the Rock Candy ones. These
+controllers therefore won't be detected as PS3 controllers even though they'd respond to the same events. You can,
+however, explicitly tell the library to route events from a particular evdev InputDevice to a previously constructed
+controller instance. This works with either the explicit binding mechanism or with the resource. You'll have to acquire
+the appropriate InputDevice from the evdev APIs first, that part's up to you, but when you have one you can do this:
+
+.. code-block:: python
+
+    from approxeng.input.selectbinder import ControllerResource
+    from approxeng.input.dualshock3 import DualShock3
+
+    # This is an InputDevice from which events should be pulled
+    input_device = ....
+
+    # Explicitly construct a controller, in this case a PS3 sixaxis. This will receive events from the InputDevice
+    # and interpret them. As long as your controller uses the same event codes and axes as those expected by the
+    # controller class you should be good to do
+    controller = DualShock3(dead_zone=0.5, hot_zone=0.1)
+
+    # Now just use the controller resource to bind the two together, your explicitly created controller instance will
+    # be fed events from your InputDevice. The with block returns the controller, so in this case it's actually the
+    # same reference as you just created. You could create the controller instance anonymously as an argument here and
+    # use the returned type
+    with ControllerResource(devices = [input_device], controller = controller) as joystick:
+        # joystick and controller are the same object!
+        # Do stuff as before, if your hardware uses the same codes as the controller class expects it'll just work.

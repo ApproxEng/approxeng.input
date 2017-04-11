@@ -13,10 +13,11 @@ from approxeng.input.steamcontroller import SC_WIRED_PRODUCT_ID, SC_WIRELESS_PRO
     WiredSteamController, WirelessSteamController
 from approxeng.input.xboxone import XB1S_VENDOR_ID, XB1S_WIRED_PRODUCT_ID, XB1S_WIRELESS_PRODUCT_ID, WiredXBoxOneSPad, \
     WirelessXBoxOneSPad
+from approxeng.input.rockcandy import RockCandy, RC_PRODUCT_ID, RC_VENDOR_ID
 
-# Note that the XBox1 controller doesn't stay paired over bluetooth, and the steam controller support is very much
-# a work in progress, by which I mean it's not there. Don't try to use it. PS3 and PS4 are fine though, as is the XB1
-# if on a wired connection.
+# Note that the steam controller support is very much a work in progress, by which I mean it's not there. Don't try to
+# use it. PS3 and PS4 are fine though, as is the XB1 if on a wired connection or after setting the appropriate kernel
+# module options. Rock Candy controller reported as working.
 CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_id': DS3_PRODUCT_ID},
                {'constructor': DualShock4, 'vendor_id': DS4_VENDOR_ID, 'product_id': DS4_PRODUCT_ID},
                {'constructor': WiredXBoxOneSPad, 'vendor_id': XB1S_VENDOR_ID, 'product_id': XB1S_WIRED_PRODUCT_ID},
@@ -24,7 +25,8 @@ CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_
                 'product_id': XB1S_WIRELESS_PRODUCT_ID},
                {'constructor': WiredSteamController, 'vendor_id': SC_VENDOR_ID, 'product_id': SC_WIRED_PRODUCT_ID},
                {'constructor': WirelessSteamController, 'vendor_id': SC_VENDOR_ID,
-                'product_id': SC_WIRELESS_PRODUCT_ID}]
+                'product_id': SC_WIRELESS_PRODUCT_ID},
+               {'constructor': RockCandy, 'vendor_id': RC_VENDOR_ID, 'product_id': RC_PRODUCT_ID}]
 
 
 def find_any_controller(**kwargs):

@@ -207,6 +207,8 @@ class Axes(object):
             cal['min'] = min(cal['min'], event.value)
             cal['max'] = max(cal['max'], event.value)
             axis.set_raw_value(float(event.value))
+        else:
+            print('Unknown axis code {}, value {}'.format(event.code, event.value))
 
     def set_axis_centres(self, *args):
         """

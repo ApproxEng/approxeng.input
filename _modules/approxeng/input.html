@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input &mdash; Approximate Engineering - Input 1.0.2 documentation</title>
+  <title>approxeng.input &mdash; Approximate Engineering - Input 1.0.3 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 1.0.2 documentation" href="../../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 1.0.3 documentation" href="../../_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 1.0.2 documentation" href="../../index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 1.0.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                1.0.2
+                1.0.3
               </div>
             
           
@@ -369,7 +369,9 @@
             <span class="n">cal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_calibration</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
             <span class="n">cal</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cal</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">],</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
             <span class="n">cal</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cal</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">],</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-            <span class="n">axis</span><span class="o">.</span><span class="n">set_raw_value</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">))</span></div>
+            <span class="n">axis</span><span class="o">.</span><span class="n">set_raw_value</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unknown axis code </span><span class="si">{}</span><span class="s1">, value </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Axes.set_axis_centres"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Axes.set_axis_centres">[docs]</a>    <span class="k">def</span> <span class="nf">set_axis_centres</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -873,7 +875,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, Tom Oinn.
-      Last updated on Apr 11, 2017.
+      Last updated on Apr 12, 2017.
 
     </p>
   </div>
@@ -895,7 +897,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'1.0.2',
+            VERSION:'1.0.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

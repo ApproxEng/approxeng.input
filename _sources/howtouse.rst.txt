@@ -72,28 +72,28 @@ standard ones are as follows:
 Button Names
 ************
 
-=============  =============  ===============  =============
-Standard name  PS3            PS4 / RockCandy  XBoxOne
--------------  -------------  ---------------  -------------
-square         Square         Square           X
-triangle       Triangle       Triangle         Y
-circle         Circle         Circle           B
-cross          Cross          Cross            A
-ls             Left Stick     Left Stick       Left Stick
-rs             Right Stick    Right Stick      Right Stick
-select         Select         Share            View
-start          Start          Options          Menu
-home           PS             PS               XBox
-dleft          DPad Left      DPad Left        DPad Left
-dup            DPad Up        DPad Up          DPad Up
-dright         DPad Right     DPad Right       DPad Right
-ddown          DPad Down      DPad Down        Dpad Down
-l1             L1 Trigger     L1 Trigger       LB Trigger
-l2             L2 Trigger     L2 Trigger       ---
-r1             R1 Trigger     R1 Trigger       RB Trigger
-r2             R2 Trigger     R2 Trigger       ---
-ps4_pad        ---            Trackpad         ---
-=============  =============  ===============  =============
+=============  =============  ===============  =============  =============
+Standard name  PS3            PS4              XBoxOne        Rock Candy
+-------------  -------------  ---------------  -------------  -------------
+square         Square         Square           X              4 Dot
+triangle       Triangle       Triangle         Y              3 Dot
+circle         Circle         Circle           B              6 Dot
+cross          Cross          Cross            A              5 Dot
+ls             Left Stick     Left Stick       Left Stick     Left Stick
+rs             Right Stick    Right Stick      Right Stick    Right Stick
+select         Select         Share            View           Select
+start          Start          Options          Menu           Start
+home           PS             PS               XBox           Home
+dleft          DPad Left      DPad Left        DPad Left      DPad Left
+dup            DPad Up        DPad Up          DPad Up        DPad Up
+dright         DPad Right     DPad Right       DPad Right     DPad Right
+ddown          DPad Down      DPad Down        Dpad Down      DPad Down
+l1             L1 Trigger     L1 Trigger       LB Trigger     L1 Trigger
+l2             L2 Trigger     L2 Trigger       ---            L2 Trigger
+r1             R1 Trigger     R1 Trigger       RB Trigger     R1 Trigger
+r2             R2 Trigger     R2 Trigger       ---            R2 Trigger
+ps4_pad        ---            Trackpad         ---            ---
+=============  =============  ===============  =============  =============
 
 
 .. note::
@@ -109,22 +109,22 @@ ps4_pad        ---            Trackpad         ---
 Axis Names
 **********
 
-=============  =============  ===============  =============
-Standard name  PS3            PS4 / RockCandy  XBoxOne
--------------  -------------  ---------------  -------------
-lx             Left X         Left X           Left X
-ly             Left Y         Left Y           Left Y
-rx             Right X        Right X          Right X
-ry             Right Y        Right Y          Right Y
-lt             ---            L2 Trigger       LT Trigger
-rt             ---            R2 Trigger       RT Trigger
-=============  =============  ===============  =============
+=============  =============  ===============  =============  ==========
+Standard name  PS3            PS4              XBoxOne        Rock Candy
+-------------  -------------  ---------------  -------------  ----------
+lx             Left X         Left X           Left X         Left X
+ly             Left Y         Left Y           Left Y         Left Y
+rx             Right X        Right X          Right X        Right X
+ry             Right Y        Right Y          Right Y        Right Y
+lt             ---            L2 Trigger       LT Trigger     ---
+rt             ---            R2 Trigger       RT Trigger     ---
+=============  =============  ===============  =============  ==========
 
 
 .. note::
 
-    The triggers on the DualShock3 can't be used as analogue axes, only use lt and rt if you're happy you won't need to
-    use a PS3 controller in your project.
+    The triggers on the DualShock3 or Rock Candy can't be used as analogue axes, only use lt and rt if you're happy you
+    won't need to use these controllers in your project.
 
 Handling Buttons
 ----------------

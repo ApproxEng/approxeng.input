@@ -13,5 +13,24 @@ it yourself, using the class from the library which most closely matches your co
 support to the library, again using the existing class. This might happen if you have, say, a clone PS4 controller which
 is identical in every way but which has a different USB vendor and product identifier.
 
-The :module:`approxeng.input.controllers` module contains a static, `CONTROLLERS`.
+The :py:const:`approxeng.input.controllers.CONTROLLERS` is an array of dicts containing class constructor, vendor ID and
+product ID values. This array is searched for matching controllers when a controller class is specified, when no class
+is provided this array is used to find any potential matches. If you add an appropriate entry to this array you can
+cause the library's controller matching to match an existing class with a new pair of vendor and product IDs. So,
+supposing you had a new controller which used the :class:`approxeng.input.dualshock4.DualShock4` codes for axes and
+buttons, but had a different vendor and product ID, you could add it to the match array with:
 
+.. code-block:: python
+
+    import approxeng.input.controllers
+    from approxeng.input.dualshock4 import DualShock4
+
+    VENDOR_ID = ...
+    PRODUCT_ID = ...
+
+    approxeng.input.controllers.CONTROLLERS.append({'constructor':DualShock4,
+                                                    'vendor_id': VENDOR_ID,
+                                                    'product_id': PRODUCT_ID})
+
+This will now let you bind using the controller_class or no-argument form of the resource and should match your
+controller's vendor and product IDs to the existing controller class.

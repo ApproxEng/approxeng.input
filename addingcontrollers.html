@@ -174,7 +174,25 @@ in:</p>
 it yourself, using the class from the library which most closely matches your controller, or you can add autodetect
 support to the library, again using the existing class. This might happen if you have, say, a clone PS4 controller which
 is identical in every way but which has a different USB vendor and product identifier.</p>
-<p>The <a href="#id1"><span class="problematic" id="id2">:module:`approxeng.input.controllers`</span></a> module contains a static, <cite>CONTROLLERS</cite>.</p>
+<p>The <code class="xref py py-const docutils literal"><span class="pre">approxeng.input.controllers.CONTROLLERS</span></code> is an array of dicts containing class constructor, vendor ID and
+product ID values. This array is searched for matching controllers when a controller class is specified, when no class
+is provided this array is used to find any potential matches. If you add an appropriate entry to this array you can
+cause the library&#8217;s controller matching to match an existing class with a new pair of vendor and product IDs. So,
+supposing you had a new controller which used the <a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4" title="approxeng.input.dualshock4.DualShock4"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.dualshock4.DualShock4</span></code></a> codes for axes and
+buttons, but had a different vendor and product ID, you could add it to the match array with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">approxeng.input.controllers</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.dualshock4</span> <span class="kn">import</span> <span class="n">DualShock4</span>
+
+<span class="n">VENDOR_ID</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">PRODUCT_ID</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">approxeng</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">controllers</span><span class="o">.</span><span class="n">CONTROLLERS</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;constructor&#39;</span><span class="p">:</span><span class="n">DualShock4</span><span class="p">,</span>
+                                                <span class="s1">&#39;vendor_id&#39;</span><span class="p">:</span> <span class="n">VENDOR_ID</span><span class="p">,</span>
+                                                <span class="s1">&#39;product_id&#39;</span><span class="p">:</span> <span class="n">PRODUCT_ID</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>This will now let you bind using the controller_class or no-argument form of the resource and should match your
+controller&#8217;s vendor and product IDs to the existing controller class.</p>
 </div>
 </div>
 

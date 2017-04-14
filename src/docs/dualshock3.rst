@@ -1,3 +1,5 @@
+.. _ps3-label:
+
 Configuring Playstation 3 Controllers
 =====================================
 

@@ -1,7 +1,7 @@
 from approxeng.input import CentredAxis, Controller, Button
 
-DS3_VENDOR_ID = 1356
-DS3_PRODUCT_ID = 616
+DS3_VENDOR_ID = 0x54c
+DS3_PRODUCT_ID = 0x268
 
 
 class DualShock3(Controller):

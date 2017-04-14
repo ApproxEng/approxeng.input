@@ -51,6 +51,8 @@ necessary logic to pull events out of the evdev linux system and update the valu
 
 The details of the binding process are described at :ref:`binding-reference-label`.
 
+.. _sname-label:
+
 Standard Names
 --------------
 

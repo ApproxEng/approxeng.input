@@ -39,8 +39,10 @@ Follow me on twitter (approx_eng_) for updates!
     :glob:
 
     howtouse
+    bluetooth
     dualshock3
     api
+    addingcontrollers
 
 .. _GitHub: https://github.com/ApproxEng/approxeng.input
 

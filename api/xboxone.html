@@ -183,6 +183,9 @@ file can be called anything, you&#8217;ll need to be root to create it, and must
 </pre></div>
 </div>
 <p>To create a file, and entered the following line into that file:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>options bluetooth <span class="nv">disable_ertm</span><span class="o">=</span>Y
+</pre></div>
+</div>
 <p>After doing this you&#8217;ll need to reboot your computer. If you don&#8217;t perform this step your controller will pair, but will
 not stay connected for more than a couple of seconds (if you&#8217;re using the graphical bluetooth manager you&#8217;ll see it
 connecting and disconnecting forever). There don&#8217;t appear to be any drawbacks to setting this option, at least none that

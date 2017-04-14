@@ -13,7 +13,7 @@ file can be called anything, you'll need to be root to create it, and must speci
 
 To create a file, and entered the following line into that file:
 
-.. code-block::
+.. code-block:: bash
 
     options bluetooth disable_ertm=Y
 

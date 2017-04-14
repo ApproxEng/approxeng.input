@@ -512,6 +512,19 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="BinaryAxis.__init__"><a class="viewcode-back" href="../../api/input.html#approxeng.input.BinaryAxis.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">axis_event_code</span><span class="p">,</span> <span class="n">b1name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b2name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new binary axis, used to route axis events through to a pair of buttons, which are created as</span>
+<span class="sd">        part of this constructor</span>
+<span class="sd">        </span>
+<span class="sd">        :param name: </span>
+<span class="sd">            Name for the axis, use this to describe the axis, it&#39;s not used for anything else</span>
+<span class="sd">        :param axis_event_code: </span>
+<span class="sd">            The evdev event code for changes to this axis</span>
+<span class="sd">        :param b1name: </span>
+<span class="sd">            The sname of the button corresponding to negative values of the axis.</span>
+<span class="sd">        :param b2name: </span>
+<span class="sd">            The sname of the button corresponding to positive values of the axis</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axis_event_code</span> <span class="o">=</span> <span class="n">axis_event_code</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">b1</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_left_button&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">key_code</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_left&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_event_code</span><span class="p">),</span> <span class="n">sname</span><span class="o">=</span><span class="n">b1name</span><span class="p">)</span>

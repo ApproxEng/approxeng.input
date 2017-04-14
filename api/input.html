@@ -97,6 +97,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Common APIs</a></li>
@@ -107,6 +108,7 @@
 <li class="toctree-l2"><a class="reference internal" href="rockcandy.html">Rock Candy Controller Support</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
 </ul>
 
             
@@ -429,7 +431,23 @@ it routes events through to the Buttons instance to create button presses corres
 <dl class="method">
 <dt id="approxeng.input.BinaryAxis.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>axis_event_code</em>, <em>b1name=None</em>, <em>b2name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#BinaryAxis.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.BinaryAxis.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Create a new binary axis, used to route axis events through to a pair of buttons, which are created as
+part of this constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> &#8211; Name for the axis, use this to describe the axis, it&#8217;s not used for anything else</li>
+<li><strong>axis_event_code</strong> &#8211; The evdev event code for changes to this axis</li>
+<li><strong>b1name</strong> &#8211; The sname of the button corresponding to negative values of the axis.</li>
+<li><strong>b2name</strong> &#8211; The sname of the button corresponding to positive values of the axis</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 
@@ -723,7 +741,7 @@ binding is required.</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, Tom Oinn.
-      Last updated on Apr 12, 2017.
+      Last updated on Apr 14, 2017.
 
     </p>
   </div>

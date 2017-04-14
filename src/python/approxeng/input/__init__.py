@@ -347,6 +347,19 @@ class BinaryAxis(object):
     """
 
     def __init__(self, name, axis_event_code, b1name=None, b2name=None):
+        """
+        Create a new binary axis, used to route axis events through to a pair of buttons, which are created as
+        part of this constructor
+        
+        :param name: 
+            Name for the axis, use this to describe the axis, it's not used for anything else
+        :param axis_event_code: 
+            The evdev event code for changes to this axis
+        :param b1name: 
+            The sname of the button corresponding to negative values of the axis.
+        :param b2name: 
+            The sname of the button corresponding to positive values of the axis
+        """
         self.name = name
         self.axis_event_code = axis_event_code
         self.b1 = Button('{}_left_button'.format(name), key_code='{}_left'.format(axis_event_code), sname=b1name)

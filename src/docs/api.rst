@@ -14,3 +14,4 @@ largely self explanatory although you'll need at least a reasonable level of Pyt
     api/dualshock4
     api/xboxone
     api/rockcandy
+    api/steamcontroller

@@ -1,39 +1,52 @@
-from approxeng.input import Controller
+from approxeng.input import CentredAxis, TriggerAxis, Button, Controller, BinaryAxis
 
-SC_VENDOR_ID = 10462
-SC_WIRELESS_PRODUCT_ID = 4418
-SC_WIRED_PRODUCT_ID = 4354
-
+SC_VENDOR_ID = 1118
+SC_PRODUCT_ID = 654
 
 class SteamController(Controller):
     """
-    Driver for the Steam Controller, Valve's odd hybrid controller thing. Still in progress. Subclasses are used to 
-    detect wired and wireless forms of the controller as these appear with different product IDs (the wireless one has
-    the product ID of the wireless dongle rather than the controller itself, unlike say the PS4 controller which uses
-    the same ID whether communicating over bluetooth or wired connections)
+    Wireless steam controller. Note that you must be running the xbox driver for the steam controller first, otherwise
+    this won't pick up any appropriate devices. Once this is running though it works just fine.
     """
 
-    def __init__(self, product_id, dead_zone=0.05, hot_zone=0.05):
+    def __init__(self, dead_zone=0.1, hot_zone=0.05):
+        """
+        Create a new steam controller
+
+        :param float dead_zone:
+            Used to set the dead zone for each :class:`approxeng.input.CentredAxis` and
+            :class:`approxeng.input.TriggerAxis` in the controller.
+        :param float hot_zone:
+            Used to set the hot zone for each :class:`approxeng.input.CentredAxis` and
+            :class:`approxeng.input.TriggerAxis` in the controller.
+        """
         super(SteamController, self).__init__(vendor_id=SC_VENDOR_ID,
-                                              product_id=product_id,
-                                              controls=[],
-                                              dead_zone=dead_zone,
-                                              hot_zone=hot_zone)
-
-
-class WirelessSteamController(SteamController):
-    def __init__(self, dead_zone=0.05, hot_zone=0.05):
-        super(WirelessSteamController, self).__init__(product_id=SC_WIRELESS_PRODUCT_ID, dead_zone=dead_zone,
-                                                      hot_zone=hot_zone)
+                                               product_id=SC_PRODUCT_ID,
+                                               controls=[
+                                                   Button("X", 307, sname='square'),
+                                                   Button("Y", 308, sname='triangle'),
+                                                   Button("B", 305, sname='circle'),
+                                                   Button("A", 304, sname='cross'),
+                                                   Button("Right Stick", 318, sname='rs'),
+                                                   Button("Left Stick", 317, sname='ls'),
+                                                   Button("View", 314, sname='select'),
+                                                   Button("Menu", 315, sname='start'),
+                                                   Button("XBox", 316, sname='home'),
+                                                   Button("LB", 310, sname='l1'),
+                                                   Button("RB", 311, sname='r1'),
+                                                   CentredAxis("Left Horizontal", -32768, 32768, 0, sname='lx'),
+                                                   CentredAxis("Left Vertical", -32768, 32768, 1, invert=True,
+                                                               sname='ly'),
+                                                   CentredAxis("Right Horizontal", -32768, 32768, 3, sname='rx'),
+                                                   CentredAxis("Right Vertical", -32768, 32768, 4, invert=True,
+                                                               sname='ry'),
+                                                   TriggerAxis("Left Trigger", 0, 255, 2, sname='lt'),
+                                                   TriggerAxis("Right Trigger", 0, 255, 5, sname='rt'),
+                                                   BinaryAxis("D-pad Horizontal", 16, b1name='dleft', b2name='dright'),
+                                                   BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown')
+                                               ],
+                                               dead_zone=dead_zone,
+                                               hot_zone=hot_zone)
 
     def __repr__(self):
-        return 'Wireless Valve Steam controller - not fully supported'
-
-
-class WiredSteamController(SteamController):
-    def __init__(self, dead_zone=0.05, hot_zone=0.05):
-        super(WiredSteamController, self).__init__(product_id=SC_WIRED_PRODUCT_ID, dead_zone=dead_zone,
-                                                   hot_zone=hot_zone)
-
-    def __repr__(self):
-        return 'Wired Valve Steam controller - not fully supported'
+        return 'Valve Steam controller in XBox mode'

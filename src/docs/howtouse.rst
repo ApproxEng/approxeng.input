@@ -44,6 +44,10 @@ be a subclass of :class:`approxeng.input.Controller`, currently there are three 
 - :class:`approxeng.input.rockcandy.RockCandy` for the Rock Candy PS4 controller clone (it appears to describe itself as
   a PS3 controller, but has the controls of a PS4 one!). Contribution from Keith Ellis (pitutorials_ on twitter).
 
+- :class:`approxeng.input.steamcontroller.SteamController` for the Valve Steam controller. This is a bit of a strange
+  one, and you'll need to be running a driver which creates a virtual XBox360 device to use it, but it does work. See
+  :ref:`steam-controller-label` for details.
+
 In general you will not explicitly create these objects yourself, instead you can use the binding layer to discover a
 connected controller (optionally supplying a particular kind of controller you want, otherwise it just finds the first
 one it can). This will create the controller object from which you can read things like axis values, and also set up the

@@ -56,3 +56,49 @@ buttons, but had a different vendor and product ID, you could add it to the matc
 This will now let you bind using the `controller_class` or no-argument form of the resource and should match your
 controller's vendor and product IDs to the existing controller class.
 
+Writing a new controller class
+------------------------------
+
+It's possible you have a controller which is completely different to the ones the library already supports. This might
+be because it's something we've just never got our hands on, or because the manufacturer has decided to produce a clone
+controller with completely different codes for buttons or axes (it happens!). In this case you'll need to create a new
+subclass of :class:`approxeng.input.Controller` and use the mechanism above to register it. Fortunately this is fairly
+simple. First create your class, this won't include any button or axis bindings, we'll add these later:
+
+.. code-block:: python
+
+    from approxeng.input import Controller
+
+    MY_VENDOR_ID = ...
+    MY_PRODUCT_ID = ...
+
+
+    class MyNewController(Controller):
+        """
+        Driver for my new controller type
+        """
+
+        def __init__(self, dead_zone=0.05, hot_zone=0.0):
+            """
+            Axis and button definitions for my new controller class
+
+            :param float dead_zone:
+                Used to set the dead zone for each :class:`approxeng.input.CentredAxis` in the controller.
+            :param float hot_zone:
+                Used to set the hot zone for each :class:`approxeng.input.CentredAxis` in the controller.
+            """
+            super(MyNewController, self).__init__(vendor_id=DS3_VENDOR_ID,
+                                                  product_id=DS3_PRODUCT_ID,
+                                                  controls=[],
+                                                  dead_zone=dead_zone,
+                                                  hot_zone=hot_zone)
+
+        def __repr__(self):
+            return 'My new controller'
+
+This is a fairly useless controller, because it doesn't have any buttons or axes, but it will get us to the point where
+the library tries to send events to it, and that's important because when an event is received and not processed by the
+controller class we just print it to the console. This means that if you register your new class with its associated
+vendor and product IDs (as above) and run the `scripts/select_binder_resource_example.py` script you should start seeing
+messages about unknown axes and buttons. You can then go back to this class definition and use this information to add
+controls until you're not getting any of these 'missing control' messages and everything's working.

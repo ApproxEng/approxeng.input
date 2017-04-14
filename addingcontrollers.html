@@ -101,6 +101,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Adding support for a new controller type</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#finding-your-product-and-vendor-id">Finding your product and vendor ID</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#clones-of-a-supported-controller">Clones of a supported controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-a-new-controller-class">Writing a new controller class</a></li>
 </ul>
 </li>
 </ul>
@@ -212,6 +213,50 @@ buttons, but had a different vendor and product ID, you could add it to the matc
 </div>
 <p>This will now let you bind using the <cite>controller_class</cite> or no-argument form of the resource and should match your
 controller&#8217;s vendor and product IDs to the existing controller class.</p>
+</div>
+<div class="section" id="writing-a-new-controller-class">
+<h2>Writing a new controller class<a class="headerlink" href="#writing-a-new-controller-class" title="Permalink to this headline">¶</a></h2>
+<p>It&#8217;s possible you have a controller which is completely different to the ones the library already supports. This might
+be because it&#8217;s something we&#8217;ve just never got our hands on, or because the manufacturer has decided to produce a clone
+controller with completely different codes for buttons or axes (it happens!). In this case you&#8217;ll need to create a new
+subclass of <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Controller</span></code></a> and use the mechanism above to register it. Fortunately this is fairly
+simple. First create your class, this won&#8217;t include any button or axis bindings, we&#8217;ll add these later:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="kn">import</span> <span class="n">Controller</span>
+
+<span class="n">MY_VENDOR_ID</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">MY_PRODUCT_ID</span> <span class="o">=</span> <span class="o">...</span>
+
+
+<span class="k">class</span> <span class="nc">MyNewController</span><span class="p">(</span><span class="n">Controller</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Driver for my new controller type</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Axis and button definitions for my new controller class</span>
+
+<span class="sd">        :param float dead_zone:</span>
+<span class="sd">            Used to set the dead zone for each :class:`approxeng.input.CentredAxis` in the controller.</span>
+<span class="sd">        :param float hot_zone:</span>
+<span class="sd">            Used to set the hot zone for each :class:`approxeng.input.CentredAxis` in the controller.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyNewController</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vendor_id</span><span class="o">=</span><span class="n">DS3_VENDOR_ID</span><span class="p">,</span>
+                                              <span class="n">product_id</span><span class="o">=</span><span class="n">DS3_PRODUCT_ID</span><span class="p">,</span>
+                                              <span class="n">controls</span><span class="o">=</span><span class="p">[],</span>
+                                              <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
+                                              <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;My new controller&#39;</span>
+</pre></div>
+</div>
+<p>This is a fairly useless controller, because it doesn&#8217;t have any buttons or axes, but it will get us to the point where
+the library tries to send events to it, and that&#8217;s important because when an event is received and not processed by the
+controller class we just print it to the console. This means that if you register your new class with its associated
+vendor and product IDs (as above) and run the <cite>scripts/select_binder_resource_example.py</cite> script you should start seeing
+messages about unknown axes and buttons. You can then go back to this class definition and use this information to add
+controls until you&#8217;re not getting any of these &#8216;missing control&#8217; messages and everything&#8217;s working.</p>
 </div>
 </div>
 

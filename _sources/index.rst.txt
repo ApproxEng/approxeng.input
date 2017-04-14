@@ -12,6 +12,11 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
     - Version 1.0.4 supports the Steam Controller from Valve, although it needs an extra third party user space driver
       (see :ref:`steam-controller-label`)
 
+Contributors
+------------
+
+
+
 Getting the code
 ----------------
 
@@ -36,7 +41,10 @@ virtual environment (virtualenv) so you don't have to install python libraries a
 To work with the code on other platforms you'll want to clone it from GitHub_, it's available under the ASL, the same as
 almost everything Python based. Documentation (this site) is generated using Sphinx.
 
-Follow me on twitter (approx_eng_) for updates!
+Follow me on twitter (\@approx_eng_) for updates!
+
+Contents
+--------
 
 .. toctree::
     :maxdepth: 4
@@ -54,4 +62,4 @@ Follow me on twitter (approx_eng_) for updates!
 
 .. _PyGame: http://pygame.org
 
-.. _approx_eng: https://twitter.com/approx_eng
+.. _\@approx_eng: https://twitter.com/approx_eng

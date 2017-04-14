@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Documentation &mdash; Approximate Engineering - Input 1.0.3 documentation</title>
+  <title>Adding support for a new controller type &mdash; Approximate Engineering - Input 1.0.3 documentation</title>
   
 
   
@@ -40,8 +40,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Approximate Engineering - Input 1.0.3 documentation" href="index.html"/>
-        <link rel="next" title="Common APIs" href="api/input.html"/>
-        <link rel="prev" title="Configuring Playstation 3 Controllers" href="dualshock3.html"/> 
+        <link rel="prev" title="Rock Candy Controller Support" href="api/rockcandy.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -98,16 +97,11 @@
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">Usage Guide</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dualshock3.html">Configuring Playstation 3 Controllers</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/input.html">Common APIs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/dualshock3.html">PlayStation 3 Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/dualshock4.html">PlayStation 4 Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/xboxone.html">XBox-One S Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/rockcandy.html">Rock Candy Controller Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Adding support for a new controller type</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#clones-of-a-supported-controller">Clones of a supported controller</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
 </ul>
 
             
@@ -152,7 +146,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>API Documentation</li>
+      <li>Adding support for a new controller type</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -169,25 +163,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="api-documentation">
-<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
-<p>This code is intended to be help as well as useful, as such it is very heavily commented - you should hopefully find it
-largely self explanatory although you&#8217;ll need at least a reasonable level of Python knowledge.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api/input.html">Common APIs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/selectbinder.html">Binding - approxeng.input.selectbinder</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/selectbinder.html#using-an-unsupported-controller">Using an Unsupported Controller</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api/dualshock3.html">PlayStation 3 Controller Support</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/dualshock4.html">PlayStation 4 Controller Support</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/xboxone.html">XBox-One S Controller Support</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/xboxone.html#module-approxeng.input.xboxone">Controller Classes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api/rockcandy.html">Rock Candy Controller Support</a></li>
-</ul>
+  <div class="section" id="adding-support-for-a-new-controller-type">
+<h1>Adding support for a new controller type<a class="headerlink" href="#adding-support-for-a-new-controller-type" title="Permalink to this headline">¶</a></h1>
+<p>The library supports a number of controllers but it&#8217;s quite possible, given the variety of cheap clones on the market,
+that your particular controller isn&#8217;t one of them. You have a few options, depending on the scenario you find yourself
+in:</p>
+<div class="section" id="clones-of-a-supported-controller">
+<h2>Clones of a supported controller<a class="headerlink" href="#clones-of-a-supported-controller" title="Permalink to this headline">¶</a></h2>
+<p>If you have a controller which is an exact copy of one the library supports, but isn&#8217;t autodetected, you can either bind
+it yourself, using the class from the library which most closely matches your controller, or you can add autodetect
+support to the library, again using the existing class. This might happen if you have, say, a clone PS4 controller which
+is identical in every way but which has a different USB vendor and product identifier.</p>
+<p>The <a href="#id1"><span class="problematic" id="id2">:module:`approxeng.input.controllers`</span></a> module contains a static, <cite>CONTROLLERS</cite>.</p>
 </div>
 </div>
 
@@ -201,10 +188,8 @@ largely self explanatory although you&#8217;ll need at least a reasonable level 
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="api/input.html" class="btn btn-neutral float-right" title="Common APIs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="dualshock3.html" class="btn btn-neutral" title="Configuring Playstation 3 Controllers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="api/rockcandy.html" class="btn btn-neutral" title="Rock Candy Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

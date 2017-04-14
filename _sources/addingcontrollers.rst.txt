@@ -1,0 +1,17 @@
+Adding support for a new controller type
+========================================
+
+The library supports a number of controllers but it's quite possible, given the variety of cheap clones on the market,
+that your particular controller isn't one of them. You have a few options, depending on the scenario you find yourself
+in:
+
+Clones of a supported controller
+--------------------------------
+
+If you have a controller which is an exact copy of one the library supports, but isn't autodetected, you can either bind
+it yourself, using the class from the library which most closely matches your controller, or you can add autodetect
+support to the library, again using the existing class. This might happen if you have, say, a clone PS4 controller which
+is identical in every way but which has a different USB vendor and product identifier.
+
+The :module:`approxeng.input.controllers` module contains a static, `CONTROLLERS`.
+

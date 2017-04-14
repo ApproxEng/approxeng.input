@@ -98,6 +98,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../addingcontrollers.html">Adding support for a new controller type</a></li>
 </ul>
 
             
@@ -215,22 +216,6 @@
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;Sony DualShock3 (Playstation 3) controller&#39;</span></div>
-
-
-<div class="viewcode-block" id="PSMove"><a class="viewcode-back" href="../../../api/dualshock3.html#approxeng.input.dualshock3.PSMove">[docs]</a><span class="k">class</span> <span class="nc">PSMove</span><span class="p">(</span><span class="n">Controller</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Driver for the PlayStation Move motion controller, because why not.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="PSMove.__init__"><a class="viewcode-back" href="../../../api/dualshock3.html#approxeng.input.dualshock3.PSMove.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">PSMove</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vendor_id</span><span class="o">=</span><span class="n">DS3_VENDOR_ID</span><span class="p">,</span>
-                                     <span class="n">product_id</span><span class="o">=</span><span class="n">PSM_PRODUCT_ID</span><span class="p">,</span>
-                                     <span class="n">controls</span><span class="o">=</span><span class="p">[],</span>
-                                     <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
-                                     <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;Sony PlayStation Move controller&#39;</span></div>
 </pre></div>
 
            </div>

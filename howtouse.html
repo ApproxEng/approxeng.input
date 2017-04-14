@@ -40,7 +40,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Approximate Engineering - Input 1.0.3 documentation" href="index.html"/>
-        <link rel="next" title="Configuring Playstation 3 Controllers" href="dualshock3.html"/>
+        <link rel="next" title="Pairing Controllers over Bluetooth" href="bluetooth.html"/>
         <link rel="prev" title="Welcome to Approximate Engineering’s Python Game Controller Documentation!" href="index.html"/> 
 
   
@@ -111,8 +111,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#reading-and-configuring-analogue-axes">Reading and Configuring Analogue Axes</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
 </ul>
 
             
@@ -219,7 +221,7 @@ necessary logic to pull events out of the evdev linux system and update the valu
 <p>The details of the binding process are described at <a class="reference internal" href="api/selectbinder.html#binding-reference-label"><span class="std std-ref">Binding - approxeng.input.selectbinder</span></a>.</p>
 </div>
 <div class="section" id="standard-names">
-<h2>Standard Names<a class="headerlink" href="#standard-names" title="Permalink to this headline">¶</a></h2>
+<span id="sname-label"></span><h2>Standard Names<a class="headerlink" href="#standard-names" title="Permalink to this headline">¶</a></h2>
 <p>All the controllers supported by this library are fairly similar - they have two analogue joysticks, a bunch of buttons,
 some triggers etc. It would be helpful therefore to be able to make use of one controller type but make it as easy as
 possible to use others without substantial code changes in your own code.</p>
@@ -604,7 +606,7 @@ controller, and will run around in a loop printing the corrected value of the le
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="dualshock3.html" class="btn btn-neutral float-right" title="Configuring Playstation 3 Controllers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="bluetooth.html" class="btn btn-neutral float-right" title="Pairing Controllers over Bluetooth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Welcome to Approximate Engineering’s Python Game Controller Documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -617,7 +619,7 @@ controller, and will run around in a loop printing the corrected value of the le
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, Tom Oinn.
-      Last updated on Apr 12, 2017.
+      Last updated on Apr 14, 2017.
 
     </p>
   </div>

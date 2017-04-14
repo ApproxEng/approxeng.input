@@ -241,8 +241,8 @@ simple. First create your class, this won&#8217;t include any button or axis bin
 <span class="sd">        :param float hot_zone:</span>
 <span class="sd">            Used to set the hot zone for each :class:`approxeng.input.CentredAxis` in the controller.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MyNewController</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vendor_id</span><span class="o">=</span><span class="n">DS3_VENDOR_ID</span><span class="p">,</span>
-                                              <span class="n">product_id</span><span class="o">=</span><span class="n">DS3_PRODUCT_ID</span><span class="p">,</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyNewController</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vendor_id</span><span class="o">=</span><span class="n">MY_VENDOR_ID</span><span class="p">,</span>
+                                              <span class="n">product_id</span><span class="o">=</span><span class="n">MY_PRODUCT_ID</span><span class="p">,</span>
                                               <span class="n">controls</span><span class="o">=</span><span class="p">[],</span>
                                               <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
                                               <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span>
@@ -257,6 +257,22 @@ controller class we just print it to the console. This means that if you registe
 vendor and product IDs (as above) and run the <cite>scripts/select_binder_resource_example.py</cite> script you should start seeing
 messages about unknown axes and buttons. You can then go back to this class definition and use this information to add
 controls until you&#8217;re not getting any of these &#8216;missing control&#8217; messages and everything&#8217;s working.</p>
+<p>Controls are all added to the <cite>controls</cite> parameter of the constructor, you should look at the documentation for the
+various axis and button classes to see what they take as arguments, these are currently:</p>
+<ul class="simple">
+<li><a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> for analogue axes which have a resting point in the centre of their range.</li>
+<li><a class="reference internal" href="api/input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> for analogue axes which have a resting point at one end of their range.</li>
+<li><a class="reference internal" href="api/input.html#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.BinaryAxis</span></code></a> for analogue axes which are really pairs of buttons, both the PS4 and XBox One
+controllers use this for their direction pads, the buttons on these pads don&#8217;t appear as buttons in the event stream
+but as an analogue axis which only ever takes the values -1, 0 or 1.</li>
+<li><a class="reference internal" href="api/input.html#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Button</span></code></a> for buttons</li>
+</ul>
+<p>You should take a look at the source for the existing controller classes, i.e.
+<a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad" title="approxeng.input.xboxone.WirelessXBoxOneSPad"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.xboxone.WirelessXBoxOneSPad</span></code></a> to see how these are used. For every control you need to know the
+event code, for analogue axes you&#8217;ll also need to know the range of values the controller can produce so the library
+can normalise these to a -1.0 to 1.0, or 0.0 to 1.0 range. Check out the list of <a class="reference internal" href="howtouse.html#sname-label"><span class="std std-ref">Standard Names</span></a> to make your new
+controller class drop-in compatible with existing code, and let me know about it by raising either a pull request or a
+new issue on github, I&#8217;m sure others would like to know about the new functionality!</p>
 </div>
 </div>
 

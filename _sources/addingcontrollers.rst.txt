@@ -87,8 +87,8 @@ simple. First create your class, this won't include any button or axis bindings,
             :param float hot_zone:
                 Used to set the hot zone for each :class:`approxeng.input.CentredAxis` in the controller.
             """
-            super(MyNewController, self).__init__(vendor_id=DS3_VENDOR_ID,
-                                                  product_id=DS3_PRODUCT_ID,
+            super(MyNewController, self).__init__(vendor_id=MY_VENDOR_ID,
+                                                  product_id=MY_PRODUCT_ID,
                                                   controls=[],
                                                   dead_zone=dead_zone,
                                                   hot_zone=hot_zone)
@@ -102,3 +102,23 @@ controller class we just print it to the console. This means that if you registe
 vendor and product IDs (as above) and run the `scripts/select_binder_resource_example.py` script you should start seeing
 messages about unknown axes and buttons. You can then go back to this class definition and use this information to add
 controls until you're not getting any of these 'missing control' messages and everything's working.
+
+Controls are all added to the `controls` parameter of the constructor, you should look at the documentation for the
+various axis and button classes to see what they take as arguments, these are currently:
+
+- :class:`approxeng.input.CentredAxis` for analogue axes which have a resting point in the centre of their range.
+
+- :class:`approxeng.input.TriggerAxis` for analogue axes which have a resting point at one end of their range.
+
+- :class:`approxeng.input.BinaryAxis` for analogue axes which are really pairs of buttons, both the PS4 and XBox One
+  controllers use this for their direction pads, the buttons on these pads don't appear as buttons in the event stream
+  but as an analogue axis which only ever takes the values -1, 0 or 1.
+
+- :class:`approxeng.input.Button` for buttons
+
+You should take a look at the source for the existing controller classes, i.e.
+:class:`approxeng.input.xboxone.WirelessXBoxOneSPad` to see how these are used. For every control you need to know the
+event code, for analogue axes you'll also need to know the range of values the controller can produce so the library
+can normalise these to a -1.0 to 1.0, or 0.0 to 1.0 range. Check out the list of :ref:`sname-label` to make your new
+controller class drop-in compatible with existing code, and let me know about it by raising either a pull request or a
+new issue on github, I'm sure others would like to know about the new functionality!

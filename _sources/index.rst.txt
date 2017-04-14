@@ -41,7 +41,7 @@ virtual environment (virtualenv) so you don't have to install python libraries a
 To work with the code on other platforms you'll want to clone it from GitHub_, it's available under the ASL, the same as
 almost everything Python based. Documentation (this site) is generated using Sphinx.
 
-Follow me on twitter (`@approx_eng<https://twitter.com/approx_eng>`_) for updates!
+Follow me on twitter (`@approx_eng`approx_eng_) for updates!
 
 Contents
 --------
@@ -62,4 +62,4 @@ Contents
 
 .. _PyGame: http://pygame.org
 
-.. _@approx_eng: https://twitter.com/approx_eng
+.. _approx_eng: https://twitter.com/approx_eng

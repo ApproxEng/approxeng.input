@@ -3,7 +3,28 @@ Adding support for a new controller type
 
 The library supports a number of controllers but it's quite possible, given the variety of cheap clones on the market,
 that your particular controller isn't one of them. You have a few options, depending on the scenario you find yourself
-in:
+in. Firstly though you'll need both product and vendor IDs for your device - these are allocated by the USB consortium
+so will definitely not be the same for a clone device as for an original one, for example.
+
+Finding your product and vendor ID
+----------------------------------
+
+Once you have a controller paired over bluetooth, or, in the case of those with specific dongles, otherwise connected,
+you can run the `scripts/list_devices.py` to print out a list of all connected devices, including the vendor and product
+identifiers. For example, with my XBox One controller paired and connected I see this:
+
+.. code-block:: bash
+
+    (viridia-env) tom@Ogre ~/git/approxeng.input/scripts $ python list_devices.py
+    { 'bus': 5,
+      'fn': '/dev/input/event14',
+      'name': 'Xbox Wireless Controller',
+      'phys': '5c:f3:70:66:5c:e2',
+      'product': 736,
+      'vendor': 1118,
+      'version': 2307}
+
+In general this should show you enough information to identify the controller you've just connected and get the details.
 
 Clones of a supported controller
 --------------------------------
@@ -35,22 +56,3 @@ buttons, but had a different vendor and product ID, you could add it to the matc
 This will now let you bind using the `controller_class` or no-argument form of the resource and should match your
 controller's vendor and product IDs to the existing controller class.
 
-Finding your product and vendor ID
-----------------------------------
-
-Once you have a controller paired over bluetooth, or, in the case of those with specific dongles, otherwise connected,
-you can run the `scripts/list_devices.py` to print out a list of all connected devices, including the vendor and product
-identifiers. For example, with my XBox One controller paired and connected I see this:
-
-.. code-block:: bash
-
-    (viridia-env) tom@Ogre ~/git/approxeng.input/scripts $ python list_devices.py
-    { 'bus': 5,
-      'fn': '/dev/input/event14',
-      'name': 'Xbox Wireless Controller',
-      'phys': '5c:f3:70:66:5c:e2',
-      'product': 736,
-      'vendor': 1118,
-      'version': 2307}
-
-In general this should show you enough information to identify the controller you've just connected and get the details.

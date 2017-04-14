@@ -99,8 +99,8 @@
 <li class="toctree-l1"><a class="reference internal" href="dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Adding support for a new controller type</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#clones-of-a-supported-controller">Clones of a supported controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#finding-your-product-and-vendor-id">Finding your product and vendor ID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clones-of-a-supported-controller">Clones of a supported controller</a></li>
 </ul>
 </li>
 </ul>
@@ -168,7 +168,25 @@
 <h1>Adding support for a new controller type<a class="headerlink" href="#adding-support-for-a-new-controller-type" title="Permalink to this headline">¶</a></h1>
 <p>The library supports a number of controllers but it&#8217;s quite possible, given the variety of cheap clones on the market,
 that your particular controller isn&#8217;t one of them. You have a few options, depending on the scenario you find yourself
-in:</p>
+in. Firstly though you&#8217;ll need both product and vendor IDs for your device - these are allocated by the USB consortium
+so will definitely not be the same for a clone device as for an original one, for example.</p>
+<div class="section" id="finding-your-product-and-vendor-id">
+<h2>Finding your product and vendor ID<a class="headerlink" href="#finding-your-product-and-vendor-id" title="Permalink to this headline">¶</a></h2>
+<p>Once you have a controller paired over bluetooth, or, in the case of those with specific dongles, otherwise connected,
+you can run the <cite>scripts/list_devices.py</cite> to print out a list of all connected devices, including the vendor and product
+identifiers. For example, with my XBox One controller paired and connected I see this:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">(</span>viridia-env<span class="o">)</span> tom@Ogre ~/git/approxeng.input/scripts $ python list_devices.py
+<span class="o">{</span> <span class="s1">&#39;bus&#39;</span>: <span class="m">5</span>,
+  <span class="s1">&#39;fn&#39;</span>: <span class="s1">&#39;/dev/input/event14&#39;</span>,
+  <span class="s1">&#39;name&#39;</span>: <span class="s1">&#39;Xbox Wireless Controller&#39;</span>,
+  <span class="s1">&#39;phys&#39;</span>: <span class="s1">&#39;5c:f3:70:66:5c:e2&#39;</span>,
+  <span class="s1">&#39;product&#39;</span>: <span class="m">736</span>,
+  <span class="s1">&#39;vendor&#39;</span>: <span class="m">1118</span>,
+  <span class="s1">&#39;version&#39;</span>: <span class="m">2307</span><span class="o">}</span>
+</pre></div>
+</div>
+<p>In general this should show you enough information to identify the controller you&#8217;ve just connected and get the details.</p>
+</div>
 <div class="section" id="clones-of-a-supported-controller">
 <h2>Clones of a supported controller<a class="headerlink" href="#clones-of-a-supported-controller" title="Permalink to this headline">¶</a></h2>
 <p>If you have a controller which is an exact copy of one the library supports, but isn&#8217;t autodetected, you can either bind
@@ -194,23 +212,6 @@ buttons, but had a different vendor and product ID, you could add it to the matc
 </div>
 <p>This will now let you bind using the <cite>controller_class</cite> or no-argument form of the resource and should match your
 controller&#8217;s vendor and product IDs to the existing controller class.</p>
-</div>
-<div class="section" id="finding-your-product-and-vendor-id">
-<h2>Finding your product and vendor ID<a class="headerlink" href="#finding-your-product-and-vendor-id" title="Permalink to this headline">¶</a></h2>
-<p>Once you have a controller paired over bluetooth, or, in the case of those with specific dongles, otherwise connected,
-you can run the <cite>scripts/list_devices.py</cite> to print out a list of all connected devices, including the vendor and product
-identifiers. For example, with my XBox One controller paired and connected I see this:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">(</span>viridia-env<span class="o">)</span> tom@Ogre ~/git/approxeng.input/scripts $ python list_devices.py
-<span class="o">{</span> <span class="s1">&#39;bus&#39;</span>: <span class="m">5</span>,
-  <span class="s1">&#39;fn&#39;</span>: <span class="s1">&#39;/dev/input/event14&#39;</span>,
-  <span class="s1">&#39;name&#39;</span>: <span class="s1">&#39;Xbox Wireless Controller&#39;</span>,
-  <span class="s1">&#39;phys&#39;</span>: <span class="s1">&#39;5c:f3:70:66:5c:e2&#39;</span>,
-  <span class="s1">&#39;product&#39;</span>: <span class="m">736</span>,
-  <span class="s1">&#39;vendor&#39;</span>: <span class="m">1118</span>,
-  <span class="s1">&#39;version&#39;</span>: <span class="m">2307</span><span class="o">}</span>
-</pre></div>
-</div>
-<p>In general this should show you enough information to identify the controller you&#8217;ve just connected and get the details.</p>
 </div>
 </div>
 

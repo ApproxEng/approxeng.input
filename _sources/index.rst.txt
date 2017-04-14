@@ -62,4 +62,4 @@ Contents
 
 .. _PyGame: http://pygame.org
 
-.. _\@approx_eng: https://twitter.com/approx_eng
+.. _@approx_eng: https://twitter.com/approx_eng

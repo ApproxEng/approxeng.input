@@ -3,13 +3,14 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
 
 .. note::
 
-    This documentation, and the code it documents, is the original SixAxis controller code from my PiWars_ robot,
+    This documentation, and the code it documents, is the original SixAxis controller code from my PiWars_ 2015 robot,
     Triangula. It has subsequently been extensively modified, and now supports the PS4 and XBox One controllers in
     addition to the original support for PS3 controllers.
 
     - Version 1.0.2 has support for the Rock Candy PS3 clones thanks to Keith Ellis.
 
-    - Version 1.0.4 supports the Steam Controller from Valve, although it needs an extra third party user space driver.
+    - Version 1.0.4 supports the Steam Controller from Valve, although it needs an extra third party user space driver (
+      see :ref:`steam-controler-label`)
 
 Getting the code
 ----------------

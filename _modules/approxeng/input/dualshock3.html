@@ -95,6 +95,7 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../howtouse.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Documentation</a></li>
 </ul>
@@ -165,8 +166,9 @@
   <h1>Source code for approxeng.input.dualshock3</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="k">import</span> <span class="n">CentredAxis</span><span class="p">,</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">Button</span>
 
-<span class="n">DS3_VENDOR_ID</span> <span class="o">=</span> <span class="mi">1356</span>
-<span class="n">DS3_PRODUCT_ID</span> <span class="o">=</span> <span class="mi">616</span>
+<span class="n">DS3_VENDOR_ID</span> <span class="o">=</span> <span class="mh">0x54c</span>
+<span class="n">DS3_PRODUCT_ID</span> <span class="o">=</span> <span class="mh">0x268</span>
+<span class="n">PSM_PRODUCT_ID</span> <span class="o">=</span> <span class="mh">0x3d5</span>
 
 
 <div class="viewcode-block" id="DualShock3"><a class="viewcode-back" href="../../../api/dualshock3.html#approxeng.input.dualshock3.DualShock3">[docs]</a><span class="k">class</span> <span class="nc">DualShock3</span><span class="p">(</span><span class="n">Controller</span><span class="p">):</span>
@@ -213,6 +215,22 @@
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;Sony DualShock3 (Playstation 3) controller&#39;</span></div>
+
+
+<div class="viewcode-block" id="PSMove"><a class="viewcode-back" href="../../../api/dualshock3.html#approxeng.input.dualshock3.PSMove">[docs]</a><span class="k">class</span> <span class="nc">PSMove</span><span class="p">(</span><span class="n">Controller</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Driver for the PlayStation Move motion controller, because why not.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PSMove.__init__"><a class="viewcode-back" href="../../../api/dualshock3.html#approxeng.input.dualshock3.PSMove.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PSMove</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vendor_id</span><span class="o">=</span><span class="n">DS3_VENDOR_ID</span><span class="p">,</span>
+                                     <span class="n">product_id</span><span class="o">=</span><span class="n">PSM_PRODUCT_ID</span><span class="p">,</span>
+                                     <span class="n">controls</span><span class="o">=</span><span class="p">[],</span>
+                                     <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
+                                     <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;Sony PlayStation Move controller&#39;</span></div>
 </pre></div>
 
            </div>
@@ -228,7 +246,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, Tom Oinn.
-      Last updated on Apr 12, 2017.
+      Last updated on Apr 14, 2017.
 
     </p>
   </div>

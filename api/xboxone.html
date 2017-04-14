@@ -97,13 +97,17 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">XBox-One S Controller Support</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">XBox-One S Controller Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-approxeng.input.xboxone">Controller Classes</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="rockcandy.html">Rock Candy Controller Support</a></li>
 </ul>
 </li>
@@ -170,8 +174,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-approxeng.input.xboxone">
-<span id="xbox-one-s-controller-support"></span><h1>XBox-One S Controller Support<a class="headerlink" href="#module-approxeng.input.xboxone" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="xbox-one-s-controller-support">
+<span id="xbox-one-s-bluetooth-label"></span><h1>XBox-One S Controller Support<a class="headerlink" href="#xbox-one-s-controller-support" title="Permalink to this headline">¶</a></h1>
+<p>The XBox One S controller (the most modern, with bluetooth support) can be used without any dongles, but you will have
+to change a configuration option in the bluetooth driver. This is done by creating a file in <cite>/etc/modprobe.d/</cite>. The
+file can be called anything, you&#8217;ll need to be root to create it, and must specify a single line. In my case I used</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>tom@Ogre ~ $ sudo nano /etc/modprobe.d/bluetooth.conf
+</pre></div>
+</div>
+<p>To create a file, and entered the following line into that file:</p>
+<p>After doing this you&#8217;ll need to reboot your computer. If you don&#8217;t perform this step your controller will pair, but will
+not stay connected for more than a couple of seconds (if you&#8217;re using the graphical bluetooth manager you&#8217;ll see it
+connecting and disconnecting forever). There don&#8217;t appear to be any drawbacks to setting this option, at least none that
+I&#8217;ve found in the context of making robots.</p>
+<div class="section" id="module-approxeng.input.xboxone">
+<span id="controller-classes"></span><h2>Controller Classes<a class="headerlink" href="#module-approxeng.input.xboxone" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="approxeng.input.xboxone.WiredXBoxOneSPad">
 <em class="property">class </em><code class="descclassname">approxeng.input.xboxone.</code><code class="descname">WiredXBoxOneSPad</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WiredXBoxOneSPad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WiredXBoxOneSPad" title="Permalink to this definition">¶</a></dt>
@@ -230,6 +247,7 @@ be done by creating a file in /etc/modprobe.d with the line &#8216;options bluet
 </dd></dl>
 
 </div>
+</div>
 
 
            </div>
@@ -254,7 +272,7 @@ be done by creating a file in /etc/modprobe.d with the line &#8216;options bluet
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, Tom Oinn.
-      Last updated on Apr 12, 2017.
+      Last updated on Apr 14, 2017.
 
     </p>
   </div>

@@ -1,5 +1,30 @@
+.. _xbox-one-s-bluetooth-label:
+
 XBox-One S Controller Support
 =============================
+
+The XBox One S controller (the most modern, with bluetooth support) can be used without any dongles, but you will have
+to change a configuration option in the bluetooth driver. This is done by creating a file in `/etc/modprobe.d/`. The
+file can be called anything, you'll need to be root to create it, and must specify a single line. In my case I used
+
+.. code-block:: bash
+
+    tom@Ogre ~ $ sudo nano /etc/modprobe.d/bluetooth.conf
+
+To create a file, and entered the following line into that file:
+
+.. code-block::
+
+    options bluetooth disable_ertm=Y
+
+After doing this you'll need to reboot your computer. If you don't perform this step your controller will pair, but will
+not stay connected for more than a couple of seconds (if you're using the graphical bluetooth manager you'll see it
+connecting and disconnecting forever). There don't appear to be any drawbacks to setting this option, at least none that
+I've found in the context of making robots.
+
+
+Controller Classes
+------------------
 
 .. automodule:: approxeng.input.xboxone
     :members:

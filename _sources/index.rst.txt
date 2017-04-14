@@ -7,14 +7,9 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
     Triangula. It has subsequently been extensively modified, and now supports the PS4 and XBox One controllers in
     addition to the original support for PS3 controllers.
 
-    Changes
-    -------
+    - Version 1.0.2 has support for the Rock Candy PS3 clones thanks to Keith Ellis.
 
-    - As of version 1.0.2 we have support for the Rock Candy PS3
-      clones thanks to Keith Ellis.
-
-    - New in version 1.0.4, the Steam Controller from Valve now works, although it needs an
-      extra third party driver running.
+    - Version 1.0.4 supports the Steam Controller from Valve, although it needs an extra third party user space driver.
 
 Getting the code
 ----------------

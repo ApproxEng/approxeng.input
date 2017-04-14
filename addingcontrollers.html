@@ -186,12 +186,12 @@ buttons, but had a different vendor and product ID, you could add it to the matc
 <span class="n">VENDOR_ID</span> <span class="o">=</span> <span class="o">...</span>
 <span class="n">PRODUCT_ID</span> <span class="o">=</span> <span class="o">...</span>
 
-<span class="n">approxeng</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">controllers</span><span class="o">.</span><span class="n">CONTROLLERS</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;constructor&#39;</span><span class="p">:</span><span class="n">DualShock4</span><span class="p">,</span>
+<span class="n">approxeng</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">controllers</span><span class="o">.</span><span class="n">CONTROLLERS</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;constructor&#39;</span><span class="p">:</span> <span class="n">DualShock4</span><span class="p">,</span>
                                                 <span class="s1">&#39;vendor_id&#39;</span><span class="p">:</span> <span class="n">VENDOR_ID</span><span class="p">,</span>
                                                 <span class="s1">&#39;product_id&#39;</span><span class="p">:</span> <span class="n">PRODUCT_ID</span><span class="p">})</span>
 </pre></div>
 </div>
-<p>This will now let you bind using the controller_class or no-argument form of the resource and should match your
+<p>This will now let you bind using the <cite>controller_class</cite> or no-argument form of the resource and should match your
 controller&#8217;s vendor and product IDs to the existing controller class.</p>
 </div>
 </div>

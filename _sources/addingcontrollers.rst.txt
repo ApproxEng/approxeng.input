@@ -28,9 +28,9 @@ buttons, but had a different vendor and product ID, you could add it to the matc
     VENDOR_ID = ...
     PRODUCT_ID = ...
 
-    approxeng.input.controllers.CONTROLLERS.append({'constructor':DualShock4,
+    approxeng.input.controllers.CONTROLLERS.append({'constructor': DualShock4,
                                                     'vendor_id': VENDOR_ID,
                                                     'product_id': PRODUCT_ID})
 
-This will now let you bind using the controller_class or no-argument form of the resource and should match your
+This will now let you bind using the `controller_class` or no-argument form of the resource and should match your
 controller's vendor and product IDs to the existing controller class.

@@ -15,6 +15,10 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
 Contributors
 ------------
 
+- Tom Oinn (`\@approx_eng <https://twitter.com/approx_eng>`__) wrote and maintains the bulk of this library.
+
+- Keith Ellis (`\@PiTutorials <https://twitter.com/PiTutorials>`__) contributed initial support for Rock Candy
+  controllers.
 
 
 Getting the code
@@ -61,5 +65,3 @@ Contents
 .. _PiWars: http://piwars.org
 
 .. _PyGame: http://pygame.org
-
-.. _approx_eng: https://twitter.com/approx_eng

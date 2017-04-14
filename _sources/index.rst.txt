@@ -10,7 +10,7 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
     - Version 1.0.2 has support for the Rock Candy PS3 clones thanks to Keith Ellis.
 
     - Version 1.0.4 supports the Steam Controller from Valve, although it needs an extra third party user space driver (
-      see :ref:`steam-controler-label`)
+      see :ref:`steam-controller-label`)
 
 Getting the code
 ----------------

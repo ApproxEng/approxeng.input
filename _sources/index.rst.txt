@@ -26,7 +26,7 @@ You can install the code using pip, you'll have to add a few native libraries fi
 that particular python module against whatever underlying libraries your OS is using). I *strongly* recommend using a
 virtual environment (virtualenv) so you don't have to install python libraries as root.
 
-.. note:: Foo
+.. note::
 
     The controller support code is written in Python, but relies on some underlying operating system functionality which
     is exclusive to Linux based computers like the Pi. As a result, it won't work on Windows or OSX. If you need to

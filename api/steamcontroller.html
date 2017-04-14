@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview: module code &mdash; Approximate Engineering - Input 1.0.3 documentation</title>
+  <title>Steam Controller Support &mdash; Approximate Engineering - Input 1.0.3 documentation</title>
   
 
   
@@ -142,7 +142,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Overview: module code</li>
+      <li>Steam Controller Support</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -159,15 +159,41 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="approxeng/input.html">approxeng.input</a></li>
-<ul><li><a href="approxeng/input/dualshock3.html">approxeng.input.dualshock3</a></li>
-<li><a href="approxeng/input/dualshock4.html">approxeng.input.dualshock4</a></li>
-<li><a href="approxeng/input/rockcandy.html">approxeng.input.rockcandy</a></li>
-<li><a href="approxeng/input/selectbinder.html">approxeng.input.selectbinder</a></li>
-<li><a href="approxeng/input/steamcontroller.html">approxeng.input.steamcontroller</a></li>
-<li><a href="approxeng/input/xboxone.html">approxeng.input.xboxone</a></li>
-</ul></ul>
+  <div class="section" id="steam-controller-support">
+<span id="steam-controller-label"></span><h1>Steam Controller Support<a class="headerlink" href="#steam-controller-support" title="Permalink to this headline">¶</a></h1>
+<p>The Valve Steam controller is a strange beast, intended as it is to allow control of games which never expected to use
+a controller. Because of this the actual hardware and the way it interacts with the system is a little different to a
+regular game controller, and we have to use an additional driver which pulls information from the controller and pushes
+it to a virtual device to which we then bind.</p>
+<span class="target" id="module-approxeng.input.steamcontroller"></span><dl class="class">
+<dt id="approxeng.input.steamcontroller.SteamController">
+<em class="property">class </em><code class="descclassname">approxeng.input.steamcontroller.</code><code class="descname">SteamController</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wireless steam controller. Note that you must be running the xbox driver for the steam controller first, otherwise
+this won&#8217;t pick up any appropriate devices. Once this is running though it works just fine.</p>
+<dl class="method">
+<dt id="approxeng.input.steamcontroller.SteamController.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new steam controller</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
 
            </div>
            <div class="articleComments">

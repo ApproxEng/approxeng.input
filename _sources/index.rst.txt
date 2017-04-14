@@ -15,7 +15,8 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
 Contributors
 ------------
 
-- Tom Oinn (`\@approx_eng <https://twitter.com/approx_eng>`__) wrote and maintains the bulk of this library.
+- Tom Oinn (`\@approx_eng <https://twitter.com/approx_eng>`__) wrote and maintains the bulk of this library. Follow me
+  for updates!
 
 - Keith Ellis (`\@PiTutorials <https://twitter.com/PiTutorials>`__) contributed initial support for Rock Candy
   controllers.
@@ -44,8 +45,6 @@ virtual environment (virtualenv) so you don't have to install python libraries a
 
 To work with the code on other platforms you'll want to clone it from GitHub_, it's available under the ASL, the same as
 almost everything Python based. Documentation (this site) is generated using Sphinx.
-
-Follow me on twitter (`\@approx_eng <https://twitter.com/approx_eng>`__) for updates!
 
 Contents
 --------

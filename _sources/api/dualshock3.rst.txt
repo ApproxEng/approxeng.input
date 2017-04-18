@@ -1,5 +1,9 @@
 PlayStation 3 Controller Support
 ================================
 
+.. figure:: /images/ps3.jpg
+
+    DualShock 3 Controller
+
 .. automodule:: approxeng.input.dualshock3
     :members:

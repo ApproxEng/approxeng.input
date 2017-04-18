@@ -244,11 +244,13 @@ standard ones are as follows:</p>
 <h3>Button Names<a class="headerlink" href="#button-names" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="19%" />
-<col width="19%" />
-<col width="22%" />
-<col width="19%" />
-<col width="19%" />
+<col width="14%" />
+<col width="14%" />
+<col width="17%" />
+<col width="14%" />
+<col width="14%" />
+<col width="12%" />
+<col width="13%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td>Standard name</td>
@@ -256,32 +258,44 @@ standard ones are as follows:</p>
 <td>PS4</td>
 <td>XBoxOne</td>
 <td>Rock Candy</td>
+<td>Steam</td>
+<td>Wii Pro</td>
 </tr>
 <tr class="row-even"><td>square</td>
 <td>Square</td>
 <td>Square</td>
 <td>X</td>
 <td>4 Dot</td>
+<td>X</td>
+<td>Y</td>
 </tr>
 <tr class="row-odd"><td>triangle</td>
 <td>Triangle</td>
 <td>Triangle</td>
 <td>Y</td>
 <td>3 Dot</td>
+<td>Y</td>
+<td>X</td>
 </tr>
 <tr class="row-even"><td>circle</td>
 <td>Circle</td>
 <td>Circle</td>
 <td>B</td>
 <td>6 Dot</td>
+<td>B</td>
+<td>A</td>
 </tr>
 <tr class="row-odd"><td>cross</td>
 <td>Cross</td>
 <td>Cross</td>
 <td>A</td>
 <td>5 Dot</td>
+<td>A</td>
+<td>B</td>
 </tr>
 <tr class="row-even"><td>ls</td>
+<td>Left Stick</td>
+<td>Left Stick</td>
 <td>Left Stick</td>
 <td>Left Stick</td>
 <td>Left Stick</td>
@@ -292,11 +306,15 @@ standard ones are as follows:</p>
 <td>Right Stick</td>
 <td>Right Stick</td>
 <td>Right Stick</td>
+<td>Right Stick</td>
+<td>Right Stick</td>
 </tr>
 <tr class="row-even"><td>select</td>
 <td>Select</td>
 <td>Share</td>
 <td>View</td>
+<td>Select</td>
+<td>Left Arrow</td>
 <td>Select</td>
 </tr>
 <tr class="row-odd"><td>start</td>
@@ -304,14 +322,20 @@ standard ones are as follows:</p>
 <td>Options</td>
 <td>Menu</td>
 <td>Start</td>
+<td>Right Arrow</td>
+<td>Start</td>
 </tr>
 <tr class="row-even"><td>home</td>
 <td>PS</td>
 <td>PS</td>
 <td>XBox</td>
 <td>Home</td>
+<td>Steam</td>
+<td>Home</td>
 </tr>
 <tr class="row-odd"><td>dleft</td>
+<td>DPad Left</td>
+<td>DPad Left</td>
 <td>DPad Left</td>
 <td>DPad Left</td>
 <td>DPad Left</td>
@@ -322,8 +346,12 @@ standard ones are as follows:</p>
 <td>DPad Up</td>
 <td>DPad Up</td>
 <td>DPad Up</td>
+<td>DPad Up</td>
+<td>DPad Up</td>
 </tr>
 <tr class="row-odd"><td>dright</td>
+<td>DPad Right</td>
+<td>DPad Right</td>
 <td>DPad Right</td>
 <td>DPad Right</td>
 <td>DPad Right</td>
@@ -334,34 +362,46 @@ standard ones are as follows:</p>
 <td>DPad Down</td>
 <td>Dpad Down</td>
 <td>DPad Down</td>
+<td>DPad Down</td>
+<td>DPad Down</td>
 </tr>
 <tr class="row-odd"><td>l1</td>
 <td>L1 Trigger</td>
 <td>L1 Trigger</td>
 <td>LB Trigger</td>
 <td>L1 Trigger</td>
+<td>LB</td>
+<td>L</td>
 </tr>
 <tr class="row-even"><td>l2</td>
 <td>L2 Trigger</td>
 <td>L2 Trigger</td>
 <td>&#8212;</td>
 <td>L2 Trigger</td>
+<td>&#8212;</td>
+<td>LZ</td>
 </tr>
 <tr class="row-odd"><td>r1</td>
 <td>R1 Trigger</td>
 <td>R1 Trigger</td>
 <td>RB Trigger</td>
 <td>R1 Trigger</td>
+<td>RB</td>
+<td>R</td>
 </tr>
 <tr class="row-even"><td>r2</td>
 <td>R2 Trigger</td>
 <td>R2 Trigger</td>
 <td>&#8212;</td>
 <td>R2 Trigger</td>
+<td>&#8212;</td>
+<td>RZ</td>
 </tr>
 <tr class="row-odd"><td>ps4_pad</td>
 <td>&#8212;</td>
 <td>Trackpad</td>
+<td>&#8212;</td>
+<td>&#8212;</td>
 <td>&#8212;</td>
 <td>&#8212;</td>
 </tr>
@@ -369,8 +409,8 @@ standard ones are as follows:</p>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The lack of l2 and r2 for the XBoxOne controller is because these buttons don&#8217;t appear as buttons in the event
-stream. This is actually a fairly easy fix but in the current code you can&#8217;t access them as buttons.</p>
+<p class="last">The lack of l2 and r2 for the XBoxOne and Steam controllers is because these buttons don&#8217;t appear as buttons in the
+event stream. This is actually a fairly easy fix but in the current code you can&#8217;t access them as buttons.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -382,11 +422,13 @@ only use if you&#8217;re happy to be locked into this particular hardware.</p>
 <h3>Axis Names<a class="headerlink" href="#axis-names" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="20%" />
-<col width="20%" />
-<col width="23%" />
-<col width="20%" />
-<col width="16%" />
+<col width="15%" />
+<col width="15%" />
+<col width="17%" />
+<col width="15%" />
+<col width="11%" />
+<col width="15%" />
+<col width="11%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td>Standard name</td>
@@ -394,8 +436,12 @@ only use if you&#8217;re happy to be locked into this particular hardware.</p>
 <td>PS4</td>
 <td>XBoxOne</td>
 <td>Rock Candy</td>
+<td>Steam</td>
+<td>Wii Pro</td>
 </tr>
 <tr class="row-even"><td>lx</td>
+<td>Left X</td>
+<td>Left X</td>
 <td>Left X</td>
 <td>Left X</td>
 <td>Left X</td>
@@ -406,8 +452,12 @@ only use if you&#8217;re happy to be locked into this particular hardware.</p>
 <td>Left Y</td>
 <td>Left Y</td>
 <td>Left Y</td>
+<td>Left Y</td>
+<td>Left Y</td>
 </tr>
 <tr class="row-even"><td>rx</td>
+<td>Right X</td>
+<td>Right X</td>
 <td>Right X</td>
 <td>Right X</td>
 <td>Right X</td>
@@ -418,17 +468,23 @@ only use if you&#8217;re happy to be locked into this particular hardware.</p>
 <td>Right Y</td>
 <td>Right Y</td>
 <td>Right Y</td>
+<td>Right Y</td>
+<td>Right Y</td>
 </tr>
 <tr class="row-even"><td>lt</td>
 <td>&#8212;</td>
 <td>L2 Trigger</td>
 <td>LT Trigger</td>
 <td>&#8212;</td>
+<td>Left Trigger</td>
+<td>&#8212;</td>
 </tr>
 <tr class="row-odd"><td>rt</td>
 <td>&#8212;</td>
 <td>R2 Trigger</td>
 <td>RT Trigger</td>
+<td>&#8212;</td>
+<td>Right Trigger</td>
 <td>&#8212;</td>
 </tr>
 </tbody>

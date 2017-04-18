@@ -1,3 +1,5 @@
+.. _api_dualshock3:
+
 PlayStation 3 Controller Support
 ================================
 

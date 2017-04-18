@@ -1,3 +1,5 @@
+.. _api_dualshock4:
+
 PlayStation 4 Controller Support
 ================================
 

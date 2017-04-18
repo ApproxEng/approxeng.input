@@ -1,4 +1,4 @@
-.. _xbox-one-s-bluetooth-label:
+.. _api_xboxone:
 
 XBox-One S Controller Support
 =============================

@@ -1,3 +1,5 @@
+.. _api_wii:
+
 Wii Remote Pro Controller Support
 =================================
 

@@ -1,4 +1,4 @@
-.. _steam-controller-label:
+.. _api_steamcontroller:
 
 Steam Controller Support
 ========================

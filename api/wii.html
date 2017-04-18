@@ -189,6 +189,14 @@ on Linux Mint and Raspbian it&#8217;s at <cite>/usr/share/X11/xorg.conf.d/</cite
 need to search around a bit to locate it.</p>
 <p>You need to create a file in this directory, it can be any name ending with .conf (I use
 <cite>50-xorg-no-wiipro-joystick.conf</cite>) with the following contents:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Section &quot;InputClass&quot;
+Identifier &quot;Nintendo Wii Remote Pro Controller Blacklist&quot;
+MatchProduct &quot;Nintendo Wii Remote Pro Controller&quot;
+MatchDevicePath &quot;/dev/input/event*&quot;
+Option &quot;Ignore&quot; &quot;on&quot;
+EndSection
+</pre></div>
+</div>
 <p>This will blacklist the controller from acting as an input device for your desktop. If you&#8217;re using a clone of this
 controller rather than the original Nintendo one you may need to change the <cite>MatchProduct</cite> part of the file above to
 match whatever&#8217;s returned by the <cite>scripts/list_devices.py</cite> script.</p>

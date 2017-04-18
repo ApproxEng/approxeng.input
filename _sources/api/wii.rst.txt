@@ -16,7 +16,7 @@ need to search around a bit to locate it.
 You need to create a file in this directory, it can be any name ending with .conf (I use
 `50-xorg-no-wiipro-joystick.conf`) with the following contents:
 
-.. code-block::
+.. code-block:: none
 
     Section "InputClass"
     Identifier "Nintendo Wii Remote Pro Controller Blacklist"

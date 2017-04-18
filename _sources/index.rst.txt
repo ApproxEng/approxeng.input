@@ -20,7 +20,7 @@ Supported Controllers
 
 .. image:: images/ps3.jpg
    :width: 20%
-   :target: `PlayStation 3 Controller Support`_
+   :target: api/ps3
 
 .. image:: images/ps4.jpg
    :width: 20%

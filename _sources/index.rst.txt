@@ -15,8 +15,12 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
     - Version 1.0.5 adds support for the Wii Remote Pro from Nintendo - I'd have added the WiiMote at this point as well
       but my cheap clone was dead on arrival...
 
+Supported Controllers
+---------------------
+
 .. image:: images/ps3.jpg
    :width: 20%
+   :target: `PlayStation 3 Controller Support`_
 
 .. image:: images/ps4.jpg
    :width: 20%

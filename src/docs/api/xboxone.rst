@@ -1,7 +1,11 @@
-.. _xbox-one-s-bluetooth-label:
+.. _api_xboxone:
 
 XBox-One S Controller Support
 =============================
+
+.. figure:: /images/xbox-one.jpg
+
+    XBox-One S Controller
 
 The XBox One S controller (the most modern, with bluetooth support) can be used without any dongles, but you will have
 to change a configuration option in the bluetooth driver. This is done by creating a file in `/etc/modprobe.d/`. The

@@ -20,7 +20,7 @@ while 1:
         # keyword args are passed through to the constructor of the controller class, so if you know exactly what class
         # you're using (because you've supplied a controller_class argument here) you can provide controller-specific
         # configuration in your resource. Setting controller_class to None just means 'find whatever joystick you can'
-        with ControllerResource(print_events=False, controller_class=None, hot_zone=0.0, dead_zone=0.1) as controller:
+        with ControllerResource(print_events=False, controller_class=None, hot_zone=0.1, dead_zone=0.1) as controller:
             # We've got a joystick, loop forever
             while 1:
                 # The next line is used to extract all buttons which were pressed since the last time this call was

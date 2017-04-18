@@ -31,7 +31,7 @@ Constructing and Binding a Controller
 Once your controller is physically connected to the computer (whether by USB, bluetooth or magic) and you have a
 corresponding entry in the dev filesystem, you need to create an object to receive and interpret events from the
 hardware, and you need to set up a mechanism by which events will be sent to that object. The object in this case will
-be a subclass of :class:`approxeng.input.Controller`, currently there are three implementations:
+be a subclass of :class:`approxeng.input.Controller`, currently there are six supported controllers:
 
 - :class:`approxeng.input.dualshock3.DualShock3` handles PS3 controllers
 
@@ -47,6 +47,10 @@ be a subclass of :class:`approxeng.input.Controller`, currently there are three 
 - :class:`approxeng.input.steamcontroller.SteamController` for the Valve Steam controller. This is a bit of a strange
   one, and you'll need to be running a driver which creates a virtual XBox360 device to use it, but it does work. See
   :ref:`steam-controller-label` for details.
+
+- :class:`approxeng.input.wii.WiiRemotePro` for the Nintendo Wii Remote Pro. If you're running in a graphical
+  environment you'll probably want to disable the default behaviour where the left stick controls the mouse - see
+  :ref:`wii-remote-pro-label` for instructions.
 
 In general you will not explicitly create these objects yourself, instead you can use the binding layer to discover a
 connected controller (optionally supplying a particular kind of controller you want, otherwise it just finds the first
@@ -78,53 +82,60 @@ standard ones are as follows:
 Button Names
 ************
 
-=============  =============  ===============  =============  =============
-Standard name  PS3            PS4              XBoxOne        Rock Candy
--------------  -------------  ---------------  -------------  -------------
-square         Square         Square           X              4 Dot
-triangle       Triangle       Triangle         Y              3 Dot
-circle         Circle         Circle           B              6 Dot
-cross          Cross          Cross            A              5 Dot
-ls             Left Stick     Left Stick       Left Stick     Left Stick
-rs             Right Stick    Right Stick      Right Stick    Right Stick
-select         Select         Share            View           Select
-start          Start          Options          Menu           Start
-home           PS             PS               XBox           Home
-dleft          DPad Left      DPad Left        DPad Left      DPad Left
-dup            DPad Up        DPad Up          DPad Up        DPad Up
-dright         DPad Right     DPad Right       DPad Right     DPad Right
-ddown          DPad Down      DPad Down        Dpad Down      DPad Down
-l1             L1 Trigger     L1 Trigger       LB Trigger     L1 Trigger
-l2             L2 Trigger     L2 Trigger       ---            L2 Trigger
-r1             R1 Trigger     R1 Trigger       RB Trigger     R1 Trigger
-r2             R2 Trigger     R2 Trigger       ---            R2 Trigger
-ps4_pad        ---            Trackpad         ---            ---
-=============  =============  ===============  =============  =============
+=============  =============  ===============  =============  =============  ===========  ============
+Standard name  PS3            PS4              XBoxOne        Rock Candy     Steam        Wii Pro
+-------------  -------------  ---------------  -------------  -------------  -----------  ------------
+square         Square         Square           X              4 Dot          X            Y
+triangle       Triangle       Triangle         Y              3 Dot          Y            X
+circle         Circle         Circle           B              6 Dot          B            A
+cross          Cross          Cross            A              5 Dot          A            B
+ls             Left Stick     Left Stick       Left Stick     Left Stick     Left Stick   Left Stick
+rs             Right Stick    Right Stick      Right Stick    Right Stick    Right Stick  Right Stick
+select         Select         Share            View           Select         Left Arrow   Select
+start          Start          Options          Menu           Start          Right Arrow  Start
+home           PS             PS               XBox           Home           Steam        Home
+dleft          DPad Left      DPad Left        DPad Left      DPad Left      DPad Left    DPad Left
+dup            DPad Up        DPad Up          DPad Up        DPad Up        DPad Up      DPad Up
+dright         DPad Right     DPad Right       DPad Right     DPad Right     DPad Right   DPad Right
+ddown          DPad Down      DPad Down        Dpad Down      DPad Down      DPad Down    DPad Down
+l1             L1 Trigger     L1 Trigger       LB Trigger     L1 Trigger     LB           L
+l2             L2 Trigger     L2 Trigger       ---            L2 Trigger     ---          LZ
+r1             R1 Trigger     R1 Trigger       RB Trigger     R1 Trigger     RB           R
+r2             R2 Trigger     R2 Trigger       ---            R2 Trigger     ---          RZ
+ps4_pad        ---            Trackpad         ---            ---            ---          ---
+=============  =============  ===============  =============  =============  ===========  ============
 
 
 .. note::
 
-    The lack of l2 and r2 for the XBoxOne controller is because these buttons don't appear as buttons in the event
-    stream. This is actually a fairly easy fix but in the current code you can't access them as buttons.
+    The lack of l2 and r2 for the XBoxOne and Steam controllers is because these buttons don't appear as buttons in the
+    event stream. This is actually a fairly easy fix but in the current code you can't access them as buttons.
 
 .. note::
 
     The DualShock4 trackpad only works as a single button. It doesn't have an equivalent on the other controllers so
     only use if you're happy to be locked into this particular hardware.
 
+.. note::
+
+    Yes, the Wii Remote Pro buttons really are that way around. Although it has the same buttons as an XBox controller
+    they're in different locations. The standard names are set to prioritise location (and therefore kinetic memory)
+    so, for example, the 'X' button on the Wii Remote Pro is in the same place as the triangle button on the PS3 and PS4
+    so we call it 'triangle', whereas the XBox controller has a `Y` button there instead.
+
 Axis Names
 **********
 
-=============  =============  ===============  =============  ==========
-Standard name  PS3            PS4              XBoxOne        Rock Candy
--------------  -------------  ---------------  -------------  ----------
-lx             Left X         Left X           Left X         Left X
-ly             Left Y         Left Y           Left Y         Left Y
-rx             Right X        Right X          Right X        Right X
-ry             Right Y        Right Y          Right Y        Right Y
-lt             ---            L2 Trigger       LT Trigger     ---
-rt             ---            R2 Trigger       RT Trigger     ---
-=============  =============  ===============  =============  ==========
+=============  =============  ===============  =============  ==========  =============  ==========
+Standard name  PS3            PS4              XBoxOne        Rock Candy  Steam          Wii Pro
+-------------  -------------  ---------------  -------------  ----------  -------------  ----------
+lx             Left X         Left X           Left X         Left X      Left X         Left X
+ly             Left Y         Left Y           Left Y         Left Y      Left Y         Left Y
+rx             Right X        Right X          Right X        Right X     Right X        Right X
+ry             Right Y        Right Y          Right Y        Right Y     Right Y        Right Y
+lt             ---            L2 Trigger       LT Trigger     ---         Left Trigger   ---
+rt             ---            R2 Trigger       RT Trigger     ---         Right Trigger  ---
+=============  =============  ===============  =============  ==========  =============  ==========
 
 
 .. note::

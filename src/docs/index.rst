@@ -10,7 +10,32 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
     - Version 1.0.2 has support for the Rock Candy PS3 clones thanks to Keith Ellis.
 
     - Version 1.0.4 supports the Steam Controller from Valve, although it needs an extra third party user space driver
-      (see :ref:`steam-controller-label`)
+      (see :ref:`api_steamcontroller`)
+
+    - Version 1.0.5 adds support for the Wii Remote Pro from Nintendo - I'd have added the WiiMote at this point as well
+      but my cheap clone was dead on arrival...
+
+Supported Controllers
+---------------------
+
+.. image:: images/ps3.jpg
+   :width: 20%
+
+.. image:: images/ps4.jpg
+   :width: 20%
+
+.. image:: images/rock-candy.jpg
+   :width: 20%
+
+.. image:: images/xbox-one.jpg
+   :width: 20%
+
+.. image:: images/steam-controller.jpg
+   :width: 20%
+
+.. image:: images/wii-pro.jpg
+   :width: 20%
+
 
 Contributors
 ------------

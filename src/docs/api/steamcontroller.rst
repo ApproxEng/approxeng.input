@@ -1,7 +1,11 @@
-.. _steam-controller-label:
+.. _api_steamcontroller:
 
 Steam Controller Support
 ========================
+
+.. figure:: /images/steam-controller.jpg
+
+    Steam Controller
 
 The Valve Steam controller is a strange beast, intended as it is to allow control of games which never expected to use
 a controller. Because of this the actual hardware and the way it interacts with the system is a little different to a

@@ -21,10 +21,10 @@ Supported Controllers
 .. image:: images/ps3.jpg
    :width: 20%
 
-.. figure:: images/ps4.jpg
+.. image:: images/ps4.jpg
    :width: 20%
 
-.. figure:: images/rock-candy.jpg
+.. image:: images/rock-candy.jpg
    :width: 20%
 
 .. image:: images/xbox-one.jpg

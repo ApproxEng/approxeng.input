@@ -116,6 +116,13 @@ ps4_pad        ---            Trackpad         ---            ---            ---
     The DualShock4 trackpad only works as a single button. It doesn't have an equivalent on the other controllers so
     only use if you're happy to be locked into this particular hardware.
 
+.. note::
+
+    Yes, the Wii Remote Pro buttons really are that way around. Although it has the same buttons as an XBox controller
+    they're in different locations. The standard names are set to prioritise location (and therefore kinetic memory)
+    so, for example, the 'X' button on the Wii Remote Pro is in the same place as the triangle button on the PS3 and PS4
+    so we call it 'triangle', whereas the XBox controller has a `Y` button there instead.
+
 Axis Names
 **********
 

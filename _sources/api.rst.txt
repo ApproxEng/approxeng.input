@@ -15,3 +15,4 @@ largely self explanatory although you'll need at least a reasonable level of Pyt
     api/xboxone
     api/rockcandy
     api/steamcontroller
+    api/wii

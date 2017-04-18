@@ -31,7 +31,7 @@ Constructing and Binding a Controller
 Once your controller is physically connected to the computer (whether by USB, bluetooth or magic) and you have a
 corresponding entry in the dev filesystem, you need to create an object to receive and interpret events from the
 hardware, and you need to set up a mechanism by which events will be sent to that object. The object in this case will
-be a subclass of :class:`approxeng.input.Controller`, currently there are three implementations:
+be a subclass of :class:`approxeng.input.Controller`, currently there are six supported controllers:
 
 - :class:`approxeng.input.dualshock3.DualShock3` handles PS3 controllers
 
@@ -47,6 +47,10 @@ be a subclass of :class:`approxeng.input.Controller`, currently there are three 
 - :class:`approxeng.input.steamcontroller.SteamController` for the Valve Steam controller. This is a bit of a strange
   one, and you'll need to be running a driver which creates a virtual XBox360 device to use it, but it does work. See
   :ref:`steam-controller-label` for details.
+
+- :class:`approxeng.input.wii.WiiRemotePro` for the Nintendo Wii Remote Pro. If you're running in a graphical
+  environment you'll probably want to disable the default behaviour where the left stick controls the mouse - see
+  :ref:`wii-remote-pro-label` for instructions.
 
 In general you will not explicitly create these objects yourself, instead you can use the binding layer to discover a
 connected controller (optionally supplying a particular kind of controller you want, otherwise it just finds the first

@@ -204,7 +204,7 @@ how long a button has been held down.</li>
 <p>Once your controller is physically connected to the computer (whether by USB, bluetooth or magic) and you have a
 corresponding entry in the dev filesystem, you need to create an object to receive and interpret events from the
 hardware, and you need to set up a mechanism by which events will be sent to that object. The object in this case will
-be a subclass of <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Controller</span></code></a>, currently there are three implementations:</p>
+be a subclass of <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Controller</span></code></a>, currently there are six supported controllers:</p>
 <ul class="simple">
 <li><a class="reference internal" href="api/dualshock3.html#approxeng.input.dualshock3.DualShock3" title="approxeng.input.dualshock3.DualShock3"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.dualshock3.DualShock3</span></code></a> handles PS3 controllers</li>
 <li><a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4" title="approxeng.input.dualshock4.DualShock4"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.dualshock4.DualShock4</span></code></a> is for PS4 controllers</li>
@@ -216,6 +216,9 @@ a PS3 controller, but has the controls of a PS4 one!). Contribution from Keith E
 <li><a class="reference internal" href="api/steamcontroller.html#approxeng.input.steamcontroller.SteamController" title="approxeng.input.steamcontroller.SteamController"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.steamcontroller.SteamController</span></code></a> for the Valve Steam controller. This is a bit of a strange
 one, and you&#8217;ll need to be running a driver which creates a virtual XBox360 device to use it, but it does work. See
 <a class="reference internal" href="api/steamcontroller.html#steam-controller-label"><span class="std std-ref">Steam Controller Support</span></a> for details.</li>
+<li><a class="reference internal" href="api/wii.html#approxeng.input.wii.WiiRemotePro" title="approxeng.input.wii.WiiRemotePro"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.wii.WiiRemotePro</span></code></a> for the Nintendo Wii Remote Pro. If you&#8217;re running in a graphical
+environment you&#8217;ll probably want to disable the default behaviour where the left stick controls the mouse - see
+<a class="reference internal" href="api/wii.html#wii-remote-pro-label"><span class="std std-ref">Disabling &#8216;Stick as Mouse&#8217; functionality</span></a> for instructions.</li>
 </ul>
 <p>In general you will not explicitly create these objects yourself, instead you can use the binding layer to discover a
 connected controller (optionally supplying a particular kind of controller you want, otherwise it just finds the first
@@ -622,7 +625,7 @@ controller, and will run around in a loop printing the corrected value of the le
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, Tom Oinn.
-      Last updated on Apr 14, 2017.
+      Last updated on Apr 18, 2017.
 
     </p>
   </div>

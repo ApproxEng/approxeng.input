@@ -179,9 +179,15 @@
             
   <div class="section" id="wii-remote-pro-controller-support">
 <h1>Wii Remote Pro Controller Support<a class="headerlink" href="#wii-remote-pro-controller-support" title="Permalink to this headline">¶</a></h1>
+<p>Version 1.0.5 adds support for the Wii Remote Pro controller - this is the one that looks like a regular game controller
+and not the motion sensing wand thing.</p>
+<div class="figure" id="id1">
+<img alt="api/images/wii-pro.jpg" src="api/images/wii-pro.jpg" />
+<p class="caption"><span class="caption-text">Wii-Pro Remote</span></p>
+</div>
 <div class="section" id="disabling-stick-as-mouse-functionality">
 <span id="wii-remote-pro-label"></span><h2>Disabling &#8216;Stick as Mouse&#8217; functionality<a class="headerlink" href="#disabling-stick-as-mouse-functionality" title="Permalink to this headline">¶</a></h2>
-<p>If you pair your Wii Remote Pro controller under linux within a graphical environment you may find that your mouse
+<p>If you pair your Wii Remote Pro controller under Linux within a graphical environment you may find that your mouse
 suddenly starts behaving strangely. This is because on modern Linux distributions the system will treat the left stick
 on your controller as a mouse. That&#8217;s quite neat, but probably not what you want. To prevent this happening you need
 to create, as root, a file in <cite>xorg.conf.d</cite> - the exact location of this file depends on your distribution, for example

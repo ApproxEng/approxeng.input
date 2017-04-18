@@ -18,14 +18,15 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
 Supported Controllers
 ---------------------
 
-.. image:: images/ps3.jpg
-   :width: 20%
-   :target: api_steamcontroller_
-
-.. image:: images/ps4.jpg
+.. figure:: images/ps3.jpg
    :width: 20%
 
-.. image:: images/rock-candy.jpg
+   :ref:`api_steamcontroller`
+
+.. figure:: images/ps4.jpg
+   :width: 20%
+
+.. figure:: images/rock-candy.jpg
    :width: 20%
 
 .. image:: images/xbox-one.jpg

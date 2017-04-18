@@ -20,7 +20,7 @@ Supported Controllers
 
 .. image:: images/ps3.jpg
    :width: 20%
-   :target: api/ps3
+   :target: `api_dualshock3`_
 
 .. image:: images/ps4.jpg
    :width: 20%

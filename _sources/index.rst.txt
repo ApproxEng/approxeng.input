@@ -12,6 +12,9 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
     - Version 1.0.4 supports the Steam Controller from Valve, although it needs an extra third party user space driver
       (see :ref:`steam-controller-label`)
 
+    - Version 1.0.5 adds support for the Wii Remote Pro from Nintendo - I'd have added the WiiMote at this point as well
+      but my cheap clone was dead on arrival...
+
 Contributors
 ------------
 

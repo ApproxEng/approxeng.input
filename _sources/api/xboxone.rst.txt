@@ -3,6 +3,10 @@
 XBox-One S Controller Support
 =============================
 
+.. figure:: /images/xbox-one.jpg
+
+    XBox-One S Controller
+
 The XBox One S controller (the most modern, with bluetooth support) can be used without any dongles, but you will have
 to change a configuration option in the bluetooth driver. This is done by creating a file in `/etc/modprobe.d/`. The
 file can be called anything, you'll need to be root to create it, and must specify a single line. In my case I used

@@ -4,7 +4,7 @@ Wii Remote Pro Controller Support
 Version 1.0.5 adds support for the Wii Remote Pro controller - this is the one that looks like a regular game controller
 and not the motion sensing wand thing.
 
-.. figure:: images/wii-pro.jpg
+.. figure:: /images/wii-pro.jpg
 
     Wii-Pro Remote
 

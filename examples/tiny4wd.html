@@ -163,9 +163,259 @@
             
   <div class="section" id="example-tiny4wd-robot-drive">
 <h1>Example - Tiny4WD Robot Drive<a class="headerlink" href="#example-tiny4wd-robot-drive" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">include</span><span class="p">::</span> <span class="o">../../../</span><span class="n">scripts</span><span class="o">/</span><span class="n">tiny4wd_drive</span><span class="o">.</span><span class="n">py</span>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Code for Brian Corteil&#39;s Tiny 4WD robot, based on code from Brian as modified by Emma Norling.</span>
+<span class="c1"># Subsequently modified by Tom Oinn to add dummy functions when no explorer hat is available,</span>
+<span class="c1"># use any available joystick, use the new function in 1.0.6 of approxeng.input to get multiple</span>
+<span class="c1"># axis values in a single call, use implicit de-structuring of tuples to reduce verbosity, add</span>
+<span class="c1"># an exception to break out of the control loop on pressing HOME etc.</span>
+
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Attempt to import the Explorer HAT library. If this fails, because we&#39;re running somewhere</span>
+    <span class="c1"># that doesn&#39;t have the library, we create dummy functions for set_speeds and stop_motors which</span>
+    <span class="c1"># just print out what they&#39;d have done. This is a fairly common way to deal with hardware that</span>
+    <span class="c1"># may or may not exist! Obviously if you&#39;re actually running this on one of Brian&#39;s robots you</span>
+    <span class="c1"># should have the Explorer HAT libraries installed, this is really just so I can test on my big</span>
+    <span class="c1"># linux desktop machine when coding.</span>
+
+    <span class="kn">from</span> <span class="nn">explorerhat</span> <span class="kn">import</span> <span class="n">motor</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Explorer HAT library available.&#39;</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">set_speeds</span><span class="p">(</span><span class="n">power_left</span><span class="p">,</span> <span class="n">power_right</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        As we have an motor hat, we can use the motors</span>
+<span class="sd">        </span>
+<span class="sd">        :param power_left: </span>
+<span class="sd">            Power to send to left motor</span>
+<span class="sd">        :param power_right: </span>
+<span class="sd">            Power to send to right motor, will be inverted to reflect chassis layout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">motor</span><span class="o">.</span><span class="n">one</span><span class="o">.</span><span class="n">speed</span><span class="p">(</span><span class="o">-</span><span class="n">power_right</span><span class="p">)</span>
+        <span class="n">motor</span><span class="o">.</span><span class="n">two</span><span class="o">.</span><span class="n">speed</span><span class="p">(</span><span class="n">power_left</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">stop_motors</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        As we have an motor hat, stop the motors using their motors call</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">motor</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;No explorer HAT library available, using dummy functions.&#39;</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">set_speeds</span><span class="p">(</span><span class="n">power_left</span><span class="p">,</span> <span class="n">power_right</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        No motor hat - print what we would have sent to it if we&#39;d had one.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Left: {}, Right: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">power_left</span><span class="p">,</span> <span class="n">power_right</span><span class="p">))</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">stop_motors</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        No motor hat, so just print a message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Motors stopping&#39;</span><span class="p">)</span>
+
+<span class="c1"># All we need, as we don&#39;t care which controller we bind to, is the ControllerResource</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+
+
+<span class="k">class</span> <span class="nc">RobotStopException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The simplest possible subclass of Exception, we&#39;ll raise this if we want to stop the robot</span>
+<span class="sd">    for any reason. Creating a custom exception like this makes the code more readable later.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">mixer</span><span class="p">(</span><span class="n">yaw</span><span class="p">,</span> <span class="n">throttle</span><span class="p">,</span> <span class="n">max_power</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Mix a pair of joystick axes, returning a pair of wheel speeds. This is where the mapping from</span>
+<span class="sd">    joystick positions to wheel powers is defined, so any changes to how the robot drives should</span>
+<span class="sd">    be made here, everything else is really just plumbing.</span>
+<span class="sd">    </span>
+<span class="sd">    :param yaw: </span>
+<span class="sd">        Yaw axis value, ranges from -1.0 to 1.0</span>
+<span class="sd">    :param throttle: </span>
+<span class="sd">        Throttle axis value, ranges from -1.0 to 1.0</span>
+<span class="sd">    :param max_power: </span>
+<span class="sd">        Maximum speed that should be returned from the mixer, defaults to 100</span>
+<span class="sd">    :return: </span>
+<span class="sd">        A pair of power_left, power_right integer values to send to the motor driver</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">left</span> <span class="o">=</span> <span class="n">throttle</span> <span class="o">+</span> <span class="n">yaw</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="n">throttle</span> <span class="o">-</span> <span class="n">yaw</span>
+    <span class="n">scale</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">max_power</span><span class="p">)</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">left</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">right</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">left</span> <span class="o">*</span> <span class="n">scale</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">right</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span>
+
+
+<span class="c1"># Outer try / except catches the RobotStopException we just defined, which we&#39;ll raise when we want to</span>
+<span class="c1"># bail out of the loop cleanly, shutting the motors down. We can raise this in response to a button press</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="c1"># Inner try / except is used to wait for a controller to become available, at which point we</span>
+        <span class="c1"># bind to it and enter a loop where we read axis values and send commands to the motors.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Bind to any available joystick, this will use whatever&#39;s connected as long as the library</span>
+            <span class="c1"># supports it.</span>
+            <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Controller found, press HOME button to exit, use left stick to drive.&#39;</span><span class="p">)</span>
+                <span class="c1"># Loop forever, or at least until we raise an exception because we want to stop</span>
+                <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+                    <span class="c1"># Get joystick values from the left analogue stick</span>
+                    <span class="n">x_axis</span><span class="p">,</span> <span class="n">y_axis</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">get_axis_values</span><span class="p">(</span><span class="s1">&#39;lx&#39;</span><span class="p">,</span> <span class="s1">&#39;ly&#39;</span><span class="p">)</span>
+                    <span class="c1"># Get power from mixer function</span>
+                    <span class="n">power_left</span><span class="p">,</span> <span class="n">power_right</span> <span class="o">=</span> <span class="n">mixer</span><span class="p">(</span><span class="n">yaw</span><span class="o">=</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">throttle</span><span class="o">=</span><span class="n">y_axis</span><span class="p">)</span>
+                    <span class="c1"># Set motor speeds</span>
+                    <span class="n">set_speeds</span><span class="p">(</span><span class="n">power_left</span><span class="p">,</span> <span class="n">power_right</span><span class="p">)</span>
+                    <span class="c1"># Get a ButtonPresses object containing everything that was pressed since the last</span>
+                    <span class="c1"># time around this loop.</span>
+                    <span class="n">button_presses</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">get_and_clear_button_press_history</span><span class="p">()</span>
+                    <span class="c1"># If home was pressed, raise a RobotStopException to bail out of the loop</span>
+                    <span class="c1"># Home is generally the PS button for playstation controllers, XBox for XBox etc</span>
+                    <span class="k">if</span> <span class="n">button_presses</span><span class="o">.</span><span class="n">was_pressed</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">):</span>
+                        <span class="k">raise</span> <span class="n">RobotStopException</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="c1"># We get an IOError when using the ControllerResource if we don&#39;t have a controller yet, so in this</span>
+            <span class="c1"># case we just wait a second and try again after printing a message.</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;No controller found yet&#39;</span><span class="p">)</span>
+            <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">RobotStopException</span><span class="p">:</span>
+    <span class="c1"># This exception will be raised when the home button is pressed, at which point we should stop the motors.</span>
+    <span class="n">stop_motors</span><span class="p">()</span>
 </pre></div>
-</div>
+</td></tr></table></div>
 </div>
 
 

@@ -1,6 +1,6 @@
 Example - Tiny4WD Robot Drive
 =============================
 
-.. code-block:: python
-
-    .. include:: ../../../scripts/tiny4wd_drive.py
+.. literalinclude:: ../../../scripts/tiny4wd_drive.py
+    :language: python
+    :linenos:

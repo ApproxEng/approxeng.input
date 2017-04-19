@@ -220,9 +220,43 @@ to bind event handlers to buttons.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="approxeng.input.Controller.get_axis_value">
+<code class="descname">get_axis_value</code><span class="sig-paren">(</span><em>sname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.get_axis_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.get_axis_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a single corrected axis value for a given standard name</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sname</strong> &#8211; The standard name of the axis to read</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A value, the range of which is determined by the type of axis. For centered axes it will be -1 to 1, for
+triggers it&#8217;ll be 0 to 1.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="approxeng.input.Controller.get_axis_values">
+<code class="descname">get_axis_values</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.get_axis_values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.get_axis_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve multiple axis values in one call</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> &#8211; Any number of axis standard names</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A tuple of the equivalent values read from the axes</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="approxeng.input.Controller.handle_evdev_event">
 <code class="descname">handle_evdev_event</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.handle_evdev_event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.handle_evdev_event" title="Permalink to this definition">¶</a></dt>
-<dd><p>Process an event from evdev, using it to update the axis or button information in the controller.</p>
+<dd><p>Process an event from evdev, using it to update the axis or button information in the controller. This function
+is called by the binder to process events.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -743,7 +777,7 @@ binding is required.</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, Tom Oinn.
-      Last updated on Apr 18, 2017.
+      Last updated on Apr 19, 2017.
 
     </p>
   </div>

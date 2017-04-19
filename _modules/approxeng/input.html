@@ -316,7 +316,8 @@
 
 <div class="viewcode-block" id="Controller.handle_evdev_event"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.handle_evdev_event">[docs]</a>    <span class="k">def</span> <span class="nf">handle_evdev_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Process an event from evdev, using it to update the axis or button information in the controller.</span>
+<span class="sd">        Process an event from evdev, using it to update the axis or button information in the controller. This function</span>
+<span class="sd">        is called by the binder to process events.</span>
 
 <span class="sd">        :param event:</span>
 <span class="sd">            The evdev event to handle</span>
@@ -332,8 +333,28 @@
                 <span class="c1"># Button up</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_released</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">code</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">get_axis_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">sname</span><span class="p">)</span>
+<div class="viewcode-block" id="Controller.get_axis_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.get_axis_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_axis_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a single corrected axis value for a given standard name</span>
+<span class="sd">        </span>
+<span class="sd">        :param sname: </span>
+<span class="sd">            The standard name of the axis to read</span>
+<span class="sd">        :return: </span>
+<span class="sd">            A value, the range of which is determined by the type of axis. For centered axes it will be -1 to 1, for</span>
+<span class="sd">            triggers it&#39;ll be 0 to 1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">sname</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Controller.get_axis_values"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.get_axis_values">[docs]</a>    <span class="k">def</span> <span class="nf">get_axis_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve multiple axis values in one call</span>
+<span class="sd">        </span>
+<span class="sd">        :param args: </span>
+<span class="sd">            Any number of axis standard names</span>
+<span class="sd">        :return: </span>
+<span class="sd">            A tuple of the equivalent values read from the axes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">sname</span><span class="p">)</span> <span class="k">for</span> <span class="n">sname</span> <span class="ow">in</span> <span class="n">args</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">, axes=</span><span class="si">{}</span><span class="s2">, buttons=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
@@ -890,7 +911,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, Tom Oinn.
-      Last updated on Apr 18, 2017.
+      Last updated on Apr 19, 2017.
 
     </p>
   </div>

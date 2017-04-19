@@ -326,5 +326,26 @@ controller, and will run around in a loop printing the corrected value of the le
             # Don't be too spammy!
             sleep(0.1)
 
+Reading multiple axes in one call
+---------------------------------
+
+From version 1.0.6 the :class:`approxeng.input.Controller` class exposes the method from the
+:class:`approxeng.input.Axes` object to read axis values and introduces a new method to read multiple values in asingle
+call. It returns a tuple of values, so you can use Python's implicit decomposition to do e.g.:
+
+.. code-block:: python
+    from approxeng.input.selectbinder import ControllerResource
+    from time import sleep
+
+    # Bind to the first available controller of any kind
+    with ControllerResource(dead_zone=0.1, hot_zone=0.2) as joystick:
+        while 1:
+            # Loop, printing the corrected value from the left stick X and Y axes
+            x, y = joystick.get_axis_values('lx', 'ly')
+            print('Left stick: x={}, y={}'.format(x,y))
+            # Don't be too spammy!
+            sleep(0.1)
+
+
 
 .. _pitutorials: https://twitter.com/pitutorials

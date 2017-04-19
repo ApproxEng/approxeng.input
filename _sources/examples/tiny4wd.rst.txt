@@ -1,5 +1,5 @@
-Example - Tiny4WD Robot Drive
-=============================
+Tiny4WD Robot Drive
+===================
 
 .. literalinclude:: ../../../scripts/tiny4wd_drive.py
     :language: python

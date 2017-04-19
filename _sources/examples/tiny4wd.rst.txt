@@ -8,6 +8,8 @@ pirates at `\@pimoroni <https://twitter.com/pimoroni>`__ from
 few extra bits and pieces needed in case you're running without the robot libraries, how to use this library to drive
 it around. The left analogue stick controls the robot, and the HOME button exits.
 
+.. image:: tiny4wd.jpg
+
 .. literalinclude:: ../../../scripts/tiny4wd_drive.py
     :language: python
     :linenos:

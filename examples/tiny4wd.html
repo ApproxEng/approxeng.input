@@ -288,7 +288,8 @@
 123
 124
 125
-126</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Code for Brian Corteil&#39;s Tiny 4WD robot, based on code from Brian as modified by Emma Norling.</span>
+126
+127</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Code for Brian Corteil&#39;s Tiny 4WD robot, based on code from Brian as modified by Emma Norling.</span>
 <span class="c1"># Subsequently modified by Tom Oinn to add dummy functions when no explorer hat is available,</span>
 <span class="c1"># use any available joystick, use the new function in 1.0.6 of approxeng.input to get multiple</span>
 <span class="c1"># axis values in a single call, use implicit de-structuring of tuples to reduce verbosity, add</span>
@@ -407,12 +408,13 @@
                     <span class="k">if</span> <span class="n">button_presses</span><span class="o">.</span><span class="n">was_pressed</span><span class="p">(</span><span class="s1">&#39;home&#39;</span><span class="p">):</span>
                         <span class="k">raise</span> <span class="n">RobotStopException</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
-            <span class="c1"># We get an IOError when using the ControllerResource if we don&#39;t have a controller yet, so in this</span>
-            <span class="c1"># case we just wait a second and try again after printing a message.</span>
+            <span class="c1"># We get an IOError when using the ControllerResource if we don&#39;t have a controller yet,</span>
+            <span class="c1"># so in this case we just wait a second and try again after printing a message.</span>
             <span class="k">print</span><span class="p">(</span><span class="s1">&#39;No controller found yet&#39;</span><span class="p">)</span>
             <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">except</span> <span class="n">RobotStopException</span><span class="p">:</span>
-    <span class="c1"># This exception will be raised when the home button is pressed, at which point we should stop the motors.</span>
+    <span class="c1"># This exception will be raised when the home button is pressed, at which point we should</span>
+    <span class="c1"># stop the motors.</span>
     <span class="n">stop_motors</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>

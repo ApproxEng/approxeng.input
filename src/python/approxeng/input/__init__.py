@@ -151,7 +151,8 @@ class Controller(object):
 
     def handle_evdev_event(self, event):
         """
-        Process an event from evdev, using it to update the axis or button information in the controller.
+        Process an event from evdev, using it to update the axis or button information in the controller. This function
+        is called by the binder to process events.
 
         :param event:
             The evdev event to handle
@@ -168,7 +169,27 @@ class Controller(object):
                 self.buttons.button_released(event.code)
 
     def get_axis_value(self, sname):
+        """
+        Get a single corrected axis value for a given standard name
+        
+        :param sname: 
+            The standard name of the axis to read
+        :return: 
+            A value, the range of which is determined by the type of axis. For centered axes it will be -1 to 1, for
+            triggers it'll be 0 to 1.
+        """
         return self.axes.get_value(sname)
+
+    def get_axis_values(self, *args):
+        """
+        Retrieve multiple axis values in one call
+        
+        :param args: 
+            Any number of axis standard names
+        :return: 
+            A tuple of the equivalent values read from the axes
+        """
+        return (self.axes.get_value(sname) for sname in args)
 
     def __str__(self):
         return "{}, axes={}, buttons={}".format(self.__class__.__name__, self.axes, self.buttons.buttons.keys())

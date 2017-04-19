@@ -83,6 +83,7 @@ Contents
     dualshock3
     api
     addingcontrollers
+    examples
 
 .. _GitHub: https://github.com/ApproxEng/approxeng.input
 

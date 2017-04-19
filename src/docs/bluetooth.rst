@@ -10,7 +10,7 @@ Pairing Controllers over Bluetooth
 
     The XBox One S controller is the only XBox controller with bluetooth support. This won't work for regular (older)
     XBox wireless controllers. In addition, there's a bit of setup required before the bluetooth stack will stay
-    connected to the controller, see :ref:`xbox-one-s-bluetooth-label` for instructions.
+    connected to the controller, see :ref:`api_xboxone` for instructions.
 
 This guide will show you how to discover and pair with a bluetooth device entirely using the command line. Because this
 is a one-time process (controllers will, once paired, connect automatically) you could use the graphical tools to pair

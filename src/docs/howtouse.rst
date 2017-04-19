@@ -46,7 +46,7 @@ be a subclass of :class:`approxeng.input.Controller`, currently there are six su
 
 - :class:`approxeng.input.steamcontroller.SteamController` for the Valve Steam controller. This is a bit of a strange
   one, and you'll need to be running a driver which creates a virtual XBox360 device to use it, but it does work. See
-  :ref:`steam-controller-label` for details.
+  :ref:`api_steamcontroller` for details.
 
 - :class:`approxeng.input.wii.WiiRemotePro` for the Nintendo Wii Remote Pro. If you're running in a graphical
   environment you'll probably want to disable the default behaviour where the left stick controls the mouse - see
@@ -325,6 +325,28 @@ controller, and will run around in a loop printing the corrected value of the le
             print('Left stick: x={}, y={}'.format(x,y))
             # Don't be too spammy!
             sleep(0.1)
+
+Reading multiple axes in one call
+---------------------------------
+
+From version 1.0.6 the :class:`approxeng.input.Controller` class exposes the method from the
+:class:`approxeng.input.Axes` object to read axis values and introduces a new method to read multiple values in asingle
+call. It returns a tuple of values, so you can use Python's implicit decomposition to do e.g.:
+
+.. code-block:: python
+
+    from approxeng.input.selectbinder import ControllerResource
+    from time import sleep
+
+    # Bind to the first available controller of any kind
+    with ControllerResource(dead_zone=0.1, hot_zone=0.2) as joystick:
+        while 1:
+            # Loop, printing the corrected value from the left stick X and Y axes
+            x, y = joystick.get_axis_values('lx', 'ly')
+            print('Left stick: x={}, y={}'.format(x,y))
+            # Don't be too spammy!
+            sleep(0.1)
+
 
 
 .. _pitutorials: https://twitter.com/pitutorials

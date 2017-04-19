@@ -1,6 +1,6 @@
 # General information about the project.
 project = u'Approximate Engineering - Input'
-copyright = u'2016, Tom Oinn'
+copyright = u'2016, 2017, Tom Oinn'
 author = u'Tom Oinn'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -8,9 +8,9 @@ author = u'Tom Oinn'
 # built documents.
 #
 # The short X.Y version.
-version = '1.0.5'
+version = '1.0.6'
 # The full version, including alpha/beta/rc tags.
-release = '1.0.5'
+release = '1.0.6'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom

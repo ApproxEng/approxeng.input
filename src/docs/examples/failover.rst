@@ -11,7 +11,10 @@ controller battery dead? No problem, just turn on your spare one, or even your s
 your bag for some reason. As long as the controller has been previously paired with the Pi (or other computer) it'll be
 possible for your code to find it.
 
-The example below waits for a controller, prints some details about it, then goes into a loop
+The example below waits for a controller, prints some details about it, then goes into a loop where it prints the values
+of any active (non-zero) axes, along with any buttons that are pressed. If you disconnect the controller, the code will
+detect this and go back into the search mode. If you then (or previously) pair another controller it'll go back into the
+loop, and so on.
 
 .. literalinclude:: ../../../scripts/select_binder_resource_example.py
     :language: python

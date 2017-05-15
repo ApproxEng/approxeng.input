@@ -3,7 +3,7 @@
 Controller Failover
 ===================
 
-New in version 0.7 is the ability to detect when a controller has disconnected. This means you can write code which will
+New in version 1.0.7 is the ability to detect when a controller has disconnected. This means you can write code which will
 not only wait for a controller, but will gracefully handle the controller failing (generally from going out of range or
 batteries dying!). Because the simplest form of the controller resource or explicit binding will bind to any available
 controller, you can easily make your robot able to switch from one controller to another without any extra code. PS4

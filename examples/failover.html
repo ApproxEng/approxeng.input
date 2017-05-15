@@ -178,7 +178,10 @@ controller, you can easily make your robot able to switch from one controller to
 controller battery dead? No problem, just turn on your spare one, or even your spare XBox1 controller that you had in
 your bag for some reason. As long as the controller has been previously paired with the Pi (or other computer) it&#8217;ll be
 possible for your code to find it.</p>
-<p>The example below waits for a controller, prints some details about it, then goes into a loop</p>
+<p>The example below waits for a controller, prints some details about it, then goes into a loop where it prints the values
+of any active (non-zero) axes, along with any buttons that are pressed. If you disconnect the controller, the code will
+detect this and go back into the search mode. If you then (or previously) pair another controller it&#8217;ll go back into the
+loop, and so on.</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3

@@ -254,15 +254,21 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="p">{</span><span class="n">dev</span><span class="o">.</span><span class="n">fd</span><span class="p">:</span> <span class="n">dev</span> <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">}</span>
 
         <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">controller</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
-                <span class="n">r</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[],</span> <span class="mf">0.5</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">fd</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
-                    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">():</span>
-                        <span class="k">if</span> <span class="n">print_events</span><span class="p">:</span>
-                            <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-                        <span class="n">controller</span><span class="o">.</span><span class="n">handle_evdev_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">r</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">,</span> <span class="p">[],</span> <span class="p">[],</span> <span class="mf">0.5</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">fd</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">[</span><span class="n">fd</span><span class="p">]</span><span class="o">.</span><span class="n">read</span><span class="p">():</span>
+                            <span class="k">if</span> <span class="n">print_events</span><span class="p">:</span>
+                                <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+                            <span class="n">controller</span><span class="o">.</span><span class="n">handle_evdev_event</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
 
         <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">controller</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">polling_thread</span> <span class="o">=</span> <span class="n">SelectThread</span><span class="p">()</span>
@@ -293,7 +299,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, 2017, Tom Oinn.
-      Last updated on May 02, 2017.
+      Last updated on May 16, 2017.
 
     </p>
   </div>

@@ -221,6 +221,63 @@ to bind event handlers to buttons.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="approxeng.input.Controller.button_held">
+<code class="descname">button_held</code><span class="sig-paren">(</span><em>sname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.button_held"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.button_held" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut to get a button hold, either None if the button is not held, or a float value containing the number of
+seconds for which the button has been held.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sname</strong> &#8211; The standard name of the button to query</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Time in seconds the button has been held, or None if it isn&#8217;t held</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="approxeng.input.Controller.buttons_held">
+<code class="descname">buttons_held</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.buttons_held"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.buttons_held" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut to get multiple button holds, passing any number of sname values in to get a corresponding array of
+hold times or None values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> &#8211; A sequence of snames for buttons</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A corresponding sequence of hold times</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="approxeng.input.Controller.connected">
+<code class="descname">connected</code><a class="headerlink" href="#approxeng.input.Controller.connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if this controller is bound to an active source of events, False otherwise. The binder is
+responsible for setting this property based on detection of disconnects, so it should be possible to do
+a &#8216;while joystick.connected:&#8217; to break out of a behaviour if the controller disconnects.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="approxeng.input.Controller.get_and_clear_button_press_history">
+<code class="descname">get_and_clear_button_press_history</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.get_and_clear_button_press_history"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.get_and_clear_button_press_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the set of Buttons which have been pressed since this call was last made, clearing it as we do. This is
+a shortcut do doing &#8216;buttons.get_and_clear_button_press_history&#8217;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A ButtonPresses instance which contains buttons which were pressed since this call was last made.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="approxeng.input.Controller.get_axis_value">
 <code class="descname">get_axis_value</code><span class="sig-paren">(</span><em>sname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.get_axis_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.get_axis_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a single corrected axis value for a given standard name</p>
@@ -713,13 +770,13 @@ pressed</td>
 
 <dl class="method">
 <dt id="approxeng.input.Buttons.is_held_name">
-<code class="descname">is_held_name</code><span class="sig-paren">(</span><em>button_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.is_held_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.is_held_name" title="Permalink to this definition">¶</a></dt>
+<code class="descname">is_held_name</code><span class="sig-paren">(</span><em>sname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.is_held_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.is_held_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines whether a button is currently held, identifying it by standard name</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>button_name</strong> &#8211; The standard name of the button</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sname</strong> &#8211; The standard name of the button</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None if the button is not held down, or is not available, otherwise the number of seconds as a floating
 point value since it was pressed</td>
@@ -807,7 +864,7 @@ binding is required.</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, 2017, Tom Oinn.
-      Last updated on May 02, 2017.
+      Last updated on May 16, 2017.
 
     </p>
   </div>

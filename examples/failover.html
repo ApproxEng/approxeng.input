@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Controller Failover &mdash; Approximate Engineering - Input 1.0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 1.0.7 documentation" href="../_static/opensearch.xml"/>
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="Approximate Engineering - Input 1.0.7 documentation" href="../index.html"/>
+        <link rel="up" title="Examples" href="../examples.html"/>
+        <link rel="next" title="Tiny4WD Robot Drive" href="tiny4wd.html"/>
+        <link rel="prev" title="Examples" href="../examples.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Approximate Engineering - Input
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.7
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Controller Failover</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tiny4wd.html">Tiny4WD Robot Drive</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Approximate Engineering - Input</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../examples.html">Examples</a> &raquo;</li>
+        
+      <li>Controller Failover</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="controller-failover">
+<h1>Controller Failover<a class="headerlink" href="#controller-failover" title="Permalink to this headline">¶</a></h1>
+<p>New in version 0.7 is the ability to detect when a controller has disconnected. This means you can write code which will
+not only wait for a controller, but will gracefully handle the controller failing (generally from going out of range or
+batteries dying!). Because the simplest form of the controller resource or explicit binding will bind to any available
+controller, you can easily make your robot able to switch from one controller to another without any extra code. PS4
+controller battery dead? No problem, just turn on your spare one, or even your spare XBox1 controller that you had in
+your bag for some reason. As long as the controller has been previously paired with the Pi (or other computer) it&#8217;ll be
+possible for your code to find it.</p>
+<p>The example below waits for a controller, prints some details about it, then goes into a loop</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="c1"># All we need is a single import.</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+
+<span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Attempt to acquire a controller. If there&#39;s more than one we&#39;ll get one of them, if there aren&#39;t</span>
+        <span class="c1"># any we&#39;ll throw an IOError. Assuming we succeed, the controller will be initialised, a new thread will be</span>
+        <span class="c1"># created in the background to pull events out of evdev and update the state of the controller object, and all</span>
+        <span class="c1"># the buttons and axes will be available as properties of &#39;controller&#39;</span>
+        <span class="c1">#</span>
+        <span class="c1"># For most controllers, the same driver class can be used whether the controller is connected over bluetooth or</span>
+        <span class="c1"># over a USB cable. For controllers where this isn&#39;t the case there will be different driver classes for each</span>
+        <span class="c1"># kind of connection. In this particular case we&#39;re binding to whatever controllers we can find rather than</span>
+        <span class="c1"># specifying a particular one.</span>
+        <span class="c1">#</span>
+        <span class="c1"># The print_events can be set to show evdev events as they&#39;re received, whether handled or not. Any additional</span>
+        <span class="c1"># keyword args are passed through to the constructor of the controller class, so if you know exactly what class</span>
+        <span class="c1"># you&#39;re using (because you&#39;ve supplied a controller_class argument here) you can provide controller-specific</span>
+        <span class="c1"># configuration in your resource. Setting controller_class to None just means &#39;find whatever joystick you can&#39;</span>
+        <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">print_events</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">controller_class</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span> <span class="k">as</span> <span class="n">controller</span><span class="p">:</span>
+
+            <span class="c1"># We&#39;ve got a joystick, loop until it goes away. Print some details about the controller to the console.</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Found a controller, {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">controller</span><span class="p">))</span>
+
+            <span class="c1"># New in version 0.7 is detection for when a controller disconnects. This is handy, because it means we know</span>
+            <span class="c1"># if your robot has run out of controller range (for example) and can stop it! Rather than looping while</span>
+            <span class="c1"># True we loop while the &#39;connected&#39; property on the controller is true.</span>
+            <span class="k">while</span> <span class="n">controller</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+
+                <span class="c1"># The next line is used to extract all buttons which were pressed since the last time this call was</span>
+                <span class="c1"># made. This means you don&#39;t have to worry about whether you&#39;re catching buttons while they&#39;re held</span>
+                <span class="c1"># down - this will catch a case where you check, then the user clicks and releases the button, and then</span>
+                <span class="c1"># you check again. Even though the click happened while your code was off doing something else, the</span>
+                <span class="c1"># event handling thread has monitored it and stored that the click happened. You can use methods on the</span>
+                <span class="c1"># approxeng.input.ButtonPresses instance this returns to query for specific buttons (by their standard</span>
+                <span class="c1"># name) or as in this case to see whether anything was pressed and print out the list of presses if so.</span>
+                <span class="n">button_presses</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">get_and_clear_button_press_history</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">button_presses</span><span class="o">.</span><span class="n">has_presses</span><span class="p">():</span>
+                    <span class="c1"># Printing the ButtonPresses object prints a list of the snames of buttons which were pressed</span>
+                    <span class="k">print</span><span class="p">(</span><span class="n">button_presses</span><span class="p">)</span>
+
+                <span class="c1"># The controller.axes property contains all analogue (and potentially digital) axes of your controller.</span>
+                <span class="c1"># As with the button presses these are updated behind the scenes, with dead and hot zones applied,</span>
+                <span class="c1"># centre and range calibration and normalisation to either -1 to 1 (for centred axes) or 0 to 1 for</span>
+                <span class="c1"># triggers. The convenience method active_axes will return all axis objects which aren&#39;t at their</span>
+                <span class="c1"># resting position, but you can use other methods on this to get the corrected value for a specific</span>
+                <span class="c1"># axis.</span>
+                <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">controller</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">active_axes</span><span class="p">():</span>
+                    <span class="c1"># Printing an axis object (CentredAxis, TriggerAxis or BinaryAxis) will print a summary of the</span>
+                    <span class="c1"># axis including its current corrected value</span>
+                    <span class="k">print</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+
+                <span class="c1"># Note - in real cases we probably want to get axis values even when they&#39;re not active, in which case</span>
+                <span class="c1"># we would use the methods on the Controller class to get single or multiple corrected axis values by</span>
+                <span class="c1"># standard name.</span>
+
+                <span class="c1"># Sleep for a tenth of a second - spamming the console with print messages can upset the event reading</span>
+                <span class="c1"># loop. In real cases your code will be off doing other things and you probably won&#39;t want to have</span>
+                <span class="c1"># explicit delays!</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+            <span class="c1"># We get here if controller.connected is False, this is set by the binder if it at any point fails to talk</span>
+            <span class="c1"># to the controller. The result is that if you turn your controller off you should see a disconnection</span>
+            <span class="c1"># message and the code will go back into looking for controllers.</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Controller disconnected!&#39;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="c1"># This is thrown when attempting to create the controller resource if no controllers are present. In this case</span>
+        <span class="c1"># we just pause for a second and try again.</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Waiting for controller...&#39;</span><span class="p">)</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tiny4wd.html" class="btn btn-neutral float-right" title="Tiny4WD Robot Drive" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../examples.html" class="btn btn-neutral" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, 2017, Tom Oinn.
+      Last updated on May 16, 2017.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

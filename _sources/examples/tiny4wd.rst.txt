@@ -1,3 +1,5 @@
+.. _example_tiny4wd:
+
 Tiny4WD Robot Drive
 ===================
 

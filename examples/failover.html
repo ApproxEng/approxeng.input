@@ -170,7 +170,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="controller-failover">
-<h1>Controller Failover<a class="headerlink" href="#controller-failover" title="Permalink to this headline">¶</a></h1>
+<span id="example-failover"></span><h1>Controller Failover<a class="headerlink" href="#controller-failover" title="Permalink to this headline">¶</a></h1>
 <p>New in version 0.7 is the ability to detect when a controller has disconnected. This means you can write code which will
 not only wait for a controller, but will gracefully handle the controller failing (generally from going out of range or
 batteries dying!). Because the simplest form of the controller resource or explicit binding will bind to any available
@@ -277,9 +277,9 @@ possible for your code to find it.</p>
             <span class="c1"># We&#39;ve got a joystick, loop until it goes away. Print some details about the controller to the console.</span>
             <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Found a controller, {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">controller</span><span class="p">))</span>
 
-            <span class="c1"># New in version 0.7 is detection for when a controller disconnects. This is handy, because it means we know</span>
-            <span class="c1"># if your robot has run out of controller range (for example) and can stop it! Rather than looping while</span>
-            <span class="c1"># True we loop while the &#39;connected&#39; property on the controller is true.</span>
+            <span class="c1"># New in version 1.0.7 is detection for when a controller disconnects. This is handy, because it means we</span>
+            <span class="c1"># know if your robot has run out of controller range (for example) and can stop it! Rather than looping</span>
+            <span class="c1"># while True we loop while the &#39;connected&#39; property on the controller is true.</span>
             <span class="k">while</span> <span class="n">controller</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
 
                 <span class="c1"># The next line is used to extract all buttons which were pressed since the last time this call was</span>

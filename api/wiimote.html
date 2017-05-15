@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Overview: module code &mdash; Approximate Engineering - Input 1.0.7 documentation</title>
+  <title>WiiMote Controller Support &mdash; Approximate Engineering - Input 1.0.7 documentation</title>
   
 
   
@@ -143,7 +143,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Overview: module code</li>
+      <li>WiiMote Controller Support</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -160,17 +160,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>All modules for which code is available</h1>
-<ul><li><a href="approxeng/input.html">approxeng.input</a></li>
-<ul><li><a href="approxeng/input/dualshock3.html">approxeng.input.dualshock3</a></li>
-<li><a href="approxeng/input/dualshock4.html">approxeng.input.dualshock4</a></li>
-<li><a href="approxeng/input/rockcandy.html">approxeng.input.rockcandy</a></li>
-<li><a href="approxeng/input/selectbinder.html">approxeng.input.selectbinder</a></li>
-<li><a href="approxeng/input/steamcontroller.html">approxeng.input.steamcontroller</a></li>
-<li><a href="approxeng/input/wii.html">approxeng.input.wii</a></li>
-<li><a href="approxeng/input/wiimote.html">approxeng.input.wiimote</a></li>
-<li><a href="approxeng/input/xboxone.html">approxeng.input.xboxone</a></li>
-</ul></ul>
+  <div class="section" id="wiimote-controller-support">
+<span id="api-wiimote"></span><h1>WiiMote Controller Support<a class="headerlink" href="#wiimote-controller-support" title="Permalink to this headline">¶</a></h1>
+<p>Version 1.0.7 adds support for the WiiMote along with the optional Classic or Nunchuck controllers, both of which
+connect to the WiiMote wand, so you can have either the Classic or the Nunchuck but not both!</p>
+<p>Support contributed by Keith Ellis</p>
+<span class="target" id="module-approxeng.input.wiimote"></span><dl class="class">
+<dt id="approxeng.input.wiimote.WiiMote">
+<em class="property">class </em><code class="descclassname">approxeng.input.wiimote.</code><code class="descname">WiiMote</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/wiimote.html#WiiMote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.wiimote.WiiMote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Driver for the Nintendo WiiMote controller, the WiiMote</p>
+<dl class="method">
+<dt id="approxeng.input.wiimote.WiiMote.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/wiimote.html#WiiMote.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.wiimote.WiiMote.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new WiiMote driver</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> in the controller.</li>
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> in the controller.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
 
            </div>
            <div class="articleComments">

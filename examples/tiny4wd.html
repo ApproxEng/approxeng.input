@@ -41,7 +41,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="Approximate Engineering - Input 1.0.7 documentation" href="../index.html"/>
         <link rel="up" title="Examples" href="../examples.html"/>
-        <link rel="prev" title="Examples" href="../examples.html"/> 
+        <link rel="prev" title="Controller Failover" href="failover.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -101,6 +101,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="failover.html">Controller Failover</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Tiny4WD Robot Drive</a></li>
 </ul>
 </li>
@@ -168,7 +169,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="tiny4wd-robot-drive">
-<h1>Tiny4WD Robot Drive<a class="headerlink" href="#tiny4wd-robot-drive" title="Permalink to this headline">¶</a></h1>
+<span id="example-tiny4wd"></span><h1>Tiny4WD Robot Drive<a class="headerlink" href="#tiny4wd-robot-drive" title="Permalink to this headline">¶</a></h1>
 <p>Tiny4WD is a great first robot kit designed by Brian Corteil (<a class="reference external" href="https://twitter.com/cannonfodder">&#64;CannonFodder</a> and
 <a class="reference external" href="https://twitter.com/coretecrobotics">&#64;CoretecRobotics</a>). You can buy the kits from the lovely, if money-sucking,
 pirates at <a class="reference external" href="https://twitter.com/pimoroni">&#64;pimoroni</a> from
@@ -302,7 +303,8 @@ it around. The left analogue stick controls the robot, and the HOME button exits
 124
 125
 126
-127</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Code for Brian Corteil&#39;s Tiny 4WD robot, based on code from Brian as modified by Emma Norling.</span>
+127
+128</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Code for Brian Corteil&#39;s Tiny 4WD robot, based on code from Brian as modified by Emma Norling.</span>
 <span class="c1"># Subsequently modified by Tom Oinn to add dummy functions when no explorer hat is available,</span>
 <span class="c1"># use any available joystick, use the new function in 1.0.6 of approxeng.input to get multiple</span>
 <span class="c1"># axis values in a single call, use implicit de-structuring of tuples to reduce verbosity, add</span>
@@ -405,8 +407,9 @@ it around. The left analogue stick controls the robot, and the HOME button exits
             <span class="c1"># supports it.</span>
             <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
                 <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Controller found, press HOME button to exit, use left stick to drive.&#39;</span><span class="p">)</span>
-                <span class="c1"># Loop forever, or at least until we raise an exception because we want to stop</span>
-                <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+                <span class="c1"># Loop until the joystick disconnects, or we deliberately stop by raising a</span>
+                <span class="c1"># RobotStopException</span>
+                <span class="k">while</span> <span class="n">joystick</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
                     <span class="c1"># Get joystick values from the left analogue stick</span>
                     <span class="n">x_axis</span><span class="p">,</span> <span class="n">y_axis</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">get_axis_values</span><span class="p">(</span><span class="s1">&#39;lx&#39;</span><span class="p">,</span> <span class="s1">&#39;ly&#39;</span><span class="p">)</span>
                     <span class="c1"># Get power from mixer function</span>
@@ -444,7 +447,7 @@ it around. The left analogue stick controls the robot, and the HOME button exits
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="../examples.html" class="btn btn-neutral" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="failover.html" class="btn btn-neutral" title="Controller Failover" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -454,7 +457,7 @@ it around. The left analogue stick controls the robot, and the HOME button exits
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, 2017, Tom Oinn.
-      Last updated on May 02, 2017.
+      Last updated on May 16, 2017.
 
     </p>
   </div>

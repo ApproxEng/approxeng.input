@@ -16,3 +16,4 @@ largely self explanatory although you'll need at least a reasonable level of Pyt
     api/rockcandy
     api/steamcontroller
     api/wii
+    api/wiimote

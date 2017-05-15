@@ -101,8 +101,9 @@ try:
             # supports it.
             with ControllerResource(dead_zone=0.1, hot_zone=0.2) as joystick:
                 print('Controller found, press HOME button to exit, use left stick to drive.')
-                # Loop forever, or at least until we raise an exception because we want to stop
-                while True:
+                # Loop until the joystick disconnects, or we deliberately stop by raising a
+                # RobotStopException
+                while joystick.connected:
                     # Get joystick values from the left analogue stick
                     x_axis, y_axis = joystick.get_axis_values('lx', 'ly')
                     # Get power from mixer function

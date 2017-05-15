@@ -15,6 +15,11 @@ Welcome to Approximate Engineering's Python Game Controller Documentation!
     - Version 1.0.5 adds support for the Wii Remote Pro from Nintendo - I'd have added the WiiMote at this point as well
       but my cheap clone was dead on arrival...
 
+    - Version 1.0.6 was a minor tweak to fix some of the internals
+
+    - Version 1.0.7 adds support (pending documentation!) for the WiiMote controller, contributed once again by Keith
+      Ellis! It also adds controller disconnection detection, enabling :ref:`example_failover` .
+
 Supported Controllers
 ---------------------
 

@@ -86,15 +86,20 @@ def bind_controller(devices, controller, print_events=False):
             self.devices = {dev.fd: dev for dev in devices}
 
         def run(self):
+            controller.connected = True
             while self.running:
-                r, w, x = select(self.devices, [], [], 0.5)
-                for fd in r:
-                    for event in self.devices[fd].read():
-                        if print_events:
-                            print(event)
-                        controller.handle_evdev_event(event)
+                try:
+                    r, w, x = select(self.devices, [], [], 0.5)
+                    for fd in r:
+                        for event in self.devices[fd].read():
+                            if print_events:
+                                print(event)
+                            controller.handle_evdev_event(event)
+                except Exception:
+                    self.stop()
 
         def stop(self):
+            controller.connected = False
             self.running = False
 
     polling_thread = SelectThread()

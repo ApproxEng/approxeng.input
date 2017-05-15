@@ -14,10 +14,11 @@ from approxeng.input.xboxone import XB1S_VENDOR_ID, XB1S_WIRED_PRODUCT_ID, XB1S_
     WirelessXBoxOneSPad
 from approxeng.input.rockcandy import RockCandy, RC_PRODUCT_ID, RC_VENDOR_ID
 from approxeng.input.wii import WiiRemotePro, WII_REMOTE_PRO_VENDOR, WII_REMOTE_PRO_PRODUCT
-from approxeng.input.wiimote import WiiMote, WiiMote_PRODUCT_ID, WiiMote_VENDOR_ID
+from approxeng.input.wiimote import WiiMote, WIIMOTE_PRODUCT_ID, WIIMOTE_VENDOR_ID
 
 # Steam controller works but only when using the xbox userland driver. PS3 and PS4 are fine though, as is the XB1 if on
 # a wired connection or after setting the appropriate kernel module options. Rock Candy controller reported as working.
+# Support for wiimote contributed by Keith Ellis
 
 CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_id': DS3_PRODUCT_ID},
                {'constructor': DualShock4, 'vendor_id': DS4_VENDOR_ID, 'product_id': DS4_PRODUCT_ID},
@@ -28,7 +29,7 @@ CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_
                 'product_id': SC_PRODUCT_ID},
                {'constructor': RockCandy, 'vendor_id': RC_VENDOR_ID, 'product_id': RC_PRODUCT_ID},
                {'constructor': WiiRemotePro, 'vendor_id': WII_REMOTE_PRO_VENDOR, 'product_id': WII_REMOTE_PRO_PRODUCT},
-               {'constructor': WiiMote, 'vendor_id': WiiMote_VENDOR_ID, 'product_id':WiiMote_PRODUCT_ID}]
+               {'constructor': WiiMote, 'vendor_id': WIIMOTE_VENDOR_ID, 'product_id': WIIMOTE_PRODUCT_ID}]
 
 
 def find_any_controller(**kwargs):

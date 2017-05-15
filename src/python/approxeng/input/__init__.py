@@ -148,6 +148,7 @@ class Controller(object):
         if hot_zone is not None:
             for axis in self.axes.axes:
                 axis.hot_zone = hot_zone
+        self.__connected = False
 
     def handle_evdev_event(self, event):
         """
@@ -167,6 +168,19 @@ class Controller(object):
             elif event.value == 0:
                 # Button up
                 self.buttons.button_released(event.code)
+
+    @property
+    def connected(self):
+        """
+        Returns True if this controller is bound to an active source of events, False otherwise. The binder is
+        responsible for setting this property based on detection of disconnects, so it should be possible to do
+        a 'while joystick.connected:' to break out of a behaviour if the controller disconnects.
+        """
+        return self.__connected
+
+    @connected.setter
+    def connected(self, is_connected):
+        self.__connected = is_connected
 
     def get_axis_value(self, sname):
         """
@@ -189,7 +203,67 @@ class Controller(object):
         :return: 
             A tuple of the equivalent values read from the axes
         """
-        return (self.axes.get_value(sname) for sname in args)
+        return [self.axes.get_value(sname) for sname in args]
+
+    def get_axis_values_stream(self, *args):
+        """
+        Create a GPIOzero compatible source of axis values. This returns a generator which produces an infinite
+        stream of tuples containing the requested axis values, for example:
+        
+        .. code-block:: python
+        
+            from gpiozero import Robot
+            from approxeng.input.selectbinder import ControllerResource
+            from signal import pause
+            
+            # Create a Robot using GPIO pins on the Pi
+            robot = Robot(left=(18, 27), right=(17, 22))
+            
+            with ControllerResource() as joystick:
+                robot.source = joystick.get_axis_values_stream('ly','ry')
+                pause()
+        
+        :param args: 
+            Any number of axis standard names
+        :return: 
+            A generator producing an infinite sequence of tuples containing the corrected values for those names
+        """
+        while True:
+            yield self.get_axis_values(*args)
+
+    def button_held(self, sname):
+        """
+        Shortcut to get a button hold, either None if the button is not held, or a float value containing the number of
+        seconds for which the button has been held.
+        
+        :param sname: 
+            The standard name of the button to query
+        :return: 
+            Time in seconds the button has been held, or None if it isn't held
+        """
+        return self.buttons.is_held_name(sname)
+
+    def buttons_held(self, *args):
+        """
+        Shortcut to get multiple button holds, passing any number of sname values in to get a corresponding array of
+        hold times or None values.
+        
+        :param args: 
+            A sequence of snames for buttons
+        :return: 
+            A corresponding sequence of hold times
+        """
+        return [self.button_held(sname) for sname in args]
+
+    def get_and_clear_button_press_history(self):
+        """
+        Return the set of Buttons which have been pressed since this call was last made, clearing it as we do. This is
+        a shortcut do doing 'buttons.get_and_clear_button_press_history'
+    
+        :return:
+            A ButtonPresses instance which contains buttons which were pressed since this call was last made.
+        """
+        return self.buttons.get_and_clear_button_press_history()
 
     def __str__(self):
         return "{}, axes={}, buttons={}".format(self.__class__.__name__, self.axes, self.buttons.buttons.keys())
@@ -213,7 +287,7 @@ class Axes(object):
         self.axes = axes
         self.axes_by_code = {axis.axis_event_code: axis for axis in axes}
         self.axes_by_sname = {axis.sname: axis for axis in axes}
-        self.axes_calibration = {axis.axis_event_code:{'min':10000, 'max':-10000} for axis in axes}
+        self.axes_calibration = {axis.axis_event_code: {'min': 10000, 'max': -10000} for axis in axes}
 
     def axis_updated(self, event):
         """
@@ -676,17 +750,17 @@ class Buttons(object):
                 return time() - state.last_pressed
         return None
 
-    def is_held_name(self, button_name):
+    def is_held_name(self, sname):
         """
         Determines whether a button is currently held, identifying it by standard name
         
-        :param button_name: 
+        :param sname: 
             The standard name of the button
         :return: 
             None if the button is not held down, or is not available, otherwise the number of seconds as a floating
             point value since it was pressed
         """
-        state = self.buttons_by_sname.get(button_name)
+        state = self.buttons_by_sname.get(sname)
         if state is not None:
             if state.is_pressed and state.last_pressed is not None:
                 return time() - state.last_pressed

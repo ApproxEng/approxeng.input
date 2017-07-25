@@ -36,8 +36,8 @@ while 1:
                 # event handling thread has monitored it and stored that the click happened. You can use methods on the
                 # approxeng.input.ButtonPresses instance this returns to query for specific buttons (by their standard
                 # name) or as in this case to see whether anything was pressed and print out the list of presses if so.
-                button_presses = controller.get_and_clear_button_press_history()
-                if button_presses.has_presses():
+                button_presses = controller.check_presses()
+                if button_presses.has_presses:
                     # Printing the ButtonPresses object prints a list of the snames of buttons which were pressed
                     print(button_presses)
 
@@ -47,7 +47,7 @@ while 1:
                 # triggers. The convenience method active_axes will return all axis objects which aren't at their
                 # resting position, but you can use other methods on this to get the corrected value for a specific
                 # axis.
-                for axis in controller.axes.active_axes():
+                for axis in controller.axes.active_axes:
                     # Printing an axis object (CentredAxis, TriggerAxis or BinaryAxis) will print a summary of the
                     # axis including its current corrected value
                     print(axis)

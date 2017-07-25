@@ -103,15 +103,13 @@ class Controller(object):
     :ivar int vendor_id:
         Vendor ID used to identify the controller type.
     :ivar int product_id:
-        Product ID used to idenfity the controller type.
+        Product ID used to identify the controller type.
     :ivar approxeng.input.Axes axes:
-        All analogue axes, whether :class:`approxeng.input.CentredAxis` or :class:`approxeng.input.TriggerAxis` are
-        managed by this object. It can be used to reset calibration information or set centres for all axes at once.
-        Internally it's used to route events to the appropriate axis object, you should use the objects defined by each
-        controller class to actually read values from the axes.
+        All analogue axes. You can get the individual axis objects from this, but you shouldn't ever need to do this,
+        use methods on Controller instead!
     :ivar approxeng.input.Buttons buttons:
-        All buttons are managed by this object. It can be used to query which buttons are held (and for how long) and
-        to bind event handlers to buttons.
+        All buttons are managed by this object. This can be used to access Button objects representing buttons on the
+        controller, but you will almost never need to do this - use the methods on Controller instead!
     :ivar: boolean connected:
         True if the controller is connected to a source of events, False otherwise. This can be used as a break
         condition to check for controller disconnection.
@@ -151,30 +149,7 @@ class Controller(object):
                 axis.hot_zone = hot_zone
         self.connected = False
 
-    def axis_value(self, sname):
-        """
-        Get a single corrected axis value for a given standard name
-        
-        :param sname: 
-            The standard name of the axis to read
-        :return: 
-            A value, the range of which is determined by the type of axis. For centered axes it will be -1 to 1, for
-            triggers it'll be 0 to 1.
-        """
-        return self.axes.get_value(sname)
-
-    def axis_values(self, *args):
-        """
-        Retrieve multiple axis values in one call
-        
-        :param args: 
-            Any number of axis standard names
-        :return: 
-            A tuple of the equivalent values read from the axes
-        """
-        return [self.axes.get_value(sname) for sname in args]
-
-    def axis_values_stream(self, *args):
+    def stream(self, *args):
         """
         Create a GPIOzero compatible source of axis values. This returns a generator which produces an infinite
         stream of tuples containing the requested axis values, for example:
@@ -189,7 +164,7 @@ class Controller(object):
             robot = Robot(left=(18, 27), right=(17, 22))
             
             with ControllerResource() as joystick:
-                robot.source = joystick.get_axis_values_stream('ly','ry')
+                robot.source = joystick.stream('ly','ry')
                 pause()
         
         :param args: 
@@ -197,22 +172,37 @@ class Controller(object):
         :return: 
             A generator producing an infinite sequence of tuples containing the corrected values for those names
         """
-        while True:
-            yield self.axis_values(*args)
+        while self.connected:
+            yield self.__getitem__(args)
+
+    def __getitem__(self, item):
+        """
+        Simple index access to axis corrected values and button held times
+        :param item:
+            the sname of an axis or button, or a tuple thereof
+        :return:
+            for an axis, the corrected value, or, for a button, the held time or None if not held. Raises AttributeError
+            if the given name doesn't correspond to an axis or a button. If a tuple is supplied as an argument, result
+            will be a tuple of values.
+        """
+
+        if isinstance(item, tuple):
+            return [self.__getattr__(single_item) for single_item in item]
+        return self.__getattr__(item)
 
     def __getattr__(self, item):
         """
-        Simple property access to axis corrected values and button held times
+        Property access to axis values and button hold times
+
         :param item:
-            the sname of an axis or button
+            sname of an axis or button
         :return:
-            for an axis, the corrected value, or, for a button, the held time or None if not held. Raises AttributeError
-            if the given name doesn't correspond to an axis or a button
+            The axis corrected value, or button hold time (None if not held), or AttributeError if sname not found
         """
         if item in self.axes:
-            return self.axes.get_value(item)
+            return self.axes[item].value
         elif item in self.buttons:
-            return self.button_held(item)
+            return self.buttons.held(item)
         raise AttributeError
 
     def __contains__(self, item):
@@ -229,30 +219,6 @@ class Controller(object):
             return True
         return False
 
-    def button_held(self, sname):
-        """
-        Shortcut to get a button hold, either None if the button is not held, or a float value containing the number of
-        seconds for which the button has been held.
-        
-        :param sname: 
-            The standard name of the button to query
-        :return: 
-            Time in seconds the button has been held, or None if it isn't held
-        """
-        return self.buttons.is_held_name(sname)
-
-    def buttons_held(self, *args):
-        """
-        Shortcut to get multiple button holds, passing any number of sname values in to get a corresponding array of
-        hold times or None values.
-        
-        :param args: 
-            A sequence of snames for buttons
-        :return: 
-            A corresponding sequence of hold times
-        """
-        return [self.button_held(sname) for sname in args]
-
     def check_presses(self):
         """
         Return the set of Buttons which have been pressed since this call was last made, clearing it as we do. This is
@@ -264,14 +230,41 @@ class Controller(object):
         return self.buttons.check_presses()
 
     @property
+    def has_presses(self):
+        return self.presses.has_presses
+
+    @property
     def presses(self):
         """
         The ButtonPresses containing buttons pressed between the two most recent calls to check_presses
         """
         return self.buttons.presses
 
+    @property
+    def controls(self):
+        """
+        :return:
+            A struct containing all the names of controls on this controller
+        """
+        return {'axes': self.axes.names,
+                'buttons': self.buttons.names}
+
+    def register_button_handler(self, button_handler, button_sname):
+        """
+        Register a handler function which will be called when a button is pressed
+
+        :param button_handler:
+            A function which will be called when any of the specified buttons are pressed. The
+            function is called with the Button that was pressed as the sole argument.
+        :param button_sname:
+            The sname of the button which should trigger the handler function
+        :return:
+            A no-arg function which can be used to remove this registration
+        """
+        return self.buttons.register_button_handler(button_handler, self.buttons[button_sname])
+
     def __str__(self):
-        return "{}, axes={}, buttons={}".format(self.__class__.__name__, self.axes, self.buttons.buttons.keys())
+        return "{}, axes={}, buttons={}".format(self.__class__.__name__, self.axes, self.buttons)
 
 
 class Axes(object):
@@ -304,9 +297,6 @@ class Axes(object):
         """
         axis = self.axes_by_code.get(event.code)
         if axis is not None:
-            cal = self.axes_calibration.get(event.code)
-            cal['min'] = min(cal['min'], event.value)
-            cal['max'] = max(cal['max'], event.value)
             axis.set_raw_value(float(event.value))
         else:
             print('Unknown axis code {}, value {}'.format(event.code, event.value))
@@ -332,13 +322,20 @@ class Axes(object):
         return list("{}={}".format(axis.name, axis.corrected_value()) for axis in self.axes_by_code.values()).__str__()
 
     @property
+    def names(self):
+        """
+        The snames of all axis objects
+        """
+        return sorted([name for name in self.axes_by_sname.keys() if name is not ''])
+
+    @property
     def active_axes(self):
         """
         Return a sequence of all Axis objects which are not in their resting positions
         """
         return [axis for axis in self.axes if axis.corrected_value() != 0]
 
-    def get(self, sname):
+    def __getitem__(self, sname):
         """
         Get an axis by sname, if present
 
@@ -347,7 +344,7 @@ class Axes(object):
         :return:
             An axis object, or None if no such button exists
         """
-        return self.axes_by_sname.get(sname).button
+        return self.axes_by_sname.get(sname)
 
     def __getattr__(self, item):
         """
@@ -358,6 +355,7 @@ class Axes(object):
         :return:
             the corrected value of the axis, or raise AttributeError if no such axis is present
         """
+        print("Search for {}".format(item))
         if item in self.axes_by_sname:
             return self.get(item)
         raise AttributeError
@@ -696,14 +694,16 @@ class ButtonPresses(object):
         self.buttons = buttons
         self.names = list([button.sname for button in buttons])
 
-    def was_pressed(self, sname):
+    def __getitem__(self, item):
         """
         Return true if a button was pressed, referencing by standard name
         
         :param sname: the name to check
         :return: true if contained within the press set, false otherwise
         """
-        return sname in self.names
+        if isinstance(item, tuple):
+            return [(single_item in self.names) for single_item in item]
+        return item in self.names
 
     def __getattr__(self, item):
         """
@@ -716,6 +716,18 @@ class ButtonPresses(object):
         """
         return item in self.names
 
+    def __contains__(self, item):
+        """
+        Contains check for a button sname
+
+        :param item:
+            The sname of the button to check
+        :return:
+            True if the button is in the set of pressed buttons, false otherwise
+        """
+        return item in self.names
+
+    @property
     def has_presses(self):
         return len(self.names) > 0
 
@@ -805,6 +817,13 @@ class Buttons(object):
             state.last_pressed = None
 
     @property
+    def names(self):
+        """
+        The snames of all button objects
+        """
+        return sorted([name for name in self.buttons_by_sname.keys() if name is not ''])
+
+    @property
     def presses(self):
         """
         Get the ButtonPresses containing buttons pressed between the most recent two calls to check_presses. This will
@@ -851,16 +870,16 @@ class Buttons(object):
                 return time() - state.last_pressed
         return None
 
-    def get(self, sname):
+    def __getitem__(self, item):
         """
         Get a button by sname, if present
         
-        :param sname: 
+        :param item:
             The standard name to search
         :return:
             A Button, or None if no such button exists
         """
-        return self.buttons_by_sname.get(sname).button
+        return self.buttons_by_sname.get(item).button
 
     def __getattr__(self, item):
         """

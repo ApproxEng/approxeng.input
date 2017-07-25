@@ -101,21 +101,25 @@ try:
             # supports it.
             with ControllerResource(dead_zone=0.1, hot_zone=0.2) as joystick:
                 print('Controller found, press HOME button to exit, use left stick to drive.')
+                print(joystick.controls)
                 # Loop until the joystick disconnects, or we deliberately stop by raising a
                 # RobotStopException
                 while joystick.connected:
                     # Get joystick values from the left analogue stick
-                    x_axis, y_axis = joystick.get_axis_values('lx', 'ly')
+                    x_axis, y_axis = joystick['lx', 'ly']
                     # Get power from mixer function
                     power_left, power_right = mixer(yaw=x_axis, throttle=y_axis)
                     # Set motor speeds
                     set_speeds(power_left, power_right)
                     # Get a ButtonPresses object containing everything that was pressed since the last
                     # time around this loop.
-                    button_presses = joystick.buttons.get_and_clear_button_press_history()
+                    joystick.check_presses()
+                    # Print out any buttons that were pressed, if we had any
+                    if joystick.has_presses:
+                        print(joystick.presses)
                     # If home was pressed, raise a RobotStopException to bail out of the loop
                     # Home is generally the PS button for playstation controllers, XBox for XBox etc
-                    if button_presses.was_pressed('home'):
+                    if 'home' in joystick.presses:
                         raise RobotStopException()
         except IOError:
             # We get an IOError when using the ControllerResource if we don't have a controller yet,

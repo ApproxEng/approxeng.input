@@ -32,3 +32,12 @@ This will create the appropriate structure on disk, a repository parallel to the
 will be built. Now running ```make html``` from this directory will build the docs, commit them and push them to github.
 In order for github's pages system to publish files and directories with an underscore at the start of their name you
 may need to also add a ```.nojekyll``` file (no content needed) at the root of the pages branch.
+
+If this setup stage has already been done you can simply clone the gh-pages branch:
+
+```
+> cd ..
+> mkdir approxeng.input-pages
+> cd approxeng.input-pages
+> git clone git@github.com:approxeng/approxeng.input --branch gh-pages html
+```

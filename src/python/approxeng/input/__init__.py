@@ -148,7 +148,7 @@ class Controller(object):
         if hot_zone is not None:
             for axis in self.axes.axes:
                 axis.hot_zone = hot_zone
-        self.__connected = False
+        self.connected = False
 
     def handle_evdev_event(self, event):
         """
@@ -168,19 +168,6 @@ class Controller(object):
             elif event.value == 0:
                 # Button up
                 self.buttons.button_released(event.code)
-
-    @property
-    def connected(self):
-        """
-        Returns True if this controller is bound to an active source of events, False otherwise. The binder is
-        responsible for setting this property based on detection of disconnects, so it should be possible to do
-        a 'while joystick.connected:' to break out of a behaviour if the controller disconnects.
-        """
-        return self.__connected
-
-    @connected.setter
-    def connected(self, is_connected):
-        self.__connected = is_connected
 
     def get_axis_value(self, sname):
         """
@@ -325,14 +312,25 @@ class Axes(object):
     def __str__(self):
         return list("{}={}".format(axis.name, axis.corrected_value()) for axis in self.axes_by_code.values()).__str__()
 
-    def get_value(self, sname):
-        return self.axes_by_sname.get(sname).corrected_value()
-
+    @property
     def active_axes(self):
         """
         Return a sequence of all Axis objects which are not in their resting positions
         """
         return [axis for axis in self.axes if axis.corrected_value() != 0]
+
+    def __getattr__(self, item):
+        """
+        Called when an unresolved attribute is requested, acts equivalently to calling get_value on that named axis
+
+        :param item:
+            the standard name of the axis to query
+        :return:
+            the corrected value of the axis, or None if no such axis is present
+        """
+        if item in self.axes_by_sname:
+            return self.axes_by_sname.get(item).corrected_value()
+        return None
 
 
 class TriggerAxis(object):
@@ -640,6 +638,17 @@ class ButtonPresses(object):
         :return: true if contained within the press set, false otherwise
         """
         return sname in self.names
+
+    def __getattr__(self, item):
+        """
+        Simpler way to query whether a button was pressed by overriding the __getattr__ method
+
+        :param item:
+            sname of the button
+        :return:
+            true if the button was pressed, false if it either wasn't pressed or wasn't included in the controller
+        """
+        return item in self.names
 
     def has_presses(self):
         return len(self.names) > 0

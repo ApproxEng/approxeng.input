@@ -1,8 +1,5 @@
 from time import time
 
-EV_KEY = 1
-EV_ABS = 3
-
 
 def map_into_range(low, high, raw_value):
     """
@@ -101,7 +98,7 @@ def map_dual_axis(low, high, centre, dead_zone, hot_zone, value):
 
 class Controller(object):
     """
-    Superclass for controller implementations which use evdev for their event handling
+    Superclass for controller implementations
 
     :ivar int vendor_id:
         Vendor ID used to identify the controller type.
@@ -115,6 +112,9 @@ class Controller(object):
     :ivar approxeng.input.Buttons buttons:
         All buttons are managed by this object. It can be used to query which buttons are held (and for how long) and
         to bind event handlers to buttons.
+    :ivar: boolean connected:
+        True if the controller is connected to a source of events, False otherwise. This can be used as a break
+        condition to check for controller disconnection.
     """
 
     def __init__(self, vendor_id, product_id, controls, dead_zone=None,
@@ -141,7 +141,8 @@ class Controller(object):
                           isinstance(control, TriggerAxis)])
         self.buttons = Buttons([control for control in controls if
                                 isinstance(control, Button) or
-                                isinstance(control, BinaryAxis)])
+                                isinstance(control, BinaryAxis) or
+                                isinstance(control, TriggerAxis)])
         if dead_zone is not None:
             for axis in self.axes.axes:
                 axis.dead_zone = dead_zone
@@ -150,26 +151,7 @@ class Controller(object):
                 axis.hot_zone = hot_zone
         self.connected = False
 
-    def handle_evdev_event(self, event):
-        """
-        Process an event from evdev, using it to update the axis or button information in the controller. This function
-        is called by the binder to process events.
-
-        :param event:
-            The evdev event to handle
-        """
-        if event.type == EV_ABS:
-            self.axes.axis_updated(event)
-        elif event.type == EV_KEY:
-            # Button event
-            if event.value == 1:
-                # Button down
-                self.buttons.button_pressed(event.code)
-            elif event.value == 0:
-                # Button up
-                self.buttons.button_released(event.code)
-
-    def get_axis_value(self, sname):
+    def axis_value(self, sname):
         """
         Get a single corrected axis value for a given standard name
         
@@ -181,7 +163,7 @@ class Controller(object):
         """
         return self.axes.get_value(sname)
 
-    def get_axis_values(self, *args):
+    def axis_values(self, *args):
         """
         Retrieve multiple axis values in one call
         
@@ -192,7 +174,7 @@ class Controller(object):
         """
         return [self.axes.get_value(sname) for sname in args]
 
-    def get_axis_values_stream(self, *args):
+    def axis_values_stream(self, *args):
         """
         Create a GPIOzero compatible source of axis values. This returns a generator which produces an infinite
         stream of tuples containing the requested axis values, for example:
@@ -216,7 +198,36 @@ class Controller(object):
             A generator producing an infinite sequence of tuples containing the corrected values for those names
         """
         while True:
-            yield self.get_axis_values(*args)
+            yield self.axis_values(*args)
+
+    def __getattr__(self, item):
+        """
+        Simple property access to axis corrected values and button held times
+        :param item:
+            the sname of an axis or button
+        :return:
+            for an axis, the corrected value, or, for a button, the held time or None if not held. Raises AttributeError
+            if the given name doesn't correspond to an axis or a button
+        """
+        if item in self.axes:
+            return self.axes.get_value(item)
+        elif item in self.buttons:
+            return self.button_held(item)
+        raise AttributeError
+
+    def __contains__(self, item):
+        """
+        A Controller contains a named attribute if it has either an axis or a button with the attribute as its sname
+        :param item:
+            The sname of the button or axis
+        :return:
+            True if there's a button or axis with that name, false otherwise
+        """
+        if item in self.axes:
+            return True
+        if item in self.buttons:
+            return True
+        return False
 
     def button_held(self, sname):
         """
@@ -242,7 +253,7 @@ class Controller(object):
         """
         return [self.button_held(sname) for sname in args]
 
-    def get_and_clear_button_press_history(self):
+    def check_presses(self):
         """
         Return the set of Buttons which have been pressed since this call was last made, clearing it as we do. This is
         a shortcut do doing 'buttons.get_and_clear_button_press_history'
@@ -250,7 +261,14 @@ class Controller(object):
         :return:
             A ButtonPresses instance which contains buttons which were pressed since this call was last made.
         """
-        return self.buttons.get_and_clear_button_press_history()
+        return self.buttons.check_presses()
+
+    @property
+    def presses(self):
+        """
+        The ButtonPresses containing buttons pressed between the two most recent calls to check_presses
+        """
+        return self.buttons.presses
 
     def __str__(self):
         return "{}, axes={}, buttons={}".format(self.__class__.__name__, self.axes, self.buttons.buttons.keys())
@@ -274,11 +292,12 @@ class Axes(object):
         self.axes = axes
         self.axes_by_code = {axis.axis_event_code: axis for axis in axes}
         self.axes_by_sname = {axis.sname: axis for axis in axes}
-        self.axes_calibration = {axis.axis_event_code: {'min': 10000, 'max': -10000} for axis in axes}
 
     def axis_updated(self, event):
         """
         Called to process an absolute axis event from evdev, this is called internally by the controller implementations
+
+        :internal:
 
         :param event:
             The evdev event to process
@@ -306,7 +325,7 @@ class Axes(object):
         """
         Resets any previously defined axis calibration to 0.0 for all axes
         """
-        for axis in self.axes_by_code.values():
+        for axis in self.axes:
             axis.reset()
 
     def __str__(self):
@@ -319,18 +338,40 @@ class Axes(object):
         """
         return [axis for axis in self.axes if axis.corrected_value() != 0]
 
+    def get(self, sname):
+        """
+        Get an axis by sname, if present
+
+        :param sname:
+            The standard name to search
+        :return:
+            An axis object, or None if no such button exists
+        """
+        return self.axes_by_sname.get(sname).button
+
     def __getattr__(self, item):
         """
-        Called when an unresolved attribute is requested, acts equivalently to calling get_value on that named axis
+        Called when an unresolved attribute is requested, retrieves the Axis object for the given sname
 
         :param item:
             the standard name of the axis to query
         :return:
-            the corrected value of the axis, or None if no such axis is present
+            the corrected value of the axis, or raise AttributeError if no such axis is present
         """
         if item in self.axes_by_sname:
-            return self.axes_by_sname.get(item).corrected_value()
-        return None
+            return self.get(item)
+        raise AttributeError
+
+    def __contains__(self, item):
+        """
+        Check whether a given axis, referenced by sname, exists
+
+        :param item:
+            The sname of the axis to search
+        :return:
+            True if the axis exists, false otherwise
+        """
+        return item in self.axes_by_sname
 
 
 class TriggerAxis(object):
@@ -341,7 +382,8 @@ class TriggerAxis(object):
     axes.
     """
 
-    def __init__(self, name, min_raw_value, max_raw_value, axis_event_code, dead_zone=0.0, hot_zone=0.0, sname=None):
+    def __init__(self, name, min_raw_value, max_raw_value, axis_event_code, dead_zone=0.0, hot_zone=0.0, sname=None,
+                 button_sname=None, button_trigger_value=0.5):
         """
         Create a new TriggerAxis - this will be done internally within the controller classes i.e.
         :class:`approxeng.input.xboxone.XBoxOneSPad`
@@ -360,17 +402,32 @@ class TriggerAxis(object):
             The proportion of the trigger range which will be treated as equivalent to fully depressing the trigger
         :param sname:
             The standard name for this trigger, if specified
+        :param button_sname:
+            If provided, this creates a new Button internally which will be triggered by changes to the axis value. This
+            is useful for triggers which have axis representations but no corresponding button presses such as the XBox1
+            controller front triggers. If this is set to None then no button is created
+        :param button_trigger_value:
+            Defaulting to 0.5, this value determines the point in the trigger axis' range at which point the button is
+            regarded as being pressed or released.
         """
         self.name = name
         self.max = 0.9
         self.min = 0.1
-        self.value = self.min
+        self.__value = self.min
         self.dead_zone = dead_zone
         self.hot_zone = hot_zone
         self.min_raw_value = min_raw_value
         self.max_raw_value = max_raw_value
         self.axis_event_code = axis_event_code
         self.sname = sname
+        self.buttons = None
+        self.button_trigger_value = button_trigger_value
+        if button_sname is not None:
+            self.button = Button(name='{}_trigger_button'.format(name),
+                                 key_code='{}_trigger_button'.format(axis_event_code),
+                                 sname=button_sname)
+        else:
+            self.button = None
 
     def _input_to_raw_value(self, value):
         """
@@ -385,15 +442,17 @@ class TriggerAxis(object):
         """
         return (value - self.min_raw_value) / self.max_raw_value
 
+    @property
     def raw_value(self):
         """
         Get an uncorrected value for this trigger
 
         :return: a float value, 0.0 when not pressed, to 1.0 when fully pressed
         """
-        return self.value
+        return self.__value
 
-    def corrected_value(self):
+    @property
+    def value(self):
         """
         Get a centre-compensated, scaled, value for the axis, taking any dead-zone into account. The value will
         scale from 0.0 at the edge of the dead-zone to 1.0 (positive) at the extreme position of
@@ -402,12 +461,11 @@ class TriggerAxis(object):
         :return:
             a float value, 0.0 when not pressed or within the dead zone, to 1.0 when fully pressed or in the hot zone
         """
-        return map_single_axis(self.min, self.max, self.dead_zone, self.hot_zone, self.value)
+        return map_single_axis(self.min, self.max, self.dead_zone, self.hot_zone, self.__value)
 
     def reset(self):
         """
-        Reset calibration (max, min and centre values) for this axis specifically. Not generally needed, you can just
-        call the reset method on the SixAxis instance.
+        Reset calibration (max, min and centre values) for this axis specifically.
 
         :internal:
         """
@@ -423,14 +481,19 @@ class TriggerAxis(object):
         :internal:
         """
         new_value = self._input_to_raw_value(raw_value)
-        self.value = new_value
+        if self.button is not None:
+            if new_value > (self.button_trigger_value + 0.05) > self.__value:
+                self.buttons.button_pressed(self.button.key_code)
+            elif new_value < (self.button_trigger_value - 0.05) < self.__value:
+                self.buttons.button_released(self.button.key_code)
+        self.__value = new_value
         if new_value > self.max:
             self.max = new_value
         elif new_value < self.min:
             self.min = new_value
 
     def __str__(self):
-        return "TriggerAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.corrected_value())
+        return "TriggerAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.value)
 
 
 class BinaryAxis(object):
@@ -460,10 +523,10 @@ class BinaryAxis(object):
         self.buttons = None
         self.last_value = 0
         self.sname = ''
-        self.value = 0
+        self.__value = 0
 
     def set_raw_value(self, raw_value):
-        self.value = raw_value
+        self.__value = raw_value
         if self.buttons is not None:
             if self.last_value < 0:
                 self.buttons.button_released(self.b2.key_code)
@@ -475,11 +538,12 @@ class BinaryAxis(object):
             elif raw_value > 0:
                 self.buttons.button_pressed(self.b2.key_code)
 
-    def corrected_value(self):
-        return self.value
+    @property
+    def value(self):
+        return self.__value
 
     def __str__(self):
-        return "BinaryAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.corrected_value())
+        return "BinaryAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.value)
 
 
 class CentredAxis(object):
@@ -515,7 +579,7 @@ class CentredAxis(object):
         self.centre = 0.0
         self.max = 0.9
         self.min = -0.9
-        self.value = 0.0
+        self.__value = 0.0
         self.invert = invert
         self.dead_zone = dead_zone
         self.hot_zone = hot_zone
@@ -538,15 +602,17 @@ class CentredAxis(object):
         # print "Axis change : {} now {}".format(self.__str__(), value)
         return (value - self.min_raw_value) * (2 / (self.max_raw_value - self.min_raw_value)) - 1.0
 
+    @property
     def raw_value(self):
         """
         Get an uncorrected value for this axis
 
         :return: a float value, negative to the left or down, and ranging from -1.0 to 1.0
         """
-        return self.value
+        return self.__value
 
-    def corrected_value(self):
+    @property
+    def value(self):
         """
         Get a centre-compensated, scaled, value for the axis, taking any dead-zone into account. The value will
         scale from 0.0 at the edge of the dead-zone to 1.0 (positive) or -1.0 (negative) at the extreme position of
@@ -557,7 +623,7 @@ class CentredAxis(object):
 
         :return: a float value, negative to the left or down and ranging from -1.0 to 1.0
         """
-        mapped_value = map_dual_axis(self.min, self.max, self.centre, self.dead_zone, self.hot_zone, self.value)
+        mapped_value = map_dual_axis(self.min, self.max, self.centre, self.dead_zone, self.hot_zone, self.__value)
         if self.invert:
             return -mapped_value
         else:
@@ -584,7 +650,7 @@ class CentredAxis(object):
         """
 
         new_value = self._input_to_raw_value(raw_value)
-        self.value = new_value
+        self.__value = new_value
         # print "raw={}, val={}".format(raw_value, self.value)
         if new_value > self.max:
             self.max = new_value
@@ -592,7 +658,7 @@ class CentredAxis(object):
             self.min = new_value
 
     def __str__(self):
-        return "CentredAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.corrected_value())
+        return "CentredAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.value)
 
 
 class Button(object):
@@ -682,9 +748,14 @@ class Buttons(object):
                 buttons.append(thing.b1)
                 buttons.append(thing.b2)
                 thing.buttons = self
+            elif isinstance(thing, TriggerAxis):
+                if thing.button is not None:
+                    buttons.append(thing.button)
+                    thing.buttons = self
         self.buttons = {button: Buttons.ButtonState(button) for button in buttons}
         self.buttons_by_code = {button.key_code: state for button, state in self.buttons.items()}
         self.buttons_by_sname = {button.sname: state for button, state in self.buttons.items()}
+        self.__presses = None
 
     class ButtonState:
         """
@@ -704,6 +775,8 @@ class Buttons(object):
         """
         Called from the controller classes to update the state of this button manager when a button is pressed.
 
+        :internal:
+
         :param key_code:
             The code specified when populating Button instances
         """
@@ -721,6 +794,8 @@ class Buttons(object):
         """
         Called from the controller classes to update the state of this button manager when a button is released.
 
+        :internal:
+
         :param key_code:
             The code specified when populating Button instances
         """
@@ -729,7 +804,23 @@ class Buttons(object):
             state.is_pressed = False
             state.last_pressed = None
 
-    def get_and_clear_button_press_history(self):
+    @property
+    def presses(self):
+        """
+        Get the ButtonPresses containing buttons pressed between the most recent two calls to check_presses. This will
+        call the check_presses method if it has never been called before, and is therefore always safe even if your code
+        has never called the update function. To make this property actually do something useful, however, you do need
+        to call check_presses, preferably once immediately before you then want to handle any button presses that may
+        have happened.
+
+        :return:
+            a ButtonPresses object containing information about which buttons were pressed
+        """
+        if self.__presses is None:
+            self.__presses = self.get_and_clear_button_press_history()
+        return self.__presses
+
+    def check_presses(self):
         """
         Return the set of Buttons which have been pressed since this call was last made, clearing it as we do.
 
@@ -741,25 +832,10 @@ class Buttons(object):
             if state.was_pressed_since_last_check:
                 pressed.append(button)
                 state.was_pressed_since_last_check = False
-        return ButtonPresses(pressed)
+        self.__presses = ButtonPresses(pressed)
+        return self.__presses
 
-    def is_held(self, button):
-        """
-        Determines whether a button is currently held down
-
-        :param approxeng.input.Button button:
-            a Button to check
-        :return:
-            None if the button is not held down, or the number of seconds as a floating point value since it was
-            pressed
-        """
-        state = self.buttons.get(button)
-        if state is not None:
-            if state.is_pressed and state.last_pressed is not None:
-                return time() - state.last_pressed
-        return None
-
-    def is_held_name(self, sname):
+    def held(self, sname):
         """
         Determines whether a button is currently held, identifying it by standard name
         
@@ -775,15 +851,40 @@ class Buttons(object):
                 return time() - state.last_pressed
         return None
 
-    def for_name(self, sname):
+    def get(self, sname):
         """
         Get a button by sname, if present
         
         :param sname: 
             The standard name to search
-        :return: 
+        :return:
+            A Button, or None if no such button exists
         """
         return self.buttons_by_sname.get(sname).button
+
+    def __getattr__(self, item):
+        """
+        Property access to Button instances
+
+        :param item:
+            the sname of the button
+        :return:
+            the Button instance, or raise AttributeError if no such button
+        """
+        if item in self.buttons_by_sname:
+            return self.get(item)
+        raise AttributeError
+
+    def __contains__(self, item):
+        """
+        Check whether a given button, referenced by sname, exists
+
+        :param item:
+            The sname of the button to search
+        :return:
+            True if the axis exists, false otherwise
+        """
+        return item in self.buttons_by_sname
 
     def register_button_handler(self, button_handler, buttons):
         """

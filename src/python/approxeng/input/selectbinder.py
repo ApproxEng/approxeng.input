@@ -3,6 +3,9 @@ from threading import Thread
 
 from approxeng.input.controllers import find_single_controller, find_any_controller
 
+EV_KEY = 1
+EV_ABS = 3
+
 
 class ControllerResource:
     """
@@ -94,7 +97,16 @@ def bind_controller(devices, controller, print_events=False):
                         for event in self.devices[fd].read():
                             if print_events:
                                 print(event)
-                            controller.handle_evdev_event(event)
+                            if event.type == EV_ABS:
+                                controller.axes.axis_updated(event)
+                            elif event.type == EV_KEY:
+                                # Button event
+                                if event.value == 1:
+                                    # Button down
+                                    controller.buttons.button_pressed(event.code)
+                                elif event.value == 0:
+                                    # Button up
+                                    controller.buttons.button_released(event.code)
                 except Exception:
                     self.stop()
 

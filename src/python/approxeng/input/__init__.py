@@ -148,6 +148,7 @@ class Controller(object):
             for axis in self.axes.axes:
                 axis.hot_zone = hot_zone
         self.connected = False
+        self.exception = None
 
     def stream(self, *args):
         """
@@ -231,7 +232,7 @@ class Controller(object):
 
     @property
     def has_presses(self):
-        return self.presses.has_presses
+        return self.buttons.presses.has_presses
 
     @property
     def presses(self):
@@ -319,7 +320,7 @@ class Axes(object):
             axis.reset()
 
     def __str__(self):
-        return list("{}={}".format(axis.name, axis.corrected_value()) for axis in self.axes_by_code.values()).__str__()
+        return list("{}={}".format(axis.name, axis.value) for axis in self.axes_by_code.values()).__str__()
 
     @property
     def names(self):
@@ -527,9 +528,9 @@ class BinaryAxis(object):
         self.__value = raw_value
         if self.buttons is not None:
             if self.last_value < 0:
-                self.buttons.button_released(self.b2.key_code)
-            elif self.last_value > 0:
                 self.buttons.button_released(self.b1.key_code)
+            elif self.last_value > 0:
+                self.buttons.button_released(self.b2.key_code)
             self.last_value = raw_value
             if raw_value < 0:
                 self.buttons.button_pressed(self.b1.key_code)
@@ -727,6 +728,10 @@ class ButtonPresses(object):
         """
         return item in self.names
 
+    def __iter__(self):
+        for name in self.names:
+            yield name
+
     @property
     def has_presses(self):
         return len(self.names) > 0
@@ -836,7 +841,7 @@ class Buttons(object):
             a ButtonPresses object containing information about which buttons were pressed
         """
         if self.__presses is None:
-            self.__presses = self.get_and_clear_button_press_history()
+            self.check_presses()
         return self.__presses
 
     def check_presses(self):

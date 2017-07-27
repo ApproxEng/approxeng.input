@@ -107,11 +107,12 @@ def bind_controller(devices, controller, print_events=False):
                                 elif event.value == 0:
                                     # Button up
                                     controller.buttons.button_released(event.code)
-                except Exception:
-                    self.stop()
+                except Exception as e:
+                    self.stop(e)
 
-        def stop(self):
+        def stop(self, exception=None):
             controller.connected = False
+            controller.exception = exception
             self.running = False
 
     polling_thread = SelectThread()

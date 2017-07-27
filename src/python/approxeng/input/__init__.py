@@ -334,7 +334,7 @@ class Axes(object):
         """
         Return a sequence of all Axis objects which are not in their resting positions
         """
-        return [axis for axis in self.axes if axis.corrected_value() != 0]
+        return [axis for axis in self.axes if axis.value != 0]
 
     def __getitem__(self, sname):
         """

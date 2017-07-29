@@ -317,33 +317,20 @@
             <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
                 <span class="n">axis</span><span class="o">.</span><span class="n">hot_zone</span> <span class="o">=</span> <span class="n">hot_zone</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream</span> <span class="o">=</span> <span class="n">Controller</span><span class="o">.</span><span class="n">ControllerStream</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Controller.stream"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.stream">[docs]</a>    <span class="k">def</span> <span class="nf">stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a GPIOzero compatible source of axis values. This returns a generator which produces an infinite</span>
-<span class="sd">        stream of tuples containing the requested axis values, for example:</span>
-<span class="sd">        </span>
-<span class="sd">        .. code-block:: python</span>
-<span class="sd">        </span>
-<span class="sd">            from gpiozero import Robot</span>
-<span class="sd">            from approxeng.input.selectbinder import ControllerResource</span>
-<span class="sd">            from signal import pause</span>
-<span class="sd">            </span>
-<span class="sd">            # Create a Robot using GPIO pins on the Pi</span>
-<span class="sd">            robot = Robot(left=(18, 27), right=(17, 22))</span>
-<span class="sd">            </span>
-<span class="sd">            with ControllerResource() as joystick:</span>
-<span class="sd">                robot.source = joystick.stream(&#39;ly&#39;,&#39;ry&#39;)</span>
-<span class="sd">                pause()</span>
-<span class="sd">        </span>
-<span class="sd">        :param args: </span>
-<span class="sd">            Any number of axis standard names</span>
-<span class="sd">        :return: </span>
-<span class="sd">            A generator producing an infinite sequence of tuples containing the corrected values for those names</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
+    <span class="k">class</span> <span class="nc">ControllerStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span>
+
+        <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">generator</span><span class="p">():</span>
+                <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">generator</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

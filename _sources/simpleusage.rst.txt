@@ -3,9 +3,9 @@
 Simple Usage
 ------------
 
-In version 2.0 of this library, the API has been simplified and made my Python-like. Rather than having to fetch nested
-objects containing axis and button information, all the most common operations are now available as methods and
-attributes of the controller class itself.
+In version 2.0 of this library, the API has been simplified and made more Python-like. Rather than having to fetch
+nested objects containing axis and button information, all the most common operations are now available as methods and
+attributes of the controller class itself. Read on...
 
 Connecting to a controller
 **************************

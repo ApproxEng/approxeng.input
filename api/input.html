@@ -283,35 +283,6 @@ function is called with the Button that was pressed as the sole argument.</li>
 </table>
 </dd></dl>
 
-<dl class="method">
-<dt id="approxeng.input.Controller.stream">
-<code class="descname">stream</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.stream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.stream" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a GPIOzero compatible source of axis values. This returns a generator which produces an infinite
-stream of tuples containing the requested axis values, for example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gpiozero</span> <span class="kn">import</span> <span class="n">Robot</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
-<span class="kn">from</span> <span class="nn">signal</span> <span class="kn">import</span> <span class="n">pause</span>
-
-<span class="c1"># Create a Robot using GPIO pins on the Pi</span>
-<span class="n">robot</span> <span class="o">=</span> <span class="n">Robot</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">27</span><span class="p">),</span> <span class="n">right</span><span class="o">=</span><span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">22</span><span class="p">))</span>
-
-<span class="k">with</span> <span class="n">ControllerResource</span><span class="p">()</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
-    <span class="n">robot</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="s1">&#39;ly&#39;</span><span class="p">,</span><span class="s1">&#39;ry&#39;</span><span class="p">)</span>
-    <span class="n">pause</span><span class="p">()</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> &#8211; Any number of axis standard names</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A generator producing an infinite sequence of tuples containing the corrected values for those names</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="class">

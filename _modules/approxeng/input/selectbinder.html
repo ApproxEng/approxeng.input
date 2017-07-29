@@ -294,7 +294,10 @@
     <span class="k">def</span> <span class="nf">unbind</span><span class="p">():</span>
         <span class="n">polling_thread</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">devices</span><span class="p">:</span>
-            <span class="n">dev</span><span class="o">.</span><span class="n">ungrab</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">dev</span><span class="o">.</span><span class="n">ungrab</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+                <span class="k">pass</span>
 
     <span class="n">polling_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 

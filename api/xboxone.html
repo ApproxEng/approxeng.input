@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>XBox-One S Controller Support &mdash; Approximate Engineering - Input 1.0.7 documentation</title>
+  <title>XBox-One S Controller Support &mdash; Approximate Engineering - Input 2.0.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 1.0.7 documentation" href="../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.0.0 documentation" href="../_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,10 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 1.0.7 documentation" href="../index.html"/> 
+    <link rel="top" title="Approximate Engineering - Input 2.0.0 documentation" href="../index.html"/>
+        <link rel="up" title="API Documentation" href="../api.html"/>
+        <link rel="next" title="Rock Candy Controller Support" href="rockcandy.html"/>
+        <link rel="prev" title="PlayStation 4 Controller Support" href="dualshock4.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -68,7 +71,7 @@
             
             
               <div class="version">
-                1.0.7
+                2.0.0
               </div>
             
           
@@ -92,14 +95,32 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">XBox-One S Controller Support</a><ul>
-<li><a class="reference internal" href="#module-approxeng.input.xboxone">Controller Classes</a></li>
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">XBox-One S Controller Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-approxeng.input.xboxone">Controller Classes</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="rockcandy.html">Rock Candy Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="steamcontroller.html">Steam Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wii.html">Wii Remote Pro Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wiimote.html">WiiMote Controller Support</a></li>
 </ul>
-</div>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Advanced Usage Guide</a></li>
+</ul>
+
             
           
         </div>
@@ -141,6 +162,8 @@
   <ul class="wy-breadcrumbs">
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">API Documentation</a> &raquo;</li>
         
       <li>XBox-One S Controller Support</li>
     
@@ -249,12 +272,21 @@ be done by creating a file in /etc/modprobe.d with the line &#8216;options bluet
           </div>
           <footer>
   
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rockcandy.html" class="btn btn-neutral float-right" title="Rock Candy Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="dualshock4.html" class="btn btn-neutral" title="PlayStation 4 Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2016, 2017, Tom Oinn.
+        &copy; Copyright 2017, Tom Oinn.
       Last updated on Jul 29, 2017.
 
     </p>
@@ -277,7 +309,7 @@ be done by creating a file in /etc/modprobe.d with the line &#8216;options bluet
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'1.0.7',
+            VERSION:'2.0.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

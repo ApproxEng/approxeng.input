@@ -45,11 +45,11 @@ if you have multiple controllers connected for some reason you might want to tel
 PS4 controller). They can also be used to configure the default settings for axes, and there's an option to print out
 debug information. In general though you'll only ever need the simple form shown here.
 
-Once you have a controller object you can use it to read axes and buttons, both of which are referenced by a
-sname-label_ - this allows you to not worry too much about exactly what controller's going to be present. Rather than
-having to know that the XBox controller has 'A','B'... and so on, whereas the Playstation controllers have 'cross',
-'circle' etc the API defines a standard set of names for buttons and axes (they're based on the PS4 controller as it
-happens, mostly because that's the one I first used when I started writing the library!).
+Once you have a controller object you can use it to read axes and buttons, both of which are referenced by a standard
+name (see  :ref:`sname-label`) - this allows you to not worry too much about exactly what controller's going to be
+present. Rather than having to know that the XBox controller has 'A','B'... and so on, whereas the Playstation
+controllers have 'cross', 'circle' etc the API defines a standard set of names for buttons and axes (they're based on
+the PS3 controller as it happens, mostly because that's the one I first used when I started writing the library!).
 
 Reading Analoque Axes
 *********************

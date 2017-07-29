@@ -15,7 +15,7 @@ Version 2.0
 -----------
 
 Simplified API, breaks compatibility with previous versions but allows for more pythonic access via property accessors
-and overridden attribute access. The API described at :ref:`simple-api` should now be all you need!
+and overridden attribute access. The API described at :ref:`simple_api` should now be all you need!
 
 Version 1.0.7
 -------------

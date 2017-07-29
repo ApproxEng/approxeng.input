@@ -93,15 +93,8 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../howtouse.html">Usage Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../addingcontrollers.html">Adding support for a new controller type</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
-</ul>
-
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
             
           
         </div>
@@ -165,9 +158,6 @@
             
   <h1>Source code for approxeng.input</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">time</span>
-
-<span class="n">EV_KEY</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">EV_ABS</span> <span class="o">=</span> <span class="mi">3</span>
 
 
 <span class="k">def</span> <span class="nf">map_into_range</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">raw_value</span><span class="p">):</span>
@@ -267,20 +257,21 @@
 
 <div class="viewcode-block" id="Controller"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller">[docs]</a><span class="k">class</span> <span class="nc">Controller</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Superclass for controller implementations which use evdev for their event handling</span>
+<span class="sd">    Superclass for controller implementations</span>
 
 <span class="sd">    :ivar int vendor_id:</span>
 <span class="sd">        Vendor ID used to identify the controller type.</span>
 <span class="sd">    :ivar int product_id:</span>
-<span class="sd">        Product ID used to idenfity the controller type.</span>
+<span class="sd">        Product ID used to identify the controller type.</span>
 <span class="sd">    :ivar approxeng.input.Axes axes:</span>
-<span class="sd">        All analogue axes, whether :class:`approxeng.input.CentredAxis` or :class:`approxeng.input.TriggerAxis` are</span>
-<span class="sd">        managed by this object. It can be used to reset calibration information or set centres for all axes at once.</span>
-<span class="sd">        Internally it&#39;s used to route events to the appropriate axis object, you should use the objects defined by each</span>
-<span class="sd">        controller class to actually read values from the axes.</span>
+<span class="sd">        All analogue axes. You can get the individual axis objects from this, but you shouldn&#39;t ever need to do this,</span>
+<span class="sd">        use methods on Controller instead!</span>
 <span class="sd">    :ivar approxeng.input.Buttons buttons:</span>
-<span class="sd">        All buttons are managed by this object. It can be used to query which buttons are held (and for how long) and</span>
-<span class="sd">        to bind event handlers to buttons.</span>
+<span class="sd">        All buttons are managed by this object. This can be used to access Button objects representing buttons on the</span>
+<span class="sd">        controller, but you will almost never need to do this - use the methods on Controller instead!</span>
+<span class="sd">    :ivar: boolean connected:</span>
+<span class="sd">        True if the controller is connected to a source of events, False otherwise. This can be used as a break</span>
+<span class="sd">        condition to check for controller disconnection.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Controller.__init__"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vendor_id</span><span class="p">,</span> <span class="n">product_id</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -307,71 +298,18 @@
                           <span class="nb">isinstance</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">TriggerAxis</span><span class="p">)])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span> <span class="o">=</span> <span class="n">Buttons</span><span class="p">([</span><span class="n">control</span> <span class="k">for</span> <span class="n">control</span> <span class="ow">in</span> <span class="n">controls</span> <span class="k">if</span>
                                 <span class="nb">isinstance</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">Button</span><span class="p">)</span> <span class="ow">or</span>
-                                <span class="nb">isinstance</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">BinaryAxis</span><span class="p">)])</span>
+                                <span class="nb">isinstance</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">BinaryAxis</span><span class="p">)</span> <span class="ow">or</span>
+                                <span class="nb">isinstance</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">TriggerAxis</span><span class="p">)])</span>
         <span class="k">if</span> <span class="n">dead_zone</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
                 <span class="n">axis</span><span class="o">.</span><span class="n">dead_zone</span> <span class="o">=</span> <span class="n">dead_zone</span>
         <span class="k">if</span> <span class="n">hot_zone</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
                 <span class="n">axis</span><span class="o">.</span><span class="n">hot_zone</span> <span class="o">=</span> <span class="n">hot_zone</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__connected</span> <span class="o">=</span> <span class="kc">False</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Controller.handle_evdev_event"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.handle_evdev_event">[docs]</a>    <span class="k">def</span> <span class="nf">handle_evdev_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Process an event from evdev, using it to update the axis or button information in the controller. This function</span>
-<span class="sd">        is called by the binder to process events.</span>
-
-<span class="sd">        :param event:</span>
-<span class="sd">            The evdev event to handle</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">EV_ABS</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">axis_updated</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">EV_KEY</span><span class="p">:</span>
-            <span class="c1"># Button event</span>
-            <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="c1"># Button down</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_pressed</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="c1"># Button up</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_released</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">code</span><span class="p">)</span></div>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns True if this controller is bound to an active source of events, False otherwise. The binder is</span>
-<span class="sd">        responsible for setting this property based on detection of disconnects, so it should be possible to do</span>
-<span class="sd">        a &#39;while joystick.connected:&#39; to break out of a behaviour if the controller disconnects.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__connected</span>
-
-    <span class="nd">@connected</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_connected</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__connected</span> <span class="o">=</span> <span class="n">is_connected</span>
-
-<div class="viewcode-block" id="Controller.get_axis_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.get_axis_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_axis_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get a single corrected axis value for a given standard name</span>
-<span class="sd">        </span>
-<span class="sd">        :param sname: </span>
-<span class="sd">            The standard name of the axis to read</span>
-<span class="sd">        :return: </span>
-<span class="sd">            A value, the range of which is determined by the type of axis. For centered axes it will be -1 to 1, for</span>
-<span class="sd">            triggers it&#39;ll be 0 to 1.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">sname</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Controller.get_axis_values"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.get_axis_values">[docs]</a>    <span class="k">def</span> <span class="nf">get_axis_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Retrieve multiple axis values in one call</span>
-<span class="sd">        </span>
-<span class="sd">        :param args: </span>
-<span class="sd">            Any number of axis standard names</span>
-<span class="sd">        :return: </span>
-<span class="sd">            A tuple of the equivalent values read from the axes</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">sname</span><span class="p">)</span> <span class="k">for</span> <span class="n">sname</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="Controller.get_axis_values_stream"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.get_axis_values_stream">[docs]</a>    <span class="k">def</span> <span class="nf">get_axis_values_stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="Controller.stream"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.stream">[docs]</a>    <span class="k">def</span> <span class="nf">stream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a GPIOzero compatible source of axis values. This returns a generator which produces an infinite</span>
 <span class="sd">        stream of tuples containing the requested axis values, for example:</span>
@@ -386,7 +324,7 @@
 <span class="sd">            robot = Robot(left=(18, 27), right=(17, 22))</span>
 <span class="sd">            </span>
 <span class="sd">            with ControllerResource() as joystick:</span>
-<span class="sd">                robot.source = joystick.get_axis_values_stream(&#39;ly&#39;,&#39;ry&#39;)</span>
+<span class="sd">                robot.source = joystick.stream(&#39;ly&#39;,&#39;ry&#39;)</span>
 <span class="sd">                pause()</span>
 <span class="sd">        </span>
 <span class="sd">        :param args: </span>
@@ -394,34 +332,54 @@
 <span class="sd">        :return: </span>
 <span class="sd">            A generator producing an infinite sequence of tuples containing the corrected values for those names</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_axis_values</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Controller.button_held"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.button_held">[docs]</a>    <span class="k">def</span> <span class="nf">button_held</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Shortcut to get a button hold, either None if the button is not held, or a float value containing the number of</span>
-<span class="sd">        seconds for which the button has been held.</span>
-<span class="sd">        </span>
-<span class="sd">        :param sname: </span>
-<span class="sd">            The standard name of the button to query</span>
-<span class="sd">        :return: </span>
-<span class="sd">            Time in seconds the button has been held, or None if it isn&#39;t held</span>
+<span class="sd">        Simple index access to axis corrected values and button held times</span>
+<span class="sd">        :param item:</span>
+<span class="sd">            the sname of an axis or button, or a tuple thereof</span>
+<span class="sd">        :return:</span>
+<span class="sd">            for an axis, the corrected value, or, for a button, the held time or None if not held. Raises AttributeError</span>
+<span class="sd">            if the given name doesn&#39;t correspond to an axis or a button. If a tuple is supplied as an argument, result</span>
+<span class="sd">            will be a tuple of values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">is_held_name</span><span class="p">(</span><span class="n">sname</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Controller.buttons_held"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.buttons_held">[docs]</a>    <span class="k">def</span> <span class="nf">buttons_held</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">single_item</span><span class="p">)</span> <span class="k">for</span> <span class="n">single_item</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Shortcut to get multiple button holds, passing any number of sname values in to get a corresponding array of</span>
-<span class="sd">        hold times or None values.</span>
-<span class="sd">        </span>
-<span class="sd">        :param args: </span>
-<span class="sd">            A sequence of snames for buttons</span>
-<span class="sd">        :return: </span>
-<span class="sd">            A corresponding sequence of hold times</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">button_held</span><span class="p">(</span><span class="n">sname</span><span class="p">)</span> <span class="k">for</span> <span class="n">sname</span> <span class="ow">in</span> <span class="n">args</span><span class="p">]</span></div>
+<span class="sd">        Property access to axis values and button hold times</span>
 
-<div class="viewcode-block" id="Controller.get_and_clear_button_press_history"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.get_and_clear_button_press_history">[docs]</a>    <span class="k">def</span> <span class="nf">get_and_clear_button_press_history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="sd">        :param item:</span>
+<span class="sd">            sname of an axis or button</span>
+<span class="sd">        :return:</span>
+<span class="sd">            The axis corrected value, or button hold time (None if not held), or AttributeError if sname not found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">elif</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">held</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A Controller contains a named attribute if it has either an axis or a button with the attribute as its sname</span>
+<span class="sd">        :param item:</span>
+<span class="sd">            The sname of the button or axis</span>
+<span class="sd">        :return:</span>
+<span class="sd">            True if there&#39;s a button or axis with that name, false otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="Controller.check_presses"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.check_presses">[docs]</a>    <span class="k">def</span> <span class="nf">check_presses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the set of Buttons which have been pressed since this call was last made, clearing it as we do. This is</span>
 <span class="sd">        a shortcut do doing &#39;buttons.get_and_clear_button_press_history&#39;</span>
@@ -429,10 +387,44 @@
 <span class="sd">        :return:</span>
 <span class="sd">            A ButtonPresses instance which contains buttons which were pressed since this call was last made.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">get_and_clear_button_press_history</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">check_presses</span><span class="p">()</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_presses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">presses</span><span class="o">.</span><span class="n">has_presses</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">presses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The ButtonPresses containing buttons pressed between the two most recent calls to check_presses</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">presses</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">controls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return:</span>
+<span class="sd">            A struct containing all the names of controls on this controller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;axes&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">names</span><span class="p">,</span>
+                <span class="s1">&#39;buttons&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">names</span><span class="p">}</span>
+
+<div class="viewcode-block" id="Controller.register_button_handler"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.register_button_handler">[docs]</a>    <span class="k">def</span> <span class="nf">register_button_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button_handler</span><span class="p">,</span> <span class="n">button_sname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register a handler function which will be called when a button is pressed</span>
+
+<span class="sd">        :param button_handler:</span>
+<span class="sd">            A function which will be called when any of the specified buttons are pressed. The</span>
+<span class="sd">            function is called with the Button that was pressed as the sole argument.</span>
+<span class="sd">        :param button_sname:</span>
+<span class="sd">            The sname of the button which should trigger the handler function</span>
+<span class="sd">        :return:</span>
+<span class="sd">            A no-arg function which can be used to remove this registration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">register_button_handler</span><span class="p">(</span><span class="n">button_handler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="p">[</span><span class="n">button_sname</span><span class="p">])</span></div>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">, axes=</span><span class="si">{}</span><span class="s2">, buttons=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">, axes=</span><span class="si">{}</span><span class="s2">, buttons=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Axes"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Axes">[docs]</a><span class="k">class</span> <span class="nc">Axes</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -452,21 +444,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_code</span> <span class="o">=</span> <span class="p">{</span><span class="n">axis</span><span class="o">.</span><span class="n">axis_event_code</span><span class="p">:</span> <span class="n">axis</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span> <span class="o">=</span> <span class="p">{</span><span class="n">axis</span><span class="o">.</span><span class="n">sname</span><span class="p">:</span> <span class="n">axis</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">axes_calibration</span> <span class="o">=</span> <span class="p">{</span><span class="n">axis</span><span class="o">.</span><span class="n">axis_event_code</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">10000</span><span class="p">}</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">}</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span> <span class="o">=</span> <span class="p">{</span><span class="n">axis</span><span class="o">.</span><span class="n">sname</span><span class="p">:</span> <span class="n">axis</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">}</span></div>
 
 <div class="viewcode-block" id="Axes.axis_updated"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Axes.axis_updated">[docs]</a>    <span class="k">def</span> <span class="nf">axis_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called to process an absolute axis event from evdev, this is called internally by the controller implementations</span>
+
+<span class="sd">        :internal:</span>
 
 <span class="sd">        :param event:</span>
 <span class="sd">            The evdev event to process</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_code</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">cal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_calibration</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
-            <span class="n">cal</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cal</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">],</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-            <span class="n">cal</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cal</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">],</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
             <span class="n">axis</span><span class="o">.</span><span class="n">set_raw_value</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unknown axis code </span><span class="si">{}</span><span class="s1">, value </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">))</span></div>
@@ -485,20 +475,61 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resets any previously defined axis calibration to 0.0 for all axes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_code</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
             <span class="n">axis</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">axis</span><span class="o">.</span><span class="n">corrected_value</span><span class="p">())</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_code</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">axis</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_code</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sname</span><span class="p">)</span><span class="o">.</span><span class="n">corrected_value</span><span class="p">()</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The snames of all axis objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="s1">&#39;&#39;</span><span class="p">])</span>
 
-<div class="viewcode-block" id="Axes.active_axes"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Axes.active_axes">[docs]</a>    <span class="k">def</span> <span class="nf">active_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">active_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a sequence of all Axis objects which are not in their resting positions</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">axis</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="k">if</span> <span class="n">axis</span><span class="o">.</span><span class="n">corrected_value</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span></div></div>
+        <span class="k">return</span> <span class="p">[</span><span class="n">axis</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="k">if</span> <span class="n">axis</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get an axis by sname, if present</span>
+
+<span class="sd">        :param sname:</span>
+<span class="sd">            The standard name to search</span>
+<span class="sd">        :return:</span>
+<span class="sd">            An axis object, or None if no such button exists</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sname</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called when an unresolved attribute is requested, retrieves the Axis object for the given sname</span>
+
+<span class="sd">        :param item:</span>
+<span class="sd">            the standard name of the axis to query</span>
+<span class="sd">        :return:</span>
+<span class="sd">            the corrected value of the axis, or raise AttributeError if no such axis is present</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Search for </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check whether a given axis, referenced by sname, exists</span>
+
+<span class="sd">        :param item:</span>
+<span class="sd">            The sname of the axis to search</span>
+<span class="sd">        :return:</span>
+<span class="sd">            True if the axis exists, false otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span></div>
 
 
 <div class="viewcode-block" id="TriggerAxis"><a class="viewcode-back" href="../../api/input.html#approxeng.input.TriggerAxis">[docs]</a><span class="k">class</span> <span class="nc">TriggerAxis</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -509,7 +540,8 @@
 <span class="sd">    axes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TriggerAxis.__init__"><a class="viewcode-back" href="../../api/input.html#approxeng.input.TriggerAxis.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">min_raw_value</span><span class="p">,</span> <span class="n">max_raw_value</span><span class="p">,</span> <span class="n">axis_event_code</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="TriggerAxis.__init__"><a class="viewcode-back" href="../../api/input.html#approxeng.input.TriggerAxis.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">min_raw_value</span><span class="p">,</span> <span class="n">max_raw_value</span><span class="p">,</span> <span class="n">axis_event_code</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">button_sname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">button_trigger_value</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a new TriggerAxis - this will be done internally within the controller classes i.e.</span>
 <span class="sd">        :class:`approxeng.input.xboxone.XBoxOneSPad`</span>
@@ -528,17 +560,32 @@
 <span class="sd">            The proportion of the trigger range which will be treated as equivalent to fully depressing the trigger</span>
 <span class="sd">        :param sname:</span>
 <span class="sd">            The standard name for this trigger, if specified</span>
+<span class="sd">        :param button_sname:</span>
+<span class="sd">            If provided, this creates a new Button internally which will be triggered by changes to the axis value. This</span>
+<span class="sd">            is useful for triggers which have axis representations but no corresponding button presses such as the XBox1</span>
+<span class="sd">            controller front triggers. If this is set to None then no button is created</span>
+<span class="sd">        :param button_trigger_value:</span>
+<span class="sd">            Defaulting to 0.5, this value determines the point in the trigger axis&#39; range at which point the button is</span>
+<span class="sd">            regarded as being pressed or released.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="mf">0.9</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="mf">0.1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dead_zone</span> <span class="o">=</span> <span class="n">dead_zone</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hot_zone</span> <span class="o">=</span> <span class="n">hot_zone</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min_raw_value</span> <span class="o">=</span> <span class="n">min_raw_value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_raw_value</span> <span class="o">=</span> <span class="n">max_raw_value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axis_event_code</span> <span class="o">=</span> <span class="n">axis_event_code</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">sname</span> <span class="o">=</span> <span class="n">sname</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sname</span> <span class="o">=</span> <span class="n">sname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_trigger_value</span> <span class="o">=</span> <span class="n">button_trigger_value</span>
+        <span class="k">if</span> <span class="n">button_sname</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_trigger_button&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+                                 <span class="n">key_code</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_trigger_button&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_event_code</span><span class="p">),</span>
+                                 <span class="n">sname</span><span class="o">=</span><span class="n">button_sname</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">button</span> <span class="o">=</span> <span class="kc">None</span></div>
 
     <span class="k">def</span> <span class="nf">_input_to_raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -553,15 +600,17 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_raw_value</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_raw_value</span>
 
-<div class="viewcode-block" id="TriggerAxis.raw_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.TriggerAxis.raw_value">[docs]</a>    <span class="k">def</span> <span class="nf">raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an uncorrected value for this trigger</span>
 
 <span class="sd">        :return: a float value, 0.0 when not pressed, to 1.0 when fully pressed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
 
-<div class="viewcode-block" id="TriggerAxis.corrected_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.TriggerAxis.corrected_value">[docs]</a>    <span class="k">def</span> <span class="nf">corrected_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a centre-compensated, scaled, value for the axis, taking any dead-zone into account. The value will</span>
 <span class="sd">        scale from 0.0 at the edge of the dead-zone to 1.0 (positive) at the extreme position of</span>
@@ -570,12 +619,11 @@
 <span class="sd">        :return:</span>
 <span class="sd">            a float value, 0.0 when not pressed or within the dead zone, to 1.0 when fully pressed or in the hot zone</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">map_single_axis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dead_zone</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hot_zone</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">map_single_axis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dead_zone</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hot_zone</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TriggerAxis.reset"><a class="viewcode-back" href="../../api/input.html#approxeng.input.TriggerAxis.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Reset calibration (max, min and centre values) for this axis specifically. Not generally needed, you can just</span>
-<span class="sd">        call the reset method on the SixAxis instance.</span>
+<span class="sd">        Reset calibration (max, min and centre values) for this axis specifically.</span>
 
 <span class="sd">        :internal:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -591,14 +639,19 @@
 <span class="sd">        :internal:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">new_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_to_raw_value</span><span class="p">(</span><span class="n">raw_value</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new_value</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">button</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">new_value</span> <span class="o">&gt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">button_trigger_value</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_pressed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">key_code</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">new_value</span> <span class="o">&lt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">button_trigger_value</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_released</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">button</span><span class="o">.</span><span class="n">key_code</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="n">new_value</span>
         <span class="k">if</span> <span class="n">new_value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">new_value</span>
         <span class="k">elif</span> <span class="n">new_value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">new_value</span></div>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;TriggerAxis name=</span><span class="si">{}</span><span class="s2">, sname=</span><span class="si">{}</span><span class="s2">, corrected_value=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrected_value</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="s2">&quot;TriggerAxis name=</span><span class="si">{}</span><span class="s2">, sname=</span><span class="si">{}</span><span class="s2">, corrected_value=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BinaryAxis"><a class="viewcode-back" href="../../api/input.html#approxeng.input.BinaryAxis">[docs]</a><span class="k">class</span> <span class="nc">BinaryAxis</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -628,26 +681,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_value</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sname</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="mi">0</span></div>
 
     <span class="k">def</span> <span class="nf">set_raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">raw_value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="n">raw_value</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_released</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b2</span><span class="o">.</span><span class="n">key_code</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_released</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b1</span><span class="o">.</span><span class="n">key_code</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_released</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b2</span><span class="o">.</span><span class="n">key_code</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">last_value</span> <span class="o">=</span> <span class="n">raw_value</span>
             <span class="k">if</span> <span class="n">raw_value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_pressed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b1</span><span class="o">.</span><span class="n">key_code</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">raw_value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_pressed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b2</span><span class="o">.</span><span class="n">key_code</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">corrected_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;BinaryAxis name=</span><span class="si">{}</span><span class="s2">, sname=</span><span class="si">{}</span><span class="s2">, corrected_value=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrected_value</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="s2">&quot;BinaryAxis name=</span><span class="si">{}</span><span class="s2">, sname=</span><span class="si">{}</span><span class="s2">, corrected_value=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="CentredAxis"><a class="viewcode-back" href="../../api/input.html#approxeng.input.CentredAxis">[docs]</a><span class="k">class</span> <span class="nc">CentredAxis</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -683,7 +737,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">centre</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="mf">0.9</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.9</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">invert</span> <span class="o">=</span> <span class="n">invert</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dead_zone</span> <span class="o">=</span> <span class="n">dead_zone</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hot_zone</span> <span class="o">=</span> <span class="n">hot_zone</span>
@@ -706,15 +760,17 @@
         <span class="c1"># print &quot;Axis change : {} now {}&quot;.format(self.__str__(), value)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_raw_value</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_raw_value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_raw_value</span><span class="p">))</span> <span class="o">-</span> <span class="mf">1.0</span>
 
-<div class="viewcode-block" id="CentredAxis.raw_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.CentredAxis.raw_value">[docs]</a>    <span class="k">def</span> <span class="nf">raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an uncorrected value for this axis</span>
 
 <span class="sd">        :return: a float value, negative to the left or down, and ranging from -1.0 to 1.0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
 
-<div class="viewcode-block" id="CentredAxis.corrected_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.CentredAxis.corrected_value">[docs]</a>    <span class="k">def</span> <span class="nf">corrected_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a centre-compensated, scaled, value for the axis, taking any dead-zone into account. The value will</span>
 <span class="sd">        scale from 0.0 at the edge of the dead-zone to 1.0 (positive) or -1.0 (negative) at the extreme position of</span>
@@ -725,11 +781,11 @@
 
 <span class="sd">        :return: a float value, negative to the left or down and ranging from -1.0 to 1.0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">mapped_value</span> <span class="o">=</span> <span class="n">map_dual_axis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">centre</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dead_zone</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hot_zone</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">mapped_value</span> <span class="o">=</span> <span class="n">map_dual_axis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">centre</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dead_zone</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hot_zone</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert</span><span class="p">:</span>
             <span class="k">return</span> <span class="o">-</span><span class="n">mapped_value</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">mapped_value</span></div>
+            <span class="k">return</span> <span class="n">mapped_value</span>
 
 <div class="viewcode-block" id="CentredAxis.reset"><a class="viewcode-back" href="../../api/input.html#approxeng.input.CentredAxis.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -752,7 +808,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">new_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_to_raw_value</span><span class="p">(</span><span class="n">raw_value</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">new_value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="n">new_value</span>
         <span class="c1"># print &quot;raw={}, val={}&quot;.format(raw_value, self.value)</span>
         <span class="k">if</span> <span class="n">new_value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">new_value</span>
@@ -760,7 +816,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">new_value</span></div>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;CentredAxis name=</span><span class="si">{}</span><span class="s2">, sname=</span><span class="si">{}</span><span class="s2">, corrected_value=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">corrected_value</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="s2">&quot;CentredAxis name=</span><span class="si">{}</span><span class="s2">, sname=</span><span class="si">{}</span><span class="s2">, corrected_value=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Button"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Button">[docs]</a><span class="k">class</span> <span class="nc">Button</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -798,15 +854,44 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span> <span class="o">=</span> <span class="n">buttons</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">([</span><span class="n">button</span><span class="o">.</span><span class="n">sname</span> <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="n">buttons</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="ButtonPresses.was_pressed"><a class="viewcode-back" href="../../api/input.html#approxeng.input.ButtonPresses.was_pressed">[docs]</a>    <span class="k">def</span> <span class="nf">was_pressed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return true if a button was pressed, referencing by standard name</span>
 <span class="sd">        </span>
 <span class="sd">        :param sname: the name to check</span>
 <span class="sd">        :return: true if contained within the press set, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">sname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span></div>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="n">single_item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">)</span> <span class="k">for</span> <span class="n">single_item</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span>
 
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simpler way to query whether a button was pressed by overriding the __getattr__ method</span>
+
+<span class="sd">        :param item:</span>
+<span class="sd">            sname of the button</span>
+<span class="sd">        :return:</span>
+<span class="sd">            true if the button was pressed, false if it either wasn&#39;t pressed or wasn&#39;t included in the controller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Contains check for a button sname</span>
+
+<span class="sd">        :param item:</span>
+<span class="sd">            The sname of the button to check</span>
+<span class="sd">        :return:</span>
+<span class="sd">            True if the button is in the set of pressed buttons, false otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">has_presses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
 
@@ -839,9 +924,14 @@
                 <span class="n">buttons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thing</span><span class="o">.</span><span class="n">b1</span><span class="p">)</span>
                 <span class="n">buttons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thing</span><span class="o">.</span><span class="n">b2</span><span class="p">)</span>
                 <span class="n">thing</span><span class="o">.</span><span class="n">buttons</span> <span class="o">=</span> <span class="bp">self</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">thing</span><span class="p">,</span> <span class="n">TriggerAxis</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">thing</span><span class="o">.</span><span class="n">button</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">buttons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thing</span><span class="o">.</span><span class="n">button</span><span class="p">)</span>
+                    <span class="n">thing</span><span class="o">.</span><span class="n">buttons</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span> <span class="o">=</span> <span class="p">{</span><span class="n">button</span><span class="p">:</span> <span class="n">Buttons</span><span class="o">.</span><span class="n">ButtonState</span><span class="p">(</span><span class="n">button</span><span class="p">)</span> <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="n">buttons</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_code</span> <span class="o">=</span> <span class="p">{</span><span class="n">button</span><span class="o">.</span><span class="n">key_code</span><span class="p">:</span> <span class="n">state</span> <span class="k">for</span> <span class="n">button</span><span class="p">,</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_sname</span> <span class="o">=</span> <span class="p">{</span><span class="n">button</span><span class="o">.</span><span class="n">sname</span><span class="p">:</span> <span class="n">state</span> <span class="k">for</span> <span class="n">button</span><span class="p">,</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_sname</span> <span class="o">=</span> <span class="p">{</span><span class="n">button</span><span class="o">.</span><span class="n">sname</span><span class="p">:</span> <span class="n">state</span> <span class="k">for</span> <span class="n">button</span><span class="p">,</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__presses</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="Buttons.ButtonState"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.ButtonState">[docs]</a>    <span class="k">class</span> <span class="nc">ButtonState</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -861,6 +951,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called from the controller classes to update the state of this button manager when a button is pressed.</span>
 
+<span class="sd">        :internal:</span>
+
 <span class="sd">        :param key_code:</span>
 <span class="sd">            The code specified when populating Button instances</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -878,6 +970,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called from the controller classes to update the state of this button manager when a button is released.</span>
 
+<span class="sd">        :internal:</span>
+
 <span class="sd">        :param key_code:</span>
 <span class="sd">            The code specified when populating Button instances</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -886,7 +980,30 @@
             <span class="n">state</span><span class="o">.</span><span class="n">is_pressed</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="n">state</span><span class="o">.</span><span class="n">last_pressed</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Buttons.get_and_clear_button_press_history"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.get_and_clear_button_press_history">[docs]</a>    <span class="k">def</span> <span class="nf">get_and_clear_button_press_history</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The snames of all button objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_sname</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="s1">&#39;&#39;</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">presses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the ButtonPresses containing buttons pressed between the most recent two calls to check_presses. This will</span>
+<span class="sd">        call the check_presses method if it has never been called before, and is therefore always safe even if your code</span>
+<span class="sd">        has never called the update function. To make this property actually do something useful, however, you do need</span>
+<span class="sd">        to call check_presses, preferably once immediately before you then want to handle any button presses that may</span>
+<span class="sd">        have happened.</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">            a ButtonPresses object containing information about which buttons were pressed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__presses</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_presses</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__presses</span>
+
+<div class="viewcode-block" id="Buttons.check_presses"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.check_presses">[docs]</a>    <span class="k">def</span> <span class="nf">check_presses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the set of Buttons which have been pressed since this call was last made, clearing it as we do.</span>
 
@@ -898,25 +1015,10 @@
             <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">was_pressed_since_last_check</span><span class="p">:</span>
                 <span class="n">pressed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
                 <span class="n">state</span><span class="o">.</span><span class="n">was_pressed_since_last_check</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="n">ButtonPresses</span><span class="p">(</span><span class="n">pressed</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__presses</span> <span class="o">=</span> <span class="n">ButtonPresses</span><span class="p">(</span><span class="n">pressed</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__presses</span></div>
 
-<div class="viewcode-block" id="Buttons.is_held"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.is_held">[docs]</a>    <span class="k">def</span> <span class="nf">is_held</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Determines whether a button is currently held down</span>
-
-<span class="sd">        :param approxeng.input.Button button:</span>
-<span class="sd">            a Button to check</span>
-<span class="sd">        :return:</span>
-<span class="sd">            None if the button is not held down, or the number of seconds as a floating point value since it was</span>
-<span class="sd">            pressed</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">is_pressed</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">last_pressed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">last_pressed</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
-
-<div class="viewcode-block" id="Buttons.is_held_name"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.is_held_name">[docs]</a>    <span class="k">def</span> <span class="nf">is_held_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
+<div class="viewcode-block" id="Buttons.held"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.held">[docs]</a>    <span class="k">def</span> <span class="nf">held</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Determines whether a button is currently held, identifying it by standard name</span>
 <span class="sd">        </span>
@@ -932,15 +1034,40 @@
                 <span class="k">return</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">state</span><span class="o">.</span><span class="n">last_pressed</span>
         <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Buttons.for_name"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.for_name">[docs]</a>    <span class="k">def</span> <span class="nf">for_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a button by sname, if present</span>
 <span class="sd">        </span>
-<span class="sd">        :param sname: </span>
+<span class="sd">        :param item:</span>
 <span class="sd">            The standard name to search</span>
-<span class="sd">        :return: </span>
+<span class="sd">        :return:</span>
+<span class="sd">            A Button, or None if no such button exists</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_sname</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sname</span><span class="p">)</span><span class="o">.</span><span class="n">button</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_sname</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="n">button</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Property access to Button instances</span>
+
+<span class="sd">        :param item:</span>
+<span class="sd">            the sname of the button</span>
+<span class="sd">        :return:</span>
+<span class="sd">            the Button instance, or raise AttributeError if no such button</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_sname</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check whether a given button, referenced by sname, exists</span>
+
+<span class="sd">        :param item:</span>
+<span class="sd">            The sname of the button to search</span>
+<span class="sd">        :return:</span>
+<span class="sd">            True if the axis exists, false otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_sname</span>
 
 <div class="viewcode-block" id="Buttons.register_button_handler"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.register_button_handler">[docs]</a>    <span class="k">def</span> <span class="nf">register_button_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button_handler</span><span class="p">,</span> <span class="n">buttons</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -986,7 +1113,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, 2017, Tom Oinn.
-      Last updated on May 16, 2017.
+      Last updated on Jul 29, 2017.
 
     </p>
   </div>

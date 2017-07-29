@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Usage Guide &mdash; Approximate Engineering - Input 1.0.7 documentation</title>
+  <title>Advanced Usage Guide &mdash; Approximate Engineering - Input 1.0.7 documentation</title>
   
 
   
@@ -39,9 +39,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 1.0.7 documentation" href="index.html"/>
-        <link rel="next" title="Pairing Controllers over Bluetooth" href="bluetooth.html"/>
-        <link rel="prev" title="Welcome to Approximate Engineering’s Python Game Controller Documentation!" href="index.html"/> 
+    <link rel="top" title="Approximate Engineering - Input 1.0.7 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -94,31 +92,19 @@
               
             
             
-              <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#constructing-and-binding-a-controller">Constructing and Binding a Controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#standard-names">Standard Names</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#button-names">Button Names</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#axis-names">Axis Names</a></li>
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Advanced Usage Guide</a><ul>
+<li><a class="reference internal" href="#constructing-and-binding-a-controller">Constructing and Binding a Controller</a></li>
+<li><a class="reference internal" href="#handling-buttons">Handling Buttons</a><ul>
+<li><a class="reference internal" href="#handling-button-presses-as-events">Handling Button Presses as Events</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#handling-buttons">Handling Buttons</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#querying-button-presses">Querying Button Presses</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#checking-for-held-buttons">Checking for Held Buttons</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#handling-button-presses-as-events">Handling Button Presses as Events</a></li>
+<li><a class="reference internal" href="#more-about-analogue-axes">More about Analogue Axes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#reading-and-configuring-analogue-axes">Reading and Configuring Analogue Axes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reading-multiple-axes-in-one-call">Reading multiple axes in one call</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dualshock3.html">Configuring Playstation 3 Controllers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-</ul>
-
+</div>
             
           
         </div>
@@ -161,7 +147,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Usage Guide</li>
+      <li>Advanced Usage Guide</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -178,8 +164,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="usage-guide">
-<h1>Usage Guide<a class="headerlink" href="#usage-guide" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="advanced-usage-guide">
+<h1>Advanced Usage Guide<a class="headerlink" href="#advanced-usage-guide" title="Permalink to this headline">¶</a></h1>
 <p>This module contains general support for game controllers. It includes the top level classes such as buttons and
 joystick axes which are used for any kind of controller, particular controllers and binding mechanisms are implemented
 in sub-modules. The key classes shared across all controllers are:</p>
@@ -228,283 +214,6 @@ one it can). This will create the controller object from which you can read thin
 necessary logic to pull events out of the evdev linux system and update the values without you having to do anything.</p>
 <p>The details of the binding process are described at <a class="reference internal" href="api/selectbinder.html#binding-reference-label"><span class="std std-ref">Binding - approxeng.input.selectbinder</span></a>.</p>
 </div>
-<div class="section" id="standard-names">
-<span id="sname-label"></span><h2>Standard Names<a class="headerlink" href="#standard-names" title="Permalink to this headline">¶</a></h2>
-<p>All the controllers supported by this library are fairly similar - they have two analogue joysticks, a bunch of buttons,
-some triggers etc. It would be helpful therefore to be able to make use of one controller type but make it as easy as
-possible to use others without substantial code changes in your own code.</p>
-<p>To do this the library assigns a standard name, or &#8216;sname&#8217; to each button and axis on every controller. These are based
-loosely on the buttons found on a PS3 controller, at the cost of minor confusion for the XBox users (where, for example,
-the &#8216;X&#8217; button is referred to by the name &#8216;square&#8217;). As long as you use controls which are common to all three
-controllers you should be able to transparently make use of whichever of them is available at the time. You can also
-choose to make use of facilities which are only available on specific hardware (such as the analogue triggers on the PS4
-and XBoxOne controllers) but you should bear in mind that this will preclude use of a less well equipped controller. Up
-to you.</p>
-<p>A look at the source for each of the controller subclasses should make it obvious what names are available, but the
-standard ones are as follows:</p>
-<div class="section" id="button-names">
-<h3>Button Names<a class="headerlink" href="#button-names" title="Permalink to this headline">¶</a></h3>
-<table border="1" class="docutils">
-<colgroup>
-<col width="14%" />
-<col width="14%" />
-<col width="17%" />
-<col width="14%" />
-<col width="14%" />
-<col width="12%" />
-<col width="13%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Standard name</td>
-<td>PS3</td>
-<td>PS4</td>
-<td>XBoxOne</td>
-<td>Rock Candy</td>
-<td>Steam</td>
-<td>Wii Pro</td>
-</tr>
-<tr class="row-even"><td>square</td>
-<td>Square</td>
-<td>Square</td>
-<td>X</td>
-<td>4 Dot</td>
-<td>X</td>
-<td>Y</td>
-</tr>
-<tr class="row-odd"><td>triangle</td>
-<td>Triangle</td>
-<td>Triangle</td>
-<td>Y</td>
-<td>3 Dot</td>
-<td>Y</td>
-<td>X</td>
-</tr>
-<tr class="row-even"><td>circle</td>
-<td>Circle</td>
-<td>Circle</td>
-<td>B</td>
-<td>6 Dot</td>
-<td>B</td>
-<td>A</td>
-</tr>
-<tr class="row-odd"><td>cross</td>
-<td>Cross</td>
-<td>Cross</td>
-<td>A</td>
-<td>5 Dot</td>
-<td>A</td>
-<td>B</td>
-</tr>
-<tr class="row-even"><td>ls</td>
-<td>Left Stick</td>
-<td>Left Stick</td>
-<td>Left Stick</td>
-<td>Left Stick</td>
-<td>Left Stick</td>
-<td>Left Stick</td>
-</tr>
-<tr class="row-odd"><td>rs</td>
-<td>Right Stick</td>
-<td>Right Stick</td>
-<td>Right Stick</td>
-<td>Right Stick</td>
-<td>Right Stick</td>
-<td>Right Stick</td>
-</tr>
-<tr class="row-even"><td>select</td>
-<td>Select</td>
-<td>Share</td>
-<td>View</td>
-<td>Select</td>
-<td>Left Arrow</td>
-<td>Select</td>
-</tr>
-<tr class="row-odd"><td>start</td>
-<td>Start</td>
-<td>Options</td>
-<td>Menu</td>
-<td>Start</td>
-<td>Right Arrow</td>
-<td>Start</td>
-</tr>
-<tr class="row-even"><td>home</td>
-<td>PS</td>
-<td>PS</td>
-<td>XBox</td>
-<td>Home</td>
-<td>Steam</td>
-<td>Home</td>
-</tr>
-<tr class="row-odd"><td>dleft</td>
-<td>DPad Left</td>
-<td>DPad Left</td>
-<td>DPad Left</td>
-<td>DPad Left</td>
-<td>DPad Left</td>
-<td>DPad Left</td>
-</tr>
-<tr class="row-even"><td>dup</td>
-<td>DPad Up</td>
-<td>DPad Up</td>
-<td>DPad Up</td>
-<td>DPad Up</td>
-<td>DPad Up</td>
-<td>DPad Up</td>
-</tr>
-<tr class="row-odd"><td>dright</td>
-<td>DPad Right</td>
-<td>DPad Right</td>
-<td>DPad Right</td>
-<td>DPad Right</td>
-<td>DPad Right</td>
-<td>DPad Right</td>
-</tr>
-<tr class="row-even"><td>ddown</td>
-<td>DPad Down</td>
-<td>DPad Down</td>
-<td>Dpad Down</td>
-<td>DPad Down</td>
-<td>DPad Down</td>
-<td>DPad Down</td>
-</tr>
-<tr class="row-odd"><td>l1</td>
-<td>L1 Trigger</td>
-<td>L1 Trigger</td>
-<td>LB Trigger</td>
-<td>L1 Trigger</td>
-<td>LB</td>
-<td>L</td>
-</tr>
-<tr class="row-even"><td>l2</td>
-<td>L2 Trigger</td>
-<td>L2 Trigger</td>
-<td>&#8212;</td>
-<td>L2 Trigger</td>
-<td>&#8212;</td>
-<td>LZ</td>
-</tr>
-<tr class="row-odd"><td>r1</td>
-<td>R1 Trigger</td>
-<td>R1 Trigger</td>
-<td>RB Trigger</td>
-<td>R1 Trigger</td>
-<td>RB</td>
-<td>R</td>
-</tr>
-<tr class="row-even"><td>r2</td>
-<td>R2 Trigger</td>
-<td>R2 Trigger</td>
-<td>&#8212;</td>
-<td>R2 Trigger</td>
-<td>&#8212;</td>
-<td>RZ</td>
-</tr>
-<tr class="row-odd"><td>ps4_pad</td>
-<td>&#8212;</td>
-<td>Trackpad</td>
-<td>&#8212;</td>
-<td>&#8212;</td>
-<td>&#8212;</td>
-<td>&#8212;</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The lack of l2 and r2 for the XBoxOne and Steam controllers is because these buttons don&#8217;t appear as buttons in the
-event stream. This is actually a fairly easy fix but in the current code you can&#8217;t access them as buttons.</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The DualShock4 trackpad only works as a single button. It doesn&#8217;t have an equivalent on the other controllers so
-only use if you&#8217;re happy to be locked into this particular hardware.</p>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Yes, the Wii Remote Pro buttons really are that way around. Although it has the same buttons as an XBox controller
-they&#8217;re in different locations. The standard names are set to prioritise location (and therefore kinetic memory)
-so, for example, the &#8216;X&#8217; button on the Wii Remote Pro is in the same place as the triangle button on the PS3 and PS4
-so we call it &#8216;triangle&#8217;, whereas the XBox controller has a <cite>Y</cite> button there instead.</p>
-</div>
-</div>
-<div class="section" id="axis-names">
-<h3>Axis Names<a class="headerlink" href="#axis-names" title="Permalink to this headline">¶</a></h3>
-<table border="1" class="docutils">
-<colgroup>
-<col width="15%" />
-<col width="15%" />
-<col width="17%" />
-<col width="15%" />
-<col width="11%" />
-<col width="15%" />
-<col width="11%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Standard name</td>
-<td>PS3</td>
-<td>PS4</td>
-<td>XBoxOne</td>
-<td>Rock Candy</td>
-<td>Steam</td>
-<td>Wii Pro</td>
-</tr>
-<tr class="row-even"><td>lx</td>
-<td>Left X</td>
-<td>Left X</td>
-<td>Left X</td>
-<td>Left X</td>
-<td>Left X</td>
-<td>Left X</td>
-</tr>
-<tr class="row-odd"><td>ly</td>
-<td>Left Y</td>
-<td>Left Y</td>
-<td>Left Y</td>
-<td>Left Y</td>
-<td>Left Y</td>
-<td>Left Y</td>
-</tr>
-<tr class="row-even"><td>rx</td>
-<td>Right X</td>
-<td>Right X</td>
-<td>Right X</td>
-<td>Right X</td>
-<td>Right X</td>
-<td>Right X</td>
-</tr>
-<tr class="row-odd"><td>ry</td>
-<td>Right Y</td>
-<td>Right Y</td>
-<td>Right Y</td>
-<td>Right Y</td>
-<td>Right Y</td>
-<td>Right Y</td>
-</tr>
-<tr class="row-even"><td>lt</td>
-<td>&#8212;</td>
-<td>L2 Trigger</td>
-<td>LT Trigger</td>
-<td>&#8212;</td>
-<td>Left Trigger</td>
-<td>&#8212;</td>
-</tr>
-<tr class="row-odd"><td>rt</td>
-<td>&#8212;</td>
-<td>R2 Trigger</td>
-<td>RT Trigger</td>
-<td>&#8212;</td>
-<td>Right Trigger</td>
-<td>&#8212;</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The triggers on the DualShock3 or Rock Candy can&#8217;t be used as analogue axes, only use lt and rt if you&#8217;re happy you
-won&#8217;t need to use these controllers in your project.</p>
-</div>
-</div>
-</div>
 <div class="section" id="handling-buttons">
 <h2>Handling Buttons<a class="headerlink" href="#handling-buttons" title="Permalink to this headline">¶</a></h2>
 <p>There are two styles of button handler. The simplest, and the one you&#8217;re likely to use in almost all cases, is a polling
@@ -518,53 +227,6 @@ button has been held. Handy for where you want the magnitude of a response to be
 longer need to do this - it was used primarily for cases where e.g. a button should interrupt whatever was going on with
 a robot and bounce the system back to some safe state, but there are better ways to do this. Nonetheless, this mechanism
 is still present and you can use it if you really need to.</p>
-<div class="section" id="querying-button-presses">
-<h3>Querying Button Presses<a class="headerlink" href="#querying-button-presses" title="Permalink to this headline">¶</a></h3>
-<p>The most common requirement you&#8217;ll have will be to find out whether the user pressed a button. This sounds obvious, but
-in fact it&#8217;s slightly more subtle - what you really want to know is whether the user pressed a button at any point since
-you last asked this question! That way, even if you don&#8217;t ask very often you won&#8217;t miss button presses and you don&#8217;t
-have to worry about the user pressing so fast you can&#8217;t detect it.</p>
-<p>You can do this with the get_and_clear_button_press_history function. The <a class="reference internal" href="api/input.html#approxeng.input.Buttons" title="approxeng.input.Buttons"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Buttons</span></code></a> instance
-tracks whether buttons were pressed since the last call to this function and returns a
-<a class="reference internal" href="api/input.html#approxeng.input.ButtonPresses" title="approxeng.input.ButtonPresses"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.ButtonPresses</span></code></a> with the pressed buttons:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
-
-<span class="c1"># Get a joystick</span>
-<span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">controller_class</span> <span class="o">=</span> <span class="n">DualShock3</span><span class="p">)</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
-    <span class="c1"># Loop forever</span>
-    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="c1"># This is an instance of approxeng.input.ButtonPresses</span>
-        <span class="n">presses</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">get_and_clear_button_press_history</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">presses</span><span class="o">.</span><span class="n">was_pressed</span><span class="p">(</span><span class="s1">&#39;square&#39;</span><span class="p">)</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;SQUARE pressed since last check&#39;</span><span class="p">)</span>
-
-        <span class="c1"># If we had any presses, print the list of pressed buttons by standard name</span>
-        <span class="k">if</span> <span class="n">presses</span><span class="o">.</span><span class="n">has_presses</span><span class="p">():</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">presses</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="checking-for-held-buttons">
-<h3>Checking for Held Buttons<a class="headerlink" href="#checking-for-held-buttons" title="Permalink to this headline">¶</a></h3>
-<p>You can also check whether a button is currently held, and, if so, how long it&#8217;s been held for to date:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
-
-<span class="c1"># Get a joystick</span>
-<span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">controller_class</span> <span class="o">=</span> <span class="n">DualShock3</span><span class="p">)</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
-    <span class="c1"># Loop forever</span>
-    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="c1"># Use is_held_name to refer to a button by name, the old form &#39;is_held&#39; needs you to</span>
-        <span class="c1"># have the Button instance</span>
-        <span class="n">held</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">is_held_name</span><span class="p">(</span><span class="s1">&#39;circle&#39;</span><span class="p">)</span>
-        <span class="c1"># If the button isn&#39;t held at the moment this will be None</span>
-        <span class="k">if</span> <span class="n">held</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="c1"># If the button was held, this is the number of seconds since it was initially pressed</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Circle held for {} seconds&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">held</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="handling-button-presses-as-events">
 <h3>Handling Button Presses as Events<a class="headerlink" href="#handling-button-presses-as-events" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
@@ -599,8 +261,8 @@ to worry about it). If, however, you&#8217;re in a polling loop such as Triangul
 probably just want to know whether a button was pressed since you last checked.</p>
 </div>
 </div>
-<div class="section" id="reading-and-configuring-analogue-axes">
-<h2>Reading and Configuring Analogue Axes<a class="headerlink" href="#reading-and-configuring-analogue-axes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="more-about-analogue-axes">
+<h2>More about Analogue Axes<a class="headerlink" href="#more-about-analogue-axes" title="Permalink to this headline">¶</a></h2>
 <p>Analogue axes on the controller are those which can vary continuously over their range. Typically these are joysticks
 and triggers. This code maps all axes either to a range from -1.0 to 1.0 (for centred axes such as joysticks) or from
 0.0 to 1.0 (for things like triggers where the resting point is at one end of the range of movement). Joysticks are
@@ -631,7 +293,7 @@ values from the controller. This means we don&#8217;t have to worry that the the
 used, we&#8217;ll always have our -1.0 to 1.0 correspond to the actual controller movement.</p>
 <p>Auto-centring isn&#8217;t possible as we can&#8217;t know whether the user is touching the controller, but you can set the centre
 point for an individual <a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> by setting its &#8216;centre&#8217; property, or for a complete set
-defined by an <code class="xref py py-class docutils literal"><span class="pre">approxent.input.Axes</span></code> object by calling the set_axis_centres() function on the Axes object. This
+defined by an <a class="reference internal" href="api/input.html#approxeng.input.Axes" title="approxeng.input.Axes"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Axes</span></code></a> object by calling the set_axis_centres() function on the Axes object. This
 function takes an arbitrary number of parameters and ignores all of them - this is done so you can specify the function
 as a button handler.</p>
 <p>Dead zones and hot zones are defined as a proportion of the range of the axis:</p>
@@ -645,44 +307,7 @@ edge of the hot zone.</li>
 above 0.8 will return a corrected value of 1.0, and those below 0.1 will return 0.0. For negative values the same
 applies, except that values below -0.8 will return -1.0 and those above -0.1 will return 0.0</li>
 </ul>
-<p>To obtain the corrected values for an axis you need to call the corrected_value() function on the axis object.</p>
-<p>As an example, the PS3 controller exposes four axes, two for each analogue stick. The following code will get a
-controller, and will run around in a loop printing the corrected value of the left analogue stick:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
-
-<span class="c1"># We can pass any additional keyword arguments here, they&#39;ll be passed on to the controller class constructor.</span>
-<span class="c1"># All controller subclasses understand dead_zone and hot_zone, specific controller types may accept other args.</span>
-<span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">controller_class</span> <span class="o">=</span> <span class="n">DualShock3</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
-    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="c1"># Loop, printing the corrected value from the left stick</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s1">&#39;lx&#39;</span><span class="p">)</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s1">&#39;ly&#39;</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Left stick: x={}, y={}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
-        <span class="c1"># Don&#39;t be too spammy!</span>
-        <span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="reading-multiple-axes-in-one-call">
-<h2>Reading multiple axes in one call<a class="headerlink" href="#reading-multiple-axes-in-one-call" title="Permalink to this headline">¶</a></h2>
-<p>From version 1.0.6 the <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Controller</span></code></a> class exposes the method from the
-<a class="reference internal" href="api/input.html#approxeng.input.Axes" title="approxeng.input.Axes"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Axes</span></code></a> object to read axis values and introduces a new method to read multiple values in asingle
-call. It returns a tuple of values, so you can use Python&#8217;s implicit decomposition to do e.g.:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
-
-<span class="c1"># Bind to the first available controller of any kind</span>
-<span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
-    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="c1"># Loop, printing the corrected value from the left stick X and Y axes</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">get_axis_values</span><span class="p">(</span><span class="s1">&#39;lx&#39;</span><span class="p">,</span> <span class="s1">&#39;ly&#39;</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Left stick: x={}, y={}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
-        <span class="c1"># Don&#39;t be too spammy!</span>
-        <span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>To obtain the corrected values for an axis you need to retrieve the &#8216;value&#8217; property on the axis object.</p>
 </div>
 </div>
 
@@ -694,22 +319,13 @@ call. It returns a tuple of values, so you can use Python&#8217;s implicit decom
           </div>
           <footer>
   
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="bluetooth.html" class="btn btn-neutral float-right" title="Pairing Controllers over Bluetooth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="index.html" class="btn btn-neutral" title="Welcome to Approximate Engineering’s Python Game Controller Documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
         &copy; Copyright 2016, 2017, Tom Oinn.
-      Last updated on May 02, 2017.
+      Last updated on Jul 29, 2017.
 
     </p>
   </div>

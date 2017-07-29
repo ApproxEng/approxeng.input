@@ -11,8 +11,8 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
-Version 2.0
------------
+Version 2.0.0
+-------------
 
 Simplified API, breaks compatibility with previous versions but allows for more pythonic access via property accessors
 and overridden attribute access. The API described at :ref:`simple_api` should now be all you need!

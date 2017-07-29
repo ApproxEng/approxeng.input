@@ -8,6 +8,8 @@ and their values, along with any button presses detected, on the command line. I
 for what controls are present on a connected controller - for example you might want to do this to check whether the
 controller supports ever axis you're going to use later.
 
+.. image:: show_controls_screenshot.png
+
 .. literalinclude:: ../../../scripts/show_controls.py
     :language: python
     :linenos:

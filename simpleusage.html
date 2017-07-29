@@ -215,7 +215,7 @@ if you have multiple controllers connected for some reason you might want to tel
 PS4 controller). They can also be used to configure the default settings for axes, and there&#8217;s an option to print out
 debug information. In general though you&#8217;ll only ever need the simple form shown here.</p>
 <p>Once you have a controller object you can use it to read axes and buttons, both of which are referenced by a standard
-name (see  <a class="reference internal" href="#sname-label"><span class="std std-ref">Reading multiple Axis or Button Hold values</span></a>) - this allows you to not worry too much about exactly what controller&#8217;s going to be
+name (see  <a class="reference internal" href="#sname-label"><span class="std std-ref">Standard Names</span></a>) - this allows you to not worry too much about exactly what controller&#8217;s going to be
 present. Rather than having to know that the XBox controller has &#8216;A&#8217;,&#8217;B&#8217;... and so on, whereas the Playstation
 controllers have &#8216;cross&#8217;, &#8216;circle&#8217; etc the API defines a standard set of names for buttons and axes (they&#8217;re based on
 the PS3 controller as it happens, mostly because that&#8217;s the one I first used when I started writing the library!).</p>
@@ -253,7 +253,7 @@ on or off, an analogue axis has a floating point value associated with its curre
 </div>
 </div>
 <div class="section" id="reading-multiple-axis-or-button-hold-values">
-<span id="sname-label"></span><h2>Reading multiple Axis or Button Hold values<a class="headerlink" href="#reading-multiple-axis-or-button-hold-values" title="Permalink to this headline">¶</a></h2>
+<h2>Reading multiple Axis or Button Hold values<a class="headerlink" href="#reading-multiple-axis-or-button-hold-values" title="Permalink to this headline">¶</a></h2>
 <p>You can read multiple axis values and button hold times in a single call, simply by passing multiple names into the
 call (you can, as the example below shows, query a mix of button hold times and axis values in one call):</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
@@ -308,7 +308,7 @@ attribute</p>
 </div>
 </div>
 <div class="section" id="standard-names">
-<h1>Standard Names<a class="headerlink" href="#standard-names" title="Permalink to this headline">¶</a></h1>
+<span id="sname-label"></span><h1>Standard Names<a class="headerlink" href="#standard-names" title="Permalink to this headline">¶</a></h1>
 <p>All the controllers supported by this library are fairly similar - they have two analogue joysticks, a bunch of buttons,
 some triggers etc. It would be helpful therefore to be able to make use of one controller type but make it as easy as
 possible to use others without substantial code changes in your own code.</p>

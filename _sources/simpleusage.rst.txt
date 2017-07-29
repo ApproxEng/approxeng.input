@@ -86,8 +86,6 @@ You can also check whether a button is currently held, and, if so, how long it's
             circle_held = joystick.circle
 
 
-.. _sname-label:
-
 Reading multiple Axis or Button Hold values
 *******************************************
 
@@ -148,6 +146,8 @@ property of the controller for later access.
             if joystick.has_presses:
                 print(joystick.presses)
 
+
+.. _sname-label:
 
 Standard Names
 --------------

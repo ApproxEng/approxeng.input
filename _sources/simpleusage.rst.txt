@@ -1,3 +1,5 @@
+.. _simple_api:
+
 Simple Usage
 ------------
 

@@ -7,11 +7,15 @@ Change Log
     Triangula. It has subsequently been extensively modified, and now supports the PS4 and XBox One controllers in
     addition to the original support for PS3 controllers.
 
+    A newer version was used for my PiWars_ 2017 entry, this time using a PS4 controller. Several other robots in that
+    year also used the library, and my aim is to make this the definitive library for connecting game controllers to
+    Python code, especially for robots (but it'll work elsewhere if needed!)
+
 Version 2.0
 -----------
 
 Simplified API, breaks compatibility with previous versions but allows for more pythonic access via property accessors
-and overridden attribute access.
+and overridden attribute access. The API described at :ref:`simple-api` should now be all you need!
 
 Version 1.0.7
 -------------

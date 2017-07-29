@@ -123,7 +123,10 @@ def bind_controller(devices, controller, print_events=False):
     def unbind():
         polling_thread.stop()
         for dev in devices:
-            dev.ungrab()
+            try:
+                dev.ungrab()
+            except IOError:
+                pass
 
     polling_thread.start()
 

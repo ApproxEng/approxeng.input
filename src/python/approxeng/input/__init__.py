@@ -149,32 +149,19 @@ class Controller(object):
                 axis.hot_zone = hot_zone
         self.connected = False
         self.exception = None
+        self.stream = Controller.ControllerStream(self)
 
-    def stream(self, *args):
-        """
-        Create a GPIOzero compatible source of axis values. This returns a generator which produces an infinite
-        stream of tuples containing the requested axis values, for example:
-        
-        .. code-block:: python
-        
-            from gpiozero import Robot
-            from approxeng.input.selectbinder import ControllerResource
-            from signal import pause
-            
-            # Create a Robot using GPIO pins on the Pi
-            robot = Robot(left=(18, 27), right=(17, 22))
-            
-            with ControllerResource() as joystick:
-                robot.source = joystick.stream('ly','ry')
-                pause()
-        
-        :param args: 
-            Any number of axis standard names
-        :return: 
-            A generator producing an infinite sequence of tuples containing the corrected values for those names
-        """
-        while self.connected:
-            yield self.__getitem__(args)
+    class ControllerStream(object):
+
+        def __init__(self, controller):
+            self.controller = controller
+
+        def __getitem__(self, item):
+            def generator():
+                while self.controller.connected:
+                    yield self.controller.__getitem__(item)
+
+            return generator()
 
     def __getitem__(self, item):
         """

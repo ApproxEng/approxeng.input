@@ -1,24 +1,9 @@
 Welcome to Approximate Engineering's Python Game Controller Documentation!
 ==========================================================================
 
-.. note::
-
-    This documentation, and the code it documents, is the original SixAxis controller code from my PiWars_ 2015 robot,
-    Triangula. It has subsequently been extensively modified, and now supports the PS4 and XBox One controllers in
-    addition to the original support for PS3 controllers.
-
-    - Version 1.0.2 has support for the Rock Candy PS3 clones thanks to Keith Ellis.
-
-    - Version 1.0.4 supports the Steam Controller from Valve, although it needs an extra third party user space driver
-      (see :ref:`api_steamcontroller`)
-
-    - Version 1.0.5 adds support for the Wii Remote Pro from Nintendo - I'd have added the WiiMote at this point as well
-      but my cheap clone was dead on arrival...
-
-    - Version 1.0.6 was a minor tweak to fix some of the internals
-
-    - Version 1.0.7 adds support (pending documentation!) for the WiiMote controller, contributed once again by Keith
-      Ellis! It also adds controller disconnection detection, enabling :ref:`example_failover` .
+This library simplified access to the axes and buttons on game controller hardware from Python. It was originally
+written to support my PiWars_ robots, and remains focused on similar projects, but can be used wherever game controller
+functionality is required. The current code only supports Linux based systems, including the Raspberry Pi.
 
 Supported Controllers
 ---------------------
@@ -41,7 +26,6 @@ Supported Controllers
 .. image:: images/wii-pro.jpg
    :width: 20%
 
-
 Contributors
 ------------
 
@@ -50,7 +34,6 @@ Contributors
 
 - Keith Ellis (`\@PiTutorials <https://twitter.com/PiTutorials>`__) contributed initial support for Rock Candy
   controllers.
-
 
 Getting the code
 ----------------
@@ -83,12 +66,14 @@ Contents
     :maxdepth: 4
     :glob:
 
-    howtouse
+    changelog
+    simpleusage
     bluetooth
     dualshock3
     api
     addingcontrollers
     examples
+    howtouse
 
 .. _GitHub: https://github.com/ApproxEng/approxeng.input
 

@@ -17,6 +17,9 @@ the resource abstraction shown in the other examples.
     :language: python
     :linenos:
 
+Note particularly that there's only one call to create the stream, on line 21, and that afterwards this is just like any
+other iterable thing in Python, each time around the loop the next value (in this case a tuple of lx and ly axis values)
+is taken off the stream. 
 
 .. _Gpiozero: http://gpiozero.readthedocs.io/en/stable/index.html
 

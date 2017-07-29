@@ -39,7 +39,8 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 1.0.7 documentation" href="#"/> 
+    <link rel="top" title="Approximate Engineering - Input 1.0.7 documentation" href="#"/>
+        <link rel="next" title="Change Log" href="changelog.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -92,17 +93,18 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Welcome to Approximate Engineering&#8217;s Python Game Controller Documentation!</a><ul>
-<li><a class="reference internal" href="#supported-controllers">Supported Controllers</a></li>
-<li><a class="reference internal" href="#contributors">Contributors</a></li>
-<li><a class="reference internal" href="#getting-the-code">Getting the code</a></li>
-<li><a class="reference internal" href="#contents">Contents</a></li>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dualshock3.html">Configuring Playstation 3 Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">Advanced Usage Guide</a></li>
 </ul>
-</li>
-</ul>
-</div>
+
             
           
         </div>
@@ -207,6 +209,89 @@ almost everything Python based. Documentation (this site) is generated using Sph
 </div>
 <div class="section" id="contents">
 <h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-0">Version 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-7">Version 1.0.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-6">Version 1.0.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-5">Version 1.0.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-4">Version 1.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-2">Version 1.0.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#connecting-to-a-controller">Connecting to a controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#reading-analoque-axes">Reading Analoque Axes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#checking-for-held-buttons">Checking for Held Buttons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#reading-multiple-axis-or-button-hold-values">Reading multiple Axis or Button Hold values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#querying-button-presses">Querying Button Presses</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="simpleusage.html#standard-names">Standard Names</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#button-names">Button Names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#axis-names">Axis Names</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bluetooth.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bluetooth.html#pairing-with-bluetoothctl">Pairing with Bluetoothctl</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dualshock3.html">Configuring Playstation 3 Controllers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dualshock3.html#a-note-on-pairing">A note on pairing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dualshock3.html#hardware">Hardware</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dualshock3.html#bluetooth-dongles">Bluetooth dongles</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dualshock3.html#software">Software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dualshock3.html#pairing">Pairing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/input.html">Common APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/selectbinder.html">Binding - approxeng.input.selectbinder</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/selectbinder.html#using-an-unsupported-controller">Using an Unsupported Controller</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/dualshock3.html">PlayStation 3 Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dualshock4.html">PlayStation 4 Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/xboxone.html">XBox-One S Controller Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/xboxone.html#module-approxeng.input.xboxone">Controller Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/rockcandy.html">Rock Candy Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/steamcontroller.html">Steam Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/wii.html">Wii Remote Pro Controller Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/wii.html#disabling-stick-as-mouse-functionality">Disabling &#8216;Stick as Mouse&#8217; functionality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/wiimote.html">WiiMote Controller Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="addingcontrollers.html#finding-your-product-and-vendor-id">Finding your product and vendor ID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addingcontrollers.html#clones-of-a-supported-controller">Clones of a supported controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addingcontrollers.html#writing-a-new-controller-class">Writing a new controller class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/failover.html">Controller Failover</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/show_controls.html">Showing Controller Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/tiny4wd.html">Tiny4WD Robot Drive</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">Advanced Usage Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#constructing-and-binding-a-controller">Constructing and Binding a Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#handling-buttons">Handling Buttons</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="howtouse.html#handling-button-presses-as-events">Handling Button Presses as Events</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="howtouse.html#more-about-analogue-axes">More about Analogue Axes</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -217,6 +302,13 @@ almost everything Python based. Documentation (this site) is generated using Sph
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Change Log" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
   
 
   <hr/>

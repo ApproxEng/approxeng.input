@@ -65,6 +65,7 @@ Contents
 .. toctree::
     :maxdepth: 4
     :glob:
+
     changelog
     simpleusage
     bluetooth

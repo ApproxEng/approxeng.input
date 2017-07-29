@@ -230,7 +230,23 @@ on or off, an analogue axis has a floating point value associated with its curre
 <li>Trigger axes have a value ranging from 0.0 to 1.0</li>
 </ul>
 </div></blockquote>
-<p>Axis values are read either by</p>
+<p>Axis values are read as properties of the joystick object (in this and other examples we&#8217;re not showing the exception
+handling from the first example, but you should still do it!):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+
+<span class="c1"># Get a joystick</span>
+<span class="k">with</span> <span class="n">ControllerResource</span><span class="p">()</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
+    <span class="c1"># Loop until disconnected</span>
+    <span class="k">while</span> <span class="n">joystick</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+        <span class="c1"># Get a corrected value for the left stick x-axis</span>
+        <span class="n">left_x</span> <span class="o">=</span> <span class="n">joystick</span><span class="p">[</span><span class="s1">&#39;lx&#39;</span><span class="p">]</span>
+        <span class="c1"># We can also get values as attributes:</span>
+        <span class="n">left_y</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">ly</span>
+</pre></div>
+</div>
+<p>...and that&#8217;s it! You might have used other libraries which require you to do event handling and similar, but in this
+case all that stuff is taken care of in the background and you just have to read the information you want from the
+joystick object.</p>
 </div>
 <div class="section" id="checking-for-held-buttons">
 <h2>Checking for Held Buttons<a class="headerlink" href="#checking-for-held-buttons" title="Permalink to this headline">¶</a></h2>

@@ -60,8 +60,26 @@ on or off, an analogue axis has a floating point value associated with its curre
     * Centred axes have a value ranging from -1.0 to 1.0
     * Trigger axes have a value ranging from 0.0 to 1.0
 
-Axis values are read either by
+Axis values are read as properties of the joystick object (in this and other examples we're not showing the exception
+handling from the first example, but you should still do it!):
 
+.. code-block:: python
+
+    from approxeng.input.selectbinder import ControllerResource
+
+    # Get a joystick
+    with ControllerResource() as joystick:
+        # Loop until disconnected
+        while joystick.connected:
+            # Get a corrected value for the left stick x-axis
+            left_x = joystick['lx']
+            # We can also get values as attributes:
+            left_y = joystick.ly
+
+
+...and that's it! You might have used other libraries which require you to do event handling and similar, but in this
+case all that stuff is taken care of in the background and you just have to read the information you want from the
+joystick object.
 
 Checking for Held Buttons
 *************************

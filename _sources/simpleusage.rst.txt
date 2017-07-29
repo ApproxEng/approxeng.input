@@ -34,12 +34,12 @@ This example will loop forever. It will attempt to connect to any supported joys
 IOError if it can't find one, otherwise it will do all the necessary background work, create a controller object and, in
 this case, bind it to the 'joystick' variable which can then be used to read axes, buttons etc.
 
-The 'connected' property on the joystick object indicates whether the underlying device is connected or not - if, for
+The `connected` property on the joystick object indicates whether the underlying device is connected or not - if, for
 example, you have a controller that goes out of range, runs out of batteries, or is turned off while in use this will be
 set to False and you can handle the case correctly (if using this code in a robot, this would be an excellent time to
 turn of all your motors, for instance!)
 
-The :class:approxeng.input.selectbinder.ControllerResource class accepts a number of, optional, arguments. These can be
+The :class:`approxeng.input.selectbinder.ControllerResource` class accepts a number of, optional, arguments. These can be
 used to tell it which controller type to use (the default is to connect to the first controller it can understand, but
 if you have multiple controllers connected for some reason you might want to tell it to use your XBox1 rather than your
 PS4 controller). They can also be used to configure the default settings for axes, and there's an option to print out

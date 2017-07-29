@@ -39,7 +39,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 1.0.7 documentation" href="index.html"/> 
+    <link rel="top" title="Approximate Engineering - Input 1.0.7 documentation" href="index.html"/>
+        <link rel="next" title="Pairing Controllers over Bluetooth" href="bluetooth.html"/>
+        <link rel="prev" title="Change Log" href="changelog.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -92,23 +94,29 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Simple Usage</a><ul>
-<li><a class="reference internal" href="#connecting-to-a-controller">Connecting to a controller</a></li>
-<li><a class="reference internal" href="#reading-analoque-axes">Reading Analoque Axes</a></li>
-<li><a class="reference internal" href="#checking-for-held-buttons">Checking for Held Buttons</a></li>
-<li><a class="reference internal" href="#reading-multiple-axis-or-button-hold-values">Reading multiple Axis or Button Hold values</a></li>
-<li><a class="reference internal" href="#querying-button-presses">Querying Button Presses</a></li>
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Simple Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#connecting-to-a-controller">Connecting to a controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reading-analoque-axes">Reading Analoque Axes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-for-held-buttons">Checking for Held Buttons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reading-multiple-axis-or-button-hold-values">Reading multiple Axis or Button Hold values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#querying-button-presses">Querying Button Presses</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#standard-names">Standard Names</a><ul>
-<li><a class="reference internal" href="#button-names">Button Names</a></li>
-<li><a class="reference internal" href="#axis-names">Axis Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#standard-names">Standard Names</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#button-names">Button Names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#axis-names">Axis Names</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dualshock3.html">Configuring Playstation 3 Controllers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">Advanced Usage Guide</a></li>
 </ul>
-</div>
+
             
           
         </div>
@@ -197,11 +205,11 @@ attributes of the controller class itself.</p>
 <p>This example will loop forever. It will attempt to connect to any supported joystick - the ControllerResource will raise
 IOError if it can&#8217;t find one, otherwise it will do all the necessary background work, create a controller object and, in
 this case, bind it to the &#8216;joystick&#8217; variable which can then be used to read axes, buttons etc.</p>
-<p>The &#8216;connected&#8217; property on the joystick object indicates whether the underlying device is connected or not - if, for
+<p>The <cite>connected</cite> property on the joystick object indicates whether the underlying device is connected or not - if, for
 example, you have a controller that goes out of range, runs out of batteries, or is turned off while in use this will be
 set to False and you can handle the case correctly (if using this code in a robot, this would be an excellent time to
 turn of all your motors, for instance!)</p>
-<p>The :class:approxeng.input.selectbinder.ControllerResource class accepts a number of, optional, arguments. These can be
+<p>The <a class="reference internal" href="api/selectbinder.html#approxeng.input.selectbinder.ControllerResource" title="approxeng.input.selectbinder.ControllerResource"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.selectbinder.ControllerResource</span></code></a> class accepts a number of, optional, arguments. These can be
 used to tell it which controller type to use (the default is to connect to the first controller it can understand, but
 if you have multiple controllers connected for some reason you might want to tell it to use your XBox1 rather than your
 PS4 controller). They can also be used to configure the default settings for axes, and there&#8217;s an option to print out
@@ -584,6 +592,15 @@ won&#8217;t need to use these controllers in your project.</p>
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="bluetooth.html" class="btn btn-neutral float-right" title="Pairing Controllers over Bluetooth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="changelog.html" class="btn btn-neutral" title="Change Log" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -1,4 +1,4 @@
-.. _example_tiny4wd:
+.. _example_stream:
 
 Streaming Axis and Button Hold values
 =====================================

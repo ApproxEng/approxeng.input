@@ -1,9 +1,7 @@
+from approxeng.input.selectbinder import ControllerResource
+from time import sleep
 import curses
 import pprint
-from time import sleep
-
-from approxeng.input.selectbinder import ControllerResource
-
 
 def main(screen):
     curses.curs_set(False)

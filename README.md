@@ -5,6 +5,7 @@ A Python (2 or 3) library to handle game controllers. At the moment it can work 
 1) DualShock3, as used by the Sony Playstation 3
 2) DualShock4, as used by the Sony Playstation 4
 3) XBox One, the most recent version with bluetooth
+4) Pi Hut, mixture of DualShock3 and 4
 
 See the full documentation [here](http://approxeng.github.io/approxeng.input/)
 

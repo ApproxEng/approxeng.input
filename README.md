@@ -12,7 +12,7 @@ See the full documentation [here](http://approxeng.github.io/approxeng.input/)
 Get the code using pip:
 
 ```
-> sudo pip install approxeng.input
+> pip install approxeng.input
 ```
 
 Note - you may need to install some prerequisites first, and this will only work on Linux based 

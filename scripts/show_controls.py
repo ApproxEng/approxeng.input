@@ -1,9 +1,7 @@
 from approxeng.input.selectbinder import ControllerResource
 from time import sleep
-
 import curses
 import pprint
-from time import sleep
 
 def main(screen):
     curses.curs_set(False)
@@ -30,8 +28,7 @@ def main(screen):
                     # Check for presses since the last time we checked
                     joystick.check_presses()
 
-                    # Don't clear so we can see unknown button presses
-                    # screen.clear()
+                    screen.clear()
 
                     if joystick.has_presses:
                         last_presses = joystick.presses

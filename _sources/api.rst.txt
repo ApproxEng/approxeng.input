@@ -17,4 +17,4 @@ largely self explanatory although you'll need at least a reasonable level of Pyt
     api/steamcontroller
     api/wii
     api/wiimote
-        api/pihut
+    api/pihut

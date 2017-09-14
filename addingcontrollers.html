@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Adding support for a new controller type &mdash; Approximate Engineering - Input 2.0.0 documentation</title>
+  <title>Adding support for a new controller type &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.0.0 documentation" href="_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="_static/opensearch.xml"/>
     
 
   
@@ -39,9 +39,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.0.0 documentation" href="index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="index.html"/>
         <link rel="next" title="Examples" href="examples.html"/>
-        <link rel="prev" title="WiiMote Controller Support" href="api/wiimote.html"/> 
+        <link rel="prev" title="PiHut Controller Support" href="api/pihut.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                2.0.0
+                2.1.0
               </div>
             
           
@@ -275,7 +275,7 @@ but as an analogue axis which only ever takes the values -1, 0 or 1.</li>
 <p>You should take a look at the source for the existing controller classes, i.e.
 <a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad" title="approxeng.input.xboxone.WirelessXBoxOneSPad"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.xboxone.WirelessXBoxOneSPad</span></code></a> to see how these are used. For every control you need to know the
 event code, for analogue axes you&#8217;ll also need to know the range of values the controller can produce so the library
-can normalise these to a -1.0 to 1.0, or 0.0 to 1.0 range. Check out the list of <a class="reference internal" href="simpleusage.html#sname-label"><span class="std std-ref">Reading multiple Axis or Button Hold values</span></a> to make your new
+can normalise these to a -1.0 to 1.0, or 0.0 to 1.0 range. Check out the list of <a class="reference internal" href="simpleusage.html#sname-label"><span class="std std-ref">Standard Names</span></a> to make your new
 controller class drop-in compatible with existing code, and let me know about it by raising either a pull request or a
 new issue on github, I&#8217;m sure others would like to know about the new functionality!</p>
 </div>
@@ -294,7 +294,7 @@ new issue on github, I&#8217;m sure others would like to know about the new func
         <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="api/wiimote.html" class="btn btn-neutral" title="WiiMote Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="api/pihut.html" class="btn btn-neutral" title="PiHut Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -304,7 +304,7 @@ new issue on github, I&#8217;m sure others would like to know about the new func
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Jul 29, 2017.
+      Last updated on Sep 14, 2017.
 
     </p>
   </div>
@@ -326,7 +326,7 @@ new issue on github, I&#8217;m sure others would like to know about the new func
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.0.0',
+            VERSION:'2.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

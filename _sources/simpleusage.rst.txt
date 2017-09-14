@@ -215,9 +215,9 @@ ps4_pad        ---            Trackpad         ---            ---            ---
 
 ...and some more, because we now have too many controllers to fit on one table!
 
-=============  =============
-Standard name  PS3
--------------  -------------
+=============  ===========
+Standard name  PiHut
+-------------  -----------
 square         Square
 triangle       Triangle
 circle         Circle
@@ -226,7 +226,7 @@ ls             Left Stick
 rs             Right Stick
 select         Select
 start          Start
-home           PS
+home           Analog
 dleft          DPad Left
 dup            DPad Up
 dright         DPad Right
@@ -236,7 +236,11 @@ l2             L2 Trigger
 r1             R1 Trigger
 r2             R2 Trigger
 ps4_pad        ---
-=============  =============  
+=============  ===========
+
+.. note::
+
+    The PiHut controller has a `turbo` button which isn't currently mapped to any button in the API.
 
 .. note::
 
@@ -268,6 +272,17 @@ ry             Right Y        Right Y          Right Y        Right Y     Right 
 lt             ---            L2 Trigger       LT Trigger     ---         Left Trigger   ---
 rt             ---            R2 Trigger       RT Trigger     ---         Right Trigger  ---
 =============  =============  ===============  =============  ==========  =============  ==========
+
+=============  =========
+Standard name  PiHut
+-------------  ---------
+lx             Left X
+ly             Left Y
+rx             Right X
+ry             Right Y
+lt             L Trigger
+rt             R Trigger
+=============  =========
 
 
 .. note::

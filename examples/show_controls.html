@@ -41,7 +41,7 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="Approximate Engineering - Input 2.0.0 documentation" href="../index.html"/>
         <link rel="up" title="Examples" href="../examples.html"/>
-        <link rel="next" title="Tiny4WD Robot Drive" href="tiny4wd.html"/>
+        <link rel="next" title="Streaming Axis and Button Hold values" href="streams.html"/>
         <link rel="prev" title="Controller Failover" href="failover.html"/> 
 
   
@@ -106,6 +106,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="failover.html">Controller Failover</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Showing Controller Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="streams.html">Streaming Axis and Button Hold values</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tiny4wd.html">Tiny4WD Robot Drive</a></li>
 </ul>
 </li>
@@ -253,14 +254,10 @@ controller supports ever axis you&#8217;re going to use later.</p>
 71
 72
 73
-74
-75
-76</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">curses</span>
-<span class="kn">import</span> <span class="nn">pprint</span>
+74</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
-
-<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
-
+<span class="kn">import</span> <span class="nn">curses</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">screen</span><span class="p">):</span>
     <span class="n">curses</span><span class="o">.</span><span class="n">curs_set</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
@@ -345,7 +342,7 @@ controller supports ever axis you&#8217;re going to use later.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="tiny4wd.html" class="btn btn-neutral float-right" title="Tiny4WD Robot Drive" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="streams.html" class="btn btn-neutral float-right" title="Streaming Axis and Button Hold values" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="failover.html" class="btn btn-neutral" title="Controller Failover" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -358,7 +355,7 @@ controller supports ever axis you&#8217;re going to use later.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Jul 29, 2017.
+      Last updated on Sep 14, 2017.
 
     </p>
   </div>

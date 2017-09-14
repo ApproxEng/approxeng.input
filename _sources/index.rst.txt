@@ -26,6 +26,9 @@ Supported Controllers
 .. image:: images/wii-pro.jpg
    :width: 20%
 
+.. image:: images/pihut.jpg
+   :width: 20%
+
 Contributors
 ------------
 
@@ -34,6 +37,8 @@ Contributors
 
 - Keith Ellis (`\@PiTutorials <https://twitter.com/PiTutorials>`__) contributed initial support for Rock Candy
   controllers.
+
+- Mike Horne (`\@recantha <https://twitter.com/recantha>`__) add support for the PiHut controller.
 
 Getting the code
 ----------------

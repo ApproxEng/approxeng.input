@@ -27,7 +27,7 @@ Supported Controllers
    :width: 20%
 
 .. image:: images/pihut.jpg
-   :width: 20%
+    :width: 20%
 
 Contributors
 ------------

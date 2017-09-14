@@ -12,5 +12,5 @@ use this library to drive it around. The left analogue stick controls the robot,
 .. image:: edukit3.jpg
 
 .. literalinclude:: ../../../scripts/camjamedukit3.py
-    :language: python
-    :linenos:
+:language: python
+        :linenos:

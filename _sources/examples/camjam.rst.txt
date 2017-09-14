@@ -1,7 +1,7 @@
 .. _example_camjam:
 
-CamJam Edukit Robot Drive
-=========================
+CamJam Edukit 3 Robot
+=====================
 
 This example drives the `\CamJam EduKit 3 <https://camjam.me/?page_id=1035>`__ robot and is based on
 :ref:`example_tiny4wd` with some modifications by Mike Horne to support the different motor driver board that kit uses.

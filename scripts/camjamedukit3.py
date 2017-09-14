@@ -1,8 +1,10 @@
 # Code for CamJam EduKit 3 robot
-# Based on Tom Oinn/Emma Norling code
+#
+# By Mike Horne, based on code by Tom Oinn/Emma Norling code
 
 # Need floating point division of integers
 from __future__ import division
+
 from time import sleep
 
 try:
@@ -57,6 +59,7 @@ try:
             motor_right.backward(-power_right)
         else:
             motor_right.forward(power_right)
+
 
     def stop_motors():
         """

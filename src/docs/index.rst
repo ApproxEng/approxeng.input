@@ -26,6 +26,9 @@ Supported Controllers
 .. image:: images/wii-pro.jpg
    :width: 20%
 
+.. image:: images/pihut.jpg
+    :width: 20%
+
 Contributors
 ------------
 
@@ -34,6 +37,9 @@ Contributors
 
 - Keith Ellis (`\@PiTutorials <https://twitter.com/PiTutorials>`__) contributed initial support for Rock Candy
   controllers.
+
+- Mike Horne (`\@recantha <https://twitter.com/recantha>`__) add support for the PiHut_ controller and an example for
+  the :ref:`example_camjam`
 
 Getting the code
 ----------------
@@ -80,3 +86,5 @@ Contents
 .. _PiWars: http://piwars.org
 
 .. _PyGame: http://pygame.org
+
+.. _PiHut: https://thepihut.com/products/raspberry-pi-compatible-wireless-gamepad-controller

@@ -207,12 +207,40 @@ dup            DPad Up        DPad Up          DPad Up        DPad Up        DPa
 dright         DPad Right     DPad Right       DPad Right     DPad Right     DPad Right   DPad Right
 ddown          DPad Down      DPad Down        Dpad Down      DPad Down      DPad Down    DPad Down
 l1             L1 Trigger     L1 Trigger       LB Trigger     L1 Trigger     LB           L
-l2             L2 Trigger     L2 Trigger       ---            L2 Trigger     ---          LZ
+l2             L2 Trigger     L2 Trigger       LT Trigger     L2 Trigger     ---          LZ
 r1             R1 Trigger     R1 Trigger       RB Trigger     R1 Trigger     RB           R
-r2             R2 Trigger     R2 Trigger       ---            R2 Trigger     ---          RZ
+r2             R2 Trigger     R2 Trigger       RT Trigger     R2 Trigger     ---          RZ
 ps4_pad        ---            Trackpad         ---            ---            ---          ---
 =============  =============  ===============  =============  =============  ===========  ============
 
+...and some more, because we now have too many controllers to fit on one table!
+
+=============  ===========
+Standard name  PiHut
+-------------  -----------
+square         Square
+triangle       Triangle
+circle         Circle
+cross          Cross
+ls             Left Stick
+rs             Right Stick
+select         Select
+start          Start
+home           Analog
+dleft          DPad Left
+dup            DPad Up
+dright         DPad Right
+ddown          DPad Down
+l1             L1 Trigger
+l2             L2 Trigger
+r1             R1 Trigger
+r2             R2 Trigger
+ps4_pad        ---
+=============  ===========
+
+.. note::
+
+    The PiHut controller has a `turbo` button which isn't currently mapped to any button in the API.
 
 .. note::
 
@@ -244,6 +272,17 @@ ry             Right Y        Right Y          Right Y        Right Y     Right 
 lt             ---            L2 Trigger       LT Trigger     ---         Left Trigger   ---
 rt             ---            R2 Trigger       RT Trigger     ---         Right Trigger  ---
 =============  =============  ===============  =============  ==========  =============  ==========
+
+=============  =========
+Standard name  PiHut
+-------------  ---------
+lx             Left X
+ly             Left Y
+rx             Right X
+ry             Right Y
+lt             L Trigger
+rt             R Trigger
+=============  =========
 
 
 .. note::

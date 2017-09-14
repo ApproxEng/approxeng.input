@@ -11,6 +11,11 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
+Version 2.0.1
+-------------
+
+Added support for the PiHut own brand controller, code from Mike Horne (see :ref:`api_pihut`)
+
 Version 2.0.0
 -------------
 

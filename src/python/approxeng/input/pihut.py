@@ -11,7 +11,7 @@ class PiHut(Controller):
 
     def __init__(self, dead_zone=0.05, hot_zone=0.05):
         """
-        Discover and initialise a PS3 SixAxis controller connected to this computer.
+        Discover and initialise a PiHut controller connected to this computer.
 
         :param float dead_zone:
             Used to set the dead zone for each :class:`approxeng.input.CentredAxis` in the controller.

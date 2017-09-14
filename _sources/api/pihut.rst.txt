@@ -14,6 +14,6 @@ Candy and similar.
 Supported by code added by Mike Horne (`\@recantha <https://twitter.com/recantha>`__) from version 2.0.1 onwards.
 
 .. automodule:: approxeng.input.pihut
-:members:
+    :members:
 
 .. _thePiHut: https://thepihut.com/products/raspberry-pi-compatible-wireless-gamepad-controller

@@ -8,7 +8,7 @@ except ImportError:
     print('Attempt to import evdev failed - if you are not running Sphinx this is a critical error.')
 
 from approxeng.input.dualshock3 import DS3_PRODUCT_ID, DS3_VENDOR_ID, DualShock3
-from approxeng.input.dualshock4 import DS4_PRODUCT_ID, DS4_VENDOR_ID, DualShock4
+from approxeng.input.dualshock4 import DS4_PRODUCT_ID, DS4_VENDOR_ID, DS4V2_PRODUCT_ID, DualShock4
 from approxeng.input.pihut import PH_PRODUCT_ID, PH_VENDOR_ID, PiHut
 from approxeng.input.steamcontroller import SC_PRODUCT_ID, SC_VENDOR_ID, SteamController
 from approxeng.input.xboxone import XB1S_VENDOR_ID, XB1S_WIRED_PRODUCT_ID, XB1S_WIRELESS_PRODUCT_ID, WiredXBoxOneSPad, \
@@ -23,6 +23,7 @@ from approxeng.input.wiimote import WiiMote, WIIMOTE_PRODUCT_ID, WIIMOTE_VENDOR_
 
 CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_id': DS3_PRODUCT_ID},
                {'constructor': DualShock4, 'vendor_id': DS4_VENDOR_ID, 'product_id': DS4_PRODUCT_ID},
+               {'constructor': DualShock4, 'vendor_id': DS4_VENDOR_ID, 'product_id': DS4V2_PRODUCT_ID},
                {'constructor': PiHut, 'vendor_id': PH_VENDOR_ID, 'product_id': PH_PRODUCT_ID},
                {'constructor': WiredXBoxOneSPad, 'vendor_id': XB1S_VENDOR_ID, 'product_id': XB1S_WIRED_PRODUCT_ID},
                {'constructor': WirelessXBoxOneSPad, 'vendor_id': XB1S_VENDOR_ID,

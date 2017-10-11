@@ -182,14 +182,176 @@
 <p>The code below shows, with a few extra bits and pieces needed in case you&#8217;re running without the robot libraries, how to
 use this library to drive it around. The left analogue stick controls the robot, and the HOME button exits.</p>
 <img alt="../_images/edukit3.jpg" src="../_images/edukit3.jpg" />
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Code for CamJam EduKit 3 robot</span>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Code for CamJam EduKit 3 robot</span>
 <span class="c1">#</span>
 <span class="c1"># By Mike Horne, based on code by Tom Oinn/Emma Norling code</span>
 
 <span class="c1"># Need floating point division of integers</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
 
-<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="c1"># Attempt to import the GPIO Zero library. If this fails, because we&#39;re running somewhere</span>
@@ -198,9 +360,9 @@ use this library to drive it around. The left analogue stick controls the robot,
     <span class="c1"># may or may not exist!</span>
 
     <span class="c1"># Use GPIO Zero implementation of CamJam EduKit robot (thanks Ben Nuttall/Dave Jones!)</span>
-    <span class="kn">from</span> <span class="nn">gpiozero</span> <span class="k">import</span> <span class="n">CamJamKitRobot</span>
+    <span class="kn">from</span> <span class="nn">gpiozero</span> <span class="kn">import</span> <span class="n">CamJamKitRobot</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;GPIO Zero found&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;GPIO Zero found&#39;</span><span class="p">)</span>
 
     <span class="c1"># Get the robot instance and the independent motor controllers</span>
     <span class="n">robot</span> <span class="o">=</span> <span class="n">CamJamKitRobot</span><span class="p">()</span>
@@ -255,14 +417,14 @@ use this library to drive it around. The left analogue stick controls the robot,
 
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;GPIO Zero not found, using dummy functions.&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;GPIO Zero not found, using dummy functions.&#39;</span><span class="p">)</span>
 
 
     <span class="k">def</span> <span class="nf">set_speeds</span><span class="p">(</span><span class="n">power_left</span><span class="p">,</span> <span class="n">power_right</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        No motor hat - print what we would have sent to it if we&#39;d had one.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;DEBUG Left: </span><span class="si">{}</span><span class="s1">, Right: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">power_left</span><span class="p">,</span> <span class="n">power_right</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;DEBUG Left: {}, Right: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">power_left</span><span class="p">,</span> <span class="n">power_right</span><span class="p">))</span>
         <span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
 
 
@@ -270,10 +432,10 @@ use this library to drive it around. The left analogue stick controls the robot,
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        No motor hat, so just print a message.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;DEBUG Motors stopping&#39;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;DEBUG Motors stopping&#39;</span><span class="p">)</span>
 
 <span class="c1"># All we need, as we don&#39;t care which controller we bind to, is the ControllerResource</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="k">import</span> <span class="n">ControllerResource</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
 
 <span class="k">class</span> <span class="nc">RobotStopException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -308,15 +470,15 @@ use this library to drive it around. The left analogue stick controls the robot,
 <span class="c1"># Outer try / except catches the RobotStopException we just defined, which we&#39;ll raise when we want to</span>
 <span class="c1"># bail out of the loop cleanly, shutting the motors down. We can raise this in response to a button press</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
         <span class="c1"># Inner try / except is used to wait for a controller to become available, at which point we</span>
         <span class="c1"># bind to it and enter a loop where we read axis values and send commands to the motors.</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="c1"># Bind to any available joystick, this will use whatever&#39;s connected as long as the library</span>
             <span class="c1"># supports it.</span>
             <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Controller found, press HOME button to exit, use left stick to drive.&#39;</span><span class="p">)</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">joystick</span><span class="o">.</span><span class="n">controls</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Controller found, press HOME button to exit, use left stick to drive.&#39;</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">joystick</span><span class="o">.</span><span class="n">controls</span><span class="p">)</span>
                 <span class="c1"># Loop until the joystick disconnects, or we deliberately stop by raising a</span>
                 <span class="c1"># RobotStopException</span>
                 <span class="k">while</span> <span class="n">joystick</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
@@ -331,7 +493,7 @@ use this library to drive it around. The left analogue stick controls the robot,
                     <span class="n">joystick</span><span class="o">.</span><span class="n">check_presses</span><span class="p">()</span>
                     <span class="c1"># Print out any buttons that were pressed, if we had any</span>
                     <span class="k">if</span> <span class="n">joystick</span><span class="o">.</span><span class="n">has_presses</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="n">joystick</span><span class="o">.</span><span class="n">presses</span><span class="p">)</span>
+                        <span class="k">print</span><span class="p">(</span><span class="n">joystick</span><span class="o">.</span><span class="n">presses</span><span class="p">)</span>
                     <span class="c1"># If home was pressed, raise a RobotStopException to bail out of the loop</span>
                     <span class="c1"># Home is generally the PS button for playstation controllers, XBox for XBox etc</span>
                     <span class="k">if</span> <span class="s1">&#39;home&#39;</span> <span class="ow">in</span> <span class="n">joystick</span><span class="o">.</span><span class="n">presses</span><span class="p">:</span>
@@ -339,23 +501,14 @@ use this library to drive it around. The left analogue stick controls the robot,
         <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
             <span class="c1"># We get an IOError when using the ControllerResource if we don&#39;t have a controller yet,</span>
             <span class="c1"># so in this case we just wait a second and try again after printing a message.</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No controller found yet&#39;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;No controller found yet&#39;</span><span class="p">)</span>
             <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="k">except</span> <span class="n">RobotStopException</span><span class="p">:</span>
     <span class="c1"># This exception will be raised when the home button is pressed, at which point we should</span>
     <span class="c1"># stop the motors.</span>
     <span class="n">stop_motors</span><span class="p">()</span>
 </pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">python
-:linenos:</td>
-</tr>
-</tbody>
-</table>
+</td></tr></table></div>
 </div>
 
 

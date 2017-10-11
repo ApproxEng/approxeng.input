@@ -1,7 +1,7 @@
 import pprint
 
 try:
-    from evdev import InputDevice, list_devices
+    from evdev import InputDevice, list_devices, ecodes, util
 except ImportError:
     InputDevice = None
     list_devices = None
@@ -120,9 +120,20 @@ def print_devices():
     """
     _check_import()
     for device in [InputDevice(fn) for fn in list_devices()]:
-        pp = pprint.PrettyPrinter(indent=2)
-        pp.pprint({'fn': device.fn, 'name': device.name, 'phys': device.phys, 'vendor': device.info.vendor,
-                   'product': device.info.product, 'version': device.info.version, 'bus': device.info.bustype})
+        pp = pprint.PrettyPrinter(indent=2, width=100)
+        pp.pprint(device_verbose_info(device))
+
+
+def device_verbose_info(device):
+    axes = {
+        ecodes.ABS[axis_code]: {'code': axis_code, 'min': axis_info.min, 'max': axis_info.max, 'fuzz': axis_info.fuzz,
+                                'flat': axis_info.flat, 'res': axis_info.resolution} for
+        axis_code, axis_info in device.capabilities().get(3)}
+    buttons = {code: names for (names, code) in
+               dict(util.resolve_ecodes_dict({1: device.capabilities().get(1)})).get(('EV_KEY', 1))}
+    return {'fn': device.fn, 'name': device.name, 'phys': device.phys, 'vendor': device.info.vendor,
+            'product': device.info.product, 'version': device.info.version, 'bus': device.info.bustype,
+            'axes': axes, 'buttons': buttons}
 
 
 def print_controllers():
@@ -142,7 +153,7 @@ def _check_import():
     run this code on such a system should fail as early as possible, we can't fail the import without being unable
     to build docs, but all functions in this module will check to see whether we imported properly and fail if we
     didn't
-    
+
     :raises ImportError:
     """
     if InputDevice is None:

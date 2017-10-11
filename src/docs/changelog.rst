@@ -11,6 +11,11 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
+Version 2.0.2
+-------------
+
+Minor change to allow recognition of newer DS4 controllers with a different product ID
+
 Version 2.0.1
 -------------
 

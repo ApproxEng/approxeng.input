@@ -2,6 +2,7 @@ from approxeng.input import Controller, Button, CentredAxis, TriggerAxis, Binary
 
 DS4_VENDOR_ID = 1356
 DS4_PRODUCT_ID = 2508
+DS4V2_PRODUCT_ID = 1476
 
 
 class DualShock4(Controller):

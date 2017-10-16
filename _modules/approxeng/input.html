@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input &mdash; Approximate Engineering - Input 2.0.2 documentation</title>
+  <title>approxeng.input &mdash; Approximate Engineering - Input 2.0.3 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.0.2 documentation" href="../../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.0.3 documentation" href="../../_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.0.2 documentation" href="../../index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.0.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                2.0.2
+                2.0.3
               </div>
             
           
@@ -167,7 +167,12 @@
            <div itemprop="articleBody">
             
   <h1>Source code for approxeng.input</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">time</span>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">time</span>
+
+<span class="kn">import</span> <span class="nn">logzero</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logzero</span><span class="o">.</span><span class="n">setup_logger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">NOTSET</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">map_into_range</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">raw_value</span><span class="p">):</span>
@@ -456,7 +461,7 @@
         <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">axis</span><span class="o">.</span><span class="n">set_raw_value</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unknown axis code </span><span class="si">{}</span><span class="s1">, value </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">))</span></div>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Unknown axis code </span><span class="si">{}</span><span class="s1">, value </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Axes.set_axis_centres"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Axes.set_axis_centres">[docs]</a>    <span class="k">def</span> <span class="nf">set_axis_centres</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -512,7 +517,6 @@
 <span class="sd">        :return:</span>
 <span class="sd">            the corrected value of the axis, or raise AttributeError if no such axis is present</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Search for </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">AttributeError</span>
@@ -754,7 +758,6 @@
 <span class="sd">        :return:</span>
 <span class="sd">            -1.0 at minumum, 1.0 at maximum, linearly interpolating between those two points.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># print &quot;Axis change : {} now {}&quot;.format(self.__str__(), value)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_raw_value</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_raw_value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_raw_value</span><span class="p">))</span> <span class="o">-</span> <span class="mf">1.0</span>
 
     <span class="nd">@property</span>
@@ -806,7 +809,6 @@
 
         <span class="n">new_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_to_raw_value</span><span class="p">(</span><span class="n">raw_value</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="n">new_value</span>
-        <span class="c1"># print &quot;raw={}, val={}&quot;.format(raw_value, self.value)</span>
         <span class="k">if</span> <span class="n">new_value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="n">new_value</span>
         <span class="k">elif</span> <span class="n">new_value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">:</span>
@@ -961,7 +963,7 @@
             <span class="n">state</span><span class="o">.</span><span class="n">last_pressed</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
             <span class="n">state</span><span class="o">.</span><span class="n">was_pressed_since_last_check</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unknown button code </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key_code</span><span class="p">))</span></div>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Unknown button code </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key_code</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Buttons.button_released"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.button_released">[docs]</a>    <span class="k">def</span> <span class="nf">button_released</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_code</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1110,7 +1112,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Oct 11, 2017.
+      Last updated on Oct 16, 2017.
 
     </p>
   </div>
@@ -1132,7 +1134,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'2.0.2',
+            VERSION:'2.0.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

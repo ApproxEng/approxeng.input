@@ -11,6 +11,13 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
+Version 2.0.3
+-------------
+
+Updated evdev dependency to 0.7.0, added logzero 1.3.0 and moved print() statements to use logging instead. This should
+make cases where the previous version was printing reams of messages about missing axes on certain controllers more
+sane. Also updated the show_controls.py script to handle out-of-range axis codes without blowing up.
+
 Version 2.0.2
 -------------
 

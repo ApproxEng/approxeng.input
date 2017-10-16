@@ -1,4 +1,9 @@
+import logging
 from time import time
+
+import logzero
+
+logger = logzero.setup_logger(name=__name__, level=logging.NOTSET)
 
 
 def map_into_range(low, high, raw_value):
@@ -287,7 +292,7 @@ class Axes(object):
         if axis is not None:
             axis.set_raw_value(float(event.value))
         else:
-            print('Unknown axis code {}, value {}'.format(event.code, event.value))
+            logger.warning('Unknown axis code {}, value {}'.format(event.code, event.value))
 
     def set_axis_centres(self, *args):
         """
@@ -343,7 +348,6 @@ class Axes(object):
         :return:
             the corrected value of the axis, or raise AttributeError if no such axis is present
         """
-        print("Search for {}".format(item))
         if item in self.axes_by_sname:
             return self.get(item)
         raise AttributeError
@@ -585,7 +589,6 @@ class CentredAxis(object):
         :return:
             -1.0 at minumum, 1.0 at maximum, linearly interpolating between those two points.
         """
-        # print "Axis change : {} now {}".format(self.__str__(), value)
         return (value - self.min_raw_value) * (2 / (self.max_raw_value - self.min_raw_value)) - 1.0
 
     @property
@@ -637,7 +640,6 @@ class CentredAxis(object):
 
         new_value = self._input_to_raw_value(raw_value)
         self.__value = new_value
-        # print "raw={}, val={}".format(raw_value, self.value)
         if new_value > self.max:
             self.max = new_value
         elif new_value < self.min:
@@ -792,7 +794,7 @@ class Buttons(object):
             state.last_pressed = time()
             state.was_pressed_since_last_check = True
         else:
-            print('Unknown button code {}'.format(key_code))
+            logger.warning('Unknown button code {}'.format(key_code))
 
     def button_released(self, key_code):
         """

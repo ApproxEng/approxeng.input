@@ -17,6 +17,10 @@ from approxeng.input.rockcandy import RockCandy, RC_PRODUCT_ID, RC_VENDOR_ID
 from approxeng.input.wii import WiiRemotePro, WII_REMOTE_PRO_VENDOR, WII_REMOTE_PRO_PRODUCT
 from approxeng.input.wiimote import WiiMote, WIIMOTE_PRODUCT_ID, WIIMOTE_VENDOR_ID
 
+import logzero
+
+logger = logzero.setup_logger(name=__name__)
+
 # Steam controller works but only when using the xbox userland driver. PS3 and PS4 are fine though, as is the XB1 if on
 # a wired connection or after setting the appropriate kernel module options. Rock Candy controller reported as working.
 # Support for wiimote contributed by Keith Ellis
@@ -52,6 +56,7 @@ def find_any_controller(**kwargs):
         controller, the instance of the controller class itself and the first part of the input device phys property
     """
     for controller_class in [c['constructor'] for c in CONTROLLERS]:
+        logger.debug('Attempting to find controller using driver class {}'.format(controller_class))
         try:
             return find_single_controller(controller_class, **kwargs)
         except IOError:
@@ -126,9 +131,15 @@ def print_devices():
 
 
 def device_verbose_info(device):
+    def axis_name(axis_code):
+        try:
+            return ecodes.ABS[axis_code]
+        except KeyError:
+            return 'EXTENDED_CODE_{}'.format(axis_code)
+
     axes = {
-        ecodes.ABS[axis_code]: {'code': axis_code, 'min': axis_info.min, 'max': axis_info.max, 'fuzz': axis_info.fuzz,
-                                'flat': axis_info.flat, 'res': axis_info.resolution} for
+        axis_name(axis_code): {'code': axis_code, 'min': axis_info.min, 'max': axis_info.max, 'fuzz': axis_info.fuzz,
+                               'flat': axis_info.flat, 'res': axis_info.resolution} for
         axis_code, axis_info in device.capabilities().get(3)}
     buttons = {code: names for (names, code) in
                dict(util.resolve_ecodes_dict({1: device.capabilities().get(1)})).get(('EV_KEY', 1))}

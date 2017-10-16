@@ -18,8 +18,9 @@ from approxeng.input.wii import WiiRemotePro, WII_REMOTE_PRO_VENDOR, WII_REMOTE_
 from approxeng.input.wiimote import WiiMote, WIIMOTE_PRODUCT_ID, WIIMOTE_VENDOR_ID
 
 import logzero
+import logging
 
-logger = logzero.setup_logger(name=__name__)
+logger = logzero.setup_logger(name='approxeng.input.controllers', level=logging.NOTSET)
 
 # Steam controller works but only when using the xbox userland driver. PS3 and PS4 are fine though, as is the XB1 if on
 # a wired connection or after setting the appropriate kernel module options. Rock Candy controller reported as working.

@@ -3,7 +3,7 @@ from time import time
 
 import logzero
 
-logger = logzero.setup_logger(name=__name__, level=logging.NOTSET)
+logger = logzero.setup_logger(name='approxeng.input', level=logging.NOTSET)
 
 
 def map_into_range(low, high, raw_value):

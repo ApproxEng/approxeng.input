@@ -100,7 +100,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
@@ -191,19 +190,19 @@ a controller. Because of this the actual hardware and the way it interacts with 
 regular game controller, and we have to use an additional driver which pulls information from the controller and pushes
 it to a virtual device to which we then bind.</p>
 <p>The steam controller userland driver can be found on github at <a class="reference external" href="https://github.com/ynsta/steamcontroller">SteamController</a>, you need to follow the instructions
-there to obtain and build the driver. You&#8217;ll need to add appropriate udev rules as specified on that page.</p>
-<p>Once you have it, there&#8217;s a script &#8216;scripts/sc-xbox.py&#8217; directory of the driver which you must run as root:</p>
+there to obtain and build the driver. You’ll need to add appropriate udev rules as specified on that page.</p>
+<p>Once you have it, there’s a script ‘scripts/sc-xbox.py’ directory of the driver which you must run as root:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>sudo ~/viridia-env/bin/python ../scripts/sc-xbox.py start
 </pre></div>
 </div>
-<p>(In this case I&#8217;ve installed into my virtual environment, so I need to specify the full path to the Python interpreter)</p>
+<p>(In this case I’ve installed into my virtual environment, so I need to specify the full path to the Python interpreter)</p>
 <p>This will run in the background and create a virtual joystick device, the steam controller support in approxeng.input
-finds this device automatically just the same way it finds &#8216;real&#8217; controllers.</p>
+finds this device automatically just the same way it finds ‘real’ controllers.</p>
 <span class="target" id="module-approxeng.input.steamcontroller"></span><dl class="class">
 <dt id="approxeng.input.steamcontroller.SteamController">
 <em class="property">class </em><code class="descclassname">approxeng.input.steamcontroller.</code><code class="descname">SteamController</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wireless steam controller. Note that you must be running the xbox driver for the steam controller first, otherwise
-this won&#8217;t pick up any appropriate devices. Once this is running though it works just fine.</p>
+this won’t pick up any appropriate devices. Once this is running though it works just fine.</p>
 <dl class="method">
 <dt id="approxeng.input.steamcontroller.SteamController.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController.__init__" title="Permalink to this definition">¶</a></dt>
@@ -213,9 +212,9 @@ this won&#8217;t pick up any appropriate devices. Once this is running though it
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
 <a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
-<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
 <a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
 </ul>
 </td>
@@ -251,7 +250,7 @@ this won&#8217;t pick up any appropriate devices. Once this is running though it
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Oct 16, 2017.
+      Last updated on Jan 20, 2018.
 
     </p>
   </div>
@@ -283,7 +282,7 @@ this won&#8217;t pick up any appropriate devices. Once this is running though it
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

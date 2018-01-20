@@ -100,7 +100,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Common APIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
@@ -191,11 +190,11 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first simple">
-<li><strong>vendor_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Vendor ID used to identify the controller type.</li>
-<li><strong>product_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; Product ID used to identify the controller type.</li>
-<li><strong>axes</strong> (<a class="reference internal" href="#approxeng.input.Axes" title="approxeng.input.Axes"><em>approxeng.input.Axes</em></a>) &#8211; All analogue axes. You can get the individual axis objects from this, but you shouldn&#8217;t ever need to do this,
+<li><strong>vendor_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Vendor ID used to identify the controller type.</li>
+<li><strong>product_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Product ID used to identify the controller type.</li>
+<li><strong>axes</strong> (<a class="reference internal" href="#approxeng.input.Axes" title="approxeng.input.Axes"><em>approxeng.input.Axes</em></a>) – All analogue axes. You can get the individual axis objects from this, but you shouldn’t ever need to do this,
 use methods on Controller instead!</li>
-<li><strong>buttons</strong> (<a class="reference internal" href="#approxeng.input.Buttons" title="approxeng.input.Buttons"><em>approxeng.input.Buttons</em></a>) &#8211; All buttons are managed by this object. This can be used to access Button objects representing buttons on the
+<li><strong>buttons</strong> (<a class="reference internal" href="#approxeng.input.Buttons" title="approxeng.input.Buttons"><em>approxeng.input.Buttons</em></a>) – All buttons are managed by this object. This can be used to access Button objects representing buttons on the
 controller, but you will almost never need to do this - use the methods on Controller instead!</li>
 </ul>
 </td>
@@ -216,11 +215,11 @@ condition to check for controller disconnection.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>vendor_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The USB vendor ID for the controller</li>
-<li><strong>product_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) &#8211; The USB product ID for the controller</li>
-<li><strong>controls</strong> &#8211; A sequence of Button, CentredAxis, TriggerAxis and BinaryAxis instances</li>
-<li><strong>dead_zone</strong> &#8211; If specified, this is applied to all axes</li>
-<li><strong>hot_zone</strong> &#8211; If specified, this is applied to all axes</li>
+<li><strong>vendor_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The USB vendor ID for the controller</li>
+<li><strong>product_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The USB product ID for the controller</li>
+<li><strong>controls</strong> – A sequence of Button, CentredAxis, TriggerAxis and BinaryAxis instances</li>
+<li><strong>dead_zone</strong> – If specified, this is applied to all axes</li>
+<li><strong>hot_zone</strong> – If specified, this is applied to all axes</li>
 </ul>
 </td>
 </tr>
@@ -232,7 +231,7 @@ condition to check for controller disconnection.</p>
 <dt id="approxeng.input.Controller.check_presses">
 <code class="descname">check_presses</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.check_presses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.check_presses" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the set of Buttons which have been pressed since this call was last made, clearing it as we do. This is
-a shortcut do doing &#8216;buttons.get_and_clear_button_press_history&#8217;</p>
+a shortcut do doing ‘buttons.get_and_clear_button_press_history’</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -271,9 +270,9 @@ a shortcut do doing &#8216;buttons.get_and_clear_button_press_history&#8217;</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>button_handler</strong> &#8211; A function which will be called when any of the specified buttons are pressed. The
+<li><strong>button_handler</strong> – A function which will be called when any of the specified buttons are pressed. The
 function is called with the Button that was pressed as the sole argument.</li>
-<li><strong>button_sname</strong> &#8211; The sname of the button which should trigger the handler function</li>
+<li><strong>button_sname</strong> – The sname of the button which should trigger the handler function</li>
 </ul>
 </td>
 </tr>
@@ -301,14 +300,14 @@ the control is at 0.0, at least in principle.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> &#8211; A friendly name for the axis</li>
-<li><strong>min_raw_value</strong> &#8211; The value read from the event system when the axis is at its minimum value</li>
-<li><strong>max_raw_value</strong> &#8211; The value read from the event system when the axis is at its maximum value</li>
-<li><strong>axis_event_code</strong> &#8211; The evdev code for this axis, used to dispatch events to the axis from the event system</li>
-<li><strong>invert</strong> &#8211; True to invert data, used when the raw data is in the opposite sense to normal</li>
-<li><strong>dead_zone</strong> &#8211; Size of the dead zone in the centre of the axis, within which all values will be mapped to 0.0</li>
-<li><strong>hot_zone</strong> &#8211; Size of the hot zones at the ends of the axis, where values will be mapped to -1.0 or 1.0</li>
-<li><strong>sname</strong> &#8211; The standard name for this axis, if specified</li>
+<li><strong>name</strong> – A friendly name for the axis</li>
+<li><strong>min_raw_value</strong> – The value read from the event system when the axis is at its minimum value</li>
+<li><strong>max_raw_value</strong> – The value read from the event system when the axis is at its maximum value</li>
+<li><strong>axis_event_code</strong> – The evdev code for this axis, used to dispatch events to the axis from the event system</li>
+<li><strong>invert</strong> – True to invert data, used when the raw data is in the opposite sense to normal</li>
+<li><strong>dead_zone</strong> – Size of the dead zone in the centre of the axis, within which all values will be mapped to 0.0</li>
+<li><strong>hot_zone</strong> – Size of the hot zones at the ends of the axis, where values will be mapped to -1.0 or 1.0</li>
+<li><strong>sname</strong> – The standard name for this axis, if specified</li>
 </ul>
 </td>
 </tr>
@@ -353,7 +352,7 @@ call the reset method on the SixAxis instance.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>raw_value</strong> &#8211; the raw value from the joystick hardware</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>raw_value</strong> – the raw value from the joystick hardware</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Internal:</th><td class="field-body"></td>
 </tr>
@@ -399,17 +398,17 @@ axes.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> &#8211; A friendly name for the axis</li>
-<li><strong>min_raw_value</strong> &#8211; The value read from the event system when the trigger is not pressed</li>
-<li><strong>max_raw_value</strong> &#8211; The value read from the event system when the trigger is fully pressed</li>
-<li><strong>axis_event_code</strong> &#8211; The evdev code for this axis, used when dispatching events to it from an Axes object</li>
-<li><strong>dead_zone</strong> &#8211; The proportion of the trigger range which will be treated as equivalent to no press</li>
-<li><strong>hot_zone</strong> &#8211; The proportion of the trigger range which will be treated as equivalent to fully depressing the trigger</li>
-<li><strong>sname</strong> &#8211; The standard name for this trigger, if specified</li>
-<li><strong>button_sname</strong> &#8211; If provided, this creates a new Button internally which will be triggered by changes to the axis value. This
+<li><strong>name</strong> – A friendly name for the axis</li>
+<li><strong>min_raw_value</strong> – The value read from the event system when the trigger is not pressed</li>
+<li><strong>max_raw_value</strong> – The value read from the event system when the trigger is fully pressed</li>
+<li><strong>axis_event_code</strong> – The evdev code for this axis, used when dispatching events to it from an Axes object</li>
+<li><strong>dead_zone</strong> – The proportion of the trigger range which will be treated as equivalent to no press</li>
+<li><strong>hot_zone</strong> – The proportion of the trigger range which will be treated as equivalent to fully depressing the trigger</li>
+<li><strong>sname</strong> – The standard name for this trigger, if specified</li>
+<li><strong>button_sname</strong> – If provided, this creates a new Button internally which will be triggered by changes to the axis value. This
 is useful for triggers which have axis representations but no corresponding button presses such as the XBox1
 controller front triggers. If this is set to None then no button is created</li>
-<li><strong>button_trigger_value</strong> &#8211; Defaulting to 0.5, this value determines the point in the trigger axis&#8217; range at which point the button is
+<li><strong>button_trigger_value</strong> – Defaulting to 0.5, this value determines the point in the trigger axis’ range at which point the button is
 regarded as being pressed or released.</li>
 </ul>
 </td>
@@ -454,7 +453,7 @@ regarded as being pressed or released.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>raw_value</strong> &#8211; the raw value from the joystick hardware</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>raw_value</strong> – the raw value from the joystick hardware</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Internal:</th><td class="field-body"></td>
 </tr>
@@ -483,7 +482,7 @@ the trigger or the edge of the hot zone, if defined as other than 1.0.</p>
 <dl class="class">
 <dt id="approxeng.input.BinaryAxis">
 <em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">BinaryAxis</code><span class="sig-paren">(</span><em>name</em>, <em>axis_event_code</em>, <em>b1name=None</em>, <em>b2name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#BinaryAxis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.BinaryAxis" title="Permalink to this definition">¶</a></dt>
-<dd><p>A fake &#8216;analogue&#8217; axis which actually corresponds to a pair of buttons. Once associated with a Buttons instance
+<dd><p>A fake ‘analogue’ axis which actually corresponds to a pair of buttons. Once associated with a Buttons instance
 it routes events through to the Buttons instance to create button presses corresponding to axis movements.</p>
 <dl class="method">
 <dt id="approxeng.input.BinaryAxis.__init__">
@@ -495,10 +494,10 @@ part of this constructor</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> &#8211; Name for the axis, use this to describe the axis, it&#8217;s not used for anything else</li>
-<li><strong>axis_event_code</strong> &#8211; The evdev event code for changes to this axis</li>
-<li><strong>b1name</strong> &#8211; The sname of the button corresponding to negative values of the axis.</li>
-<li><strong>b2name</strong> &#8211; The sname of the button corresponding to positive values of the axis</li>
+<li><strong>name</strong> – Name for the axis, use this to describe the axis, it’s not used for anything else</li>
+<li><strong>axis_event_code</strong> – The evdev event code for changes to this axis</li>
+<li><strong>b1name</strong> – The sname of the button corresponding to negative values of the axis.</li>
+<li><strong>b2name</strong> – The sname of the button corresponding to positive values of the axis</li>
 </ul>
 </td>
 </tr>
@@ -522,7 +521,7 @@ instantiate this yourself.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axes</strong> &#8211; a sequence of <a class="reference internal" href="#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> or <a class="reference internal" href="#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> or 
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axes</strong> – a sequence of <a class="reference internal" href="#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> or <a class="reference internal" href="#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> or 
 <a class="reference internal" href="#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.BinaryAxis</span></code></a> containing all the axes the controller supports.</td>
 </tr>
 </tbody>
@@ -545,7 +544,7 @@ instantiate this yourself.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Internal:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> &#8211; The evdev event to process</td>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> – The evdev event to process</td>
 </tr>
 </tbody>
 </table>
@@ -580,17 +579,17 @@ to CentredAxis instances</p>
 <dl class="method">
 <dt id="approxeng.input.Button.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>key_code=None</em>, <em>sname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Button.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Button.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new Button - this will be done by the controller implementation classes, you shouldn&#8217;t create your own
-unless you&#8217;re writing such a class.</p>
+<dd><p>Create a new Button - this will be done by the controller implementation classes, you shouldn’t create your own
+unless you’re writing such a class.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> &#8211; A friendly name for the button</li>
-<li><strong>key_code</strong> &#8211; The key code for the button, typically an integer used within the button press and release events. Defaults
+<li><strong>name</strong> – A friendly name for the button</li>
+<li><strong>key_code</strong> – The key code for the button, typically an integer used within the button press and release events. Defaults
 to None if not used.</li>
-<li><strong>sname</strong> &#8211; The standard name for the button, if available.</li>
+<li><strong>sname</strong> – The standard name for the button, if available.</li>
 </ul>
 </td>
 </tr>
@@ -607,7 +606,7 @@ to None if not used.</li>
 states and tracking whether buttons are held down, and how long if so. Controller implementations instantiate and
 configure an instance of this class when they want to provide button information, the controller is responsible for
 translating button events from the underlying operating system frameworks and updating this object appropriately,
-user code (i.e. your code if you&#8217;re reading this) uses the methods on this object to react to button presses.</p>
+user code (i.e. your code if you’re reading this) uses the methods on this object to react to button presses.</p>
 <dl class="class">
 <dt id="approxeng.input.Buttons.ButtonState">
 <em class="property">class </em><code class="descname">ButtonState</code><span class="sig-paren">(</span><em>button</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.ButtonState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.ButtonState" title="Permalink to this definition">¶</a></dt>
@@ -629,7 +628,7 @@ possible forms of interaction required.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>buttons_and_axes</strong> &#8211; a list of <a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Button</span></code></a> instances which will be managed by this class</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>buttons_and_axes</strong> – a list of <a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Button</span></code></a> instances which will be managed by this class</td>
 </tr>
 </tbody>
 </table>
@@ -645,7 +644,7 @@ possible forms of interaction required.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Internal:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key_code</strong> &#8211; The code specified when populating Button instances</td>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key_code</strong> – The code specified when populating Button instances</td>
 </tr>
 </tbody>
 </table>
@@ -661,7 +660,7 @@ possible forms of interaction required.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Internal:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key_code</strong> &#8211; The code specified when populating Button instances</td>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key_code</strong> – The code specified when populating Button instances</td>
 </tr>
 </tbody>
 </table>
@@ -689,7 +688,7 @@ possible forms of interaction required.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sname</strong> &#8211; The standard name of the button</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sname</strong> – The standard name of the button</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None if the button is not held down, or is not available, otherwise the number of seconds as a floating
 point value since it was pressed</td>
@@ -731,9 +730,9 @@ have happened.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>button_handler</strong> &#8211; A function which will be called when any of the specified buttons are pressed. The
+<li><strong>button_handler</strong> – A function which will be called when any of the specified buttons are pressed. The
 function is called with the Button that was pressed as the sole argument.</li>
-<li><strong>buttons</strong> (<em></em><em>[</em><a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><em>Button</em></a><em>]</em><em></em>) &#8211; A list or one or more buttons which should trigger the handler when pressed. Buttons
+<li><strong>buttons</strong> (<em>[</em><a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><em>Button</em></a><em>]</em>) – A list or one or more buttons which should trigger the handler when pressed. Buttons
 are specified as <a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Button</span></code></a> instances, in general controller implementations will
 expose these as constants such as SixAxis.BUTTON_CIRCLE. A single Button can be specified if only one button
 binding is required.</li>
@@ -785,7 +784,7 @@ binding is required.</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Oct 16, 2017.
+      Last updated on Jan 20, 2018.
 
     </p>
   </div>
@@ -817,7 +816,7 @@ binding is required.</li>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

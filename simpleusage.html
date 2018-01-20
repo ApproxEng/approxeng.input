@@ -110,7 +110,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
@@ -180,7 +179,7 @@
 <span id="simple-api"></span><h1>Simple Usage<a class="headerlink" href="#simple-usage" title="Permalink to this headline">¶</a></h1>
 <p>In version 2.0 of this library, the API has been simplified and made more Python-like. Rather than having to fetch
 nested objects containing axis and button information, all the most common operations are now available as methods and
-attributes of the controller class itself. Read on...</p>
+attributes of the controller class itself. Read on…</p>
 <div class="section" id="connecting-to-a-controller">
 <h2>Connecting to a controller<a class="headerlink" href="#connecting-to-a-controller" title="Permalink to this headline">¶</a></h2>
 <p>To connect to a controller you do the following (including error handling):</p>
@@ -203,8 +202,8 @@ attributes of the controller class itself. Read on...</p>
 </pre></div>
 </div>
 <p>This example will loop forever. It will attempt to connect to any supported joystick - the ControllerResource will raise
-IOError if it can&#8217;t find one, otherwise it will do all the necessary background work, create a controller object and, in
-this case, bind it to the &#8216;joystick&#8217; variable which can then be used to read axes, buttons etc.</p>
+IOError if it can’t find one, otherwise it will do all the necessary background work, create a controller object and, in
+this case, bind it to the ‘joystick’ variable which can then be used to read axes, buttons etc.</p>
 <p>The <cite>connected</cite> property on the joystick object indicates whether the underlying device is connected or not - if, for
 example, you have a controller that goes out of range, runs out of batteries, or is turned off while in use this will be
 set to False and you can handle the case correctly (if using this code in a robot, this would be an excellent time to
@@ -212,13 +211,13 @@ turn of all your motors, for instance!)</p>
 <p>The <a class="reference internal" href="api/selectbinder.html#approxeng.input.selectbinder.ControllerResource" title="approxeng.input.selectbinder.ControllerResource"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.selectbinder.ControllerResource</span></code></a> class accepts a number of, optional, arguments. These can be
 used to tell it which controller type to use (the default is to connect to the first controller it can understand, but
 if you have multiple controllers connected for some reason you might want to tell it to use your XBox1 rather than your
-PS4 controller). They can also be used to configure the default settings for axes, and there&#8217;s an option to print out
-debug information. In general though you&#8217;ll only ever need the simple form shown here.</p>
+PS4 controller). They can also be used to configure the default settings for axes, and there’s an option to print out
+debug information. In general though you’ll only ever need the simple form shown here.</p>
 <p>Once you have a controller object you can use it to read axes and buttons, both of which are referenced by a standard
-name (see  <a class="reference internal" href="#sname-label"><span class="std std-ref">Standard Names</span></a>) - this allows you to not worry too much about exactly what controller&#8217;s going to be
-present. Rather than having to know that the XBox controller has &#8216;A&#8217;,&#8217;B&#8217;... and so on, whereas the Playstation
-controllers have &#8216;cross&#8217;, &#8216;circle&#8217; etc the API defines a standard set of names for buttons and axes (they&#8217;re based on
-the PS3 controller as it happens, mostly because that&#8217;s the one I first used when I started writing the library!).</p>
+name (see  <a class="reference internal" href="#sname-label"><span class="std std-ref">Standard Names</span></a>) - this allows you to not worry too much about exactly what controller’s going to be
+present. Rather than having to know that the XBox controller has ‘A’,’B’… and so on, whereas the Playstation
+controllers have ‘cross’, ‘circle’ etc the API defines a standard set of names for buttons and axes (they’re based on
+the PS3 controller as it happens, mostly because that’s the one I first used when I started writing the library!).</p>
 </div>
 <div class="section" id="reading-analoque-axes">
 <h2>Reading Analoque Axes<a class="headerlink" href="#reading-analoque-axes" title="Permalink to this headline">¶</a></h2>
@@ -230,7 +229,7 @@ on or off, an analogue axis has a floating point value associated with its curre
 <li>Trigger axes have a value ranging from 0.0 to 1.0</li>
 </ul>
 </div></blockquote>
-<p>Axis values are read as properties of the joystick object (in this and other examples we&#8217;re not showing the exception
+<p>Axis values are read as properties of the joystick object (in this and other examples we’re not showing the exception
 handling from the first example, but you should still do it!):</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
@@ -244,13 +243,13 @@ handling from the first example, but you should still do it!):</p>
         <span class="n">left_y</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">ly</span>
 </pre></div>
 </div>
-<p>...and that&#8217;s it! You might have used other libraries which require you to do event handling and similar, but in this
+<p>…and that’s it! You might have used other libraries which require you to do event handling and similar, but in this
 case all that stuff is taken care of in the background and you just have to read the information you want from the
 joystick object.</p>
 </div>
 <div class="section" id="checking-for-held-buttons">
 <h2>Checking for Held Buttons<a class="headerlink" href="#checking-for-held-buttons" title="Permalink to this headline">¶</a></h2>
-<p>You can also check whether a button is currently held, and, if so, how long it&#8217;s been held for to-date in seconds:</p>
+<p>You can also check whether a button is currently held, and, if so, how long it’s been held for to-date in seconds:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
 <span class="c1"># Get a joystick</span>
@@ -286,12 +285,12 @@ call (you can, as the example below shows, query a mix of button hold times and 
 </div>
 <div class="section" id="querying-button-presses">
 <h2>Querying Button Presses<a class="headerlink" href="#querying-button-presses" title="Permalink to this headline">¶</a></h2>
-<p>Another common requirement you&#8217;ll have will be to find out whether the user pressed a button, even if they&#8217;re not
-currently holding it down. This sounds obvious, but in fact it&#8217;s slightly more subtle - what you really want to know is
-whether the user pressed a button at any point since you last asked this question! That way, even if you don&#8217;t ask very
-often you won&#8217;t miss button presses and you don&#8217;t have to worry about the user pressing so fast you can&#8217;t detect it.</p>
+<p>Another common requirement you’ll have will be to find out whether the user pressed a button, even if they’re not
+currently holding it down. This sounds obvious, but in fact it’s slightly more subtle - what you really want to know is
+whether the user pressed a button at any point since you last asked this question! That way, even if you don’t ask very
+often you won’t miss button presses and you don’t have to worry about the user pressing so fast you can’t detect it.</p>
 <p>This is therefore a two-part process - you must first tell the controller to read out whether any buttons were pressed,
-this actually both returns a :class:approxeng.input.ButtonPresses object, and also stores that object as the &#8216;presses&#8217;
+this actually both returns a :class:approxeng.input.ButtonPresses object, and also stores that object as the ‘presses’
 property of the controller for later access.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -475,7 +474,7 @@ standard ones are as follows:</p>
 <td>L2 Trigger</td>
 <td>LT Trigger</td>
 <td>L2 Trigger</td>
-<td>&#8212;</td>
+<td>—</td>
 <td>LZ</td>
 </tr>
 <tr class="row-odd"><td>r1</td>
@@ -491,20 +490,20 @@ standard ones are as follows:</p>
 <td>R2 Trigger</td>
 <td>RT Trigger</td>
 <td>R2 Trigger</td>
-<td>&#8212;</td>
+<td>—</td>
 <td>RZ</td>
 </tr>
 <tr class="row-odd"><td>ps4_pad</td>
-<td>&#8212;</td>
+<td>—</td>
 <td>Trackpad</td>
-<td>&#8212;</td>
-<td>&#8212;</td>
-<td>&#8212;</td>
-<td>&#8212;</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
 </tr>
 </tbody>
 </table>
-<p>...and some more, because we now have too many controllers to fit on one table!</p>
+<p>…and some more, because we now have too many controllers to fit on one table!</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="54%" />
@@ -566,30 +565,30 @@ standard ones are as follows:</p>
 <td>R2 Trigger</td>
 </tr>
 <tr class="row-odd"><td>ps4_pad</td>
-<td>&#8212;</td>
+<td>—</td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The PiHut controller has a <cite>turbo</cite> button which isn&#8217;t currently mapped to any button in the API.</p>
+<p class="last">The PiHut controller has a <cite>turbo</cite> button which isn’t currently mapped to any button in the API.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The lack of l2 and r2 for the Steam controller is because these buttons don&#8217;t appear as buttons in the
+<p class="last">The lack of l2 and r2 for the Steam controller is because these buttons don’t appear as buttons in the
 event stream.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The DualShock4 trackpad only works as a single button. It doesn&#8217;t have an equivalent on the other controllers so
-only use if you&#8217;re happy to be locked into this particular hardware.</p>
+<p class="last">The DualShock4 trackpad only works as a single button. It doesn’t have an equivalent on the other controllers so
+only use if you’re happy to be locked into this particular hardware.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Yes, the Wii Remote Pro buttons really are that way around. Although it has the same buttons as an XBox controller
-they&#8217;re in different locations. The standard names are set to prioritise location (and therefore kinetic memory)
-so, for example, the &#8216;X&#8217; button on the Wii Remote Pro is in the same place as the triangle button on the PS3 and PS4
-so we call it &#8216;triangle&#8217;, whereas the XBox controller has a <cite>Y</cite> button there instead.</p>
+they’re in different locations. The standard names are set to prioritise location (and therefore kinetic memory)
+so, for example, the ‘X’ button on the Wii Remote Pro is in the same place as the triangle button on the PS3 and PS4
+so we call it ‘triangle’, whereas the XBox controller has a <cite>Y</cite> button there instead.</p>
 </div>
 </div>
 <div class="section" id="axis-names">
@@ -646,20 +645,20 @@ so we call it &#8216;triangle&#8217;, whereas the XBox controller has a <cite>Y<
 <td>Right Y</td>
 </tr>
 <tr class="row-even"><td>lt</td>
-<td>&#8212;</td>
+<td>—</td>
 <td>L2 Trigger</td>
 <td>LT Trigger</td>
-<td>&#8212;</td>
+<td>—</td>
 <td>Left Trigger</td>
-<td>&#8212;</td>
+<td>—</td>
 </tr>
 <tr class="row-odd"><td>rt</td>
-<td>&#8212;</td>
+<td>—</td>
 <td>R2 Trigger</td>
 <td>RT Trigger</td>
-<td>&#8212;</td>
+<td>—</td>
 <td>Right Trigger</td>
-<td>&#8212;</td>
+<td>—</td>
 </tr>
 </tbody>
 </table>
@@ -694,8 +693,8 @@ so we call it &#8216;triangle&#8217;, whereas the XBox controller has a <cite>Y<
 </table>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The triggers on the DualShock3 or Rock Candy can&#8217;t be used as analogue axes, only use lt and rt if you&#8217;re happy you
-won&#8217;t need to use these controllers in your project.</p>
+<p class="last">The triggers on the DualShock3 or Rock Candy can’t be used as analogue axes, only use lt and rt if you’re happy you
+won’t need to use these controllers in your project.</p>
 </div>
 </div>
 </div>
@@ -723,7 +722,7 @@ won&#8217;t need to use these controllers in your project.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Oct 16, 2017.
+      Last updated on Jan 20, 2018.
 
     </p>
   </div>
@@ -755,7 +754,7 @@ won&#8217;t need to use these controllers in your project.</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

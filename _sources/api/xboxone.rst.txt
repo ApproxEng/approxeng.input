@@ -26,6 +26,15 @@ not stay connected for more than a couple of seconds (if you're using the graphi
 connecting and disconnecting forever). There don't appear to be any drawbacks to setting this option, at least none that
 I've found in the context of making robots.
 
+Once this is done you should be able to pair with :ref:`bluetooth` as with any normal bluetooth device.
+
+Problems with button mappings
+-----------------------------
+
+When you first pair your controller, it may not work! If you're seeing messages about button codes not being recognised,
+or buttons are mapping to the wrong controls, you need to un-pair the controller and go through the pairing process
+again. We're not sure why, but in three separate cases this has fixed the issue. See
+`Issue #17 <https://github.com/ApproxEng/approxeng.input/issues/17>`__ for discussion!
 
 Controller Classes
 ------------------

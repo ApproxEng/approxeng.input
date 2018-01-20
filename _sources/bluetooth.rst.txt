@@ -1,10 +1,7 @@
+.. _bluetooth:
+
 Pairing Controllers over Bluetooth
 ==================================
-
-.. note::
-
-    The PlayStation 3 controller has a couple of additional steps, see :ref:`ps3-label` if you're using one of those
-    controllers. For everything else, read on...
 
 .. note::
 

@@ -100,13 +100,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">XBox-One S Controller Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#problems-with-button-mappings">Problems with button mappings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-approxeng.input.xboxone">Controller Classes</a></li>
 </ul>
 </li>
@@ -191,18 +191,26 @@
 </div>
 <p>The XBox One S controller (the most modern, with bluetooth support) can be used without any dongles, but you will have
 to change a configuration option in the bluetooth driver. This is done by creating a file in <cite>/etc/modprobe.d/</cite>. The
-file can be called anything, you&#8217;ll need to be root to create it, and must specify a single line. In my case I used</p>
+file can be called anything, you’ll need to be root to create it, and must specify a single line. In my case I used</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>tom@Ogre ~ $ sudo nano /etc/modprobe.d/bluetooth.conf
 </pre></div>
 </div>
-<p>...to create a file, with a single line:</p>
+<p>…to create a file, with a single line:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>options bluetooth <span class="nv">disable_ertm</span><span class="o">=</span>Y
 </pre></div>
 </div>
-<p>After doing this you&#8217;ll need to reboot your computer. If you don&#8217;t perform this step your controller will pair, but will
-not stay connected for more than a couple of seconds (if you&#8217;re using the graphical bluetooth manager you&#8217;ll see it
-connecting and disconnecting forever). There don&#8217;t appear to be any drawbacks to setting this option, at least none that
-I&#8217;ve found in the context of making robots.</p>
+<p>After doing this you’ll need to reboot your computer. If you don’t perform this step your controller will pair, but will
+not stay connected for more than a couple of seconds (if you’re using the graphical bluetooth manager you’ll see it
+connecting and disconnecting forever). There don’t appear to be any drawbacks to setting this option, at least none that
+I’ve found in the context of making robots.</p>
+<p>Once this is done you should be able to pair with <a class="reference internal" href="../bluetooth.html#bluetooth"><span class="std std-ref">Pairing Controllers over Bluetooth</span></a> as with any normal bluetooth device.</p>
+<div class="section" id="problems-with-button-mappings">
+<h2>Problems with button mappings<a class="headerlink" href="#problems-with-button-mappings" title="Permalink to this headline">¶</a></h2>
+<p>When you first pair your controller, it may not work! If you’re seeing messages about button codes not being recognised,
+or buttons are mapping to the wrong controls, you need to un-pair the controller and go through the pairing process
+again. We’re not sure why, but in three separate cases this has fixed the issue. See
+<a class="reference external" href="https://github.com/ApproxEng/approxeng.input/issues/17">Issue #17</a> for discussion!</p>
+</div>
 <div class="section" id="module-approxeng.input.xboxone">
 <span id="controller-classes"></span><h2>Controller Classes<a class="headerlink" href="#module-approxeng.input.xboxone" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -220,9 +228,9 @@ as for the wireless!</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
 <a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
-<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
 <a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
 </ul>
 </td>
@@ -239,7 +247,7 @@ as for the wireless!</p>
 <dd><p>Wireless over bluetooth - for some reason the control ranges on this are different to when wired and all the buttons
 are different.</p>
 <p>To make the wireless pair work with linux you need to set a kernel module option on the bluetooth module. This can
-be done by creating a file in /etc/modprobe.d with the line &#8216;options bluetooth disable_ertm=Y&#8217; and rebooting.</p>
+be done by creating a file in /etc/modprobe.d with the line ‘options bluetooth disable_ertm=Y’ and rebooting.</p>
 <dl class="method">
 <dt id="approxeng.input.xboxone.WirelessXBoxOneSPad.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WirelessXBoxOneSPad.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WirelessXBoxOneSPad.__init__" title="Permalink to this definition">¶</a></dt>
@@ -249,9 +257,9 @@ be done by creating a file in /etc/modprobe.d with the line &#8216;options bluet
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
 <a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
-<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
 <a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
 </ul>
 </td>
@@ -288,7 +296,7 @@ be done by creating a file in /etc/modprobe.d with the line &#8216;options bluet
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Oct 16, 2017.
+      Last updated on Jan 20, 2018.
 
     </p>
   </div>
@@ -320,7 +328,7 @@ be done by creating a file in /etc/modprobe.d with the line &#8216;options bluet
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

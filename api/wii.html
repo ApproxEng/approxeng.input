@@ -100,7 +100,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
@@ -110,7 +109,7 @@
 <li class="toctree-l2"><a class="reference internal" href="rockcandy.html">Rock Candy Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="steamcontroller.html">Steam Controller Support</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Wii Remote Pro Controller Support</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#disabling-stick-as-mouse-functionality">Disabling &#8216;Stick as Mouse&#8217; functionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disabling-stick-as-mouse-functionality">Disabling ‘Stick as Mouse’ functionality</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="wiimote.html">WiiMote Controller Support</a></li>
@@ -192,12 +191,12 @@ and not the motion sensing wand thing.</p>
 <p class="caption"><span class="caption-text">Wii-Pro Remote</span></p>
 </div>
 <div class="section" id="disabling-stick-as-mouse-functionality">
-<span id="wii-remote-pro-label"></span><h2>Disabling &#8216;Stick as Mouse&#8217; functionality<a class="headerlink" href="#disabling-stick-as-mouse-functionality" title="Permalink to this headline">¶</a></h2>
+<span id="wii-remote-pro-label"></span><h2>Disabling ‘Stick as Mouse’ functionality<a class="headerlink" href="#disabling-stick-as-mouse-functionality" title="Permalink to this headline">¶</a></h2>
 <p>If you pair your Wii Remote Pro controller under Linux within a graphical environment you may find that your mouse
 suddenly starts behaving strangely. This is because on modern Linux distributions the system will treat the left stick
-on your controller as a mouse. That&#8217;s quite neat, but probably not what you want. To prevent this happening you need
+on your controller as a mouse. That’s quite neat, but probably not what you want. To prevent this happening you need
 to create, as root, a file in <cite>xorg.conf.d</cite> - the exact location of this file depends on your distribution, for example
-on Linux Mint and Raspbian it&#8217;s at <cite>/usr/share/X11/xorg.conf.d/</cite>. It&#8217;ll be there somewhere if it&#8217;s not there - you might
+on Linux Mint and Raspbian it’s at <cite>/usr/share/X11/xorg.conf.d/</cite>. It’ll be there somewhere if it’s not there - you might
 need to search around a bit to locate it.</p>
 <p>You need to create a file in this directory, it can be any name ending with .conf (I use
 <cite>50-xorg-no-wiipro-joystick.conf</cite>) with the following contents:</p>
@@ -209,14 +208,14 @@ Option &quot;Ignore&quot; &quot;on&quot;
 EndSection
 </pre></div>
 </div>
-<p>This will blacklist the controller from acting as an input device for your desktop. If you&#8217;re using a clone of this
+<p>This will blacklist the controller from acting as an input device for your desktop. If you’re using a clone of this
 controller rather than the original Nintendo one you may need to change the <cite>MatchProduct</cite> part of the file above to
-match whatever&#8217;s returned by the <cite>scripts/list_devices.py</cite> script.</p>
+match whatever’s returned by the <cite>scripts/list_devices.py</cite> script.</p>
 <span class="target" id="module-approxeng.input.wii"></span><dl class="class">
 <dt id="approxeng.input.wii.WiiRemotePro">
 <em class="property">class </em><code class="descclassname">approxeng.input.wii.</code><code class="descname">WiiRemotePro</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/wii.html#WiiRemotePro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.wii.WiiRemotePro" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wireless steam controller. Note that you must be running the xbox driver for the steam controller first, otherwise
-this won&#8217;t pick up any appropriate devices. Once this is running though it works just fine.</p>
+this won’t pick up any appropriate devices. Once this is running though it works just fine.</p>
 <dl class="method">
 <dt id="approxeng.input.wii.WiiRemotePro.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/wii.html#WiiRemotePro.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.wii.WiiRemotePro.__init__" title="Permalink to this definition">¶</a></dt>
@@ -226,9 +225,9 @@ this won&#8217;t pick up any appropriate devices. Once this is running though it
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
 <a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
-<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) &#8211; Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
 <a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
 </ul>
 </td>
@@ -265,7 +264,7 @@ this won&#8217;t pick up any appropriate devices. Once this is running though it
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Oct 16, 2017.
+      Last updated on Jan 20, 2018.
 
     </p>
   </div>
@@ -297,7 +296,7 @@ this won&#8217;t pick up any appropriate devices. Once this is running though it
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

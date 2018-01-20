@@ -100,7 +100,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
@@ -181,7 +180,7 @@
 use this facility we need to be able to produce generators (iterators which work over lazily evaluated, potentially
 infinite, sets of data) containing streams of axis and button hold values. These generators can then be set as the
 source for anything in e.g. Gpiozero which has a <a class="reference external" href="http://gpiozero.readthedocs.io/en/stable/api_generic.html#sourcemixin">SourceMixin</a> defined, including motors and similar.</p>
-<p>The example below doesn&#8217;t use Gpiozero, but instead shows how a stream of x,y values from the left analogue stick is
+<p>The example below doesn’t use Gpiozero, but instead shows how a stream of x,y values from the left analogue stick is
 created, then used by an infinite loop to print those values. The loop only exits with a StopIteration exception when
 the controller disconnects. This is also an example of explicitly creating and binding a controller, rather than using
 the resource abstraction shown in the other examples.</p>
@@ -244,7 +243,7 @@ the resource abstraction shown in the other examples.</p>
 <span class="n">unbind_function</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
-<p>Note particularly that there&#8217;s only one call to create the stream, on line 21, and that afterwards this is just like any
+<p>Note particularly that there’s only one call to create the stream, on line 21, and that afterwards this is just like any
 other iterable thing in Python, each time around the loop the next value (in this case a tuple of lx and ly axis values)
 is taken off the stream.</p>
 </div>
@@ -272,7 +271,7 @@ is taken off the stream.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Oct 16, 2017.
+      Last updated on Jan 20, 2018.
 
     </p>
   </div>
@@ -304,7 +303,7 @@ is taken off the stream.</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

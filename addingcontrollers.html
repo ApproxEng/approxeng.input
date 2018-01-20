@@ -99,7 +99,6 @@
 <li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Adding support for a new controller type</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#finding-your-product-and-vendor-id">Finding your product and vendor ID</a></li>
@@ -172,9 +171,9 @@
             
   <div class="section" id="adding-support-for-a-new-controller-type">
 <h1>Adding support for a new controller type<a class="headerlink" href="#adding-support-for-a-new-controller-type" title="Permalink to this headline">¶</a></h1>
-<p>The library supports a number of controllers but it&#8217;s quite possible, given the variety of cheap clones on the market,
-that your particular controller isn&#8217;t one of them. You have a few options, depending on the scenario you find yourself
-in. Firstly though you&#8217;ll need both product and vendor IDs for your device - these are allocated by the USB consortium
+<p>The library supports a number of controllers but it’s quite possible, given the variety of cheap clones on the market,
+that your particular controller isn’t one of them. You have a few options, depending on the scenario you find yourself
+in. Firstly though you’ll need both product and vendor IDs for your device - these are allocated by the USB consortium
 so will definitely not be the same for a clone device as for an original one, for example.</p>
 <div class="section" id="finding-your-product-and-vendor-id">
 <h2>Finding your product and vendor ID<a class="headerlink" href="#finding-your-product-and-vendor-id" title="Permalink to this headline">¶</a></h2>
@@ -191,18 +190,18 @@ identifiers. For example, with my XBox One controller paired and connected I see
   <span class="s1">&#39;version&#39;</span>: <span class="m">2307</span><span class="o">}</span>
 </pre></div>
 </div>
-<p>In general this should show you enough information to identify the controller you&#8217;ve just connected and get the details.</p>
+<p>In general this should show you enough information to identify the controller you’ve just connected and get the details.</p>
 </div>
 <div class="section" id="clones-of-a-supported-controller">
 <h2>Clones of a supported controller<a class="headerlink" href="#clones-of-a-supported-controller" title="Permalink to this headline">¶</a></h2>
-<p>If you have a controller which is an exact copy of one the library supports, but isn&#8217;t autodetected, you can either bind
+<p>If you have a controller which is an exact copy of one the library supports, but isn’t autodetected, you can either bind
 it yourself, using the class from the library which most closely matches your controller, or you can add autodetect
 support to the library, again using the existing class. This might happen if you have, say, a clone PS4 controller which
 is identical in every way but which has a different USB vendor and product identifier.</p>
 <p>The <code class="xref py py-const docutils literal"><span class="pre">approxeng.input.controllers.CONTROLLERS</span></code> is an array of dicts containing class constructor, vendor ID and
 product ID values. This array is searched for matching controllers when a controller class is specified, when no class
 is provided this array is used to find any potential matches. If you add an appropriate entry to this array you can
-cause the library&#8217;s controller matching to match an existing class with a new pair of vendor and product IDs. So,
+cause the library’s controller matching to match an existing class with a new pair of vendor and product IDs. So,
 supposing you had a new controller which used the <a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4" title="approxeng.input.dualshock4.DualShock4"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.dualshock4.DualShock4</span></code></a> codes for axes and
 buttons, but had a different vendor and product ID, you could add it to the match array with:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">approxeng.input.controllers</span>
@@ -217,15 +216,15 @@ buttons, but had a different vendor and product ID, you could add it to the matc
 </pre></div>
 </div>
 <p>This will now let you bind using the <cite>controller_class</cite> or no-argument form of the resource and should match your
-controller&#8217;s vendor and product IDs to the existing controller class.</p>
+controller’s vendor and product IDs to the existing controller class.</p>
 </div>
 <div class="section" id="writing-a-new-controller-class">
 <h2>Writing a new controller class<a class="headerlink" href="#writing-a-new-controller-class" title="Permalink to this headline">¶</a></h2>
-<p>It&#8217;s possible you have a controller which is completely different to the ones the library already supports. This might
-be because it&#8217;s something we&#8217;ve just never got our hands on, or because the manufacturer has decided to produce a clone
-controller with completely different codes for buttons or axes (it happens!). In this case you&#8217;ll need to create a new
+<p>It’s possible you have a controller which is completely different to the ones the library already supports. This might
+be because it’s something we’ve just never got our hands on, or because the manufacturer has decided to produce a clone
+controller with completely different codes for buttons or axes (it happens!). In this case you’ll need to create a new
 subclass of <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Controller</span></code></a> and use the mechanism above to register it. Fortunately this is fairly
-simple. First create your class, this won&#8217;t include any button or axis bindings, we&#8217;ll add these later:</p>
+simple. First create your class, this won’t include any button or axis bindings, we’ll add these later:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="kn">import</span> <span class="n">Controller</span>
 
 <span class="n">MY_VENDOR_ID</span> <span class="o">=</span> <span class="o">...</span>
@@ -256,28 +255,28 @@ simple. First create your class, this won&#8217;t include any button or axis bin
         <span class="k">return</span> <span class="s1">&#39;My new controller&#39;</span>
 </pre></div>
 </div>
-<p>This is a fairly useless controller, because it doesn&#8217;t have any buttons or axes, but it will get us to the point where
-the library tries to send events to it, and that&#8217;s important because when an event is received and not processed by the
+<p>This is a fairly useless controller, because it doesn’t have any buttons or axes, but it will get us to the point where
+the library tries to send events to it, and that’s important because when an event is received and not processed by the
 controller class we just print it to the console. This means that if you register your new class with its associated
 vendor and product IDs (as above) and run the <cite>scripts/select_binder_resource_example.py</cite> script you should start seeing
 messages about unknown axes and buttons. You can then go back to this class definition and use this information to add
-controls until you&#8217;re not getting any of these &#8216;missing control&#8217; messages and everything&#8217;s working.</p>
+controls until you’re not getting any of these ‘missing control’ messages and everything’s working.</p>
 <p>Controls are all added to the <cite>controls</cite> parameter of the constructor, you should look at the documentation for the
 various axis and button classes to see what they take as arguments, these are currently:</p>
 <ul class="simple">
 <li><a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> for analogue axes which have a resting point in the centre of their range.</li>
 <li><a class="reference internal" href="api/input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> for analogue axes which have a resting point at one end of their range.</li>
 <li><a class="reference internal" href="api/input.html#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.BinaryAxis</span></code></a> for analogue axes which are really pairs of buttons, both the PS4 and XBox One
-controllers use this for their direction pads, the buttons on these pads don&#8217;t appear as buttons in the event stream
+controllers use this for their direction pads, the buttons on these pads don’t appear as buttons in the event stream
 but as an analogue axis which only ever takes the values -1, 0 or 1.</li>
 <li><a class="reference internal" href="api/input.html#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Button</span></code></a> for buttons</li>
 </ul>
 <p>You should take a look at the source for the existing controller classes, i.e.
 <a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad" title="approxeng.input.xboxone.WirelessXBoxOneSPad"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.xboxone.WirelessXBoxOneSPad</span></code></a> to see how these are used. For every control you need to know the
-event code, for analogue axes you&#8217;ll also need to know the range of values the controller can produce so the library
+event code, for analogue axes you’ll also need to know the range of values the controller can produce so the library
 can normalise these to a -1.0 to 1.0, or 0.0 to 1.0 range. Check out the list of <a class="reference internal" href="simpleusage.html#sname-label"><span class="std std-ref">Standard Names</span></a> to make your new
 controller class drop-in compatible with existing code, and let me know about it by raising either a pull request or a
-new issue on github, I&#8217;m sure others would like to know about the new functionality!</p>
+new issue on github, I’m sure others would like to know about the new functionality!</p>
 </div>
 </div>
 
@@ -304,7 +303,7 @@ new issue on github, I&#8217;m sure others would like to know about the new func
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Oct 16, 2017.
+      Last updated on Jan 20, 2018.
 
     </p>
   </div>
@@ -336,7 +335,7 @@ new issue on github, I&#8217;m sure others would like to know about the new func
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

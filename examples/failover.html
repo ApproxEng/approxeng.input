@@ -100,7 +100,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
@@ -182,11 +181,11 @@ not only wait for a controller, but will gracefully handle the controller failin
 batteries dying!). Because the simplest form of the controller resource or explicit binding will bind to any available
 controller, you can easily make your robot able to switch from one controller to another without any extra code. PS4
 controller battery dead? No problem, just turn on your spare one, or even your spare XBox1 controller that you had in
-your bag for some reason. As long as the controller has been previously paired with the Pi (or other computer) it&#8217;ll be
+your bag for some reason. As long as the controller has been previously paired with the Pi (or other computer) it’ll be
 possible for your code to find it.</p>
 <p>The example below waits for a controller, prints some details about it, then goes into a loop where it prints the values
 of any active (non-zero) axes, along with any buttons that are pressed. If you disconnect the controller, the code will
-detect this and go back into the search mode. If you then (or previously) pair another controller it&#8217;ll go back into the
+detect this and go back into the search mode. If you then (or previously) pair another controller it’ll go back into the
 loop, and so on.</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -360,7 +359,7 @@ loop, and so on.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Oct 16, 2017.
+      Last updated on Jan 20, 2018.
 
     </p>
   </div>
@@ -392,7 +391,7 @@ loop, and so on.</p>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

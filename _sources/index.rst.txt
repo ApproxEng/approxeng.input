@@ -29,6 +29,11 @@ Supported Controllers
 .. image:: images/pihut.jpg
     :width: 20%
 
+In general you don't need to code to a specific controller, but some may need extra steps when connecting to your Pi or
+other computer. You can see more details for specific controller types at the following:
+
+ - PS3
+
 Contributors
 ------------
 
@@ -75,7 +80,6 @@ Contents
     changelog
     simpleusage
     bluetooth
-    dualshock3
     api
     addingcontrollers
     examples

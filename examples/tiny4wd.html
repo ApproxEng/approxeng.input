@@ -100,7 +100,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../dualshock3.html">Configuring Playstation 3 Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../examples.html">Examples</a><ul class="current">
@@ -181,7 +180,7 @@
 <a class="reference external" href="https://twitter.com/coretecrobotics">&#64;CoretecRobotics</a>). You can buy the kits from the lovely, if money-sucking,
 pirates at <a class="reference external" href="https://twitter.com/pimoroni">&#64;pimoroni</a> from
 <a class="reference external" href="https://shop.pimoroni.com/products/coretec-tiny-4wd-robot-rover">their online shop</a>. The code below shows, with a
-few extra bits and pieces needed in case you&#8217;re running without the robot libraries, how to use this library to drive
+few extra bits and pieces needed in case you’re running without the robot libraries, how to use this library to drive
 it around. The left analogue stick controls the robot, and the HOME button exits.</p>
 <img alt="../_images/tiny4wd.jpg" src="../_images/tiny4wd.jpg" />
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
@@ -315,11 +314,7 @@ it around. The left analogue stick controls the robot, and the HOME button exits
 129
 130
 131
-132
-133
-134
-135
-136</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Code for Brian Corteil&#39;s Tiny 4WD robot, based on code from Brian as modified by Emma Norling.</span>
+132</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Code for Brian Corteil&#39;s Tiny 4WD robot, based on code from Brian as modified by Emma Norling.</span>
 <span class="c1"># Subsequently modified by Tom Oinn to add dummy functions when no explorer hat is available,</span>
 <span class="c1"># use any available joystick, use the new function in 1.0.6 of approxeng.input to get multiple</span>
 <span class="c1"># axis values in a single call, use implicit de-structuring of tuples to reduce verbosity, add</span>
@@ -381,10 +376,6 @@ it around. The left analogue stick controls the robot, and the HOME button exits
 <span class="c1"># All we need, as we don&#39;t care which controller we bind to, is the ControllerResource</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
-<span class="kn">import</span> <span class="nn">approxeng.input</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-
-<span class="c1">#approxeng.input.logger.setLevel(logging.ERROR)</span>
 
 <span class="k">class</span> <span class="nc">RobotStopException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -482,7 +473,7 @@ it around. The left analogue stick controls the robot, and the HOME button exits
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Oct 16, 2017.
+      Last updated on Jan 20, 2018.
 
     </p>
   </div>
@@ -514,7 +505,7 @@ it around. The left analogue stick controls the robot, and the HOME button exits
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

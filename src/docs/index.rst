@@ -29,6 +29,25 @@ Supported Controllers
 .. image:: images/pihut.jpg
     :width: 20%
 
+In general you don't need to code to a specific controller, but some may need extra steps when connecting to your Pi or
+other computer. You can see more details for specific controller types at the following:
+
+ - :ref:`api_dualshock3`
+
+ - :ref:`api_dualshock4`
+
+ - :ref:`api_pihut`
+
+ - :ref:`api_rockcandy`
+
+ - :ref:`api_steamcontroller`
+
+ - :ref:`api_wii`
+
+ - :ref:`api_wiimote`
+
+ - :ref:`api_xboxone`
+
 Contributors
 ------------
 
@@ -75,7 +94,6 @@ Contents
     changelog
     simpleusage
     bluetooth
-    dualshock3
     api
     addingcontrollers
     examples

@@ -216,7 +216,7 @@ class Controller(object):
         """
         Return the set of Buttons which have been pressed since this call was last made, clearing it as we do. This is
         a shortcut do doing 'buttons.get_and_clear_button_press_history'
-    
+
         :return:
             A ButtonPresses instance which contains buttons which were pressed since this call was last made.
         """
@@ -272,7 +272,7 @@ class Axes(object):
         instantiate this yourself.
 
         :param axes:
-            a sequence of :class:`approxeng.input.TriggerAxis` or :class:`approxeng.input.CentredAxis` or 
+            a sequence of :class:`approxeng.input.TriggerAxis` or :class:`approxeng.input.CentredAxis` or
             :class:`approxeng.input.BinaryAxis` containing all the axes the controller supports.
         """
         self.axes = axes
@@ -492,24 +492,27 @@ class BinaryAxis(object):
     it routes events through to the Buttons instance to create button presses corresponding to axis movements.
     """
 
-    def __init__(self, name, axis_event_code, b1name=None, b2name=None):
+    def __init__(self, name, axis_event_code, invert=False, b1name=None, b2name=None):
         """
         Create a new binary axis, used to route axis events through to a pair of buttons, which are created as
         part of this constructor
-        
-        :param name: 
+
+        :param name:
             Name for the axis, use this to describe the axis, it's not used for anything else
-        :param axis_event_code: 
+        :param axis_event_code:
             The evdev event code for changes to this axis
-        :param b1name: 
+        :param invert:
+            True to invert data, used when the raw data is in the opposite sense to normal
+        :param b1name:
             The sname of the button corresponding to negative values of the axis.
-        :param b2name: 
+        :param b2name:
             The sname of the button corresponding to positive values of the axis
         """
         self.name = name
         self.axis_event_code = axis_event_code
         self.b1 = Button('{}_left_button'.format(name), key_code='{}_left'.format(axis_event_code), sname=b1name)
         self.b2 = Button('{}_right_button'.format(name), key_code='{}_right'.format(axis_event_code), sname=b2name)
+        self.invert = invert
         self.buttons = None
         self.last_value = 0
         self.sname = ''
@@ -530,7 +533,10 @@ class BinaryAxis(object):
 
     @property
     def value(self):
-        return self.__value
+        if self.invert:
+            return -self.__value
+        else:
+            return self.__value
 
     def __str__(self):
         return "BinaryAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.value)
@@ -687,7 +693,7 @@ class ButtonPresses(object):
     def __getitem__(self, item):
         """
         Return true if a button was pressed, referencing by standard name
-        
+
         :param sname: the name to check
         :return: true if contained within the press set, false otherwise
         """
@@ -851,10 +857,10 @@ class Buttons(object):
     def held(self, sname):
         """
         Determines whether a button is currently held, identifying it by standard name
-        
-        :param sname: 
+
+        :param sname:
             The standard name of the button
-        :return: 
+        :return:
             None if the button is not held down, or is not available, otherwise the number of seconds as a floating
             point value since it was pressed
         """
@@ -867,7 +873,7 @@ class Buttons(object):
     def __getitem__(self, item):
         """
         Get a button by sname, if present
-        
+
         :param item:
             The standard name to search
         :return:

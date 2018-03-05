@@ -27,7 +27,7 @@ class SF30Pro(Controller):
                                             CentredAxis("Left Vertical", 0, 255, 1, invert=True, sname='ly'),
                                             CentredAxis("Right Horizontal", 0, 255, 2, sname='rx'),
                                             BinaryAxis("D-pad Horizontal", 16, b1name='dleft', b2name='dright'),
-                                            BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown'),
+                                            BinaryAxis("D-pad Vertical", 17, invert=True, b1name='dup', b2name='ddown'),
                                             Button("B", 304, sname='circle'),
                                             Button("A", 305, sname='cross'),
                                             Button("Mode", 306, sname='home'),

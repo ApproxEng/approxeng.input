@@ -16,6 +16,7 @@ from approxeng.input.xboxone import XB1S_VENDOR_ID, XB1S_WIRED_PRODUCT_ID, XB1S_
 from approxeng.input.rockcandy import RockCandy, RC_PRODUCT_ID, RC_VENDOR_ID
 from approxeng.input.wii import WiiRemotePro, WII_REMOTE_PRO_VENDOR, WII_REMOTE_PRO_PRODUCT
 from approxeng.input.wiimote import WiiMote, WIIMOTE_PRODUCT_ID, WIIMOTE_VENDOR_ID
+from approxeng.input.sf30pro import SF30Pro, SF30Pro_PRODUCT_ID, SF30Pro_VENDOR_ID
 
 import logzero
 import logging
@@ -37,7 +38,8 @@ CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_
                 'product_id': SC_PRODUCT_ID},
                {'constructor': RockCandy, 'vendor_id': RC_VENDOR_ID, 'product_id': RC_PRODUCT_ID},
                {'constructor': WiiRemotePro, 'vendor_id': WII_REMOTE_PRO_VENDOR, 'product_id': WII_REMOTE_PRO_PRODUCT},
-               {'constructor': WiiMote, 'vendor_id': WIIMOTE_VENDOR_ID, 'product_id': WIIMOTE_PRODUCT_ID}]
+               {'constructor': WiiMote, 'vendor_id': WIIMOTE_VENDOR_ID, 'product_id': WIIMOTE_PRODUCT_ID},
+               {'constructor': SF30Pro, 'vendor_id': SF30Pro_VENDOR_ID, 'product_id': SF30Pro_PRODUCT_ID}]
 
 
 def find_any_controller(**kwargs):
@@ -47,13 +49,13 @@ def find_any_controller(**kwargs):
     with that controller being whatever you connect. Because the most modern bits of the API use names which are
     standardised across the supported controllers you should be able to write code that works with any of the fully
     supported devices, so for example you could test with a PS3 controller and reasonably expect it to work with a PS4
-    one if that's all you have at the time. For events like PiWars where you might need to borrow a controller from 
+    one if that's all you have at the time. For events like PiWars where you might need to borrow a controller from
     another team this could be a good way to go...
-    
+
     :raises IOError:
         If no suitable controller can be found
-    :return: 
-         A tuple of (devices, controller, physical_location) containing the InputDevice instances used by this 
+    :return:
+         A tuple of (devices, controller, physical_location) containing the InputDevice instances used by this
         controller, the instance of the controller class itself and the first part of the input device phys property
     """
     for controller_class in [c['constructor'] for c in CONTROLLERS]:
@@ -69,13 +71,13 @@ def find_single_controller(controller_class, **kwargs):
     """
     Find the first controller with the specified driver class, raising IOError if we can't find an appropriate connected
     device
-    :param controller_class: 
+    :param controller_class:
         A driver class, i.e. :class:`approxeng.input.dualshock4.DualShock4` - note that you need the class and not an
         instance, so use e.g. find_single_controller(DualShock4) and not find_single_controller(DualShock4())!
     :raises IOError:
         If no suitable controller can be found
     :return:
-        A tuple of (devices, controller, physical_location) containing the InputDevice instances used by this 
+        A tuple of (devices, controller, physical_location) containing the InputDevice instances used by this
         controller, the instance of the controller class itself and the first part of the input device phys property
     """
     _check_import()
@@ -87,7 +89,7 @@ def find_single_controller(controller_class, **kwargs):
 
 def find_controllers(**kwargs):
     """
-    Scan for and return a list of dicts, one for each detected controller, where the dicts contain 'devices' as the 
+    Scan for and return a list of dicts, one for each detected controller, where the dicts contain 'devices' as the
     sequence of one or more evdev InputDevice instances, 'controller' as the controller instance and 'physical_device'
     as the device component of the InputDevice phys address. This is necessary for controllers like the steam controller
     which can potentially bind to multiple InputDevice instances.
@@ -111,7 +113,7 @@ def find_controllers(**kwargs):
 def controller_for_device(device):
     """
     If the evdev InputDevice supplied matches one of our known vendor / product ID pairs, return a dict containing
-    'device'->the device, and 'constructor'->the controller class. If no match is found, return None 
+    'device'->the device, and 'constructor'->the controller class. If no match is found, return None
     """
     _check_import()
     for controller in CONTROLLERS:

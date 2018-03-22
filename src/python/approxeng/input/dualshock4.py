@@ -5,6 +5,11 @@ DS4_PRODUCT_ID = 2508
 DS4V2_PRODUCT_ID = 1476
 
 
+# Battery status at /sys/class/power_supply/sony_controller_battery_xx:xx:xx:xx:xx:xx/capacity, where xx:xx... is the
+# bluetooth MAC of the controller.
+
+
+
 class DualShock4(Controller):
     """
     Driver for the Sony PlayStation 4 controller, the DualShock4

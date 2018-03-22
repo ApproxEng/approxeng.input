@@ -129,8 +129,9 @@ def print_devices():
     """
     _check_import()
     for device in [InputDevice(fn) for fn in list_devices()]:
-        pp = pprint.PrettyPrinter(indent=2, width=100)
-        pp.pprint(device_verbose_info(device))
+        if has_axes(device):
+            pp = pprint.PrettyPrinter(indent=2, width=100)
+            pp.pprint(device_verbose_info(device))
 
 
 def device_verbose_info(device):
@@ -140,15 +141,30 @@ def device_verbose_info(device):
         except KeyError:
             return 'EXTENDED_CODE_{}'.format(axis_code)
 
-    axes = {
-        axis_name(axis_code): {'code': axis_code, 'min': axis_info.min, 'max': axis_info.max, 'fuzz': axis_info.fuzz,
-                               'flat': axis_info.flat, 'res': axis_info.resolution} for
-        axis_code, axis_info in device.capabilities().get(3)}
-    buttons = {code: names for (names, code) in
-               dict(util.resolve_ecodes_dict({1: device.capabilities().get(1)})).get(('EV_KEY', 1))}
+    axes = None
+    if device.capabilities().get(3) is not None:
+        axes = {
+            axis_name(axis_code): {'code': axis_code, 'min': axis_info.min, 'max': axis_info.max,
+                                   'fuzz': axis_info.fuzz,
+                                   'flat': axis_info.flat, 'res': axis_info.resolution} for
+            axis_code, axis_info in device.capabilities().get(3)}
+
+    buttons = None
+    if device.capabilities().get(1) is not None:
+        buttons = {code: names for (names, code) in
+                   dict(util.resolve_ecodes_dict({1: device.capabilities().get(1)})).get(('EV_KEY', 1))}
+
     return {'fn': device.fn, 'name': device.name, 'phys': device.phys, 'vendor': device.info.vendor,
             'product': device.info.product, 'version': device.info.version, 'bus': device.info.bustype,
             'axes': axes, 'buttons': buttons}
+
+
+def has_axes(device):
+    return device.capabilities().get(3) is not None
+
+
+def has_buttons(device):
+    return device.capabilities().get(1) is not None
 
 
 def print_controllers():

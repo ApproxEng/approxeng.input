@@ -91,11 +91,10 @@ except ImportError:
 # All we need, as we don't care which controller we bind to, is the ControllerResource
 from approxeng.input.selectbinder import ControllerResource
 
+
 # Enable logging of debug messages, by default these aren't shown
-import logzero
-
-logzero.setup_logger(name='approxeng.input', level=logzero.logging.DEBUG)
-
+# import logzero
+# logzero.setup_logger(name='approxeng.input', level=logzero.logging.DEBUG)
 
 class RobotStopException(Exception):
     """

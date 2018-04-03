@@ -79,7 +79,7 @@ except ImportError:
         No motor hat - print what we would have sent to it if we'd had one.
         """
         print('DEBUG Left: {}, Right: {}'.format(power_left, power_right))
-        sleep(0.1)
+        sleep(0.3)
 
 
     def stop_motors():
@@ -90,6 +90,11 @@ except ImportError:
 
 # All we need, as we don't care which controller we bind to, is the ControllerResource
 from approxeng.input.selectbinder import ControllerResource
+
+# Enable logging of debug messages, by default these aren't shown
+import logzero
+
+logzero.setup_logger(name='approxeng.input', level=logzero.logging.DEBUG)
 
 
 class RobotStopException(Exception):

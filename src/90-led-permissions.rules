@@ -1,0 +1,6 @@
+# Assign any new nodes in the 'leds' subsystem (nodes in /sys/class/leds) to the group 'leds' to write without root
+
+# Create a new group 'leds' before this will do anything!
+
+SUBSYSTEM=="leds", ACTION=="add", RUN+="/bin/chgrp -R leds /sys%p", RUN+="/bin/chmod -R g=u /sys%p"
+SUBSYSTEM=="leds", ACTION=="change", ENV{TRIGGER}!="none", RUN+="/bin/chgrp -R leds /sys%p", RUN+="/bin/chmod -R g=u /sys%p"

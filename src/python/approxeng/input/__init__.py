@@ -120,7 +120,7 @@ class Controller(object):
         condition to check for controller disconnection.
     """
 
-    def __init__(self, vendor_id, product_id, controls, dead_zone=None,
+    def __init__(self, vendor_id, product_id, controls, node_mappings=None, dead_zone=None,
                  hot_zone=None):
         """
         Populate the controller name, button set and axis set.
@@ -131,6 +131,18 @@ class Controller(object):
             The USB product ID for the controller
         :param controls:
             A sequence of Button, CentredAxis, TriggerAxis and BinaryAxis instances
+        :param node_mappings:
+            A dict from device name to a prefix which will be applied to all events from nodes with a
+            matching name before dispatching the corresponding events. This is used to handle controller
+            types which create multiple nodes in /dev/input by keying on the device names reported to evdev
+            for each node. Nodes are grouped by physical or unique ID first so should, in an ideal world at least,
+            all correspond to the same physical controller. This is necessary to support some controllers on modern
+            kernels, particularly 4.15. If not specified, or none, then no per-node renaming is applied. Device
+            names which do not appear in this map are not assigned a prefix, so it's legitimate to only assign
+            prefixes for 'new' functionality which has magically appeared in a later kernel. Similarly, this is
+            ignored if there is only one device node bound to the controller instance, so the best practice is to
+            leave the older mappings named simply by their code, and only use this to handle secondary device nodes
+            such as motion sensors.
         :param dead_zone:
             If specified, this is applied to all axes
         :param hot_zone:
@@ -152,6 +164,7 @@ class Controller(object):
         if hot_zone is not None:
             for axis in self.axes.axes:
                 axis.hot_zone = hot_zone
+        self.node_mappings = node_mappings
         self.connected = False
         self.exception = None
         self.stream = Controller.ControllerStream(self)
@@ -279,7 +292,7 @@ class Axes(object):
         self.axes_by_code = {axis.axis_event_code: axis for axis in axes}
         self.axes_by_sname = {axis.sname: axis for axis in axes}
 
-    def axis_updated(self, event):
+    def axis_updated(self, event, prefix=None):
         """
         Called to process an absolute axis event from evdev, this is called internally by the controller implementations
 
@@ -287,12 +300,17 @@ class Axes(object):
 
         :param event:
             The evdev event to process
+        :param prefix:
+            If present, a named prefix that should be applied to the event code when searching for the axis
         """
-        axis = self.axes_by_code.get(event.code)
+        if prefix is not None:
+            axis = self.axes_by_code.get(prefix + str(event.code))
+        else:
+            axis = self.axes_by_code.get(event.code)
         if axis is not None:
             axis.set_raw_value(float(event.value))
         else:
-            logger.warning('Unknown axis code {}, value {}'.format(event.code, event.value))
+            logger.debug('Unknown axis code {} ({}), value {}'.format(event.code, prefix, event.value))
 
     def set_axis_centres(self, *args):
         """
@@ -783,7 +801,7 @@ class Buttons(object):
             self.last_pressed = None
             self.button = button
 
-    def button_pressed(self, key_code):
+    def button_pressed(self, key_code, prefix=None):
         """
         Called from the controller classes to update the state of this button manager when a button is pressed.
 
@@ -791,8 +809,13 @@ class Buttons(object):
 
         :param key_code:
             The code specified when populating Button instances
+        :param prefix:
+            Applied to key code if present
         """
-        state = self.buttons_by_code.get(key_code)
+        if prefix is not None:
+            state = self.buttons_by_code.get(prefix + str(key_code))
+        else:
+            state = self.buttons_by_code.get(key_code)
         if state is not None:
             for handler in state.button_handlers:
                 handler(state.button)
@@ -800,18 +823,23 @@ class Buttons(object):
             state.last_pressed = time()
             state.was_pressed_since_last_check = True
         else:
-            logger.warning('Unknown button code {}'.format(key_code))
+            logger.debug('Unknown button code {} ({})'.format(key_code, prefix))
 
-    def button_released(self, key_code):
+    def button_released(self, key_code, prefix=None):
         """
         Called from the controller classes to update the state of this button manager when a button is released.
 
         :internal:
 
         :param key_code:
-            The code specified when populating Button instances
+            The code specified when populating Button instance
+        :param prefix:
+            Applied to key code if present
         """
-        state = self.buttons_by_code.get(key_code)
+        if prefix is not None:
+            state = self.buttons_by_code.get(prefix + str(key_code))
+        else:
+            state = self.buttons_by_code.get(key_code)
         if state is not None:
             state.is_pressed = False
             state.last_pressed = None

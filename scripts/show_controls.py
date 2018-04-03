@@ -44,12 +44,13 @@ def main(screen):
                     for axis_name in joystick.axes.names:
                         screen.addstr(' {}='.format(axis_name))
                         axis_value = joystick[axis_name]
+                        text = '{:.2f}'.format(axis_value)
                         if axis_value > 0:
-                            green('{:.2f}'.format(axis_value))
+                            green(text)
                         elif axis_value < 0:
-                            red('{:.2f}'.format(axis_value))
+                            red(text)
                         else:
-                            yellow('{:.2f}'.format(axis_value))
+                            yellow(text)
 
                     # Print button hold times
                     screen.addstr(2, 0, 'hold times:')

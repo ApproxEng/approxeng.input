@@ -94,19 +94,26 @@ def bind_controller(devices, controller, print_events=False):
                 try:
                     r, w, x = select(self.devices, [], [], 0.5)
                     for fd in r:
-                        for event in self.devices[fd].read():
+                        active_device = self.devices[fd]
+                        prefix = None
+                        if controller.node_mappings is not None and len(self.devices) > 1:
+                            try:
+                                prefix = controller.node_mappings[active_device.name]
+                            except KeyError:
+                                pass
+                        for event in active_device.read():
                             if print_events:
                                 print(event)
                             if event.type == EV_ABS:
-                                controller.axes.axis_updated(event)
+                                controller.axes.axis_updated(event, prefix=prefix)
                             elif event.type == EV_KEY:
                                 # Button event
                                 if event.value == 1:
                                     # Button down
-                                    controller.buttons.button_pressed(event.code)
+                                    controller.buttons.button_pressed(event.code, prefix=prefix)
                                 elif event.value == 0:
                                     # Button up
-                                    controller.buttons.button_released(event.code)
+                                    controller.buttons.button_released(event.code, prefix=prefix)
                 except Exception as e:
                     self.stop(e)
 

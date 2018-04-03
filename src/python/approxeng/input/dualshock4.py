@@ -9,7 +9,6 @@ DS4V2_PRODUCT_ID = 1476
 # bluetooth MAC of the controller.
 
 
-
 class DualShock4(Controller):
     """
     Driver for the Sony PlayStation 4 controller, the DualShock4
@@ -27,31 +26,48 @@ class DualShock4(Controller):
         super(DualShock4, self).__init__(vendor_id=DS4_VENDOR_ID,
                                          product_id=DS4_PRODUCT_ID,
                                          controls=[
-                                             Button("Circle", 306, sname='circle'),
-                                             Button("Cross", 305, sname='cross'),
-                                             Button("Square", 304, sname='square'),
+                                             Button("Circle", 305, sname='circle'),
+                                             Button("Cross", 304, sname='cross'),
+                                             Button("Square", 308, sname='square'),
                                              Button("Triangle", 307, sname='triangle'),
                                              Button("Home (PS)", 316, sname='home'),
-                                             Button("Share", 312, sname='select'),
-                                             Button("Options", 313, sname='start'),
-                                             Button("Trackpad", 317, sname='ps4_pad'),
-                                             Button("L1", 308, sname='l1'),
-                                             Button("R1", 309, sname='r1'),
-                                             Button("L2", 310, sname='l2'),
-                                             Button("R2", 311, sname='r2'),
-                                             Button("Left Stick", 314, sname='ls'),
-                                             Button("Right Stick", 315, sname='rs'),
+                                             Button("Share", 314, sname='select'),
+                                             Button("Options", 315, sname='start'),
+                                             Button("Trackpad", 'touch272', sname='ps4_pad'),
+                                             Button("L1", 310, sname='l1'),
+                                             Button("R1", 311, sname='r1'),
+                                             Button("L2", 312, sname='l2'),
+                                             Button("R2", 313, sname='r2'),
+                                             Button("Left Stick", 317, sname='ls'),
+                                             Button("Right Stick", 318, sname='rs'),
                                              CentredAxis("Left Horizontal", 0, 255, 0, sname='lx'),
                                              CentredAxis("Left Vertical", 0, 255, 1, invert=True, sname='ly'),
-                                             CentredAxis("Right Horizontal", 0, 255, 2, sname='rx'),
-                                             CentredAxis("Right Vertical", 0, 255, 5, invert=True, sname='ry'),
-                                             TriggerAxis("Left Trigger", 0, 255, 3, sname='lt'),
-                                             TriggerAxis("Right Trigger", 0, 255, 4, sname='rt'),
+                                             CentredAxis("Right Horizontal", 0, 255, 3, sname='rx'),
+                                             CentredAxis("Right Vertical", 0, 255, 4, invert=True, sname='ry'),
+                                             TriggerAxis("Left Trigger", 0, 255, 2, sname='lt'),
+                                             TriggerAxis("Right Trigger", 0, 255, 5, sname='rt'),
                                              BinaryAxis("D-pad Horizontal", 16, b1name='dleft', b2name='dright'),
-                                             BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown')
+                                             BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown'),
+                                             #CentredAxis("Motion 3", -1, 1, 'motion3', sname='zm3'),
+                                             CentredAxis("Yaw rate", -2097152, 2097152, 'motion4', sname='yaw_rate', invert=True),
+                                             #CentredAxis("Motion 5", -1, 1, 'motion5', sname='zm5'),
+                                             CentredAxis("Roll", -8500, 8500, 'motion0', sname='roll', invert=True),
+                                             #CentredAxis("Motion 1", -1, 1, 'motion1', sname='zm1'),
+                                             CentredAxis("Pitch", -8500, 8500, 'motion2', sname='pitch',
+                                                         invert=True),
+                                             CentredAxis("Touch X", 0, 1920, 'touch53', sname='tx'),
+                                             CentredAxis("Touch Y", 0, 942, 'touch54', sname='ty', invert=True)
+
                                          ],
+                                         node_mappings={
+                                             'Sony Interactive Entertainment Wireless Controller Touchpad':
+                                                 'touch',
+                                             'Sony Interactive Entertainment Wireless Controller Motion Sensors':
+                                                 'motion'},
                                          dead_zone=dead_zone,
                                          hot_zone=hot_zone)
+        self.axes['roll'].hot_zone = 0.2
+        self.axes['pitch'].hot_zone = 0.2
 
     def __repr__(self):
         return 'Sony DualShock4 (Playstation 4) controller'

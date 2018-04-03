@@ -100,7 +100,7 @@ def find_controllers(**kwargs):
         if controller is not None:
             device = controller['device']
             constructor = controller['constructor']
-            physical_device_name = device.phys.split('/')[0]
+            physical_device_name = unique_name(device)
             if physical_device_name in result:
                 result[physical_device_name]['devices'].append(device)
             else:
@@ -154,9 +154,26 @@ def device_verbose_info(device):
         buttons = {code: names for (names, code) in
                    dict(util.resolve_ecodes_dict({1: device.capabilities().get(1)})).get(('EV_KEY', 1))}
 
-    return {'fn': device.fn, 'name': device.name, 'phys': device.phys, 'vendor': device.info.vendor,
-            'product': device.info.product, 'version': device.info.version, 'bus': device.info.bustype,
-            'axes': axes, 'buttons': buttons}
+    return {'fn': device.fn, 'name': device.name, 'phys': device.phys, 'uniq': device.uniq,
+            'vendor': device.info.vendor, 'product': device.info.product, 'version': device.info.version,
+            'bus': device.info.bustype, 'axes': axes, 'buttons': buttons}
+
+
+def unique_name(device):
+    """
+    Construct a unique name for the device based on, in order if available, the uniq ID, the phys ID and
+    finally a concatenation of vendor, product and version.
+
+    :param device:
+        An InputDevice instance to query
+    :return:
+        A string containing as unique as possible a name for the physical entity represented by the device
+    """
+    if device.uniq is not None:
+        return device.uniq
+    if device.phys is not None:
+        return device.phys.split('/')[0]
+    return '{}-{}-{}'.format(device.info.vendor, device.info.product, device.info.version)
 
 
 def has_axes(device):

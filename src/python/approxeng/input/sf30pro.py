@@ -12,6 +12,7 @@ class SF30Pro(Controller):
     def __init__(self, dead_zone=0.05, hot_zone=0.05):
         """
         Create a new SF30 Pro driver
+
         :param float dead_zone:
             Used to set the dead zone for each :class:`approxeng.input.CentredAxis` in the controller.
         :param float hot_zone:

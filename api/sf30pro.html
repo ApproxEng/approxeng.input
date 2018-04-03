@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PiHut Controller Support &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
+  <title>8Bitdo SF30Pro/SN30Pro Controller Support &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
   
 
   
@@ -41,8 +41,8 @@
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="../index.html"/>
         <link rel="up" title="API Documentation" href="../api.html"/>
-        <link rel="next" title="8Bitdo SF30Pro/SN30Pro Controller Support" href="sf30pro.html"/>
-        <link rel="prev" title="WiiMote Controller Support" href="wiimote.html"/> 
+        <link rel="next" title="Adding support for a new controller type" href="../addingcontrollers.html"/>
+        <link rel="prev" title="PiHut Controller Support" href="pihut.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -110,8 +110,12 @@
 <li class="toctree-l2"><a class="reference internal" href="steamcontroller.html">Steam Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wii.html">Wii Remote Pro Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wiimote.html">WiiMote Controller Support</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">PiHut Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sf30pro.html">8Bitdo SF30Pro/SN30Pro Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pihut.html">PiHut Controller Support</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8Bitdo SF30Pro/SN30Pro Controller Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#connection">Connection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#button-names">Button Names</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
@@ -163,7 +167,7 @@
         
           <li><a href="../api.html">API Documentation</a> &raquo;</li>
         
-      <li>PiHut Controller Support</li>
+      <li>8Bitdo SF30Pro/SN30Pro Controller Support</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -180,24 +184,111 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="pihut-controller-support">
-<span id="api-pihut"></span><h1>PiHut Controller Support<a class="headerlink" href="#pihut-controller-support" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="bitdo-sf30pro-sn30pro-controller-support">
+<span id="api-sf30pro"></span><h1>8Bitdo SF30Pro/SN30Pro Controller Support<a class="headerlink" href="#bitdo-sf30pro-sn30pro-controller-support" title="Permalink to this headline">¶</a></h1>
 <div class="figure" id="id1">
-<img alt="../_images/pihut.jpg" src="../_images/pihut.jpg" />
-<p class="caption"><span class="caption-text">ThePiHut Controller</span></p>
+<img alt="../_images/sf30pro.jpg" src="../_images/sf30pro.jpg" />
+<p class="caption"><span class="caption-text">The 8Bitdo SF30Pro</span></p>
 </div>
-<p>These are branded controllers that can be bought from <a class="reference external" href="https://thepihut.com/products/raspberry-pi-compatible-wireless-gamepad-controller">thePiHut</a>. They use a dongle, but are functionally very
-similar to the PS4 controllers, with analogue front triggers making them a step up in terms of controls from the Rock
-Candy and similar.</p>
-<p>Supported by code added by Mike Horne (<a class="reference external" href="https://twitter.com/recantha">&#64;recantha</a>) from version 2.0.1 onwards.</p>
-<span class="target" id="module-approxeng.input.pihut"></span><dl class="class">
-<dt id="approxeng.input.pihut.PiHut">
-<em class="property">class </em><code class="descclassname">approxeng.input.pihut.</code><code class="descname">PiHut</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/pihut.html#PiHut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.pihut.PiHut" title="Permalink to this definition">¶</a></dt>
-<dd><p>Driver for the PiHut PS3-alike controller</p>
+<p>Solidly built replica Super Nintendo (SNES) controllers with added thumb sticks and L/R triggers from <a class="reference external" href="http://www.8bitdo.com/sn30pro-sf30pro/">8Bitdo</a>.</p>
+<div class="section" id="connection">
+<h2>Connection<a class="headerlink" href="#connection" title="Permalink to this headline">¶</a></h2>
+<p>These are bluetooth controllers so no need for a dongle.  Preconfigured for use with Switch, PC, MacOSX and Android with
+variations on powering on for different device modes.  The option I have found works most straight froward to pair with is
+android mode (start + B) as described here in the <a class="reference external" href="http://download.8bitdo.com/Manual/Controller/SN30pro+SF30pro/SN30pro+SF30pro_Manual.pdf">manual</a>.</p>
+<p>Tested only with the SF30Pro (hence the component name) though the SN30Pro is exactly the same controller apart from colour so this implementation should work for that too.</p>
+</div>
+<div class="section" id="button-names">
+<h2>Button Names<a class="headerlink" href="#button-names" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Standard name</td>
+<td>sf30pro</td>
+</tr>
+<tr class="row-even"><td>square</td>
+<td>Y</td>
+</tr>
+<tr class="row-odd"><td>triangle</td>
+<td>X</td>
+</tr>
+<tr class="row-even"><td>circle</td>
+<td>A</td>
+</tr>
+<tr class="row-odd"><td>cross</td>
+<td>B</td>
+</tr>
+<tr class="row-even"><td>ls</td>
+<td>Left Stick</td>
+</tr>
+<tr class="row-odd"><td>rs</td>
+<td>Right Stick</td>
+</tr>
+<tr class="row-even"><td>select</td>
+<td>Select</td>
+</tr>
+<tr class="row-odd"><td>start</td>
+<td>Start</td>
+</tr>
+<tr class="row-even"><td>home</td>
+<td>mode</td>
+</tr>
+<tr class="row-odd"><td>dleft</td>
+<td>D-Pad Horizontal</td>
+</tr>
+<tr class="row-even"><td>dup</td>
+<td>D-Pad Vertical</td>
+</tr>
+<tr class="row-odd"><td>dright</td>
+<td>D-Pad Horizontal</td>
+</tr>
+<tr class="row-even"><td>ddown</td>
+<td>D-Pad Vertical</td>
+</tr>
+<tr class="row-odd"><td>l1</td>
+<td>L1</td>
+</tr>
+<tr class="row-even"><td>l2</td>
+<td>L2</td>
+</tr>
+<tr class="row-odd"><td>r1</td>
+<td>R1</td>
+</tr>
+<tr class="row-even"><td>r2</td>
+<td>R2</td>
+</tr>
+<tr class="row-odd"><td>lt</td>
+<td>Left Trigger</td>
+</tr>
+<tr class="row-even"><td>rt</td>
+<td>Right Trigger</td>
+</tr>
+<tr class="row-odd"><td>lx</td>
+<td>Left Horizontal</td>
+</tr>
+<tr class="row-even"><td>rx</td>
+<td>Right Horizontal</td>
+</tr>
+<tr class="row-odd"><td>ly</td>
+<td>Left Vertical</td>
+</tr>
+<tr class="row-even"><td>ry</td>
+<td>Right Vertical</td>
+</tr>
+</tbody>
+</table>
+<p>Supported by code added by Tom Broughton (<a class="reference external" href="https://twitter.com/dpolymath">&#64;dpolymath</a>).</p>
+<span class="target" id="module-approxeng.input.sf30pro"></span><dl class="class">
+<dt id="approxeng.input.sf30pro.SF30Pro">
+<em class="property">class </em><code class="descclassname">approxeng.input.sf30pro.</code><code class="descname">SF30Pro</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/sf30pro.html#SF30Pro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.sf30pro.SF30Pro" title="Permalink to this definition">¶</a></dt>
+<dd><p>Driver for the 8BitDo SF30 Pro, courtesy of Tom Brougthon (tabroughton on github)</p>
 <dl class="method">
-<dt id="approxeng.input.pihut.PiHut.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/pihut.html#PiHut.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.pihut.PiHut.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Discover and initialise a PiHut controller connected to this computer.</p>
+<dt id="approxeng.input.sf30pro.SF30Pro.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/sf30pro.html#SF30Pro.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.sf30pro.SF30Pro.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new SF30 Pro driver</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -215,6 +306,7 @@ Candy and similar.</p>
 </dd></dl>
 
 </div>
+</div>
 
 
            </div>
@@ -226,10 +318,10 @@ Candy and similar.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="sf30pro.html" class="btn btn-neutral float-right" title="8Bitdo SF30Pro/SN30Pro Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../addingcontrollers.html" class="btn btn-neutral float-right" title="Adding support for a new controller type" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="wiimote.html" class="btn btn-neutral" title="WiiMote Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="pihut.html" class="btn btn-neutral" title="PiHut Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

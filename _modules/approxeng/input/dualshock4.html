@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input.dualshock4 &mdash; Approximate Engineering - Input 2.0.4 documentation</title>
+  <title>approxeng.input.dualshock4 &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.0.4 documentation" href="../../../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="../../../_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.0.4 documentation" href="../../../index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="approxeng.input" href="../input.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                2.0.4
+                2.1.0
               </div>
             
           
@@ -175,6 +175,10 @@
 <span class="n">DS4V2_PRODUCT_ID</span> <span class="o">=</span> <span class="mi">1476</span>
 
 
+<span class="c1"># Battery status at /sys/class/power_supply/sony_controller_battery_xx:xx:xx:xx:xx:xx/capacity, where xx:xx... is the</span>
+<span class="c1"># bluetooth MAC of the controller.</span>
+
+
 <div class="viewcode-block" id="DualShock4"><a class="viewcode-back" href="../../../api/dualshock4.html#approxeng.input.dualshock4.DualShock4">[docs]</a><span class="k">class</span> <span class="nc">DualShock4</span><span class="p">(</span><span class="n">Controller</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Driver for the Sony PlayStation 4 controller, the DualShock4</span>
@@ -192,31 +196,51 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">DualShock4</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vendor_id</span><span class="o">=</span><span class="n">DS4_VENDOR_ID</span><span class="p">,</span>
                                          <span class="n">product_id</span><span class="o">=</span><span class="n">DS4_PRODUCT_ID</span><span class="p">,</span>
                                          <span class="n">controls</span><span class="o">=</span><span class="p">[</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Circle&quot;</span><span class="p">,</span> <span class="mi">306</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Cross&quot;</span><span class="p">,</span> <span class="mi">305</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;cross&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Square&quot;</span><span class="p">,</span> <span class="mi">304</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;square&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Circle&quot;</span><span class="p">,</span> <span class="mi">305</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Cross&quot;</span><span class="p">,</span> <span class="mi">304</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;cross&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Square&quot;</span><span class="p">,</span> <span class="mi">308</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;square&#39;</span><span class="p">),</span>
                                              <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Triangle&quot;</span><span class="p">,</span> <span class="mi">307</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;triangle&#39;</span><span class="p">),</span>
                                              <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Home (PS)&quot;</span><span class="p">,</span> <span class="mi">316</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;home&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Share&quot;</span><span class="p">,</span> <span class="mi">312</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;select&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Options&quot;</span><span class="p">,</span> <span class="mi">313</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Trackpad&quot;</span><span class="p">,</span> <span class="mi">317</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ps4_pad&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;L1&quot;</span><span class="p">,</span> <span class="mi">308</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;R1&quot;</span><span class="p">,</span> <span class="mi">309</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;r1&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;L2&quot;</span><span class="p">,</span> <span class="mi">310</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;R2&quot;</span><span class="p">,</span> <span class="mi">311</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;r2&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Left Stick&quot;</span><span class="p">,</span> <span class="mi">314</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ls&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Right Stick&quot;</span><span class="p">,</span> <span class="mi">315</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rs&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Share&quot;</span><span class="p">,</span> <span class="mi">314</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;select&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Options&quot;</span><span class="p">,</span> <span class="mi">315</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Trackpad&quot;</span><span class="p">,</span> <span class="s1">&#39;touch272&#39;</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ps4_pad&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;L1&quot;</span><span class="p">,</span> <span class="mi">310</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;R1&quot;</span><span class="p">,</span> <span class="mi">311</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;r1&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;L2&quot;</span><span class="p">,</span> <span class="mi">312</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;R2&quot;</span><span class="p">,</span> <span class="mi">313</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;r2&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Left Stick&quot;</span><span class="p">,</span> <span class="mi">317</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ls&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Right Stick&quot;</span><span class="p">,</span> <span class="mi">318</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rs&#39;</span><span class="p">),</span>
                                              <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Left Horizontal&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lx&#39;</span><span class="p">),</span>
                                              <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Left Vertical&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ly&#39;</span><span class="p">),</span>
-                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Right Horizontal&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rx&#39;</span><span class="p">),</span>
-                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Right Vertical&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ry&#39;</span><span class="p">),</span>
-                                             <span class="n">TriggerAxis</span><span class="p">(</span><span class="s2">&quot;Left Trigger&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lt&#39;</span><span class="p">),</span>
-                                             <span class="n">TriggerAxis</span><span class="p">(</span><span class="s2">&quot;Right Trigger&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">),</span>
+                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Right Horizontal&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rx&#39;</span><span class="p">),</span>
+                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Right Vertical&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ry&#39;</span><span class="p">),</span>
+                                             <span class="n">TriggerAxis</span><span class="p">(</span><span class="s2">&quot;Left Trigger&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lt&#39;</span><span class="p">),</span>
+                                             <span class="n">TriggerAxis</span><span class="p">(</span><span class="s2">&quot;Right Trigger&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">),</span>
                                              <span class="n">BinaryAxis</span><span class="p">(</span><span class="s2">&quot;D-pad Horizontal&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">b1name</span><span class="o">=</span><span class="s1">&#39;dleft&#39;</span><span class="p">,</span> <span class="n">b2name</span><span class="o">=</span><span class="s1">&#39;dright&#39;</span><span class="p">),</span>
-                                             <span class="n">BinaryAxis</span><span class="p">(</span><span class="s2">&quot;D-pad Vertical&quot;</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="n">b1name</span><span class="o">=</span><span class="s1">&#39;dup&#39;</span><span class="p">,</span> <span class="n">b2name</span><span class="o">=</span><span class="s1">&#39;ddown&#39;</span><span class="p">)</span>
+                                             <span class="n">BinaryAxis</span><span class="p">(</span><span class="s2">&quot;D-pad Vertical&quot;</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="n">b1name</span><span class="o">=</span><span class="s1">&#39;dup&#39;</span><span class="p">,</span> <span class="n">b2name</span><span class="o">=</span><span class="s1">&#39;ddown&#39;</span><span class="p">),</span>
+                                             <span class="c1"># CentredAxis(&quot;Motion 3&quot;, -1, 1, &#39;motion3&#39;, sname=&#39;zm3&#39;),</span>
+                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Yaw rate&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">2097152</span><span class="p">,</span> <span class="mi">2097152</span><span class="p">,</span> <span class="s1">&#39;motion4&#39;</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;yaw_rate&#39;</span><span class="p">,</span>
+                                                         <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                                             <span class="c1"># CentredAxis(&quot;Motion 5&quot;, -1, 1, &#39;motion5&#39;, sname=&#39;zm5&#39;),</span>
+                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Roll&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">8500</span><span class="p">,</span> <span class="mi">8500</span><span class="p">,</span> <span class="s1">&#39;motion0&#39;</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;roll&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                                             <span class="c1"># CentredAxis(&quot;Motion 1&quot;, -1, 1, &#39;motion1&#39;, sname=&#39;zm1&#39;),</span>
+                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Pitch&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">8500</span><span class="p">,</span> <span class="mi">8500</span><span class="p">,</span> <span class="s1">&#39;motion2&#39;</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;pitch&#39;</span><span class="p">,</span>
+                                                         <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Touch X&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1920</span><span class="p">,</span> <span class="s1">&#39;touch53&#39;</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;tx&#39;</span><span class="p">),</span>
+                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Touch Y&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">942</span><span class="p">,</span> <span class="s1">&#39;touch54&#39;</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ty&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
                                          <span class="p">],</span>
+                                         <span class="n">node_mappings</span><span class="o">=</span><span class="p">{</span>
+                                             <span class="s1">&#39;Sony Interactive Entertainment Wireless Controller Touchpad&#39;</span><span class="p">:</span>
+                                                 <span class="s1">&#39;touch&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;Sony Interactive Entertainment Wireless Controller Motion Sensors&#39;</span><span class="p">:</span>
+                                                 <span class="s1">&#39;motion&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;Wireless Controller Touchpad&#39;</span><span class="p">:</span> <span class="s1">&#39;touch&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;Wireless Controller Motion Sensors&#39;</span><span class="p">:</span> <span class="s1">&#39;motion&#39;</span><span class="p">},</span>
                                          <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
-                                         <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span></div>
+                                         <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hot_zone</span> <span class="o">=</span> <span class="mf">0.2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="s1">&#39;pitch&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hot_zone</span> <span class="o">=</span> <span class="mf">0.2</span></div>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;Sony DualShock4 (Playstation 4) controller&#39;</span></div>
@@ -235,7 +259,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Jan 20, 2018.
+      Last updated on Apr 03, 2018.
 
     </p>
   </div>
@@ -257,7 +281,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'2.0.4',
+            VERSION:'2.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

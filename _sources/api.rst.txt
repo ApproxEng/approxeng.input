@@ -18,3 +18,4 @@ largely self explanatory although you'll need at least a reasonable level of Pyt
     api/wii
     api/wiimote
     api/pihut
+    api/sf30pro

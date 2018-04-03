@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input.dualshock3 &mdash; Approximate Engineering - Input 2.0.4 documentation</title>
+  <title>approxeng.input.dualshock3 &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.0.4 documentation" href="../../../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="../../../_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.0.4 documentation" href="../../../index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="../../../index.html"/>
         <link rel="up" title="approxeng.input" href="../input.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                2.0.4
+                2.1.0
               </div>
             
           
@@ -168,7 +168,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for approxeng.input.dualshock3</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="k">import</span> <span class="n">CentredAxis</span><span class="p">,</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">Button</span>
+<span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="k">import</span> <span class="n">CentredAxis</span><span class="p">,</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">TriggerAxis</span>
 
 <span class="n">DS3_VENDOR_ID</span> <span class="o">=</span> <span class="mh">0x54c</span>
 <span class="n">DS3_PRODUCT_ID</span> <span class="o">=</span> <span class="mh">0x268</span>
@@ -191,30 +191,38 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">DualShock3</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vendor_id</span><span class="o">=</span><span class="n">DS3_VENDOR_ID</span><span class="p">,</span>
                                          <span class="n">product_id</span><span class="o">=</span><span class="n">DS3_PRODUCT_ID</span><span class="p">,</span>
                                          <span class="n">controls</span><span class="o">=</span><span class="p">[</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Select&quot;</span><span class="p">,</span> <span class="mi">288</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;select&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Left Stick&quot;</span><span class="p">,</span> <span class="mi">289</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ls&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Right Stick&quot;</span><span class="p">,</span> <span class="mi">290</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rs&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Start&quot;</span><span class="p">,</span> <span class="mi">291</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;D Up&quot;</span><span class="p">,</span> <span class="mi">292</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;dup&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;D Right&quot;</span><span class="p">,</span> <span class="mi">293</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;dright&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;D Down&quot;</span><span class="p">,</span> <span class="mi">294</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ddown&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;D Left&quot;</span><span class="p">,</span> <span class="mi">295</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;dleft&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;L2&quot;</span><span class="p">,</span> <span class="mi">296</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;R2&quot;</span><span class="p">,</span> <span class="mi">297</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;r2&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;L1&quot;</span><span class="p">,</span> <span class="mi">298</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;R1&quot;</span><span class="p">,</span> <span class="mi">299</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;r1&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Triangle&quot;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;triangle&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Circle&quot;</span><span class="p">,</span> <span class="mi">301</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Cross&quot;</span><span class="p">,</span> <span class="mi">302</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;cross&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Square&quot;</span><span class="p">,</span> <span class="mi">303</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;square&#39;</span><span class="p">),</span>
-                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Home (PS)&quot;</span><span class="p">,</span> <span class="mi">704</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;home&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Select&quot;</span><span class="p">,</span> <span class="mi">314</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;select&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Left Stick&quot;</span><span class="p">,</span> <span class="mi">317</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ls&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Right Stick&quot;</span><span class="p">,</span> <span class="mi">318</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rs&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Start&quot;</span><span class="p">,</span> <span class="mi">315</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;D Up&quot;</span><span class="p">,</span> <span class="mi">544</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;dup&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;D Right&quot;</span><span class="p">,</span> <span class="mi">547</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;dright&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;D Down&quot;</span><span class="p">,</span> <span class="mi">545</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ddown&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;D Left&quot;</span><span class="p">,</span> <span class="mi">546</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;dleft&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;L2&quot;</span><span class="p">,</span> <span class="mi">312</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;R2&quot;</span><span class="p">,</span> <span class="mi">313</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;r2&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;L1&quot;</span><span class="p">,</span> <span class="mi">310</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;R1&quot;</span><span class="p">,</span> <span class="mi">311</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;r1&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Triangle&quot;</span><span class="p">,</span> <span class="mi">307</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;triangle&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Circle&quot;</span><span class="p">,</span> <span class="mi">305</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Cross&quot;</span><span class="p">,</span> <span class="mi">304</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;cross&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Square&quot;</span><span class="p">,</span> <span class="mi">308</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;square&#39;</span><span class="p">),</span>
+                                             <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Home (PS)&quot;</span><span class="p">,</span> <span class="mi">316</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;home&#39;</span><span class="p">),</span>
+                                             <span class="n">TriggerAxis</span><span class="p">(</span><span class="s2">&quot;Left Trigger&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lt&#39;</span><span class="p">),</span>
+                                             <span class="n">TriggerAxis</span><span class="p">(</span><span class="s2">&quot;Right Trigger&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">),</span>
                                              <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Left Vertical&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ly&#39;</span><span class="p">),</span>
-                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Right Vertical&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ry&#39;</span><span class="p">),</span>
+                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Right Vertical&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ry&#39;</span><span class="p">),</span>
                                              <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Left Horizontal&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lx&#39;</span><span class="p">),</span>
-                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Right Horizontal&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rx&#39;</span><span class="p">)</span>
+                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Right Horizontal&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rx&#39;</span><span class="p">),</span>
+                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Motion 0&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">128</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="s1">&#39;motion0&#39;</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;roll&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                                             <span class="c1"># CentredAxis(&quot;Motion 1&quot;, -512, 511, &#39;motion1&#39;, sname=&#39;m1&#39;),</span>
+                                             <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Motion 2&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">128</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="s1">&#39;motion2&#39;</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;pitch&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
                                          <span class="p">],</span>
+                                         <span class="n">node_mappings</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Sony PLAYSTATION(R)3 Controller Motion Sensors&#39;</span><span class="p">:</span> <span class="s1">&#39;motion&#39;</span><span class="p">},</span>
                                          <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
-                                         <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span></div>
+                                         <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="s1">&#39;roll&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hot_zone</span> <span class="o">=</span> <span class="mf">0.2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="s1">&#39;pitch&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hot_zone</span> <span class="o">=</span> <span class="mf">0.2</span></div>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;Sony DualShock3 (Playstation 3) controller&#39;</span></div>
@@ -233,7 +241,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Jan 20, 2018.
+      Last updated on Apr 03, 2018.
 
     </p>
   </div>
@@ -255,7 +263,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'2.0.4',
+            VERSION:'2.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

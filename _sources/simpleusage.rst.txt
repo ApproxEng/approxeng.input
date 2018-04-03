@@ -244,23 +244,32 @@ ps4_pad        ---
 
 .. note::
 
-    The lack of l2 and r2 for the Steam controller is because these buttons don't appear as buttons in the
+    The lack of `l2` and `r2` for the Steam controller is because these buttons don't appear as buttons in the
     event stream.
 
 .. note::
 
-    The DualShock4 trackpad only works as a single button. It doesn't have an equivalent on the other controllers so
-    only use if you're happy to be locked into this particular hardware.
+    The DualShock4 trackpad now (as of 2.1.0) works as both a button when pressed, and a pair of absolute axes `tx`
+    and `ty` representing a single touch point. While the controller supports a pair of touches, the library doesn't!
+    The touch coordinates range from -1.0 to 1.0, with positive to the right and forwards when holding the controller.
 
 .. note::
 
     Yes, the Wii Remote Pro buttons really are that way around. Although it has the same buttons as an XBox controller
     they're in different locations. The standard names are set to prioritise location (and therefore kinetic memory)
-    so, for example, the 'X' button on the Wii Remote Pro is in the same place as the triangle button on the PS3 and PS4
-    so we call it 'triangle', whereas the XBox controller has a `Y` button there instead.
+    so, for example, the `X` button on the Wii Remote Pro is in the same place as the triangle button on the PS3 and PS4
+    so we call it `triangle`, whereas the XBox controller has a `Y` button there instead.
 
 Axis Names
 **********
+
+.. note::
+
+    With a new kernel (4.13 upwards, tested with 4.15) the Sony controllers expose their motion events in a way we can
+    handle, so I've added pitch and roll for both controllers, and yaw rate for the DS4. There is no absolute yaw value
+    available, you'd have to calculate this from the rates (tricky to do with any accuracy). Roll is positive clockwise
+    when holding the controller, pitch is positive aiming the front of the controller towards the ceiling. Available
+    in 2.1.0 of this library onwards.
 
 =============  =============  ===============  =============  ==========  =============  ==========
 Standard name  PS3            PS4              XBoxOne        Rock Candy  Steam          Wii Pro
@@ -269,23 +278,27 @@ lx             Left X         Left X           Left X         Left X      Left X
 ly             Left Y         Left Y           Left Y         Left Y      Left Y         Left Y
 rx             Right X        Right X          Right X        Right X     Right X        Right X
 ry             Right Y        Right Y          Right Y        Right Y     Right Y        Right Y
-lt             ---            L2 Trigger       LT Trigger     ---         Left Trigger   ---
-rt             ---            R2 Trigger       RT Trigger     ---         Right Trigger  ---
+lt             L2 Trigger     L2 Trigger       LT Trigger     ---         Left Trigger   ---
+rt             R2 Trigger     R2 Trigger       RT Trigger     ---         Right Trigger  ---
+tx             ---            Touch X          ---            ---         ---            ---
+ty             ---            Touch Y          ---            ---         ---            ---
+pitch          Motion         Motion           ---            ---         ---            ---
+roll           Motion         Motion           ---            ---         ---            ---
+yaw_rate       ---            Motion           ---            ---         ---            ---
 =============  =============  ===============  =============  ==========  =============  ==========
 
-=============  =========
-Standard name  PiHut
--------------  ---------
-lx             Left X
-ly             Left Y
-rx             Right X
-ry             Right Y
-lt             L Trigger
-rt             R Trigger
-=============  =========
-
-
-.. note::
-
-    The triggers on the DualShock3 or Rock Candy can't be used as analogue axes, only use lt and rt if you're happy you
-    won't need to use these controllers in your project.
+=============  =========  =========
+Standard name  PiHut      SF30 Pro
+-------------  ---------  ---------
+lx             Left X     Left X
+ly             Left Y     Left Y
+rx             Right X    Right X
+ry             Right Y    Right Y
+lt             L Trigger  L Trigger
+rt             R Trigger  R Trigger
+tx             ---        ---
+ty             ---        ---
+pitch          ---        ---
+roll           ---        ---
+yaw_rate       ---        ---
+=============  =========  =========

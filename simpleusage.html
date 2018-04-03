@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Simple Usage &mdash; Approximate Engineering - Input 2.0.4 documentation</title>
+  <title>Simple Usage &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.0.4 documentation" href="_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.0.4 documentation" href="index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="index.html"/>
         <link rel="next" title="Pairing Controllers over Bluetooth" href="bluetooth.html"/>
         <link rel="prev" title="Change Log" href="changelog.html"/> 
 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                2.0.4
+                2.1.0
               </div>
             
           
@@ -575,24 +575,33 @@ standard ones are as follows:</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The lack of l2 and r2 for the Steam controller is because these buttons don’t appear as buttons in the
+<p class="last">The lack of <cite>l2</cite> and <cite>r2</cite> for the Steam controller is because these buttons don’t appear as buttons in the
 event stream.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The DualShock4 trackpad only works as a single button. It doesn’t have an equivalent on the other controllers so
-only use if you’re happy to be locked into this particular hardware.</p>
+<p class="last">The DualShock4 trackpad now (as of 2.1.0) works as both a button when pressed, and a pair of absolute axes <cite>tx</cite>
+and <cite>ty</cite> representing a single touch point. While the controller supports a pair of touches, the library doesn’t!
+The touch coordinates range from -1.0 to 1.0, with positive to the right and forwards when holding the controller.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Yes, the Wii Remote Pro buttons really are that way around. Although it has the same buttons as an XBox controller
 they’re in different locations. The standard names are set to prioritise location (and therefore kinetic memory)
-so, for example, the ‘X’ button on the Wii Remote Pro is in the same place as the triangle button on the PS3 and PS4
-so we call it ‘triangle’, whereas the XBox controller has a <cite>Y</cite> button there instead.</p>
+so, for example, the <cite>X</cite> button on the Wii Remote Pro is in the same place as the triangle button on the PS3 and PS4
+so we call it <cite>triangle</cite>, whereas the XBox controller has a <cite>Y</cite> button there instead.</p>
 </div>
 </div>
 <div class="section" id="axis-names">
 <h2>Axis Names<a class="headerlink" href="#axis-names" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">With a new kernel (4.13 upwards, tested with 4.15) the Sony controllers expose their motion events in a way we can
+handle, so I’ve added pitch and roll for both controllers, and yaw rate for the DS4. There is no absolute yaw value
+available, you’d have to calculate this from the rates (tricky to do with any accuracy). Roll is positive clockwise
+when holding the controller, pitch is positive aiming the front of the controller towards the ceiling. Available
+in 2.1.0 of this library onwards.</p>
+</div>
 <table border="1" class="docutils">
 <colgroup>
 <col width="15%" />
@@ -645,7 +654,7 @@ so we call it ‘triangle’, whereas the XBox controller has a <cite>Y</cite> b
 <td>Right Y</td>
 </tr>
 <tr class="row-even"><td>lt</td>
-<td>—</td>
+<td>L2 Trigger</td>
 <td>L2 Trigger</td>
 <td>LT Trigger</td>
 <td>—</td>
@@ -653,49 +662,112 @@ so we call it ‘triangle’, whereas the XBox controller has a <cite>Y</cite> b
 <td>—</td>
 </tr>
 <tr class="row-odd"><td>rt</td>
-<td>—</td>
+<td>R2 Trigger</td>
 <td>R2 Trigger</td>
 <td>RT Trigger</td>
 <td>—</td>
 <td>Right Trigger</td>
 <td>—</td>
 </tr>
+<tr class="row-even"><td>tx</td>
+<td>—</td>
+<td>Touch X</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr class="row-odd"><td>ty</td>
+<td>—</td>
+<td>Touch Y</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr class="row-even"><td>pitch</td>
+<td>Motion</td>
+<td>Motion</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr class="row-odd"><td>roll</td>
+<td>Motion</td>
+<td>Motion</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr class="row-even"><td>yaw_rate</td>
+<td>—</td>
+<td>Motion</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
 </tbody>
 </table>
 <table border="1" class="docutils">
 <colgroup>
-<col width="59%" />
-<col width="41%" />
+<col width="42%" />
+<col width="29%" />
+<col width="29%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td>Standard name</td>
 <td>PiHut</td>
+<td>SF30 Pro</td>
 </tr>
 <tr class="row-even"><td>lx</td>
+<td>Left X</td>
 <td>Left X</td>
 </tr>
 <tr class="row-odd"><td>ly</td>
 <td>Left Y</td>
+<td>Left Y</td>
 </tr>
 <tr class="row-even"><td>rx</td>
+<td>Right X</td>
 <td>Right X</td>
 </tr>
 <tr class="row-odd"><td>ry</td>
 <td>Right Y</td>
+<td>Right Y</td>
 </tr>
 <tr class="row-even"><td>lt</td>
+<td>L Trigger</td>
 <td>L Trigger</td>
 </tr>
 <tr class="row-odd"><td>rt</td>
 <td>R Trigger</td>
+<td>R Trigger</td>
+</tr>
+<tr class="row-even"><td>tx</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr class="row-odd"><td>ty</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr class="row-even"><td>pitch</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr class="row-odd"><td>roll</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr class="row-even"><td>yaw_rate</td>
+<td>—</td>
+<td>—</td>
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The triggers on the DualShock3 or Rock Candy can’t be used as analogue axes, only use lt and rt if you’re happy you
-won’t need to use these controllers in your project.</p>
-</div>
 </div>
 </div>
 
@@ -722,7 +794,7 @@ won’t need to use these controllers in your project.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Jan 20, 2018.
+      Last updated on Apr 03, 2018.
 
     </p>
   </div>
@@ -744,7 +816,7 @@ won’t need to use these controllers in your project.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.0.4',
+            VERSION:'2.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

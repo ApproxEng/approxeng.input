@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>CamJam Edukit 3 Robot &mdash; Approximate Engineering - Input 2.0.4 documentation</title>
+  <title>CamJam Edukit 3 Robot &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.0.4 documentation" href="../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="../_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.0.4 documentation" href="../index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="../index.html"/>
         <link rel="up" title="Examples" href="../examples.html"/>
         <link rel="next" title="Controller Failover" href="failover.html"/>
         <link rel="prev" title="Examples" href="../examples.html"/> 
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                2.0.4
+                2.1.0
               </div>
             
           
@@ -343,7 +343,11 @@ use this library to drive it around. The left analogue stick controls the robot,
 160
 161
 162
-163</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Code for CamJam EduKit 3 robot</span>
+163
+164
+165
+166
+167</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># Code for CamJam EduKit 3 robot</span>
 <span class="c1">#</span>
 <span class="c1"># By Mike Horne, based on code by Tom Oinn/Emma Norling code</span>
 
@@ -424,7 +428,7 @@ use this library to drive it around. The left analogue stick controls the robot,
 <span class="sd">        No motor hat - print what we would have sent to it if we&#39;d had one.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">print</span><span class="p">(</span><span class="s1">&#39;DEBUG Left: {}, Right: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">power_left</span><span class="p">,</span> <span class="n">power_right</span><span class="p">))</span>
-        <span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
 
 
     <span class="k">def</span> <span class="nf">stop_motors</span><span class="p">():</span>
@@ -436,6 +440,10 @@ use this library to drive it around. The left analogue stick controls the robot,
 <span class="c1"># All we need, as we don&#39;t care which controller we bind to, is the ControllerResource</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
+
+<span class="c1"># Enable logging of debug messages, by default these aren&#39;t shown</span>
+<span class="c1"># import logzero</span>
+<span class="c1"># logzero.setup_logger(name=&#39;approxeng.input&#39;, level=logzero.logging.DEBUG)</span>
 
 <span class="k">class</span> <span class="nc">RobotStopException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -533,7 +541,7 @@ use this library to drive it around. The left analogue stick controls the robot,
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Jan 20, 2018.
+      Last updated on Apr 03, 2018.
 
     </p>
   </div>
@@ -555,7 +563,7 @@ use this library to drive it around. The left analogue stick controls the robot,
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.0.4',
+            VERSION:'2.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

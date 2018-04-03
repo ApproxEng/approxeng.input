@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Showing Controller Properties &mdash; Approximate Engineering - Input 2.0.4 documentation</title>
+  <title>Showing Controller Properties &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.0.4 documentation" href="../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="../_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.0.4 documentation" href="../index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="../index.html"/>
         <link rel="up" title="Examples" href="../examples.html"/>
         <link rel="next" title="Streaming Axis and Button Hold values" href="streams.html"/>
         <link rel="prev" title="Controller Failover" href="failover.html"/> 
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                2.0.4
+                2.1.0
               </div>
             
           
@@ -254,10 +254,16 @@ controller supports ever axis you’re going to use later.</p>
 71
 72
 73
-74</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
-<span class="kn">import</span> <span class="nn">curses</span>
+74
+75
+76
+77
+78</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">curses</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">screen</span><span class="p">):</span>
     <span class="n">curses</span><span class="o">.</span><span class="n">curs_set</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
@@ -300,12 +306,13 @@ controller supports ever axis you’re going to use later.</p>
                     <span class="k">for</span> <span class="n">axis_name</span> <span class="ow">in</span> <span class="n">joystick</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
                         <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s1">&#39; {}=&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_name</span><span class="p">))</span>
                         <span class="n">axis_value</span> <span class="o">=</span> <span class="n">joystick</span><span class="p">[</span><span class="n">axis_name</span><span class="p">]</span>
+                        <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;{:.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_value</span><span class="p">)</span>
                         <span class="k">if</span> <span class="n">axis_value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="n">green</span><span class="p">(</span><span class="s1">&#39;{:.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_value</span><span class="p">))</span>
+                            <span class="n">green</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
                         <span class="k">elif</span> <span class="n">axis_value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="n">red</span><span class="p">(</span><span class="s1">&#39;{:.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_value</span><span class="p">))</span>
+                            <span class="n">red</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="n">yellow</span><span class="p">(</span><span class="s1">&#39;{:.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_value</span><span class="p">))</span>
+                            <span class="n">yellow</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
                     <span class="c1"># Print button hold times</span>
                     <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;hold times:&#39;</span><span class="p">)</span>
@@ -320,6 +327,7 @@ controller supports ever axis you’re going to use later.</p>
                     <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="n">joystick</span><span class="o">.</span><span class="n">controls</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 
                     <span class="n">screen</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
             <span class="n">screen</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
             <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Waiting for controller&#39;</span><span class="p">)</span>
@@ -355,7 +363,7 @@ controller supports ever axis you’re going to use later.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Jan 20, 2018.
+      Last updated on Apr 03, 2018.
 
     </p>
   </div>
@@ -377,7 +385,7 @@ controller supports ever axis you’re going to use later.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.0.4',
+            VERSION:'2.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

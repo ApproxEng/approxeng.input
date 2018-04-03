@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Change Log &mdash; Approximate Engineering - Input 2.0.4 documentation</title>
+  <title>Change Log &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.0.4 documentation" href="_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.0.4 documentation" href="index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="index.html"/>
         <link rel="next" title="Simple Usage" href="simpleusage.html"/>
         <link rel="prev" title="Welcome to Approximate Engineering’s Python Game Controller Documentation!" href="index.html"/> 
 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                2.0.4
+                2.1.0
               </div>
             
           
@@ -96,6 +96,7 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-2-1-0">Version 2.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-0-3-2-0-4">Version 2.0.3, 2.0.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-0-2">Version 2.0.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-0-1">Version 2.0.1</a></li>
@@ -186,6 +187,20 @@ addition to the original support for PS3 controllers.</p>
 year also used the library, and my aim is to make this the definitive library for connecting game controllers to
 Python code, especially for robots (but it’ll work elsewhere if needed!)</p>
 </div>
+<div class="section" id="version-2-1-0">
+<h2>Version 2.1.0<a class="headerlink" href="#version-2-1-0" title="Permalink to this headline">¶</a></h2>
+<p>Updated evdev dependency to 8.1.0, required for newer kernels. Added support from Tom Broughton for 8BitDo SF30 Pro
+controllers. Added support for multi-node controllers under latest kernels, tested with 4.15. I strongly suggest using
+this kernel version. Sony controllers now both support motion sense, with the PS3 supporting pitch and roll and the PS4
+supporting pitch, roll and yaw rate. In addition, the PS4 now exposes two extra axes, ‘tx’ and ‘ty’ representing the
+most recent contact point on the touchpad, normalised to be zero in the centre of the pad and -1 to 1 at the edges.</p>
+<p>Note that with the more recent linux kernels some of the event codes have changed. I’ve updated those used by the Sony
+controllers but not others, it’s likely that they’ll need fixing. Conversely, this release will not work with older
+kernels. If you are using a 4.9 kernel (i.e. the default for the Raspberry Pi) you should either freeze on the previous
+release of this library, or upgrade your kernel.</p>
+<p>Logging is now debug level by default, so shouldn’t spam the console with messages about unknown axes unless you ask
+it to do so.</p>
+</div>
 <div class="section" id="version-2-0-3-2-0-4">
 <h2>Version 2.0.3, 2.0.4<a class="headerlink" href="#version-2-0-3-2-0-4" title="Permalink to this headline">¶</a></h2>
 <p>Updated evdev dependency to 0.7.0, added logzero 1.3.0 and moved print() statements to use logging instead. This should
@@ -254,7 +269,7 @@ clone was dead on arrival…</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Jan 20, 2018.
+      Last updated on Apr 03, 2018.
 
     </p>
   </div>
@@ -276,7 +291,7 @@ clone was dead on arrival…</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.0.4',
+            VERSION:'2.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

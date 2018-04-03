@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PlayStation 3 Controller Support &mdash; Approximate Engineering - Input 2.0.4 documentation</title>
+  <title>PlayStation 3 Controller Support &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.0.4 documentation" href="../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="../_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.0.4 documentation" href="../index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="../index.html"/>
         <link rel="up" title="API Documentation" href="../api.html"/>
         <link rel="next" title="PlayStation 4 Controller Support" href="dualshock4.html"/>
         <link rel="prev" title="Binding - approxeng.input.selectbinder" href="selectbinder.html"/> 
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                2.0.4
+                2.1.0
               </div>
             
           
@@ -104,6 +104,7 @@
 <li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">PlayStation 3 Controller Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#newer-bluez-versions">Newer BlueZ versions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#a-note-on-pairing">A note on pairing</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#hardware">Hardware</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#bluetooth-dongles">Bluetooth dongles</a></li>
@@ -120,6 +121,7 @@
 <li class="toctree-l2"><a class="reference internal" href="wii.html">Wii Remote Pro Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wiimote.html">WiiMote Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pihut.html">PiHut Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sf30pro.html">8Bitdo SF30Pro/SN30Pro Controller Support</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
@@ -199,6 +201,23 @@
 <p class="last">If you are starting from scratch and don’t have any PS3 controllers I recommend using the PS4 controller instead.
 It’s a better piece of hardware, and pairing is considerably simpler. The most recent XBox One controllers are also
 an option. This guide therefore is largely for those who have existing controllers and want to make use of them.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are using a new (5.49 onwards) version of BlueZ with the SixAxis plugin installed you can ignore most of this
+guide and skip to the ‘pairing with new BlueZ’ section.</p>
+</div>
+<div class="section" id="newer-bluez-versions">
+<h2>Newer BlueZ versions<a class="headerlink" href="#newer-bluez-versions" title="Permalink to this headline">¶</a></h2>
+<p>Most of the information on this page applies only to older bluetooth versions. If you have a newer version of BlueZ and
+have also compiled or otherwise installed the sixaxis plugin, the pairing process is much simpler. Tested with a custom
+build of BlueZ 5.49.</p>
+<ol class="arabic simple">
+<li>Run bluetoothctl as a normal user and enable to default agent</li>
+<li>Connect your PS3 controller with a mini-USB cable and press the PS button</li>
+<li>Answer ‘yes’ at the prompt to authorise</li>
+<li>Disconnect your PS3 controller and press the PS button to turn it on. It should now connect over bluetooth</li>
+</ol>
 </div>
 <div class="section" id="a-note-on-pairing">
 <h2>A note on pairing<a class="headerlink" href="#a-note-on-pairing" title="Permalink to this headline">¶</a></h2>
@@ -368,7 +387,7 @@ timeout so be sure to turn the controller off when you’re not going to be usin
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Jan 20, 2018.
+      Last updated on Apr 03, 2018.
 
     </p>
   </div>
@@ -390,7 +409,7 @@ timeout so be sure to turn the controller off when you’re not going to be usin
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.0.4',
+            VERSION:'2.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

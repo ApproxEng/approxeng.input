@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Common APIs &mdash; Approximate Engineering - Input 2.0.4 documentation</title>
+  <title>Common APIs &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.0.4 documentation" href="../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="../_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.0.4 documentation" href="../index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="../index.html"/>
         <link rel="up" title="API Documentation" href="../api.html"/>
         <link rel="next" title="Binding - approxeng.input.selectbinder" href="selectbinder.html"/>
         <link rel="prev" title="API Documentation" href="../api.html"/> 
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                2.0.4
+                2.1.0
               </div>
             
           
@@ -111,6 +111,7 @@
 <li class="toctree-l2"><a class="reference internal" href="wii.html">Wii Remote Pro Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wiimote.html">WiiMote Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pihut.html">PiHut Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sf30pro.html">8Bitdo SF30Pro/SN30Pro Controller Support</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
@@ -183,7 +184,7 @@
 <h1>Common APIs<a class="headerlink" href="#common-apis" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="approxeng.input.Controller">
-<em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">Controller</code><span class="sig-paren">(</span><em>vendor_id</em>, <em>product_id</em>, <em>controls</em>, <em>dead_zone=None</em>, <em>hot_zone=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">Controller</code><span class="sig-paren">(</span><em>vendor_id</em>, <em>product_id</em>, <em>controls</em>, <em>node_mappings=None</em>, <em>dead_zone=None</em>, <em>hot_zone=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller" title="Permalink to this definition">¶</a></dt>
 <dd><p>Superclass for controller implementations</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -208,7 +209,7 @@ condition to check for controller disconnection.</p>
 </table>
 <dl class="method">
 <dt id="approxeng.input.Controller.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>vendor_id</em>, <em>product_id</em>, <em>controls</em>, <em>dead_zone=None</em>, <em>hot_zone=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>vendor_id</em>, <em>product_id</em>, <em>controls</em>, <em>node_mappings=None</em>, <em>dead_zone=None</em>, <em>hot_zone=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populate the controller name, button set and axis set.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -218,6 +219,17 @@ condition to check for controller disconnection.</p>
 <li><strong>vendor_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The USB vendor ID for the controller</li>
 <li><strong>product_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The USB product ID for the controller</li>
 <li><strong>controls</strong> – A sequence of Button, CentredAxis, TriggerAxis and BinaryAxis instances</li>
+<li><strong>node_mappings</strong> – A dict from device name to a prefix which will be applied to all events from nodes with a
+matching name before dispatching the corresponding events. This is used to handle controller
+types which create multiple nodes in /dev/input by keying on the device names reported to evdev
+for each node. Nodes are grouped by physical or unique ID first so should, in an ideal world at least,
+all correspond to the same physical controller. This is necessary to support some controllers on modern
+kernels, particularly 4.15. If not specified, or none, then no per-node renaming is applied. Device
+names which do not appear in this map are not assigned a prefix, so it’s legitimate to only assign
+prefixes for ‘new’ functionality which has magically appeared in a later kernel. Similarly, this is
+ignored if there is only one device node bound to the controller instance, so the best practice is to
+leave the older mappings named simply by their code, and only use this to handle secondary device nodes
+such as motion sensors.</li>
 <li><strong>dead_zone</strong> – If specified, this is applied to all axes</li>
 <li><strong>hot_zone</strong> – If specified, this is applied to all axes</li>
 </ul>
@@ -481,12 +493,12 @@ the trigger or the edge of the hot zone, if defined as other than 1.0.</p>
 
 <dl class="class">
 <dt id="approxeng.input.BinaryAxis">
-<em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">BinaryAxis</code><span class="sig-paren">(</span><em>name</em>, <em>axis_event_code</em>, <em>b1name=None</em>, <em>b2name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#BinaryAxis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.BinaryAxis" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">BinaryAxis</code><span class="sig-paren">(</span><em>name</em>, <em>axis_event_code</em>, <em>invert=False</em>, <em>b1name=None</em>, <em>b2name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#BinaryAxis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.BinaryAxis" title="Permalink to this definition">¶</a></dt>
 <dd><p>A fake ‘analogue’ axis which actually corresponds to a pair of buttons. Once associated with a Buttons instance
 it routes events through to the Buttons instance to create button presses corresponding to axis movements.</p>
 <dl class="method">
 <dt id="approxeng.input.BinaryAxis.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>axis_event_code</em>, <em>b1name=None</em>, <em>b2name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#BinaryAxis.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.BinaryAxis.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>axis_event_code</em>, <em>invert=False</em>, <em>b1name=None</em>, <em>b2name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#BinaryAxis.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.BinaryAxis.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new binary axis, used to route axis events through to a pair of buttons, which are created as
 part of this constructor</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -496,6 +508,7 @@ part of this constructor</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>name</strong> – Name for the axis, use this to describe the axis, it’s not used for anything else</li>
 <li><strong>axis_event_code</strong> – The evdev event code for changes to this axis</li>
+<li><strong>invert</strong> – True to invert data, used when the raw data is in the opposite sense to normal</li>
 <li><strong>b1name</strong> – The sname of the button corresponding to negative values of the axis.</li>
 <li><strong>b2name</strong> – The sname of the button corresponding to positive values of the axis</li>
 </ul>
@@ -521,7 +534,7 @@ instantiate this yourself.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axes</strong> – a sequence of <a class="reference internal" href="#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> or <a class="reference internal" href="#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> or 
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axes</strong> – a sequence of <a class="reference internal" href="#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> or <a class="reference internal" href="#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> or
 <a class="reference internal" href="#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.BinaryAxis</span></code></a> containing all the axes the controller supports.</td>
 </tr>
 </tbody>
@@ -536,7 +549,7 @@ instantiate this yourself.</p>
 
 <dl class="method">
 <dt id="approxeng.input.Axes.axis_updated">
-<code class="descname">axis_updated</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Axes.axis_updated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Axes.axis_updated" title="Permalink to this definition">¶</a></dt>
+<code class="descname">axis_updated</code><span class="sig-paren">(</span><em>event</em>, <em>prefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Axes.axis_updated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Axes.axis_updated" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called to process an absolute axis event from evdev, this is called internally by the controller implementations</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -544,7 +557,11 @@ instantiate this yourself.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Internal:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> – The evdev event to process</td>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>event</strong> – The evdev event to process</li>
+<li><strong>prefix</strong> – If present, a named prefix that should be applied to the event code when searching for the axis</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -636,7 +653,7 @@ possible forms of interaction required.</p>
 
 <dl class="method">
 <dt id="approxeng.input.Buttons.button_pressed">
-<code class="descname">button_pressed</code><span class="sig-paren">(</span><em>key_code</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.button_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.button_pressed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">button_pressed</code><span class="sig-paren">(</span><em>key_code</em>, <em>prefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.button_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.button_pressed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called from the controller classes to update the state of this button manager when a button is pressed.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -644,7 +661,11 @@ possible forms of interaction required.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Internal:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key_code</strong> – The code specified when populating Button instances</td>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key_code</strong> – The code specified when populating Button instances</li>
+<li><strong>prefix</strong> – Applied to key code if present</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -652,7 +673,7 @@ possible forms of interaction required.</p>
 
 <dl class="method">
 <dt id="approxeng.input.Buttons.button_released">
-<code class="descname">button_released</code><span class="sig-paren">(</span><em>key_code</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.button_released"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.button_released" title="Permalink to this definition">¶</a></dt>
+<code class="descname">button_released</code><span class="sig-paren">(</span><em>key_code</em>, <em>prefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.button_released"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.button_released" title="Permalink to this definition">¶</a></dt>
 <dd><p>Called from the controller classes to update the state of this button manager when a button is released.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -660,7 +681,11 @@ possible forms of interaction required.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Internal:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key_code</strong> – The code specified when populating Button instances</td>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key_code</strong> – The code specified when populating Button instance</li>
+<li><strong>prefix</strong> – Applied to key code if present</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -784,7 +809,7 @@ binding is required.</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Jan 20, 2018.
+      Last updated on Apr 03, 2018.
 
     </p>
   </div>
@@ -806,7 +831,7 @@ binding is required.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.0.4',
+            VERSION:'2.1.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

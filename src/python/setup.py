@@ -14,7 +14,7 @@ setup(
     author_email='tomoinn@gmail.com',
     license='ASL2.0',
     packages=find_packages(),
-    install_requires=['evdev==0.8.0', 'logzero==1.3.1'],
+    install_requires=['evdev==0.8.1', 'logzero==1.3.1'],
     include_package_data=True,
     test_suite='nose.collector',
     tests_require=['nose'],

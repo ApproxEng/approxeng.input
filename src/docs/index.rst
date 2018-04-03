@@ -29,6 +29,9 @@ Supported Controllers
 .. image:: images/pihut.jpg
     :width: 20%
 
+.. image:: images/sf30pro.jpg
+    :width: 20%
+
 In general you don't need to code to a specific controller, but some may need extra steps when connecting to your Pi or
 other computer. You can see more details for specific controller types at the following:
 
@@ -48,6 +51,8 @@ other computer. You can see more details for specific controller types at the fo
 
  - :ref:`api_xboxone`
 
+ - :ref:`api_sf30pro`
+
 Contributors
 ------------
 
@@ -59,6 +64,8 @@ Contributors
 
 - Mike Horne (`\@recantha <https://twitter.com/recantha>`__) add support for the PiHut_ controller and an example for
   the :ref:`example_camjam`
+
+- Tom Broughton (`\@dpolymath <https://twitter.com/dpolymath>`__) added support for the SF30Pro controller.
 
 Getting the code
 ----------------

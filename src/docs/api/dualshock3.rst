@@ -13,6 +13,23 @@ PlayStation 3 Controller Support
     It's a better piece of hardware, and pairing is considerably simpler. The most recent XBox One controllers are also
     an option. This guide therefore is largely for those who have existing controllers and want to make use of them.
 
+.. note::
+
+    If you are using a new (5.49 onwards) version of BlueZ with the SixAxis plugin installed you can ignore most of this
+    guide and skip to the 'pairing with new BlueZ' section.
+
+Newer BlueZ versions
+--------------------
+
+Most of the information on this page applies only to older bluetooth versions. If you have a newer version of BlueZ and
+have also compiled or otherwise installed the sixaxis plugin, the pairing process is much simpler. Tested with a custom
+build of BlueZ 5.49.
+
+1. Run bluetoothctl as a normal user and enable to default agent
+2. Connect your PS3 controller with a mini-USB cable and press the PS button
+3. Answer 'yes' at the prompt to authorise
+4. Disconnect your PS3 controller and press the PS button to turn it on. It should now connect over bluetooth
+
 A note on pairing
 -----------------
 
@@ -156,7 +173,6 @@ If a new device has appeared here then congratulations, you have successfully pa
 dongle and SixAxis controller. This will persist across reboots, so from now on you can just connect by pressing the PS
 button on the controller. Pressing and holding this button will shut the controller down - at the moment there's no
 timeout so be sure to turn the controller off when you're not going to be using it for a while.
-
 
 .. automodule:: approxeng.input.dualshock3
     :members:

@@ -11,6 +11,23 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
+Version 2.1.0
+-------------
+
+Updated evdev dependency to 8.1.0, required for newer kernels. Added support from Tom Broughton for 8BitDo SF30 Pro
+controllers. Added support for multi-node controllers under latest kernels, tested with 4.15. I strongly suggest using
+this kernel version. Sony controllers now both support motion sense, with the PS3 supporting pitch and roll and the PS4
+supporting pitch, roll and yaw rate. In addition, the PS4 now exposes two extra axes, 'tx' and 'ty' representing the
+most recent contact point on the touchpad, normalised to be zero in the centre of the pad and -1 to 1 at the edges.
+
+Note that with the more recent linux kernels some of the event codes have changed. I've updated those used by the Sony
+controllers but not others, it's likely that they'll need fixing. Conversely, this release will not work with older
+kernels. If you are using a 4.9 kernel (i.e. the default for the Raspberry Pi) you should either freeze on the previous
+release of this library, or upgrade your kernel.
+
+Logging is now debug level by default, so shouldn't spam the console with messages about unknown axes unless you ask
+it to do so.
+
 Version 2.0.3, 2.0.4
 --------------------
 

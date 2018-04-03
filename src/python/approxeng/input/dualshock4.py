@@ -48,11 +48,12 @@ class DualShock4(Controller):
                                              TriggerAxis("Right Trigger", 0, 255, 5, sname='rt'),
                                              BinaryAxis("D-pad Horizontal", 16, b1name='dleft', b2name='dright'),
                                              BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown'),
-                                             #CentredAxis("Motion 3", -1, 1, 'motion3', sname='zm3'),
-                                             CentredAxis("Yaw rate", -2097152, 2097152, 'motion4', sname='yaw_rate', invert=True),
-                                             #CentredAxis("Motion 5", -1, 1, 'motion5', sname='zm5'),
+                                             # CentredAxis("Motion 3", -1, 1, 'motion3', sname='zm3'),
+                                             CentredAxis("Yaw rate", -2097152, 2097152, 'motion4', sname='yaw_rate',
+                                                         invert=True),
+                                             # CentredAxis("Motion 5", -1, 1, 'motion5', sname='zm5'),
                                              CentredAxis("Roll", -8500, 8500, 'motion0', sname='roll', invert=True),
-                                             #CentredAxis("Motion 1", -1, 1, 'motion1', sname='zm1'),
+                                             # CentredAxis("Motion 1", -1, 1, 'motion1', sname='zm1'),
                                              CentredAxis("Pitch", -8500, 8500, 'motion2', sname='pitch',
                                                          invert=True),
                                              CentredAxis("Touch X", 0, 1920, 'touch53', sname='tx'),
@@ -63,7 +64,9 @@ class DualShock4(Controller):
                                              'Sony Interactive Entertainment Wireless Controller Touchpad':
                                                  'touch',
                                              'Sony Interactive Entertainment Wireless Controller Motion Sensors':
-                                                 'motion'},
+                                                 'motion',
+                                             'Wireless Controller Touchpad': 'touch',
+                                             'Wireless Controller Motion Sensors': 'motion'},
                                          dead_zone=dead_zone,
                                          hot_zone=hot_zone)
         self.axes['roll'].hot_zone = 0.2

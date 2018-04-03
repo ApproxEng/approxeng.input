@@ -65,6 +65,7 @@ def main(screen):
                     screen.addstr(5, 0, pprint.pformat(joystick.controls, indent=2))
 
                     screen.refresh()
+                    sleep(0.05)
         except IOError:
             screen.clear()
             screen.addstr(0, 0, 'Waiting for controller')

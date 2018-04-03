@@ -45,10 +45,10 @@ class DualShock3(Controller):
                                              CentredAxis("Left Horizontal", 0, 255, 0, sname='lx'),
                                              CentredAxis("Right Horizontal", 0, 255, 3, sname='rx'),
                                              CentredAxis("Motion 0", -128, 127, 'motion0', sname='roll', invert=True),
-                                             #CentredAxis("Motion 1", -512, 511, 'motion1', sname='m1'),
+                                             # CentredAxis("Motion 1", -512, 511, 'motion1', sname='m1'),
                                              CentredAxis("Motion 2", -128, 127, 'motion2', sname='pitch', invert=True),
                                          ],
-                                         node_mappings={'Sony PLAYSTATION(R)3 Controller Motion Sensors':'motion'},
+                                         node_mappings={'Sony PLAYSTATION(R)3 Controller Motion Sensors': 'motion'},
                                          dead_zone=dead_zone,
                                          hot_zone=hot_zone)
         self.axes['roll'].hot_zone = 0.2

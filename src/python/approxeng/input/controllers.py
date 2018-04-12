@@ -129,7 +129,7 @@ def print_devices():
     """
     _check_import()
     for device in [InputDevice(fn) for fn in list_devices()]:
-        if has_axes(device):
+        if has_abs_axes(device) or has_rel_axes(device):
             pp = pprint.PrettyPrinter(indent=2, width=100)
             pp.pprint(device_verbose_info(device))
 
@@ -141,6 +141,12 @@ def device_verbose_info(device):
         except KeyError:
             return 'EXTENDED_CODE_{}'.format(axis_code)
 
+    def rel_axis_name(axis_code):
+        try:
+            return ecodes.REL[axis_code]
+        except KeyError:
+            return 'EXTENDED_CODE_{}'.format(axis_code)
+
     axes = None
     if device.capabilities().get(3) is not None:
         axes = {
@@ -149,6 +155,13 @@ def device_verbose_info(device):
                                    'flat': axis_info.flat, 'res': axis_info.resolution} for
             axis_code, axis_info in device.capabilities().get(3)}
 
+    rel_axes = None
+    if device.capabilities().get(2) is not None:
+        print(device.capabilities().get(2))
+        rel_axes = {
+            axis_name(axis_code): {'code': axis_code} for
+            axis_code in device.capabilities().get(2)}
+
     buttons = None
     if device.capabilities().get(1) is not None:
         buttons = {code: names for (names, code) in
@@ -156,7 +169,8 @@ def device_verbose_info(device):
 
     return {'fn': device.fn, 'name': device.name, 'phys': device.phys, 'uniq': device.uniq,
             'vendor': device.info.vendor, 'product': device.info.product, 'version': device.info.version,
-            'bus': device.info.bustype, 'axes': axes, 'buttons': buttons}
+            'bus': device.info.bustype, 'axes': axes, 'rel_axes': rel_axes, 'buttons': buttons,
+            'unique_name': unique_name(device)}
 
 
 def unique_name(device):
@@ -169,15 +183,19 @@ def unique_name(device):
     :return:
         A string containing as unique as possible a name for the physical entity represented by the device
     """
-    if device.uniq is not None:
+    if device.uniq:
         return device.uniq
-    if device.phys is not None:
+    elif device.phys:
         return device.phys.split('/')[0]
     return '{}-{}-{}'.format(device.info.vendor, device.info.product, device.info.version)
 
 
-def has_axes(device):
+def has_abs_axes(device):
     return device.capabilities().get(3) is not None
+
+
+def has_rel_axes(device):
+    return device.capabilities().get(2) is not None
 
 
 def has_buttons(device):

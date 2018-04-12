@@ -165,9 +165,19 @@ class Controller(object):
             for axis in self.axes.axes:
                 axis.hot_zone = hot_zone
         self.node_mappings = node_mappings
-        self.connected = False
+        self.device_unique_name = None
         self.exception = None
         self.stream = Controller.ControllerStream(self)
+
+    @property
+    def connected(self):
+        """
+        Returns True if the controller object is associated correctly with a physical device, False otherwise. Use this
+        to detect a loss of controller pairing.
+        """
+        if self.device_unique_name:
+            return True
+        return False
 
     class ControllerStream(object):
 
@@ -184,6 +194,7 @@ class Controller(object):
     def __getitem__(self, item):
         """
         Simple index access to axis corrected values and button held times
+
         :param item:
             the sname of an axis or button, or a tuple thereof
         :return:
@@ -214,6 +225,7 @@ class Controller(object):
     def __contains__(self, item):
         """
         A Controller contains a named attribute if it has either an axis or a button with the attribute as its sname
+
         :param item:
             The sname of the button or axis
         :return:

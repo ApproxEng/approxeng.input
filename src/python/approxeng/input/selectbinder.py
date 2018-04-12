@@ -1,7 +1,8 @@
 from select import select
 from threading import Thread
 
-from approxeng.input.controllers import find_single_controller, find_any_controller
+import approxeng.input.leds as leds
+from approxeng.input.controllers import find_single_controller, find_any_controller, unique_name
 
 EV_KEY = 1
 EV_ABS = 3
@@ -89,7 +90,7 @@ def bind_controller(devices, controller, print_events=False):
             self.devices = {dev.fd: dev for dev in devices}
 
         def run(self):
-            controller.connected = True
+            controller.device_unique_name = unique_name(devices[0])
             while self.running:
                 try:
                     r, w, x = select(self.devices, [], [], 0.5)
@@ -118,11 +119,14 @@ def bind_controller(devices, controller, print_events=False):
                     self.stop(e)
 
         def stop(self, exception=None):
-            controller.connected = False
+            controller.device_unique_name = None
             controller.exception = exception
             self.running = False
 
     polling_thread = SelectThread()
+
+    # Force an update of the LED cache
+    leds.leds(force_update=True)
 
     for device in devices:
         device.grab()

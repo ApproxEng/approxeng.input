@@ -1,4 +1,7 @@
+from colorsys import hsv_to_rgb
+
 from approxeng.input import Controller, Button, CentredAxis, TriggerAxis, BinaryAxis
+from approxeng.input.leds import write_led_value
 
 DS4_VENDOR_ID = 1356
 DS4_PRODUCT_ID = 2508
@@ -74,3 +77,21 @@ class DualShock4(Controller):
 
     def __repr__(self):
         return 'Sony DualShock4 (Playstation 4) controller'
+
+    def set_leds(self, hue=0.0, saturation=1.0, value=1.0):
+        """
+        The DualShock4 has an LED bar on the front of the controller. This function allows you to set the value of this
+        bar. Note that the controller must be connected for this to work, if it's not the call will just be ignored.
+
+        :param hue:
+            The hue of the colour, defaults to 0, specified as a floating point value between 0.0 and 1.0.
+        :param saturation:
+            Saturation of the colour, defaults to 1.0, specified as a floating point value between 0.0 and 1.0.
+        :param value:
+            Value of the colour (i.e. how bright the light is overall), defaults to 1.0, specified as a floating point
+            value between 0.0 and 1.0
+        """
+        r, g, b = hsv_to_rgb(hue, saturation, value)
+        write_led_value(self.device_unique_name, 'red', r * 255.0)
+        write_led_value(self.device_unique_name, 'green', g * 255.0)
+        write_led_value(self.device_unique_name, 'blue', b * 255.0)

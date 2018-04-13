@@ -53,7 +53,7 @@ present. Rather than having to know that the XBox controller has 'A','B'... and 
 controllers have 'cross', 'circle' etc the API defines a standard set of names for buttons and axes (they're based on
 the PS3 controller as it happens, mostly because that's the one I first used when I started writing the library!).
 
-Reading Analoque Axes
+Reading Analogue Axes
 *********************
 
 Analogue axes are those which vary continuously, allowing for fine control of motion. Unlike buttons, which are either

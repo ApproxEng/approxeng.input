@@ -15,7 +15,8 @@ while True:
                         ds3.set_led(led_number + 1, 1)
                     else:
                         ds3.set_led(led_number + 1, 0)
+                sleep(0.2)
     except IOError:
-        # No DS4 controller found, wait for a bit and try again
-        print('Waiting for a DS4 controller connection')
+        # No DS3 controller found, wait for a bit and try again
+        print('Waiting for a DS3 controller connection')
         sleep(1)

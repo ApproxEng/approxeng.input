@@ -12,7 +12,7 @@ from approxeng.input.dualshock4 import DS4_PRODUCT_ID, DS4_VENDOR_ID, DS4V2_PROD
 from approxeng.input.pihut import PH_PRODUCT_ID, PH_VENDOR_ID, PiHut
 from approxeng.input.steamcontroller import SC_PRODUCT_ID, SC_VENDOR_ID, SteamController
 from approxeng.input.xboxone import XB1S_VENDOR_ID, XB1S_WIRED_PRODUCT_ID, XB1S_WIRELESS_PRODUCT_ID, WiredXBoxOneSPad, \
-    WirelessXBoxOneSPad
+    WirelessXBoxOneSPad, XB1S_WIRELESS_PRODUCT_ID_2
 from approxeng.input.rockcandy import RockCandy, RC_PRODUCT_ID, RC_VENDOR_ID
 from approxeng.input.wii import WiiRemotePro, WII_REMOTE_PRO_VENDOR, WII_REMOTE_PRO_PRODUCT
 from approxeng.input.wiimote import WiiMote, WIIMOTE_PRODUCT_ID, WIIMOTE_VENDOR_ID
@@ -34,6 +34,8 @@ CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_
                {'constructor': WiredXBoxOneSPad, 'vendor_id': XB1S_VENDOR_ID, 'product_id': XB1S_WIRED_PRODUCT_ID},
                {'constructor': WirelessXBoxOneSPad, 'vendor_id': XB1S_VENDOR_ID,
                 'product_id': XB1S_WIRELESS_PRODUCT_ID},
+               {'constructor': WirelessXBoxOneSPad, 'vendor_id': XB1S_VENDOR_ID,
+                'product_id': XB1S_WIRELESS_PRODUCT_ID_2},
                {'constructor': SteamController, 'vendor_id': SC_VENDOR_ID,
                 'product_id': SC_PRODUCT_ID},
                {'constructor': RockCandy, 'vendor_id': RC_VENDOR_ID, 'product_id': RC_PRODUCT_ID},

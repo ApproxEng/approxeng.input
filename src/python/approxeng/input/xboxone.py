@@ -4,6 +4,7 @@ from approxeng.input.sys import read_power_level
 XB1S_VENDOR_ID = 1118
 XB1S_WIRED_PRODUCT_ID = 746
 XB1S_WIRELESS_PRODUCT_ID = 765
+XB1S_WIRELESS_PRODUCT_ID_2 = 736
 
 
 class WiredXBoxOneSPad(Controller):

@@ -1,4 +1,5 @@
 from approxeng.input import CentredAxis, TriggerAxis, Button, Controller, BinaryAxis
+from approxeng.input.sys import read_power_level
 
 XB1S_VENDOR_ID = 1118
 XB1S_WIRED_PRODUCT_ID = 746
@@ -107,6 +108,10 @@ class WirelessXBoxOneSPad(Controller):
                                                   ],
                                                   dead_zone=dead_zone,
                                                   hot_zone=hot_zone)
+
+    @property
+    def battery_level(self):
+        return float(read_power_level(self.device_unique_name)) / 100.0
 
     def __repr__(self):
         return 'Wireless Microsoft XBox One S controller'

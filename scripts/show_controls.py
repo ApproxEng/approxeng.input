@@ -63,9 +63,9 @@ def main(screen):
                             green('{:.1f}'.format(hold_time))
 
                     # Print some details of the controller
-                    screen.addstr(3, 0, 'controller class: {}, battery {}'.format(type(joystick).__name__,
-                                                                                  joystick.battery_level))
-                    screen.addstr(5, 0, pprint.pformat(joystick.controls, indent=2))
+                    screen.addstr(3, 0, 'controller class: {}'.format(type(joystick).__name__))
+                    screen.addstr(4, 0, 'battery_level: {:.2f}'.format(joystick.battery_level))
+                    screen.addstr(6, 0, pprint.pformat(joystick.controls, indent=2))
 
                     screen.refresh()
                     sleep(0.05)

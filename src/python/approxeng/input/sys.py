@@ -90,7 +90,7 @@ def scan_system():
 
     power = {}
     for sub in ['/sys/class/power_supply/' + sub_dir for sub_dir in listdir('/sys/class/power_supply')]:
-        read_path = sub + 'capacity'
+        read_path = sub + '/capacity'
         device_id = find_device_hardware_id(sub + '/device/uevent')
         if device_id:
             power[device_id] = read_path

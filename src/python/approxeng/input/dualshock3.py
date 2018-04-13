@@ -1,5 +1,5 @@
 from approxeng.input import CentredAxis, Controller, Button, TriggerAxis
-from approxeng.input.sys import read_power_level
+from approxeng.input.sys import read_power_level, write_led_value
 
 DS3_VENDOR_ID = 0x54c
 DS3_PRODUCT_ID = 0x268
@@ -57,6 +57,20 @@ class DualShock3(Controller):
 
     def __repr__(self):
         return 'Sony DualShock3 (Playstation 3) controller'
+
+    def set_led(self, led_number, led_value):
+        """
+        Set front-panel controller LEDs. The DS3 controller has four, labelled, LEDs on the front panel that can
+        be either on or off.
+
+        :param led_number:
+            Integer between 1 and 4
+        :param led_value:
+            Value, set to 0 to turn the LED off, positive number to turn it on.
+        """
+        if 1 > led_number > 4:
+            return
+        write_led_value(hw_id=self.device_unique_name, led_name='sony{}'.format(led_number), value=led_value)
 
     @property
     def battery_level(self):

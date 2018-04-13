@@ -1,7 +1,7 @@
 from colorsys import hsv_to_rgb
 
 from approxeng.input import Controller, Button, CentredAxis, TriggerAxis, BinaryAxis
-from approxeng.input.leds import write_led_value
+from approxeng.input.sys import write_led_value, read_power_level
 
 DS4_VENDOR_ID = 1356
 DS4_PRODUCT_ID = 2508
@@ -95,3 +95,7 @@ class DualShock4(Controller):
         write_led_value(self.device_unique_name, 'red', r * 255.0)
         write_led_value(self.device_unique_name, 'green', g * 255.0)
         write_led_value(self.device_unique_name, 'blue', b * 255.0)
+
+    @property
+    def battery_capacity(self):
+        return read_power_level(self.device_unique_name)

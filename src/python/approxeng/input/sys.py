@@ -1,9 +1,9 @@
 from os import listdir
 
-__CACHED_LEDS__ = None
+__CACHED_SCAN__ = None
 
 
-def leds(force_update=False):
+def scan_cache(force_update=False):
     """
     Get the results of a previous scan for LEDs in /sys/class/leds. This will perform a scan if one hasn't been done, or
     if the force_update parameter is set to true, cache the result, and return it.
@@ -14,16 +14,16 @@ def leds(force_update=False):
         A dict from hardware ID to dicts of LED name to LED write path
     """
 
-    global __CACHED_LEDS__
-    if force_update or __CACHED_LEDS__ is None:
-        __CACHED_LEDS__ = scan_system()
-    return __CACHED_LEDS__
+    global __CACHED_SCAN__
+    if force_update or __CACHED_SCAN__ is None:
+        __CACHED_SCAN__ = scan_system()
+    return __CACHED_SCAN__
 
 
 def write_led_value(hw_id, led_name, value):
-    if hw_id in __CACHED_LEDS__:
-        if led_name in __CACHED_LEDS__[hw_id]:
-            f = open(__CACHED_LEDS__[hw_id][led_name], 'w')
+    if hw_id in __CACHED_SCAN__['leds']:
+        if led_name in __CACHED_SCAN__['leds'][hw_id]:
+            f = open(__CACHED_SCAN__['leds'][hw_id][led_name], 'w')
             f.write(str(int(value)))
             f.close()
         else:
@@ -32,12 +32,22 @@ def write_led_value(hw_id, led_name, value):
         print("No hardware ID {} in scan".format(hw_id))
 
 
+def read_power_level(hw_id):
+    if hw_id in __CACHED_SCAN__['power']:
+        f = open(__CACHED_SCAN__['power'][hw_id], 'r')
+        return int(f.read())
+    else:
+        return None
+
+
 def scan_system():
     """
     Scans /sys/class/leds looking for entries, then examining their .../device/uevent file to obtain unique hardware
     IDs corresponding to the associated hardware. This then allows us to associate InputDevice based controllers with
     sets of zero or more LEDs. The result is a dict from hardware address to a dict of name to filename, where the name
     is the name of the LED and the filename is the brightness control to which writing a value changes the LED state.
+
+    At the same time, scans /sys/class/power_supply looking for battery entries and analysing them in the same way.
 
     Hardware IDs are, in order of preference, the HID_UNIQ address (corresponding to the physical MAC of an attached
     bluetooth or similar HID device), or the PHYS corresponding to other devices. This is the same logic as used in the
@@ -77,4 +87,13 @@ def scan_system():
             if device_id not in leds:
                 leds[device_id] = {}
             leds[device_id][led_name] = write_path
-    return leds
+
+    power = {}
+    for sub in ['/sys/class/power_supply/' + sub_dir for sub_dir in listdir('/sys/class/power_supply')]:
+        read_path = sub + 'capacity'
+        device_id = find_device_hardware_id(sub + '/device/uevent')
+        if device_id:
+            power[device_id] = read_path
+
+    return {'leds': leds,
+            'power': power}

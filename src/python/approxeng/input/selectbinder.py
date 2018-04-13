@@ -1,7 +1,7 @@
 from select import select
 from threading import Thread
 
-import approxeng.input.leds as leds
+import approxeng.input.sys as sys
 from approxeng.input.controllers import find_single_controller, find_any_controller, unique_name
 
 EV_KEY = 1
@@ -125,8 +125,8 @@ def bind_controller(devices, controller, print_events=False):
 
     polling_thread = SelectThread()
 
-    # Force an update of the LED cache
-    leds.leds(force_update=True)
+    # Force an update of the LED and battery system cache
+    sys.scan_cache(force_update=True)
 
     for device in devices:
         device.grab()

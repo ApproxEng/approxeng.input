@@ -97,5 +97,5 @@ class DualShock4(Controller):
         write_led_value(self.device_unique_name, 'blue', b * 255.0)
 
     @property
-    def battery_capacity(self):
-        return read_power_level(self.device_unique_name)
+    def battery_level(self):
+        return float(read_power_level(self.device_unique_name)) / 100.0

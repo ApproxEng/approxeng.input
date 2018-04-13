@@ -179,6 +179,13 @@ class Controller(object):
             return True
         return False
 
+    @property
+    def battery_level(self):
+        """
+        Returns the battery level, as a float from 0.0 to 1.0, or None if not available
+        """
+        return None
+
     class ControllerStream(object):
 
         def __init__(self, controller):

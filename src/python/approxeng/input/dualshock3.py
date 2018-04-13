@@ -1,4 +1,5 @@
 from approxeng.input import CentredAxis, Controller, Button, TriggerAxis
+from approxeng.input.sys import read_power_level
 
 DS3_VENDOR_ID = 0x54c
 DS3_PRODUCT_ID = 0x268
@@ -56,3 +57,7 @@ class DualShock3(Controller):
 
     def __repr__(self):
         return 'Sony DualShock3 (Playstation 3) controller'
+
+    @property
+    def battery_level(self):
+        return float(read_power_level(self.device_unique_name)) / 100.0

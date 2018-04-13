@@ -64,7 +64,9 @@ def main(screen):
 
                     # Print some details of the controller
                     screen.addstr(3, 0, 'controller class: {}'.format(type(joystick).__name__))
-                    screen.addstr(4, 0, 'battery_level: {:.2f}'.format(joystick.battery_level))
+                    battery_level = joystick.battery_level
+                    if battery_level:
+                        screen.addstr(4, 0, 'battery_level: {:.2f}'.format(joystick.battery_level))
                     screen.addstr(6, 0, pprint.pformat(joystick.controls, indent=2))
 
                     screen.refresh()

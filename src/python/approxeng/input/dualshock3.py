@@ -66,7 +66,7 @@ class DualShock3(Controller):
         :param led_number:
             Integer between 1 and 4
         :param led_value:
-            Value, set to 0 to turn the LED off, positive number to turn it on.
+            Value, set to 0 to turn the LED off, 1 to turn it on
         """
         if 1 > led_number > 4:
             return

@@ -28,7 +28,7 @@ class ControllerResource:
         :param controller_class: 
             If specified, this class is used to locate the first matching controller of this kind anywhere on the evdev
             bus. If this is not None then devices and controller are ignored, and IOError will be raised if we can't
-            find an appropriate controller.
+            find an appropriate controller. If this is a list then  match any controllers in the list.
         :param devices: 
             If controller_classes is None, this can be non-None and should contain at least one instance of InputDevice
             to which we should bind to extract evdev events
@@ -44,7 +44,19 @@ class ControllerResource:
             If the controller class is not specified, and we have no devices or controller is None
         """
         if controller_class is not None:
-            self.devices, self.controller, physical_address = find_single_controller(controller_class, **kwargs)
+            if type(controller_class) in [list, tuple]:
+                self.devices, self.controller, physical_address = None, None, None
+                for controller_single_class in controller_class:
+                    try:
+                        self.devices, self.controller, physical_address = find_single_controller(controller_single_class,
+                                                                                                 **kwargs)
+                        break
+                    except IOError:
+                        pass
+                if self.devices is None:
+                    raise IOError('Unable to locate any compatible controllers')
+            else:
+                self.devices, self.controller, physical_address = find_single_controller(controller_class, **kwargs)
         else:
             if devices is None or controller is None or len(devices) == 0:
                 self.devices, self.controller, physical_address = find_any_controller(**kwargs)

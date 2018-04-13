@@ -1,4 +1,5 @@
 from approxeng.input import Controller, CentredAxis, Button
+from approxeng.input.sys import read_power_level, write_led_value
 
 WII_REMOTE_PRO_VENDOR = 1406
 WII_REMOTE_PRO_PRODUCT = 816
@@ -53,3 +54,21 @@ class WiiRemotePro(Controller):
 
     def __repr__(self):
         return 'Nintendo Wii Remote Pro Controller'
+
+    def set_led(self, led_number, led_value):
+        """
+        Set controller LEDs. The controller has four, labelled, LEDs between the hand grips that can be either
+        on or off. The labels are actually slightly raised dimples.
+
+        :param led_number:
+            Integer between 1 and 4
+        :param led_value:
+            Value, set to 0 to turn the LED off, 1 to turn it on
+        """
+        if 1 > led_number > 4:
+            return
+        write_led_value(hw_id=self.device_unique_name, led_name='p{}'.format(led_number), value=led_value)
+
+    @property
+    def battery_level(self):
+        return float(read_power_level(self.device_unique_name)) / 100.0

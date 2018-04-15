@@ -22,9 +22,9 @@ who should be able to access LEDs, and then add the appropriate user to that gro
 Firstly create a new file, `90-led-permission.rules` in `/etc/udev/rules.d/` with the following contents:
 
 .. literalinclude:: ../90-led-permissions.rules
-:linenos:
+    :linenos:
 
-    Then create a new `leds` group:
+Then create a new `leds` group:
 
 .. code-block:: bash
 
@@ -58,12 +58,12 @@ The examples below show how to use the LEDs on the DS3 (scanning across the four
 (animating a rainbow of colours):
 
 .. literalinclude:: ../../scripts/cylon.py
-:language: python
-        :linenos:
+    :language: python
+    :linenos:
 
 .. literalinclude:: ../../scripts/ds4_rainbow.py
-:language: python
-        :linenos:
+    :language: python
+    :linenos:
 
 Reading Battery Levels
 ======================
@@ -87,5 +87,5 @@ slightly finer grained.
 The updated `show_controls.py` script now indicates battery level if the controller supports it (see line 67 below):
 
 .. literalinclude:: ../../scripts/show_controls.py
-:language: python
-        :linenos:
+    :language: python
+    :linenos:

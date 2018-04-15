@@ -105,7 +105,7 @@ Contents
     addingcontrollers
     examples
     howtouse
-        sys.rst
+    sys.rst
 
 .. _GitHub: https://github.com/ApproxEng/approxeng.input
 

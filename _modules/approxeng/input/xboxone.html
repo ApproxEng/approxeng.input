@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input.xboxone &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
+  <title>approxeng.input.xboxone &mdash; Approximate Engineering - Input 2.2.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="../../../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.2.0 documentation" href="../../../_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="../../../index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.2.0 documentation" href="../../../index.html"/>
         <link rel="up" title="approxeng.input" href="../input.html"/> 
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                2.1.0
+                2.2.0
               </div>
             
           
@@ -169,10 +169,12 @@
             
   <h1>Source code for approxeng.input.xboxone</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="k">import</span> <span class="n">CentredAxis</span><span class="p">,</span> <span class="n">TriggerAxis</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">BinaryAxis</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.sys</span> <span class="k">import</span> <span class="n">read_power_level</span>
 
 <span class="n">XB1S_VENDOR_ID</span> <span class="o">=</span> <span class="mi">1118</span>
 <span class="n">XB1S_WIRED_PRODUCT_ID</span> <span class="o">=</span> <span class="mi">746</span>
 <span class="n">XB1S_WIRELESS_PRODUCT_ID</span> <span class="o">=</span> <span class="mi">765</span>
+<span class="n">XB1S_WIRELESS_PRODUCT_ID_2</span> <span class="o">=</span> <span class="mi">736</span>
 
 
 <div class="viewcode-block" id="WiredXBoxOneSPad"><a class="viewcode-back" href="../../../api/xboxone.html#approxeng.input.xboxone.WiredXBoxOneSPad">[docs]</a><span class="k">class</span> <span class="nc">WiredXBoxOneSPad</span><span class="p">(</span><span class="n">Controller</span><span class="p">):</span>
@@ -250,26 +252,26 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">WirelessXBoxOneSPad</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vendor_id</span><span class="o">=</span><span class="n">XB1S_VENDOR_ID</span><span class="p">,</span>
                                                   <span class="n">product_id</span><span class="o">=</span><span class="n">XB1S_WIRELESS_PRODUCT_ID</span><span class="p">,</span>
                                                   <span class="n">controls</span><span class="o">=</span><span class="p">[</span>
-                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="mi">307</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;square&#39;</span><span class="p">),</span>
-                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="mi">308</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;triangle&#39;</span><span class="p">),</span>
+                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="mi">306</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;square&#39;</span><span class="p">),</span>
+                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Y&quot;</span><span class="p">,</span> <span class="mi">307</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;triangle&#39;</span><span class="p">),</span>
                                                       <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mi">305</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">),</span>
                                                       <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">304</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;cross&#39;</span><span class="p">),</span>
-                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Right Stick&quot;</span><span class="p">,</span> <span class="mi">318</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rs&#39;</span><span class="p">),</span>
-                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Left Stick&quot;</span><span class="p">,</span> <span class="mi">317</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ls&#39;</span><span class="p">),</span>
-                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;View&quot;</span><span class="p">,</span> <span class="mi">158</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;select&#39;</span><span class="p">),</span>
-                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Menu&quot;</span><span class="p">,</span> <span class="mi">315</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">),</span>
-                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;XBox&quot;</span><span class="p">,</span> <span class="mi">172</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;home&#39;</span><span class="p">),</span>
-                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;LB&quot;</span><span class="p">,</span> <span class="mi">310</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">),</span>
-                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;RB&quot;</span><span class="p">,</span> <span class="mi">311</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;r1&#39;</span><span class="p">),</span>
+                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Right Stick&quot;</span><span class="p">,</span> <span class="mi">313</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rs&#39;</span><span class="p">),</span>
+                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Left Stick&quot;</span><span class="p">,</span> <span class="mi">312</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ls&#39;</span><span class="p">),</span>
+                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;View&quot;</span><span class="p">,</span> <span class="mi">310</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;select&#39;</span><span class="p">),</span>
+                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Menu&quot;</span><span class="p">,</span> <span class="mi">311</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;start&#39;</span><span class="p">),</span>
+                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;XBox&quot;</span><span class="p">,</span> <span class="mi">139</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;home&#39;</span><span class="p">),</span>
+                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;LB&quot;</span><span class="p">,</span> <span class="mi">308</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">),</span>
+                                                      <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;RB&quot;</span><span class="p">,</span> <span class="mi">309</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;r1&#39;</span><span class="p">),</span>
                                                       <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Left Horizontal&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">65335</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lx&#39;</span><span class="p">),</span>
                                                       <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Left Vertical&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">65335</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                                                   <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ly&#39;</span><span class="p">),</span>
-                                                      <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Right Horizontal&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">65335</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rx&#39;</span><span class="p">),</span>
-                                                      <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Right Vertical&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">65335</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                      <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Right Horizontal&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">65335</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rx&#39;</span><span class="p">),</span>
+                                                      <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Right Vertical&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">65335</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                                                   <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ry&#39;</span><span class="p">),</span>
-                                                      <span class="n">TriggerAxis</span><span class="p">(</span><span class="s2">&quot;Left Trigger&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1023</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lt&#39;</span><span class="p">,</span>
+                                                      <span class="n">TriggerAxis</span><span class="p">(</span><span class="s2">&quot;Left Trigger&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1023</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lt&#39;</span><span class="p">,</span>
                                                                   <span class="n">button_sname</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span> <span class="n">button_trigger_value</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
-                                                      <span class="n">TriggerAxis</span><span class="p">(</span><span class="s2">&quot;Right Trigger&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1023</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span>
+                                                      <span class="n">TriggerAxis</span><span class="p">(</span><span class="s2">&quot;Right Trigger&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1023</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">,</span>
                                                                   <span class="n">button_sname</span><span class="o">=</span><span class="s1">&#39;r2&#39;</span><span class="p">,</span> <span class="n">button_trigger_value</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
                                                       <span class="n">BinaryAxis</span><span class="p">(</span><span class="s2">&quot;D-pad Horizontal&quot;</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">b1name</span><span class="o">=</span><span class="s1">&#39;dleft&#39;</span><span class="p">,</span>
                                                                  <span class="n">b2name</span><span class="o">=</span><span class="s1">&#39;dright&#39;</span><span class="p">),</span>
@@ -277,6 +279,10 @@
                                                   <span class="p">],</span>
                                                   <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
                                                   <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">battery_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">read_power_level</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_unique_name</span><span class="p">))</span> <span class="o">/</span> <span class="mf">100.0</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;Wireless Microsoft XBox One S controller&#39;</span></div>
@@ -295,7 +301,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 03, 2018.
+      Last updated on Apr 15, 2018.
 
     </p>
   </div>
@@ -317,7 +323,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'2.1.0',
+            VERSION:'2.2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

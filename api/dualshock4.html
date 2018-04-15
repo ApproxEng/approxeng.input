@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PlayStation 4 Controller Support &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
+  <title>PlayStation 4 Controller Support &mdash; Approximate Engineering - Input 2.2.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.2.0 documentation" href="../_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.2.0 documentation" href="../index.html"/>
         <link rel="up" title="API Documentation" href="../api.html"/>
         <link rel="next" title="XBox-One S Controller Support" href="xboxone.html"/>
         <link rel="prev" title="PlayStation 3 Controller Support" href="dualshock3.html"/> 
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                2.1.0
+                2.2.0
               </div>
             
           
@@ -212,6 +212,27 @@ with the current Linux driver (mine, for example, doesn’t).</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="approxeng.input.dualshock4.DualShock4.set_leds">
+<code class="descname">set_leds</code><span class="sig-paren">(</span><em>hue=0.0</em>, <em>saturation=1.0</em>, <em>value=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock4.html#DualShock4.set_leds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock4.DualShock4.set_leds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The DualShock4 has an LED bar on the front of the controller. This function allows you to set the value of this
+bar. Note that the controller must be connected for this to work, if it’s not the call will just be ignored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>hue</strong> – The hue of the colour, defaults to 0, specified as a floating point value between 0.0 and 1.0.</li>
+<li><strong>saturation</strong> – Saturation of the colour, defaults to 1.0, specified as a floating point value between 0.0 and 1.0.</li>
+<li><strong>value</strong> – Value of the colour (i.e. how bright the light is overall), defaults to 1.0, specified as a floating point
+value between 0.0 and 1.0</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -239,7 +260,7 @@ with the current Linux driver (mine, for example, doesn’t).</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 03, 2018.
+      Last updated on Apr 15, 2018.
 
     </p>
   </div>
@@ -261,7 +282,7 @@ with the current Linux driver (mine, for example, doesn’t).</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.1.0',
+            VERSION:'2.2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

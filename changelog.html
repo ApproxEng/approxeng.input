@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Change Log &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
+  <title>Change Log &mdash; Approximate Engineering - Input 2.2.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.2.0 documentation" href="_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.2.0 documentation" href="index.html"/>
         <link rel="next" title="Simple Usage" href="simpleusage.html"/>
         <link rel="prev" title="Welcome to Approximate Engineering’s Python Game Controller Documentation!" href="index.html"/> 
 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                2.1.0
+                2.2.0
               </div>
             
           
@@ -96,6 +96,7 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-2-2-0">Version 2.2.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-1-0">Version 2.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-0-3-2-0-4">Version 2.0.3, 2.0.4</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-0-2">Version 2.0.2</a></li>
@@ -187,6 +188,12 @@ addition to the original support for PS3 controllers.</p>
 year also used the library, and my aim is to make this the definitive library for connecting game controllers to
 Python code, especially for robots (but it’ll work elsewhere if needed!)</p>
 </div>
+<div class="section" id="version-2-2-0">
+<h2>Version 2.2.0<a class="headerlink" href="#version-2-2-0" title="Permalink to this headline">¶</a></h2>
+<p>Added support for device LEDs where applicable. If your controller supports setting LEDs, these can be accessed through
+controller-class-specific methods, i.e. <a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4.set_leds" title="approxeng.input.dualshock4.DualShock4.set_leds"><code class="xref py py-meth docutils literal"><span class="pre">approxeng.input.dualshock4.DualShock4.set_leds()</span></code></a> for the DualShock4.
+There’s no general way to do this as all controllers are different. See <a class="reference internal" href="sys.html#sys"><span class="std std-ref">LEDs and Battery Monitoring</span></a></p>
+</div>
 <div class="section" id="version-2-1-0">
 <h2>Version 2.1.0<a class="headerlink" href="#version-2-1-0" title="Permalink to this headline">¶</a></h2>
 <p>Updated evdev dependency to 8.1.0, required for newer kernels. Added support from Tom Broughton for 8BitDo SF30 Pro
@@ -269,7 +276,7 @@ clone was dead on arrival…</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 03, 2018.
+      Last updated on Apr 15, 2018.
 
     </p>
   </div>
@@ -291,7 +298,7 @@ clone was dead on arrival…</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.1.0',
+            VERSION:'2.2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

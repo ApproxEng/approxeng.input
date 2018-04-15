@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Wii Remote Pro Controller Support &mdash; Approximate Engineering - Input 2.1.0 documentation</title>
+  <title>Wii Remote Pro Controller Support &mdash; Approximate Engineering - Input 2.2.0 documentation</title>
   
 
   
@@ -21,7 +21,7 @@
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.1.0 documentation" href="../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.2.0 documentation" href="../_static/opensearch.xml"/>
     
 
   
@@ -39,7 +39,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="Approximate Engineering - Input 2.1.0 documentation" href="../index.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.2.0 documentation" href="../index.html"/>
         <link rel="up" title="API Documentation" href="../api.html"/>
         <link rel="next" title="WiiMote Controller Support" href="wiimote.html"/>
         <link rel="prev" title="Steam Controller Support" href="steamcontroller.html"/> 
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                2.1.0
+                2.2.0
               </div>
             
           
@@ -215,8 +215,8 @@ match whatever’s returned by the <cite>scripts/list_devices.py</cite> script.<
 <span class="target" id="module-approxeng.input.wii"></span><dl class="class">
 <dt id="approxeng.input.wii.WiiRemotePro">
 <em class="property">class </em><code class="descclassname">approxeng.input.wii.</code><code class="descname">WiiRemotePro</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/wii.html#WiiRemotePro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.wii.WiiRemotePro" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wireless steam controller. Note that you must be running the xbox driver for the steam controller first, otherwise
-this won’t pick up any appropriate devices. Once this is running though it works just fine.</p>
+<dd><p>Wireless wi-u-pro controller. This theoretically supports battery and LED control, but for some reason doesn’t
+report its hardware ID back to evdev so we can’t associate it with nodes in /sys/class/xxx.</p>
 <dl class="method">
 <dt id="approxeng.input.wii.WiiRemotePro.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/wii.html#WiiRemotePro.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.wii.WiiRemotePro.__init__" title="Permalink to this definition">¶</a></dt>
@@ -265,7 +265,7 @@ this won’t pick up any appropriate devices. Once this is running though it wor
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 03, 2018.
+      Last updated on Apr 15, 2018.
 
     </p>
   </div>
@@ -287,7 +287,7 @@ this won’t pick up any appropriate devices. Once this is running though it wor
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'2.1.0',
+            VERSION:'2.2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

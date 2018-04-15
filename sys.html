@@ -1,0 +1,467 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>LEDs and Battery Monitoring &mdash; Approximate Engineering - Input 2.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.2.0 documentation" href="_static/opensearch.xml"/>
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Approximate Engineering - Input 2.2.0 documentation" href="index.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Approximate Engineering - Input
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">Advanced Usage Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Approximate Engineering - Input</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>LEDs and Battery Monitoring</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="leds-and-battery-monitoring">
+<span id="sys"></span><h1>LEDs and Battery Monitoring<a class="headerlink" href="#leds-and-battery-monitoring" title="Permalink to this headline">¶</a></h1>
+<p>New in version 2.2 is the ability to control the LEDs, and read the battery level, of some controllers. In this initial
+release the library supports LEDs on the PS3 and PS4 controllers, and battery monitoring for the PS3, PS4 and XB1 with
+the last of those only reporting battery levels when connected over bluetooth.</p>
+<div class="section" id="enabling-access-to-leds">
+<h2>Enabling access to LEDs<a class="headerlink" href="#enabling-access-to-leds" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You must do the steps below if you want to write to LED state on your controller. If you do not, it will not work
+and you’ll probably encounter file permission errors.</p>
+</div>
+<p>We write to files in <cite>/sys/class/leds</cite> to change LED state on a connected controller. By default under linux these file
+nodes are not writeable for non-root users. To fix this, we need to add some udev rules, create a new group for users
+who should be able to access LEDs, and then add the appropriate user to that group.</p>
+<p>Firstly create a new file, <cite>90-led-permission.rules</cite> in <cite>/etc/udev/rules.d/</cite> with the following contents:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Assign any new nodes in the &#39;leds&#39; subsystem (nodes in /sys/class/leds) to the group &#39;leds&#39; to write without root</span>
+
+<span class="c1"># Create a new group &#39;leds&#39; before this will do anything!</span>
+
+<span class="n">SUBSYSTEM</span><span class="o">==</span><span class="s2">&quot;leds&quot;</span><span class="p">,</span> <span class="n">ACTION</span><span class="o">==</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="n">RUN</span><span class="o">+=</span><span class="s2">&quot;/bin/chgrp -R leds /sys%p&quot;</span><span class="p">,</span> <span class="n">RUN</span><span class="o">+=</span><span class="s2">&quot;/bin/chmod -R g=u /sys%p&quot;</span>
+<span class="n">SUBSYSTEM</span><span class="o">==</span><span class="s2">&quot;leds&quot;</span><span class="p">,</span> <span class="n">ACTION</span><span class="o">==</span><span class="s2">&quot;change&quot;</span><span class="p">,</span> <span class="n">ENV</span><span class="p">{</span><span class="n">TRIGGER</span><span class="p">}</span><span class="o">!=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">RUN</span><span class="o">+=</span><span class="s2">&quot;/bin/chgrp -R leds /sys%p&quot;</span><span class="p">,</span> <span class="n">RUN</span><span class="o">+=</span><span class="s2">&quot;/bin/chmod -R g=u /sys%p&quot;</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">linenos:</th><td class="field-body">Then create a new <cite>leds</cite> group:</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>&gt; sudo groupadd leds
+</pre></div>
+</div>
+<p>Then add membership of that new group to the appropriate user. In this case we’ll use the user <cite>pi</cite>, the default user
+on the Raspberry Pi:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>&gt; sudo usermod -a -G leds pi
+</pre></div>
+</div>
+<p>Once you’ve done all the above, you need to either restart the pi (simplest option) or, if you know what you’re doing,
+force a re-load of the udev rules and log out then back in again to pick up the new group membership. Once this is done,
+any new nodes corresponding to LEDs will be writeable for users in the <cite>leds</cite> group, and the user you selected will be
+a member of that group.</p>
+</div>
+<div class="section" id="writing-to-leds">
+<h2>Writing to LEDs<a class="headerlink" href="#writing-to-leds" title="Permalink to this headline">¶</a></h2>
+<p>There is no single standard API used to write to LEDs, because each controller is different. If your controller supports
+this, and in version 2.2 this is restricted to the DS3 and DS4 controllers, it will be described in the documentation
+for the controller class itself. Specifically, for the DS3 controller you can control each individual red LED to be on
+or off with <a class="reference internal" href="api/dualshock3.html#approxeng.input.dualshock3.DualShock3.set_led" title="approxeng.input.dualshock3.DualShock3.set_led"><code class="xref py py-meth docutils literal"><span class="pre">approxeng.input.dualshock3.DualShock3.set_led()</span></code></a>, and on the DS4 controller you can set the hue,
+saturation and value (brightness) of the front bar RGB LED with <a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4.set_leds" title="approxeng.input.dualshock4.DualShock4.set_leds"><code class="xref py py-meth docutils literal"><span class="pre">approxeng.input.dualshock4.DualShock4.set_leds()</span></code></a>
+method. Because these methods are entirely controller specific, you should either user a form of the binder that
+requires that controller type, or explicitly check that you’ve got the right kind of controller (or handle the absence
+of these methods in your own code when you call them).</p>
+<p>The examples below show how to use the LEDs on the DS3 (scanning across the four LEDs), and the light bar on the DS4
+(animating a rainbow of colours):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+
+<span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="k">import</span> <span class="n">DualShock3</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="k">import</span> <span class="n">ControllerResource</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">active_led</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Force waiting for a DS3</span>
+        <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">controller_class</span><span class="o">=</span><span class="n">DualShock3</span><span class="p">)</span> <span class="k">as</span> <span class="n">controller</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">controller</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+                <span class="n">active_led</span> <span class="o">=</span> <span class="p">(</span><span class="n">active_led</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span>
+                <span class="k">for</span> <span class="n">led_number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">led_number</span> <span class="o">==</span> <span class="n">active_led</span><span class="p">:</span>
+                        <span class="n">controller</span><span class="o">.</span><span class="n">set_led</span><span class="p">(</span><span class="n">led_number</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">controller</span><span class="o">.</span><span class="n">set_led</span><span class="p">(</span><span class="n">led_number</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="c1"># No DS3 controller found, wait for a bit and try again</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Waiting for a DS3 controller connection&#39;</span><span class="p">)</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">python
+:linenos:</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+
+<span class="kn">from</span> <span class="nn">approxeng.input.dualshock4</span> <span class="k">import</span> <span class="n">DualShock4</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="k">import</span> <span class="n">ControllerResource</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">hue</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Force waiting for a DS4 controller, as that&#39;s the only one with the call</span>
+        <span class="c1"># to set the light bar in this way.</span>
+        <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">controller_class</span><span class="o">=</span><span class="n">DualShock4</span><span class="p">)</span> <span class="k">as</span> <span class="n">ds4</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">ds4</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+                <span class="c1"># Set the hue of the light bar, saturation and value default to 1.0</span>
+                <span class="n">ds4</span><span class="o">.</span><span class="n">set_leds</span><span class="p">(</span><span class="n">hue</span><span class="o">=</span><span class="n">hue</span><span class="p">)</span>
+                <span class="c1"># Pause for a bit, advance hue, and go around again</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="mf">0.02</span><span class="p">)</span>
+                <span class="n">hue</span> <span class="o">=</span> <span class="n">hue</span> <span class="o">+</span> <span class="mf">0.01</span>
+                <span class="k">if</span> <span class="n">hue</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
+                    <span class="n">hue</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="c1"># No DS4 controller found, wait for a bit and try again</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Waiting for a DS4 controller connection&#39;</span><span class="p">)</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">python
+:linenos:</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="reading-battery-levels">
+<h2>Reading Battery Levels<a class="headerlink" href="#reading-battery-levels" title="Permalink to this headline">¶</a></h2>
+<p>Controllers now all have a property <cite>battery_level</cite>. Controllers that support battery monitoring (currently the DS3, DS4
+and XB1 controller when connected wirelessly) will return a floating point value between 0.0 (empty) and 1.0 (full) to
+indicate the battery level of the associated controller. Controllers that do not support this feature will return None,
+so you potentially need to handle the return value not being a number.</p>
+<p>Not all controllers report fine-grained battery levels. For example, the DS3 only reports four partial battery levels,
+so you’ll probably only see 0, 0.25, 0.5, 0.75, and 1.0, whereas the DS4 reports to the nearest 0.1 and the XB1 is
+slightly finer grained.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Be aware that every time you read the <cite>battery_level</cite> property, the code has to open a file and read the value from
+it. While this is fast, because the file is a virtual one, the battery level only changes quite slowly so you should
+only query this property fairly infrequently to avoid excessive IO access. Checking every minute or so is almost
+certainly going to be good enough.</p>
+</div>
+<p>The updated <cite>show_controls.py</cite> script now indicates battery level if the controller supports it (see line 67 below):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">curses</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">sleep</span>
+
+<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="k">import</span> <span class="n">ControllerResource</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">screen</span><span class="p">):</span>
+    <span class="n">curses</span><span class="o">.</span><span class="n">curs_set</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_RED</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLACK</span><span class="p">)</span>
+    <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_GREEN</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLACK</span><span class="p">)</span>
+    <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_YELLOW</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLACK</span><span class="p">)</span>
+    <span class="n">curses</span><span class="o">.</span><span class="n">start_color</span><span class="p">()</span>
+    <span class="n">last_presses</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">red</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">green</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">yellow</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+    <span class="c1"># Loop forever</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">()</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
+                <span class="k">while</span> <span class="n">joystick</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+                    <span class="c1"># Check for presses since the last time we checked</span>
+                    <span class="n">joystick</span><span class="o">.</span><span class="n">check_presses</span><span class="p">()</span>
+
+                    <span class="n">screen</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+                    <span class="k">if</span> <span class="n">joystick</span><span class="o">.</span><span class="n">has_presses</span><span class="p">:</span>
+                        <span class="n">last_presses</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">presses</span>
+
+                    <span class="c1"># Print most recent presses set</span>
+                    <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;last presses:&#39;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">last_presses</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">button_name</span> <span class="ow">in</span> <span class="n">last_presses</span><span class="p">:</span>
+                            <span class="n">green</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">button_name</span><span class="p">))</span>
+
+                    <span class="c1"># Print axis values</span>
+                    <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;axes:&#39;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">axis_name</span> <span class="ow">in</span> <span class="n">joystick</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
+                        <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">{}</span><span class="s1">=&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_name</span><span class="p">))</span>
+                        <span class="n">axis_value</span> <span class="o">=</span> <span class="n">joystick</span><span class="p">[</span><span class="n">axis_name</span><span class="p">]</span>
+                        <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_value</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">axis_value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">green</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                        <span class="k">elif</span> <span class="n">axis_value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">red</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">yellow</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+                    <span class="c1"># Print button hold times</span>
+                    <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;hold times:&#39;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">button_name</span> <span class="ow">in</span> <span class="n">joystick</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
+                        <span class="n">hold_time</span> <span class="o">=</span> <span class="n">joystick</span><span class="p">[</span><span class="n">button_name</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="n">hold_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">{}</span><span class="s1">=&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">button_name</span><span class="p">))</span>
+                            <span class="n">green</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hold_time</span><span class="p">))</span>
+
+                    <span class="c1"># Print some details of the controller</span>
+                    <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;controller class: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">joystick</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+                    <span class="n">battery_level</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">battery_level</span>
+                    <span class="k">if</span> <span class="n">battery_level</span><span class="p">:</span>
+                        <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;battery_level: </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">joystick</span><span class="o">.</span><span class="n">battery_level</span><span class="p">))</span>
+                    <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="n">joystick</span><span class="o">.</span><span class="n">controls</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+
+                    <span class="n">screen</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Waiting for controller&#39;</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+            <span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+
+
+<span class="n">curses</span><span class="o">.</span><span class="n">wrapper</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">language:</th><td class="field-body">python
+:linenos:</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Tom Oinn.
+      Last updated on Apr 15, 2018.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2.2.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

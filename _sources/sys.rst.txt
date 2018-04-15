@@ -23,7 +23,7 @@ Firstly create a new file, `90-led-permission.rules` in `/etc/udev/rules.d/` wit
 
 .. literalinclude:: ../90-led-permissions.rules
 
-    Then create a new `leds` group:
+Then create a new `leds` group:
 
 .. code-block:: bash
 

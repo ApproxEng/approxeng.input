@@ -185,6 +185,15 @@ and you’ll probably encounter file permission errors.</p>
 nodes are not writeable for non-root users. To fix this, we need to add some udev rules, create a new group for users
 who should be able to access LEDs, and then add the appropriate user to that group.</p>
 <p>Firstly create a new file, <cite>90-led-permission.rules</cite> in <cite>/etc/udev/rules.d/</cite> with the following contents:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Assign any new nodes in the &#39;leds&#39; subsystem (nodes in /sys/class/leds) to the group &#39;leds&#39; to write without root</span>
+
+<span class="c1"># Create a new group &#39;leds&#39; before this will do anything!</span>
+
+<span class="n">SUBSYSTEM</span><span class="o">==</span><span class="s2">&quot;leds&quot;</span><span class="p">,</span> <span class="n">ACTION</span><span class="o">==</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="n">RUN</span><span class="o">+=</span><span class="s2">&quot;/bin/chgrp -R leds /sys%p&quot;</span><span class="p">,</span> <span class="n">RUN</span><span class="o">+=</span><span class="s2">&quot;/bin/chmod -R g=u /sys%p&quot;</span>
+<span class="n">SUBSYSTEM</span><span class="o">==</span><span class="s2">&quot;leds&quot;</span><span class="p">,</span> <span class="n">ACTION</span><span class="o">==</span><span class="s2">&quot;change&quot;</span><span class="p">,</span> <span class="n">ENV</span><span class="p">{</span><span class="n">TRIGGER</span><span class="p">}</span><span class="o">!=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span> <span class="n">RUN</span><span class="o">+=</span><span class="s2">&quot;/bin/chgrp -R leds /sys%p&quot;</span><span class="p">,</span> <span class="n">RUN</span><span class="o">+=</span><span class="s2">&quot;/bin/chmod -R g=u /sys%p&quot;</span>
+</pre></div>
+</div>
+<p>Then create a new <cite>leds</cite> group:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>&gt; sudo groupadd leds
 </pre></div>
 </div>

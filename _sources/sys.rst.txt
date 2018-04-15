@@ -22,7 +22,7 @@ who should be able to access LEDs, and then add the appropriate user to that gro
 Firstly create a new file, `90-led-permission.rules` in `/etc/udev/rules.d/` with the following contents:
 
 .. literalinclude:: ../90-led-permissions.rules
-:linenos:
+    :linenos:
 
     Then create a new `leds` group:
 

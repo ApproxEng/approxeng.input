@@ -1,5 +1,7 @@
 from os import listdir
 
+from approxeng.input import logger
+
 __CACHED_SCAN__ = None
 
 
@@ -27,9 +29,9 @@ def write_led_value(hw_id, led_name, value):
             f.write(str(int(value)))
             f.close()
         else:
-            print("No led called {} in {}".format(led_name, hw_id))
+            logger.debug("No led called {} in {}".format(led_name, hw_id))
     else:
-        print("No hardware ID {} in scan".format(hw_id))
+        logger.debug("No hardware ID {} in scan".format(hw_id))
 
 
 def read_power_level(hw_id):

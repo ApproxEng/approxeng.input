@@ -15,8 +15,8 @@ Version 2.2.0
 -------------
 
 Added support for device LEDs where applicable. If your controller supports setting LEDs, these can be accessed through
-controller-class-specific methods, i.e. :meth:`approxeng.input.DualShock4.set_leds` for the DualShock4. There's no
-general way to do this as all controllers are different.
+controller-class-specific methods, i.e. :meth:`approxeng.input.dualshock4.DualShock4.set_leds` for the DualShock4.
+There's no general way to do this as all controllers are different. See :ref:`sys`
 
 Version 2.1.0
 -------------

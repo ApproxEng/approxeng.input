@@ -1,7 +1,7 @@
 Welcome to Approximate Engineering's Python Game Controller Documentation!
 ==========================================================================
 
-This library simplified access to the axes and buttons on game controller hardware from Python. It was originally
+This library simplifies access to the axes and buttons on game controller hardware from Python. It was originally
 written to support my PiWars_ robots, and remains focused on similar projects, but can be used wherever game controller
 functionality is required. The current code only supports Linux based systems, including the Raspberry Pi.
 

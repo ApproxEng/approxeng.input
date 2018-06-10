@@ -247,7 +247,7 @@ class Controller(object):
     def check_presses(self):
         """
         Return the set of Buttons which have been pressed since this call was last made, clearing it as we do. This is
-        a shortcut do doing 'buttons.get_and_clear_button_press_history'
+        a shortcut to doing 'buttons.get_and_clear_button_press_history'
 
         :return:
             A ButtonPresses instance which contains buttons which were pressed since this call was last made.

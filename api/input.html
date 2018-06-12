@@ -117,6 +117,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
             
@@ -249,7 +250,7 @@ such as motion sensors.</li>
 <dt id="approxeng.input.Controller.check_presses">
 <code class="descname">check_presses</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.check_presses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.check_presses" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the set of Buttons which have been pressed since this call was last made, clearing it as we do. This is
-a shortcut do doing ‘buttons.get_and_clear_button_press_history’</p>
+a shortcut to doing ‘buttons.get_and_clear_button_press_history’</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -319,7 +320,7 @@ the control is at 0.0, at least in principle.</p>
 <dt id="approxeng.input.CentredAxis.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>min_raw_value</em>, <em>max_raw_value</em>, <em>axis_event_code</em>, <em>invert=False</em>, <em>dead_zone=0.0</em>, <em>hot_zone=0.0</em>, <em>sname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#CentredAxis.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.CentredAxis.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new CentredAxis - this will be done internally within the controller classes i.e.
-<code class="xref py py-class docutils literal"><span class="pre">approxeng.input.sixaxis.SixAxis</span></code></p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.sixaxis.SixAxis</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -417,7 +418,7 @@ axes.</p>
 <dt id="approxeng.input.TriggerAxis.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>min_raw_value</em>, <em>max_raw_value</em>, <em>axis_event_code</em>, <em>dead_zone=0.0</em>, <em>hot_zone=0.0</em>, <em>sname=None</em>, <em>button_sname=None</em>, <em>button_trigger_value=0.5</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#TriggerAxis.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.TriggerAxis.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new TriggerAxis - this will be done internally within the controller classes i.e.
-<code class="xref py py-class docutils literal"><span class="pre">approxeng.input.xboxone.XBoxOneSPad</span></code></p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.xboxone.XBoxOneSPad</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -547,8 +548,8 @@ instantiate this yourself.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axes</strong> – a sequence of <a class="reference internal" href="#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> or <a class="reference internal" href="#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> or
-<a class="reference internal" href="#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.BinaryAxis</span></code></a> containing all the axes the controller supports.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axes</strong> – a sequence of <a class="reference internal" href="#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> or <a class="reference internal" href="#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> or
+<a class="reference internal" href="#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.BinaryAxis</span></code></a> containing all the axes the controller supports.</td>
 </tr>
 </tbody>
 </table>
@@ -646,7 +647,8 @@ possible forms of interaction required.</p>
 <dl class="method">
 <dt id="approxeng.input.Buttons.ButtonState.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>button</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.ButtonState.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.ButtonState.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -658,7 +660,7 @@ possible forms of interaction required.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>buttons_and_axes</strong> – a list of <a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Button</span></code></a> instances which will be managed by this class</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>buttons_and_axes</strong> – a list of <a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Button</span></code></a> instances which will be managed by this class</td>
 </tr>
 </tbody>
 </table>
@@ -771,7 +773,7 @@ have happened.</p>
 <li><strong>button_handler</strong> – A function which will be called when any of the specified buttons are pressed. The
 function is called with the Button that was pressed as the sole argument.</li>
 <li><strong>buttons</strong> (<em>[</em><a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><em>Button</em></a><em>]</em>) – A list or one or more buttons which should trigger the handler when pressed. Buttons
-are specified as <a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Button</span></code></a> instances, in general controller implementations will
+are specified as <a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Button</span></code></a> instances, in general controller implementations will
 expose these as constants such as SixAxis.BUTTON_CIRCLE. A single Button can be specified if only one button
 binding is required.</li>
 </ul>
@@ -793,7 +795,8 @@ binding is required.</li>
 <dl class="method">
 <dt id="approxeng.input.ButtonPresses.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>buttons</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#ButtonPresses.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.ButtonPresses.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -822,7 +825,7 @@ binding is required.</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 15, 2018.
+      Last updated on Jun 12, 2018.
 
     </p>
   </div>

@@ -111,6 +111,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
             
@@ -176,7 +177,7 @@
             
   <div class="section" id="streaming-axis-and-button-hold-values">
 <span id="example-stream"></span><h1>Streaming Axis and Button Hold values<a class="headerlink" href="#streaming-axis-and-button-hold-values" title="Permalink to this headline">¶</a></h1>
-<p>Some other APIs, most notably <a class="reference external" href="http://gpiozero.readthedocs.io/en/stable/index.html">Gpiozero</a> can configure devices to read from iterators over data such as axis values. To
+<p>Some other APIs, most notably <a class="reference external" href="http://gpiozero.readthedocs.io/en/stable/index.html">Gpiozero</a>, can configure devices to read from iterators over data such as axis values. To
 use this facility we need to be able to produce generators (iterators which work over lazily evaluated, potentially
 infinite, sets of data) containing streams of axis and button hold values. These generators can then be set as the
 source for anything in e.g. Gpiozero which has a <a class="reference external" href="http://gpiozero.readthedocs.io/en/stable/api_generic.html#sourcemixin">SourceMixin</a> defined, including motors and similar.</p>
@@ -184,7 +185,7 @@ source for anything in e.g. Gpiozero which has a <a class="reference external" h
 created, then used by an infinite loop to print those values. The loop only exits with a StopIteration exception when
 the controller disconnects. This is also an example of explicitly creating and binding a controller, rather than using
 the resource abstraction shown in the other examples.</p>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -271,7 +272,7 @@ is taken off the stream.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 15, 2018.
+      Last updated on Jun 12, 2018.
 
     </p>
   </div>

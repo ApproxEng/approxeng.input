@@ -114,6 +114,7 @@
 <li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
             
@@ -183,7 +184,7 @@ attributes of the controller class itself. Read on…</p>
 <div class="section" id="connecting-to-a-controller">
 <h2>Connecting to a controller<a class="headerlink" href="#connecting-to-a-controller" title="Permalink to this headline">¶</a></h2>
 <p>To connect to a controller you do the following (including error handling):</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
 <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
@@ -208,7 +209,7 @@ this case, bind it to the ‘joystick’ variable which can then be used to read
 example, you have a controller that goes out of range, runs out of batteries, or is turned off while in use this will be
 set to False and you can handle the case correctly (if using this code in a robot, this would be an excellent time to
 turn of all your motors, for instance!)</p>
-<p>The <a class="reference internal" href="api/selectbinder.html#approxeng.input.selectbinder.ControllerResource" title="approxeng.input.selectbinder.ControllerResource"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.selectbinder.ControllerResource</span></code></a> class accepts a number of, optional, arguments. These can be
+<p>The <a class="reference internal" href="api/selectbinder.html#approxeng.input.selectbinder.ControllerResource" title="approxeng.input.selectbinder.ControllerResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.selectbinder.ControllerResource</span></code></a> class accepts a number of, optional, arguments. These can be
 used to tell it which controller type to use (the default is to connect to the first controller it can understand, but
 if you have multiple controllers connected for some reason you might want to tell it to use your XBox1 rather than your
 PS4 controller). They can also be used to configure the default settings for axes, and there’s an option to print out
@@ -231,7 +232,7 @@ on or off, an analogue axis has a floating point value associated with its curre
 </div></blockquote>
 <p>Axis values are read as properties of the joystick object (in this and other examples we’re not showing the exception
 handling from the first example, but you should still do it!):</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
 <span class="c1"># Get a joystick</span>
 <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">()</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
@@ -250,7 +251,7 @@ joystick object.</p>
 <div class="section" id="checking-for-held-buttons">
 <h2>Checking for Held Buttons<a class="headerlink" href="#checking-for-held-buttons" title="Permalink to this headline">¶</a></h2>
 <p>You can also check whether a button is currently held, and, if so, how long it’s been held for to-date in seconds:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
 <span class="c1"># Get a joystick</span>
 <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">()</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
@@ -271,7 +272,7 @@ joystick object.</p>
 <h2>Reading multiple Axis or Button Hold values<a class="headerlink" href="#reading-multiple-axis-or-button-hold-values" title="Permalink to this headline">¶</a></h2>
 <p>You can read multiple axis values and button hold times in a single call, simply by passing multiple names into the
 call (you can, as the example below shows, query a mix of button hold times and axis values in one call):</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
 <span class="c1"># Get a joystick</span>
 <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">()</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
@@ -284,7 +285,7 @@ call (you can, as the example below shows, query a mix of button hold times and 
 </div>
 </div>
 <div class="section" id="querying-button-presses">
-<h2>Querying Button Presses<a class="headerlink" href="#querying-button-presses" title="Permalink to this headline">¶</a></h2>
+<span id="poll-presses-label"></span><h2>Querying Button Presses<a class="headerlink" href="#querying-button-presses" title="Permalink to this headline">¶</a></h2>
 <p>Another common requirement you’ll have will be to find out whether the user pressed a button, even if they’re not
 currently holding it down. This sounds obvious, but in fact it’s slightly more subtle - what you really want to know is
 whether the user pressed a button at any point since you last asked this question! That way, even if you don’t ask very
@@ -298,7 +299,7 @@ property of the controller for later access.</p>
 and the one before that. Only call check_presses() once per loop, before the code you then want to read the presses
 attribute</p>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
 <span class="c1"># Get a joystick</span>
 <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">()</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
@@ -794,7 +795,7 @@ in 2.1.0 of this library onwards.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 15, 2018.
+      Last updated on Jun 12, 2018.
 
     </p>
   </div>

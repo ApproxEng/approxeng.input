@@ -120,6 +120,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
             
@@ -195,7 +196,7 @@ don’t need to care about any of these things though, you just need to know tha
 use!</p>
 </div>
 <p>The binder provides a bridge between the low level operating system representation of your connected controller and the
-high level python classes such as <a class="reference internal" href="dualshock3.html#approxeng.input.dualshock3.DualShock3" title="approxeng.input.dualshock3.DualShock3"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.dualshock3.DualShock3</span></code></a> which your code uses. The binder starts
+high level python classes such as <a class="reference internal" href="dualshock3.html#approxeng.input.dualshock3.DualShock3" title="approxeng.input.dualshock3.DualShock3"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.dualshock3.DualShock3</span></code></a> which your code uses. The binder starts
 a new thread to pull events out of the operating system and update your controller object, this is the bit that means
 you don’t have to continuously poll the controller, it just updates in the background. It’s also the thread which calls
 any functions you’ve bound to buttons as event handlers. You can either manually bind the controller yourself (in which
@@ -203,7 +204,7 @@ case you’re also responsible for un-binding it after you’re done!) or you ca
 <p>To bind a controller manually you’ll need both an instance of the controller class, and one or more evdev InputDevice
 instances from which events should be extracted. The following code shows use of the ‘find_single_controller’ function
 to make this reasonably easy:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">bind_controller</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">bind_controller</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.controllers</span> <span class="kn">import</span> <span class="n">find_single_controller</span>
 
@@ -220,7 +221,7 @@ to make this reasonably easy:</p>
 </div>
 <p>Binding a controller manually works, but there’s a simpler way to handle the process (and one which avoids ever having
 to worry about explicitly unbinding the controller!):</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
 
 <span class="c1"># Locate a controller, instantiate it, and retrieve the InputDevice devices with which it&#39;s associated</span>
@@ -236,7 +237,7 @@ because of exceptions or other error conditions. It’s a simpler and more robus
 you use it instead of explicitly binding it yourself.</p>
 <p>This still requires you to go and find your controller, in most cases you’ll only have one controller of a given kind.
 There’s a shorter form of the resource binding that takes advantage of this case:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
 
 <span class="c1"># Specifying a controller_class here will search for an attached controller of the given kind</span>
@@ -251,7 +252,7 @@ to the first controller of any kind that’s found! This, along with the use of 
 buttons on the controllers, means you can create a robot that works with PS3, PS4 or XBoxOne controllers based on what
 you have lying around, very handy for those PiWars moments when your controller dies and you need to borrow one from the
 next table along…</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
 <span class="c1"># No controller_class is specified, so we look for any joystick from the list we support, and use the first one!</span>
 <span class="c1"># If one can&#39;t be found we&#39;ll raise IOError as with the previous code</span>
@@ -335,7 +336,7 @@ controllers therefore won’t be detected as PS3 controllers even though they’
 however, explicitly tell the library to route events from a particular evdev InputDevice to a previously constructed
 controller instance. This works with either the explicit binding mechanism or with the resource. You’ll have to acquire
 the appropriate InputDevice from the evdev APIs first, that part’s up to you, but when you have one you can do this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
 
 <span class="c1"># This is an InputDevice from which events should be pulled</span>
@@ -381,7 +382,7 @@ the appropriate InputDevice from the evdev APIs first, that part’s up to you, 
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 15, 2018.
+      Last updated on Jun 12, 2018.
 
     </p>
   </div>

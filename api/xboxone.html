@@ -121,6 +121,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
             
@@ -193,11 +194,11 @@
 <p>The XBox One S controller (the most modern, with bluetooth support) can be used without any dongles, but you will have
 to change a configuration option in the bluetooth driver. This is done by creating a file in <cite>/etc/modprobe.d/</cite>. The
 file can be called anything, you’ll need to be root to create it, and must specify a single line. In my case I used</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>tom@Ogre ~ $ sudo nano /etc/modprobe.d/bluetooth.conf
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tom@Ogre ~ $ sudo nano /etc/modprobe.d/bluetooth.conf
 </pre></div>
 </div>
 <p>…to create a file, with a single line:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>options bluetooth <span class="nv">disable_ertm</span><span class="o">=</span>Y
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>options bluetooth <span class="nv">disable_ertm</span><span class="o">=</span>Y
 </pre></div>
 </div>
 <p>After doing this you’ll need to reboot your computer. If you don’t perform this step your controller will pair, but will
@@ -229,10 +230,10 @@ as for the wireless!</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
-<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
 </ul>
 </td>
 </tr>
@@ -258,15 +259,21 @@ be done by creating a file in /etc/modprobe.d with the line ‘options bluetooth
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
-<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="approxeng.input.xboxone.WirelessXBoxOneSPad.battery_level">
+<code class="descname">battery_level</code><a class="headerlink" href="#approxeng.input.xboxone.WirelessXBoxOneSPad.battery_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the battery level, as a float from 0.0 to 1.0, or None if not available</p>
 </dd></dl>
 
 </dd></dl>
@@ -297,7 +304,7 @@ be done by creating a file in /etc/modprobe.d with the line ‘options bluetooth
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 15, 2018.
+      Last updated on Jun 12, 2018.
 
     </p>
   </div>

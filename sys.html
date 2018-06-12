@@ -185,7 +185,7 @@ and you’ll probably encounter file permission errors.</p>
 nodes are not writeable for non-root users. To fix this, we need to add some udev rules, create a new group for users
 who should be able to access LEDs, and then add the appropriate user to that group.</p>
 <p>Firstly create a new file, <cite>90-led-permission.rules</cite> in <cite>/etc/udev/rules.d/</cite> with the following contents:</p>
-<div class="highlight-default"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+<div class="highlight-default notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
@@ -199,12 +199,12 @@ who should be able to access LEDs, and then add the appropriate user to that gro
 </pre></div>
 </td></tr></table></div>
 <p>Then create a new <cite>leds</cite> group:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>&gt; sudo groupadd leds
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; sudo groupadd leds
 </pre></div>
 </div>
 <p>Then add membership of that new group to the appropriate user. In this case we’ll use the user <cite>pi</cite>, the default user
 on the Raspberry Pi:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>&gt; sudo usermod -a -G leds pi
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; sudo usermod -a -G leds pi
 </pre></div>
 </div>
 <p>Once you’ve done all the above, you need to either restart the pi (simplest option) or, if you know what you’re doing,
@@ -217,14 +217,14 @@ a member of that group.</p>
 <p>There is no single standard API used to write to LEDs, because each controller is different. If your controller supports
 this, and in version 2.2 this is restricted to the DS3 and DS4 controllers, it will be described in the documentation
 for the controller class itself. Specifically, for the DS3 controller you can control each individual red LED to be on
-or off with <a class="reference internal" href="api/dualshock3.html#approxeng.input.dualshock3.DualShock3.set_led" title="approxeng.input.dualshock3.DualShock3.set_led"><code class="xref py py-meth docutils literal"><span class="pre">approxeng.input.dualshock3.DualShock3.set_led()</span></code></a>, and on the DS4 controller you can set the hue,
-saturation and value (brightness) of the front bar RGB LED with <a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4.set_leds" title="approxeng.input.dualshock4.DualShock4.set_leds"><code class="xref py py-meth docutils literal"><span class="pre">approxeng.input.dualshock4.DualShock4.set_leds()</span></code></a>
+or off with <a class="reference internal" href="api/dualshock3.html#approxeng.input.dualshock3.DualShock3.set_led" title="approxeng.input.dualshock3.DualShock3.set_led"><code class="xref py py-meth docutils literal notranslate"><span class="pre">approxeng.input.dualshock3.DualShock3.set_led()</span></code></a>, and on the DS4 controller you can set the hue,
+saturation and value (brightness) of the front bar RGB LED with <a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4.set_leds" title="approxeng.input.dualshock4.DualShock4.set_leds"><code class="xref py py-meth docutils literal notranslate"><span class="pre">approxeng.input.dualshock4.DualShock4.set_leds()</span></code></a>
 method. Because these methods are entirely controller specific, you should either user a form of the binder that
 requires that controller type, or explicitly check that you’ve got the right kind of controller (or handle the absence
 of these methods in your own code when you call them).</p>
 <p>The examples below show how to use the LEDs on the DS3 (scanning across the four LEDs), and the light bar on the DS4
 (animating a rainbow of colours):</p>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -269,7 +269,7 @@ of these methods in your own code when you call them).</p>
         <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -334,7 +334,7 @@ only query this property fairly infrequently to avoid excessive IO access. Check
 certainly going to be good enough.</p>
 </div>
 <p>The updated <cite>show_controls.py</cite> script now indicates battery level if the controller supports it (see line 67 below):</p>
-<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
  4
@@ -521,7 +521,7 @@ certainly going to be good enough.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 15, 2018.
+      Last updated on Jun 12, 2018.
 
     </p>
   </div>

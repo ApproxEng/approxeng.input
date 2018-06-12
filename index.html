@@ -166,21 +166,23 @@
             
   <div class="section" id="welcome-to-approximate-engineering-s-python-game-controller-documentation">
 <h1>Welcome to Approximate Engineering’s Python Game Controller Documentation!<a class="headerlink" href="#welcome-to-approximate-engineering-s-python-game-controller-documentation" title="Permalink to this headline">¶</a></h1>
-<p>This library simplified access to the axes and buttons on game controller hardware from Python. It was originally
+<p>This library simplifies access to the axes and buttons on game controller hardware from Python. It was originally
 written to support my <a class="reference external" href="http://piwars.org">PiWars</a> robots, and remains focused on similar projects, but can be used wherever game controller
 functionality is required. The current code only supports Linux based systems, including the Raspberry Pi.</p>
 <div class="section" id="supported-controllers">
 <h2>Supported Controllers<a class="headerlink" href="#supported-controllers" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/ps3.jpg"><img alt="_images/ps3.jpg" src="_images/ps3.jpg" style="width: 20%;" /></a>
 <a class="reference internal image-reference" href="_images/ps4.jpg"><img alt="_images/ps4.jpg" src="_images/ps4.jpg" style="width: 20%;" /></a>
+<a class="reference internal image-reference" href="_images/pihut.jpg"><img alt="_images/pihut.jpg" src="_images/pihut.jpg" style="width: 20%;" /></a>
 <a class="reference internal image-reference" href="_images/rock-candy.jpg"><img alt="_images/rock-candy.jpg" src="_images/rock-candy.jpg" style="width: 20%;" /></a>
-<a class="reference internal image-reference" href="_images/xbox-one.jpg"><img alt="_images/xbox-one.jpg" src="_images/xbox-one.jpg" style="width: 20%;" /></a>
 <a class="reference internal image-reference" href="_images/steam-controller.jpg"><img alt="_images/steam-controller.jpg" src="_images/steam-controller.jpg" style="width: 20%;" /></a>
 <a class="reference internal image-reference" href="_images/wii-pro.jpg"><img alt="_images/wii-pro.jpg" src="_images/wii-pro.jpg" style="width: 20%;" /></a>
-<a class="reference internal image-reference" href="_images/pihut.jpg"><img alt="_images/pihut.jpg" src="_images/pihut.jpg" style="width: 20%;" /></a>
+<a class="reference internal image-reference" href="_images/wiimote.jpg"><img alt="_images/wiimote.jpg" src="_images/wiimote.jpg" style="width: 20%;" /></a>
+<a class="reference internal image-reference" href="_images/xbox-one.jpg"><img alt="_images/xbox-one.jpg" src="_images/xbox-one.jpg" style="width: 20%;" /></a>
 <a class="reference internal image-reference" href="_images/sf30pro.jpg"><img alt="_images/sf30pro.jpg" src="_images/sf30pro.jpg" style="width: 20%;" /></a>
 <p>In general you don’t need to code to a specific controller, but some may need extra steps when connecting to your Pi or
-other computer. You can see more details for specific controller types at the following:</p>
+other computer. In other cases, some controllers offer unique features such as the PS4’s light bar. You can see more
+details for specific controller types at the following:</p>
 <blockquote>
 <div><ul class="simple">
 <li><a class="reference internal" href="api/dualshock3.html#api-dualshock3"><span class="std std-ref">PlayStation 3 Controller Support</span></a></li>
@@ -205,12 +207,13 @@ controllers.</li>
 <li>Mike Horne (<a class="reference external" href="https://twitter.com/recantha">&#64;recantha</a>) add support for the <a class="reference external" href="https://thepihut.com/products/raspberry-pi-compatible-wireless-gamepad-controller">PiHut</a> controller and an example for
 the <a class="reference internal" href="examples/camjam.html#example-camjam"><span class="std std-ref">CamJam Edukit 3 Robot</span></a></li>
 <li>Tom Broughton (<a class="reference external" href="https://twitter.com/dpolymath">&#64;dpolymath</a>) added support for the SF30Pro controller.</li>
+<li>Clare Macrae (<a class="reference external" href="https://twitter.com/ClareMacraeUK">&#64;ClareMacraeUK</a>) helped herd the documentation beasts.</li>
 </ul>
 </div>
 <div class="section" id="getting-the-code">
 <h2>Getting the code<a class="headerlink" href="#getting-the-code" title="Permalink to this headline">¶</a></h2>
 <p>You can install the code using pip, you’ll have to add a few native libraries first though:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ sudo apt-get install python-dev python-pip gcc
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install python-dev python-pip gcc
 $ pip install approxeng.input
 </pre></div>
 </div>
@@ -356,7 +359,7 @@ almost everything Python based. Documentation (this site) is generated using Sph
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 15, 2018.
+      Last updated on Jun 12, 2018.
 
     </p>
   </div>

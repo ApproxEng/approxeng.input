@@ -40,6 +40,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Approximate Engineering - Input 2.2.0 documentation" href="index.html"/>
+        <link rel="next" title="LEDs and Battery Monitoring" href="sys.html"/>
         <link rel="prev" title="Tiny4WD Robot Drive" href="examples/tiny4wd.html"/> 
 
   
@@ -110,6 +111,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#more-about-analogue-axes">More about Analogue Axes</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
             
@@ -177,7 +179,7 @@
 joystick axes which are used for any kind of controller, particular controllers and binding mechanisms are implemented
 in sub-modules. The key classes shared across all controllers are:</p>
 <ul class="simple">
-<li><a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> <a class="reference internal" href="api/input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> and <a class="reference internal" href="api/input.html#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.BinaryAxis</span></code></a>
+<li><a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> <a class="reference internal" href="api/input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> and <a class="reference internal" href="api/input.html#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.BinaryAxis</span></code></a>
 represent different kinds of axis of an analogue control. The centred axis is used for joysticks with a negative value
 at one end of the range and positive at the other, whereas the trigger axis is used for axes with zero at the resting
 position and increasingly positive values as the control is pressed. As the names suggest, these are used for centred
@@ -185,13 +187,13 @@ and trigger controls respectively - a PS3 joystick consists of two centred axes,
 a single trigger axis. The BinaryAxis is used for controllers which export buttons as axes (both the PS4 and the XBox
 controller D-pads are actually a pair of axes in terms of implementation, although they don’t have any analogue
 control, they just emit either -1, 0 or 1)</li>
-<li><a class="reference internal" href="api/input.html#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Button</span></code></a> represents a single button. As with the Axis class you don’t create these, instead you
+<li><a class="reference internal" href="api/input.html#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Button</span></code></a> represents a single button. As with the Axis class you don’t create these, instead you
 need to use the instances provided by the driver classes.</li>
-<li><a class="reference internal" href="api/input.html#approxeng.input.Buttons" title="approxeng.input.Buttons"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Buttons</span></code></a> represents the state of all the buttons on the controller. You’ll use the provided
+<li><a class="reference internal" href="api/input.html#approxeng.input.Buttons" title="approxeng.input.Buttons"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Buttons</span></code></a> represents the state of all the buttons on the controller. You’ll use the provided
 instance of this class to register button handlers, ask whether any buttons were pressed, and get information about
 how long a button has been held down.</li>
-<li>Finally, all controller classes inherit from <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Controller</span></code></a>. This provides a
-<a class="reference internal" href="api/input.html#approxeng.input.Buttons" title="approxeng.input.Buttons"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Buttons</span></code></a> instance called ‘buttons’, and an <a class="reference internal" href="api/input.html#approxeng.input.Axes" title="approxeng.input.Axes"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Axes</span></code></a> instance called
+<li>Finally, all controller classes inherit from <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Controller</span></code></a>. This provides a
+<a class="reference internal" href="api/input.html#approxeng.input.Buttons" title="approxeng.input.Buttons"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Buttons</span></code></a> instance called ‘buttons’, and an <a class="reference internal" href="api/input.html#approxeng.input.Axes" title="approxeng.input.Axes"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Axes</span></code></a> instance called
 ‘axes’. These will come in handy later!</li>
 </ul>
 <div class="section" id="constructing-and-binding-a-controller">
@@ -199,27 +201,32 @@ how long a button has been held down.</li>
 <p>Once your controller is physically connected to the computer (whether by USB, bluetooth or magic) and you have a
 corresponding entry in the dev filesystem, you need to create an object to receive and interpret events from the
 hardware, and you need to set up a mechanism by which events will be sent to that object. The object in this case will
-be a subclass of <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Controller</span></code></a>, currently there are six supported controllers:</p>
+be a subclass of <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Controller</span></code></a>, currently the following controllers are supported:</p>
 <ul class="simple">
-<li><a class="reference internal" href="api/dualshock3.html#approxeng.input.dualshock3.DualShock3" title="approxeng.input.dualshock3.DualShock3"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.dualshock3.DualShock3</span></code></a> handles PS3 controllers</li>
-<li><a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4" title="approxeng.input.dualshock4.DualShock4"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.dualshock4.DualShock4</span></code></a> is for PS4 controllers</li>
-<li><a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WiredXBoxOneSPad" title="approxeng.input.xboxone.WiredXBoxOneSPad"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.xboxone.WiredXBoxOneSPad</span></code></a> and <a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad" title="approxeng.input.xboxone.WirelessXBoxOneSPad"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.xboxone.WirelessXBoxOneSPad</span></code></a> are for the
+<li><a class="reference internal" href="api/dualshock3.html#approxeng.input.dualshock3.DualShock3" title="approxeng.input.dualshock3.DualShock3"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.dualshock3.DualShock3</span></code></a> handles PS3 controllers</li>
+<li><a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4" title="approxeng.input.dualshock4.DualShock4"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.dualshock4.DualShock4</span></code></a> is for PS4 controllers</li>
+<li><a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WiredXBoxOneSPad" title="approxeng.input.xboxone.WiredXBoxOneSPad"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.xboxone.WiredXBoxOneSPad</span></code></a> and <a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad" title="approxeng.input.xboxone.WirelessXBoxOneSPad"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.xboxone.WirelessXBoxOneSPad</span></code></a> are for the
 newer XBox One controllers. For whatever reason this controller reports different axes and buttons when connected over
 bluetooth to when it’s connected with a wire, so you’ll need to use the correct one!</li>
-<li><a class="reference internal" href="api/rockcandy.html#approxeng.input.rockcandy.RockCandy" title="approxeng.input.rockcandy.RockCandy"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.rockcandy.RockCandy</span></code></a> for the Rock Candy PS4 controller clone (it appears to describe itself as
-a PS3 controller, but has the controls of a PS4 one!). Contribution from Keith Ellis (<a class="reference external" href="https://twitter.com/pitutorials">pitutorials</a> on twitter).</li>
-<li><a class="reference internal" href="api/steamcontroller.html#approxeng.input.steamcontroller.SteamController" title="approxeng.input.steamcontroller.SteamController"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.steamcontroller.SteamController</span></code></a> for the Valve Steam controller. This is a bit of a strange
+<li><a class="reference internal" href="api/rockcandy.html#approxeng.input.rockcandy.RockCandy" title="approxeng.input.rockcandy.RockCandy"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.rockcandy.RockCandy</span></code></a> for the Rock Candy PS4 controller clone (it appears to describe itself as
+a PS3 controller, but has the controls of a PS4 one!)</li>
+<li><a class="reference internal" href="api/steamcontroller.html#approxeng.input.steamcontroller.SteamController" title="approxeng.input.steamcontroller.SteamController"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.steamcontroller.SteamController</span></code></a> for the Valve Steam controller. This is a bit of a strange
 one, and you’ll need to be running a driver which creates a virtual XBox360 device to use it, but it does work. See
 <a class="reference internal" href="api/steamcontroller.html#api-steamcontroller"><span class="std std-ref">Steam Controller Support</span></a> for details.</li>
-<li><a class="reference internal" href="api/wii.html#approxeng.input.wii.WiiRemotePro" title="approxeng.input.wii.WiiRemotePro"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.wii.WiiRemotePro</span></code></a> for the Nintendo Wii Remote Pro. If you’re running in a graphical
+<li><a class="reference internal" href="api/wii.html#approxeng.input.wii.WiiRemotePro" title="approxeng.input.wii.WiiRemotePro"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.wii.WiiRemotePro</span></code></a> for the Nintendo Wii Remote Pro. If you’re running in a graphical
 environment you’ll probably want to disable the default behaviour where the left stick controls the mouse - see
 <a class="reference internal" href="api/wii.html#wii-remote-pro-label"><span class="std std-ref">Disabling ‘Stick as Mouse’ functionality</span></a> for instructions.</li>
+<li><a class="reference internal" href="api/wiimote.html#approxeng.input.wiimote.WiiMote" title="approxeng.input.wiimote.WiiMote"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.wiimote.WiiMote</span></code></a> for <a class="reference internal" href="api/wiimote.html#api-wiimote"><span class="std std-ref">WiiMote Controller Support</span></a>.</li>
+<li><a class="reference internal" href="api/sf30pro.html#approxeng.input.sf30pro.SF30Pro" title="approxeng.input.sf30pro.SF30Pro"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.sf30pro.SF30Pro</span></code></a> for <a class="reference internal" href="api/sf30pro.html#api-sf30pro"><span class="std std-ref">8Bitdo SF30Pro/SN30Pro Controller Support</span></a>.</li>
+<li><a class="reference internal" href="api/pihut.html#approxeng.input.pihut.PiHut" title="approxeng.input.pihut.PiHut"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.pihut.PiHut</span></code></a> for <a class="reference internal" href="api/pihut.html#api-pihut"><span class="std std-ref">PiHut Controller Support</span></a>.</li>
 </ul>
 <p>In general you will not explicitly create these objects yourself, instead you can use the binding layer to discover a
 connected controller (optionally supplying a particular kind of controller you want, otherwise it just finds the first
 one it can). This will create the controller object from which you can read things like axis values, and also set up the
 necessary logic to pull events out of the evdev linux system and update the values without you having to do anything.</p>
-<p>The details of the binding process are described at <a class="reference internal" href="api/selectbinder.html#binding-reference-label"><span class="std std-ref">Binding - approxeng.input.selectbinder</span></a>.</p>
+<p>The only time you’re likely to use these classes is to reference them when binding, this allows you to wait for a
+specific kind of controller to become available - handy if, say, you really have to have a PS4 controller but you’ve
+got a rock candy dongle plugged in. The details of the binding process are described at <a class="reference internal" href="api/selectbinder.html#binding-reference-label"><span class="std std-ref">Binding - approxeng.input.selectbinder</span></a>.</p>
 </div>
 <div class="section" id="handling-buttons">
 <h2>Handling Buttons<a class="headerlink" href="#handling-buttons" title="Permalink to this headline">¶</a></h2>
@@ -236,7 +243,14 @@ a robot and bounce the system back to some safe state, but there are better ways
 is still present and you can use it if you really need to.</p>
 <div class="section" id="handling-button-presses-as-events">
 <h3>Handling Button Presses as Events<a class="headerlink" href="#handling-button-presses-as-events" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only use this method if you are absolutely sure it’s what you need. Callback functions will be called from the event
+processing thread - you need to handle these extremely fast or you’ll cause issues with missed events! It’s almost
+never going to be the right thing to do, you’re almost certainly better off using the polling for buttons mechanism
+described in <a class="reference internal" href="simpleusage.html#poll-presses-label"><span class="std std-ref">Querying Button Presses</span></a>. With that caveat, here’s how to do it if you insist!</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
 <span class="c1"># Get a joystick</span>
 <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">controller_class</span> <span class="o">=</span> <span class="n">DualShock3</span><span class="p">)</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
@@ -294,13 +308,13 @@ controller noise.</li>
 controller is from -32768 to 32768 when plugged in and, for some ungodly reason, 0 to 65335 when wireless), but you
 don’t have to worry about this as the controller implementations specify this internally and you’ll only ever see values
 between -1.0 and 1.0, or between 0.0 and 1.0 for trigger axes.</p>
-<p>The <a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> and <a class="reference internal" href="api/input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> both auto-range, in that they start
+<p>The <a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and <a class="reference internal" href="api/input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> both auto-range, in that they start
 off with a maximum and minimum value that’s well within the theoretical range, and expand this out when they see higher
 values from the controller. This means we don’t have to worry that the theoretical range of the controller isn’t fully
 used, we’ll always have our -1.0 to 1.0 correspond to the actual controller movement.</p>
 <p>Auto-centring isn’t possible as we can’t know whether the user is touching the controller, but you can set the centre
-point for an individual <a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> by setting its ‘centre’ property, or for a complete set
-defined by an <a class="reference internal" href="api/input.html#approxeng.input.Axes" title="approxeng.input.Axes"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Axes</span></code></a> object by calling the set_axis_centres() function on the Axes object. This
+point for an individual <a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> by setting its ‘centre’ property, or for a complete set
+defined by an <a class="reference internal" href="api/input.html#approxeng.input.Axes" title="approxeng.input.Axes"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Axes</span></code></a> object by calling the set_axis_centres() function on the Axes object. This
 function takes an arbitrary number of parameters and ignores all of them - this is done so you can specify the function
 as a button handler.</p>
 <p>Dead zones and hot zones are defined as a proportion of the range of the axis:</p>
@@ -328,6 +342,8 @@ applies, except that values below -0.8 will return -1.0 and those above -0.1 wil
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="sys.html" class="btn btn-neutral float-right" title="LEDs and Battery Monitoring" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
       
         <a href="examples/tiny4wd.html" class="btn btn-neutral" title="Tiny4WD Robot Drive" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
@@ -339,7 +355,7 @@ applies, except that values below -0.8 will return -1.0 and those above -0.1 wil
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 15, 2018.
+      Last updated on Jun 12, 2018.
 
     </p>
   </div>

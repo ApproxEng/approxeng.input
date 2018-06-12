@@ -31,7 +31,7 @@ Constructing and Binding a Controller
 Once your controller is physically connected to the computer (whether by USB, bluetooth or magic) and you have a
 corresponding entry in the dev filesystem, you need to create an object to receive and interpret events from the
 hardware, and you need to set up a mechanism by which events will be sent to that object. The object in this case will
-be a subclass of :class:`approxeng.input.Controller`, currently there are six supported controllers:
+be a subclass of :class:`approxeng.input.Controller`, currently the following controllers are supported:
 
 - :class:`approxeng.input.dualshock3.DualShock3` handles PS3 controllers
 
@@ -42,7 +42,7 @@ be a subclass of :class:`approxeng.input.Controller`, currently there are six su
   bluetooth to when it's connected with a wire, so you'll need to use the correct one!
 
 - :class:`approxeng.input.rockcandy.RockCandy` for the Rock Candy PS4 controller clone (it appears to describe itself as
-  a PS3 controller, but has the controls of a PS4 one!). Contribution from Keith Ellis (pitutorials_ on twitter).
+  a PS3 controller, but has the controls of a PS4 one!)
 
 - :class:`approxeng.input.steamcontroller.SteamController` for the Valve Steam controller. This is a bit of a strange
   one, and you'll need to be running a driver which creates a virtual XBox360 device to use it, but it does work. See
@@ -52,12 +52,20 @@ be a subclass of :class:`approxeng.input.Controller`, currently there are six su
   environment you'll probably want to disable the default behaviour where the left stick controls the mouse - see
   :ref:`wii-remote-pro-label` for instructions.
 
+- :class:`approxeng.input.wiimote.WiiMote` for :ref:`api_wiimote`.
+
+- :class:`approxeng.input.sf30pro.SF30Pro` for :ref:`api_sf30pro`.
+
+- :class:`approxeng.input.pihut.PiHut` for :ref:`api_pihut`.
+
 In general you will not explicitly create these objects yourself, instead you can use the binding layer to discover a
 connected controller (optionally supplying a particular kind of controller you want, otherwise it just finds the first
 one it can). This will create the controller object from which you can read things like axis values, and also set up the
 necessary logic to pull events out of the evdev linux system and update the values without you having to do anything.
 
-The details of the binding process are described at :ref:`binding-reference-label`.
+The only time you're likely to use these classes is to reference them when binding, this allows you to wait for a
+specific kind of controller to become available - handy if, say, you really have to have a PS4 controller but you've
+got a rock candy dongle plugged in. The details of the binding process are described at :ref:`binding-reference-label`.
 
 Handling Buttons
 ----------------
@@ -78,6 +86,13 @@ is still present and you can use it if you really need to.
 
 Handling Button Presses as Events
 *********************************
+
+.. note::
+
+    Only use this method if you are absolutely sure it's what you need. Callback functions will be called from the event
+    processing thread - you need to handle these extremely fast or you'll cause issues with missed events! It's almost
+    never going to be the right thing to do, you're almost certainly better off using the polling for buttons mechanism
+    described in :ref:`poll-presses-label`. With that caveat, here's how to do it if you insist!
 
 .. code-block:: python
 

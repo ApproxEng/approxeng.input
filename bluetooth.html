@@ -107,6 +107,7 @@
 <li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
             
@@ -184,7 +185,7 @@ the controller in the first place, but I prefer to run everything on my robots w
 <p>A standard Raspberry Pi will now come with the necessary bluetooth services installed and running, largely because both
 the Pi3 and Pi Zero W have built-in bluetooth and wifi chips. This guide assumes you’re using one of these newer
 versions, if you aren’t you may need to explicitly install the bluetooth stack:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ sudo apt-get install bluetooth libbluetooth3 libusb-dev
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ sudo apt-get install bluetooth libbluetooth3 libusb-dev
 pi@raspberrypi ~ $ sudo systemctl <span class="nb">enable</span> bluetooth.service
 pi@raspberrypi ~ $ sudo usermod -G bluetooth -a pi
 </pre></div>
@@ -196,7 +197,7 @@ life more predictable by actually pulling the plug and waiting a few seconds.</p
 <h2>Pairing with Bluetoothctl<a class="headerlink" href="#pairing-with-bluetoothctl" title="Permalink to this headline">¶</a></h2>
 <p>Once you have a working bluetooth stack, you can use the bluetoothctl command to configure it. You don’t need to run
 this as root, just use your regular user account.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ bluetoothctl
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ bluetoothctl
 </pre></div>
 </div>
 <p>This will put you into a shell-like mode where you can type commands to manipulate the bluetooth stack. It will also
@@ -205,7 +206,7 @@ only have one of these), pairing, scans etc.</p>
 <p>The first thing you should do is enable the default agent. The agent is the code which handles pairing requests, and is
 necessary to successfully pair with devices which don’t have displays or pairing codes. Once you have the bluetoothctl
 shell open, type the following (expected responses from bluetoothctl are shown):</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># agent on</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># agent on</span>
 Agent registered
 <span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># default-agent</span>
 Default agent request successful
@@ -215,7 +216,7 @@ Default agent request successful
 are ready to pair. You need to do this in conjunction with putting your device into pairing mode (the exact mechanism
 for this varies from device to device, for example on the XBox One controller you hold down the share button while
 pressing the home one, but look up the specifics for your particular controller).</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># scan on</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># scan on</span>
 Discovery started
 <span class="o">[</span>CHG<span class="o">]</span> Controller 5C:F3:70:66:5C:E2 Discovering: yes
 .... Messages about devices will follow here
@@ -229,7 +230,7 @@ connect to its services, and to tell the agent that it should trust the device a
 to pair with no further checks. You may be asked to confirm these processes (in my example below I’m not because I had
 already trusted the device before un-pairing and re-pairing for the example, but if it does just do what it says on the
 console).</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>.... after running the <span class="s1">&#39;scan on&#39;</span> and telling my XBox controller to enter pairing mode
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.... after running the <span class="s1">&#39;scan on&#39;</span> and telling my XBox controller to enter pairing mode
 <span class="o">[</span>NEW<span class="o">]</span> Device C8:3F:26:1E:C3:7F Xbox Wireless Controller
 <span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># pair C8:3F:26:1E:C3:7F</span>
 Attempting to pair with C8:3F:26:1E:C3:7F
@@ -286,7 +287,7 @@ desktop and expect it to just work if you move it to your pi.</p>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 15, 2018.
+      Last updated on Jun 12, 2018.
 
     </p>
   </div>

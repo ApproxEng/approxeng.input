@@ -108,6 +108,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
             
@@ -180,7 +181,7 @@ so will definitely not be the same for a clone device as for an original one, fo
 <p>Once you have a controller paired over bluetooth, or, in the case of those with specific dongles, otherwise connected,
 you can run the <cite>scripts/list_devices.py</cite> to print out a list of all connected devices, including the vendor and product
 identifiers. For example, with my XBox One controller paired and connected I see this:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">(</span>viridia-env<span class="o">)</span> tom@Ogre ~/git/approxeng.input/scripts $ python list_devices.py
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>viridia-env<span class="o">)</span> tom@Ogre ~/git/approxeng.input/scripts $ python list_devices.py
 <span class="o">{</span> <span class="s1">&#39;bus&#39;</span>: <span class="m">5</span>,
   <span class="s1">&#39;fn&#39;</span>: <span class="s1">&#39;/dev/input/event14&#39;</span>,
   <span class="s1">&#39;name&#39;</span>: <span class="s1">&#39;Xbox Wireless Controller&#39;</span>,
@@ -198,13 +199,13 @@ identifiers. For example, with my XBox One controller paired and connected I see
 it yourself, using the class from the library which most closely matches your controller, or you can add autodetect
 support to the library, again using the existing class. This might happen if you have, say, a clone PS4 controller which
 is identical in every way but which has a different USB vendor and product identifier.</p>
-<p>The <code class="xref py py-const docutils literal"><span class="pre">approxeng.input.controllers.CONTROLLERS</span></code> is an array of dicts containing class constructor, vendor ID and
+<p>The <code class="xref py py-const docutils literal notranslate"><span class="pre">approxeng.input.controllers.CONTROLLERS</span></code> is an array of dicts containing class constructor, vendor ID and
 product ID values. This array is searched for matching controllers when a controller class is specified, when no class
 is provided this array is used to find any potential matches. If you add an appropriate entry to this array you can
 cause the library’s controller matching to match an existing class with a new pair of vendor and product IDs. So,
-supposing you had a new controller which used the <a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4" title="approxeng.input.dualshock4.DualShock4"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.dualshock4.DualShock4</span></code></a> codes for axes and
+supposing you had a new controller which used the <a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4" title="approxeng.input.dualshock4.DualShock4"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.dualshock4.DualShock4</span></code></a> codes for axes and
 buttons, but had a different vendor and product ID, you could add it to the match array with:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">approxeng.input.controllers</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">approxeng.input.controllers</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.dualshock4</span> <span class="kn">import</span> <span class="n">DualShock4</span>
 
 <span class="n">VENDOR_ID</span> <span class="o">=</span> <span class="o">...</span>
@@ -223,9 +224,9 @@ controller’s vendor and product IDs to the existing controller class.</p>
 <p>It’s possible you have a controller which is completely different to the ones the library already supports. This might
 be because it’s something we’ve just never got our hands on, or because the manufacturer has decided to produce a clone
 controller with completely different codes for buttons or axes (it happens!). In this case you’ll need to create a new
-subclass of <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Controller</span></code></a> and use the mechanism above to register it. Fortunately this is fairly
+subclass of <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Controller</span></code></a> and use the mechanism above to register it. Fortunately this is fairly
 simple. First create your class, this won’t include any button or axis bindings, we’ll add these later:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="kn">import</span> <span class="n">Controller</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="kn">import</span> <span class="n">Controller</span>
 
 <span class="n">MY_VENDOR_ID</span> <span class="o">=</span> <span class="o">...</span>
 <span class="n">MY_PRODUCT_ID</span> <span class="o">=</span> <span class="o">...</span>
@@ -264,15 +265,15 @@ controls until you’re not getting any of these ‘missing control’ messages 
 <p>Controls are all added to the <cite>controls</cite> parameter of the constructor, you should look at the documentation for the
 various axis and button classes to see what they take as arguments, these are currently:</p>
 <ul class="simple">
-<li><a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code></a> for analogue axes which have a resting point in the centre of their range.</li>
-<li><a class="reference internal" href="api/input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code></a> for analogue axes which have a resting point at one end of their range.</li>
-<li><a class="reference internal" href="api/input.html#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.BinaryAxis</span></code></a> for analogue axes which are really pairs of buttons, both the PS4 and XBox One
+<li><a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> for analogue axes which have a resting point in the centre of their range.</li>
+<li><a class="reference internal" href="api/input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> for analogue axes which have a resting point at one end of their range.</li>
+<li><a class="reference internal" href="api/input.html#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.BinaryAxis</span></code></a> for analogue axes which are really pairs of buttons, both the PS4 and XBox One
 controllers use this for their direction pads, the buttons on these pads don’t appear as buttons in the event stream
 but as an analogue axis which only ever takes the values -1, 0 or 1.</li>
-<li><a class="reference internal" href="api/input.html#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Button</span></code></a> for buttons</li>
+<li><a class="reference internal" href="api/input.html#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Button</span></code></a> for buttons</li>
 </ul>
 <p>You should take a look at the source for the existing controller classes, i.e.
-<a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad" title="approxeng.input.xboxone.WirelessXBoxOneSPad"><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.xboxone.WirelessXBoxOneSPad</span></code></a> to see how these are used. For every control you need to know the
+<a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad" title="approxeng.input.xboxone.WirelessXBoxOneSPad"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.xboxone.WirelessXBoxOneSPad</span></code></a> to see how these are used. For every control you need to know the
 event code, for analogue axes you’ll also need to know the range of values the controller can produce so the library
 can normalise these to a -1.0 to 1.0, or 0.0 to 1.0 range. Check out the list of <a class="reference internal" href="simpleusage.html#sname-label"><span class="std std-ref">Standard Names</span></a> to make your new
 controller class drop-in compatible with existing code, and let me know about it by raising either a pull request or a
@@ -303,7 +304,7 @@ new issue on github, I’m sure others would like to know about the new function
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Apr 15, 2018.
+      Last updated on Jun 12, 2018.
 
     </p>
   </div>

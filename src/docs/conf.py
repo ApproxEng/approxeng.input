@@ -21,7 +21,8 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
     'sphinx.ext.graphviz',
-    'sphinx.ext.mathjax'
+    'sphinx.ext.mathjax',
+    'sphinx.ext.inheritance_diagram'
 ]
 
 # Configure graphviz to generate PNG and set up some default colours and graph styling. We were using SVGs here, but

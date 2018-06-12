@@ -125,6 +125,8 @@ call (you can, as the example below shows, query a mix of button hold times and 
             x, y, hold = joystick['lx','ly','home']
 
 
+.. _poll-presses-label:
+
 Querying Button Presses
 ***********************
 

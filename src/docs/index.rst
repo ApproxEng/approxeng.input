@@ -14,10 +14,10 @@ Supported Controllers
 .. image:: images/ps4.jpg
    :width: 20%
 
-.. image:: images/rock-candy.jpg
+.. image:: images/pihut.jpg
    :width: 20%
 
-.. image:: images/xbox-one.jpg
+.. image:: images/rock-candy.jpg
    :width: 20%
 
 .. image:: images/steam-controller.jpg
@@ -26,14 +26,19 @@ Supported Controllers
 .. image:: images/wii-pro.jpg
    :width: 20%
 
-.. image:: images/pihut.jpg
-    :width: 20%
+.. image:: images/wiimote.jpg
+   :width: 20%
+
+.. image:: images/xbox-one.jpg
+   :width: 20%
 
 .. image:: images/sf30pro.jpg
     :width: 20%
 
+
 In general you don't need to code to a specific controller, but some may need extra steps when connecting to your Pi or
-other computer. You can see more details for specific controller types at the following:
+other computer. In other cases, some controllers offer unique features such as the PS4's light bar. You can see more
+details for specific controller types at the following:
 
  - :ref:`api_dualshock3`
 
@@ -66,6 +71,8 @@ Contributors
   the :ref:`example_camjam`
 
 - Tom Broughton (`\@dpolymath <https://twitter.com/dpolymath>`__) added support for the SF30Pro controller.
+
+- Clare Macrae (`\@ClareMacraeUK <https://twitter.com/ClareMacraeUK>`__) helped herd the documentation beasts.
 
 Getting the code
 ----------------

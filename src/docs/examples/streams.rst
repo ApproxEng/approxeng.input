@@ -3,7 +3,7 @@
 Streaming Axis and Button Hold values
 =====================================
 
-Some other APIs, most notably Gpiozero_ can configure devices to read from iterators over data such as axis values. To
+Some other APIs, most notably Gpiozero_, can configure devices to read from iterators over data such as axis values. To
 use this facility we need to be able to produce generators (iterators which work over lazily evaluated, potentially
 infinite, sets of data) containing streams of axis and button hold values. These generators can then be set as the
 source for anything in e.g. Gpiozero which has a SourceMixin_ defined, including motors and similar.

@@ -17,6 +17,8 @@ from approxeng.input.rockcandy import RockCandy, RC_PRODUCT_ID, RC_VENDOR_ID
 from approxeng.input.wii import WiiRemotePro, WII_REMOTE_PRO_VENDOR, WII_REMOTE_PRO_PRODUCT
 from approxeng.input.wiimote import WiiMote, WIIMOTE_PRODUCT_ID, WIIMOTE_VENDOR_ID
 from approxeng.input.sf30pro import SF30Pro, SF30Pro_PRODUCT_ID, SF30Pro_VENDOR_ID
+from approxeng.input.switch_L import SwitchJoyCon_L, SWITCH_VENDOR_ID, SWITCH_L_PRODUCT_ID
+from approxeng.input.switch_R import SwitchJoyCon_R, SWITCH_VENDOR_ID, SWITCH_R_PRODUCT_ID
 
 import logzero
 import logging
@@ -41,7 +43,9 @@ CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_
                {'constructor': RockCandy, 'vendor_id': RC_VENDOR_ID, 'product_id': RC_PRODUCT_ID},
                {'constructor': WiiRemotePro, 'vendor_id': WII_REMOTE_PRO_VENDOR, 'product_id': WII_REMOTE_PRO_PRODUCT},
                {'constructor': WiiMote, 'vendor_id': WIIMOTE_VENDOR_ID, 'product_id': WIIMOTE_PRODUCT_ID},
-               {'constructor': SF30Pro, 'vendor_id': SF30Pro_VENDOR_ID, 'product_id': SF30Pro_PRODUCT_ID}]
+               {'constructor': SF30Pro, 'vendor_id': SF30Pro_VENDOR_ID, 'product_id': SF30Pro_PRODUCT_ID},
+               {'constructor': SwitchJoyCon_L, 'vendor_id': SWITCH_VENDOR_ID, 'product_id': SWITCH_L_PRODUCT_ID},
+               {'constructor': SwitchJoyCon_R, 'vendor_id': SWITCH_VENDOR_ID, 'product_id': SWITCH_R_PRODUCT_ID}]
 
 
 def find_any_controller(**kwargs):

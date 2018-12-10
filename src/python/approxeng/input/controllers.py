@@ -17,17 +17,14 @@ from approxeng.input.rockcandy import RockCandy, RC_PRODUCT_ID, RC_VENDOR_ID
 from approxeng.input.wii import WiiRemotePro, WII_REMOTE_PRO_VENDOR, WII_REMOTE_PRO_PRODUCT
 from approxeng.input.wiimote import WiiMote, WIIMOTE_PRODUCT_ID, WIIMOTE_VENDOR_ID
 from approxeng.input.sf30pro import SF30Pro, SF30Pro_PRODUCT_ID, SF30Pro_VENDOR_ID
-from approxeng.input.switch_L import SwitchJoyCon_L, SWITCH_VENDOR_ID, SWITCH_L_PRODUCT_ID
-from approxeng.input.switch_R import SwitchJoyCon_R, SWITCH_VENDOR_ID, SWITCH_R_PRODUCT_ID
+from approxeng.input.switch import SwitchJoyConLeft, SWITCH_VENDOR_ID, SWITCH_L_PRODUCT_ID, SwitchJoyConRight, \
+    SWITCH_R_PRODUCT_ID
 
 import logzero
 import logging
+from functools import total_ordering
 
 logger = logzero.setup_logger(name='approxeng.input.controllers', level=logging.NOTSET)
-
-# Steam controller works but only when using the xbox userland driver. PS3 and PS4 are fine though, as is the XB1 if on
-# a wired connection or after setting the appropriate kernel module options. Rock Candy controller reported as working.
-# Support for wiimote contributed by Keith Ellis
 
 CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_id': DS3_PRODUCT_ID},
                {'constructor': DualShock4, 'vendor_id': DS4_VENDOR_ID, 'product_id': DS4_PRODUCT_ID},
@@ -44,145 +41,75 @@ CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_
                {'constructor': WiiRemotePro, 'vendor_id': WII_REMOTE_PRO_VENDOR, 'product_id': WII_REMOTE_PRO_PRODUCT},
                {'constructor': WiiMote, 'vendor_id': WIIMOTE_VENDOR_ID, 'product_id': WIIMOTE_PRODUCT_ID},
                {'constructor': SF30Pro, 'vendor_id': SF30Pro_VENDOR_ID, 'product_id': SF30Pro_PRODUCT_ID},
-               {'constructor': SwitchJoyCon_L, 'vendor_id': SWITCH_VENDOR_ID, 'product_id': SWITCH_L_PRODUCT_ID},
-               {'constructor': SwitchJoyCon_R, 'vendor_id': SWITCH_VENDOR_ID, 'product_id': SWITCH_R_PRODUCT_ID}]
+               {'constructor': SwitchJoyConLeft, 'vendor_id': SWITCH_VENDOR_ID, 'product_id': SWITCH_L_PRODUCT_ID},
+               {'constructor': SwitchJoyConRight, 'vendor_id': SWITCH_VENDOR_ID, 'product_id': SWITCH_R_PRODUCT_ID}]
 
 
-def find_any_controller(**kwargs):
+@total_ordering
+class ControllerDiscovery:
     """
-    Finds the first controller of any kind and returns the result from find_single_controller. Handy for cases where
-    you know (because, say, you've just built a robot) that there's only ever going to be one controller and you're okay
-    with that controller being whatever you connect. Because the most modern bits of the API use names which are
-    standardised across the supported controllers you should be able to write code that works with any of the fully
-    supported devices, so for example you could test with a PS3 controller and reasonably expect it to work with a PS4
-    one if that's all you have at the time. For events like PiWars where you might need to borrow a controller from
-    another team this could be a good way to go...
-
-    :raises IOError:
-        If no suitable controller can be found
-    :return:
-         A tuple of (devices, controller, physical_location) containing the InputDevice instances used by this
-        controller, the instance of the controller class itself and the first part of the input device phys property
+    Represents a single discovered controller attached to the host. Ordered, with controllers with more axes and buttons
+    being given a higher ordering, then falling back to the assigned name.
     """
-    for controller_class in [c['constructor'] for c in CONTROLLERS]:
-        logger.debug('Attempting to find controller using driver class {}'.format(controller_class))
-        try:
-            return find_single_controller(controller_class, **kwargs)
-        except IOError:
-            pass
-    raise IOError('Unable to find any controllers!')
+
+    def __init__(self, controller, devices, name):
+        self.controller = controller
+        if not isinstance(devices, list):
+            self.devices = [devices]
+        else:
+            self.devices = devices
+        self.name = name
+
+    def __repr__(self):
+        return '{}({})'.format(self.controller.__class__.__name__, ','.join(device.fn for device in self.devices))
+
+    def __eq__(self, other):
+        return self.controller.__class__.__name__ == other.controller.__class__.__name__ and self.name == other.name
+
+    def __lt__(self, other):
+        self_axes = len(self.controller.axes.names)
+        other_axes = len(other.controller.axes.names)
+        self_buttons = len(self.controller.buttons.names)
+        other_buttons = len(other.controller.buttons.names)
+        if self_axes != other_axes:
+            return self_axes < other_axes
+        elif self_buttons != other_buttons:
+            return self_buttons < other_buttons
+        return self.name < other.name
 
 
-def find_single_controller(controller_class, **kwargs):
+class ControllerRequirement:
     """
-    Find the first controller with the specified driver class, raising IOError if we can't find an appropriate connected
-    device
-    :param controller_class:
-        A driver class, i.e. :class:`approxeng.input.dualshock4.DualShock4` - note that you need the class and not an
-        instance, so use e.g. find_single_controller(DualShock4) and not find_single_controller(DualShock4())!
-    :raises IOError:
-        If no suitable controller can be found
-    :return:
-        A tuple of (devices, controller, physical_location) containing the InputDevice instances used by this
-        controller, the instance of the controller class itself and the first part of the input device phys property
+    Represents a requirement for a single controller, allowing restriction on type. We might add more filtering options
+    later, such as requiring a minimum number of axes, or the presence of a particular control. If you want that now,
+    you can subclass this and pass it into the find_matching_controllers and similar functions.
     """
-    _check_import()
-    for controller in find_controllers(**kwargs):
-        if isinstance(controller['controller'], controller_class):
-            return controller['devices'], controller['controller'], controller['physical_device']
-    raise IOError('Unable to find an instance of {}'.format(controller_class))
+
+    def __init__(self, require_class=None):
+        self.require_class = require_class
+
+    def accept(self, discovery: ControllerDiscovery):
+        """
+        Returns True if the supplied ControllerDiscovery matches this requirement, False otherwise
+        """
+        if self.require_class is None:
+            return True
+        elif isinstance(discovery.controller, self.require_class):
+            return True
+        return False
 
 
-def find_controllers(**kwargs):
+class ControllerNotFoundError(IOError):
     """
-    Scan for and return a list of dicts, one for each detected controller, where the dicts contain 'devices' as the
-    sequence of one or more evdev InputDevice instances, 'controller' as the controller instance and 'physical_device'
-    as the device component of the InputDevice phys address. This is necessary for controllers like the steam controller
-    which can potentially bind to multiple InputDevice instances.
+    Raised during controller discovery if the specified set of controller requirements cannot be satisfied
     """
-    _check_import()
-    result = {}
-    for controller in [controller_for_device(InputDevice(fn)) for fn in list_devices()]:
-        if controller is not None:
-            device = controller['device']
-            constructor = controller['constructor']
-            physical_device_name = unique_name(device)
-            if physical_device_name in result:
-                result[physical_device_name]['devices'].append(device)
-            else:
-                result[physical_device_name] = {'devices': [device],
-                                                'controller': constructor(**kwargs),
-                                                'physical_device': physical_device_name}
-    return list(result.values())
+    pass
 
 
-def controller_for_device(device):
-    """
-    If the evdev InputDevice supplied matches one of our known vendor / product ID pairs, return a dict containing
-    'device'->the device, and 'constructor'->the controller class. If no match is found, return None
-    """
-    _check_import()
-    for controller in CONTROLLERS:
-        if controller['vendor_id'] == device.info.vendor and controller['product_id'] == device.info.product:
-            return {'device': device,
-                    'constructor': controller['constructor']}
-    return None
-
-
-def print_devices():
-    """
-    Simple test function which prints out all devices found by evdev
-    """
-    _check_import()
-    for device in [InputDevice(fn) for fn in list_devices()]:
-        if has_abs_axes(device) or has_rel_axes(device):
-            pp = pprint.PrettyPrinter(indent=2, width=100)
-            pp.pprint(device_verbose_info(device))
-
-
-def device_verbose_info(device):
-    def axis_name(axis_code):
-        try:
-            return ecodes.ABS[axis_code]
-        except KeyError:
-            return 'EXTENDED_CODE_{}'.format(axis_code)
-
-    def rel_axis_name(axis_code):
-        try:
-            return ecodes.REL[axis_code]
-        except KeyError:
-            return 'EXTENDED_CODE_{}'.format(axis_code)
-
-    axes = None
-    if device.capabilities().get(3) is not None:
-        axes = {
-            axis_name(axis_code): {'code': axis_code, 'min': axis_info.min, 'max': axis_info.max,
-                                   'fuzz': axis_info.fuzz,
-                                   'flat': axis_info.flat, 'res': axis_info.resolution} for
-            axis_code, axis_info in device.capabilities().get(3)}
-
-    rel_axes = None
-    if device.capabilities().get(2) is not None:
-        print(device.capabilities().get(2))
-        rel_axes = {
-            axis_name(axis_code): {'code': axis_code} for
-            axis_code in device.capabilities().get(2)}
-
-    buttons = None
-    if device.capabilities().get(1) is not None:
-        buttons = {code: names for (names, code) in
-                   dict(util.resolve_ecodes_dict({1: device.capabilities().get(1)})).get(('EV_KEY', 1))}
-
-    return {'fn': device.fn, 'name': device.name, 'phys': device.phys, 'uniq': device.uniq,
-            'vendor': device.info.vendor, 'product': device.info.product, 'version': device.info.version,
-            'bus': device.info.bustype, 'axes': axes, 'rel_axes': rel_axes, 'buttons': buttons,
-            'unique_name': unique_name(device)}
-
-
-def unique_name(device):
+def unique_name(device: InputDevice) -> str:
     """
     Construct a unique name for the device based on, in order if available, the uniq ID, the phys ID and
-    finally a concatenation of vendor, product and version.
+    finally a concatenation of vendor, product, version and filename.
 
     :param device:
         An InputDevice instance to query
@@ -193,19 +120,156 @@ def unique_name(device):
         return device.uniq
     elif device.phys:
         return device.phys.split('/')[0]
-    return '{}-{}-{}'.format(device.info.vendor, device.info.product, device.info.version)
+    return '{}-{}-{}-{}'.format(device.info.vendor, device.info.product, device.info.version, device.fn)
 
 
-def has_abs_axes(device):
-    return device.capabilities().get(3) is not None
+def find_matching_controllers(requirements: [ControllerRequirement] = None, **kwargs) -> [ControllerDiscovery]:
+    """
+    Find a sequence of controllers which match the supplied requirements, or raise an error if no such controllers
+    exist.
+
+    :param requirements:
+        A sequence of ControllerRequirement instances defining the requirements for controllers. If a single item is
+        passed in it will be treated as a single element list. If no item is passed it will be treated as a single
+        requirement with no filters applied and will therefore match the first controller found, this is also the case
+        if an empty list is supplied.
+    :return:
+        A sequence of the same length as the supplied requirements array containing ControllerDiscovery instances which
+        match the requirements supplied.
+    :raises:
+        ControllerNotFoundError if no appropriately matching controllers can be located
+    """
+
+    if requirements is None:
+        requirements = [ControllerRequirement()]
+    elif not isinstance(requirements, list):
+        requirements = [requirements]
+    if len(requirements) == 0:
+        requirements = [ControllerRequirement()]
+
+    def pop_controller(r: ControllerRequirement, discoveries: [ControllerDiscovery]) -> ControllerDiscovery:
+        """
+        Find a single controller matching the supplied requirement from a list of ControllerDiscovery instances
+
+        :param r:
+            The ControllerRequirement to match
+        :param discoveries:
+            The [ControllerDiscovery] to search
+        :return:
+            A matching ControllerDiscovery. Modifies the supplied list of discoveries, removing the found item.
+        :raises:
+            ControllerNotFoundError if no matching controller can be found
+        """
+        for index, d in enumerate(discoveries):
+            if r.accept(d):
+                return discoveries.pop(index)
+        raise ControllerNotFoundError()
+
+    all_controllers = find_all_controllers(**kwargs)
+
+    try:
+        return list(pop_controller(r, all_controllers) for r in requirements)
+    except ControllerNotFoundError as exception:
+        logger.info('Unable to satisfy controller requirements' +
+                    ', required {}, found {}'.format(requirements, find_all_controllers(**kwargs)))
+        raise exception
 
 
-def has_rel_axes(device):
-    return device.capabilities().get(2) is not None
+def find_all_controllers(**kwargs) -> [ControllerDiscovery]:
+    """
+    :return:
+        A list of ControllerDiscovery instances corresponding to controllers attached to this host, ordered by the
+        ordering on ControllerDiscovery. Any controllers found will be constructed with kwargs passed to their
+        constructor function
+    """
+
+    id_to_constructor = {'{}-{}'.format(c['vendor_id'], c['product_id']): c['constructor'] for c in CONTROLLERS}
+
+    def controller_constructor(d: InputDevice):
+        id = '{}-{}'.format(d.info.vendor, d.info.product)
+        if id in id_to_constructor:
+            return id_to_constructor[id]
+        return None
+
+    all_devices = list(InputDevice(path) for path in list_devices())
+
+    devices_by_name = {name: list(e for e in all_devices if unique_name(e) == name) for name in
+                       set(unique_name(e) for e in all_devices if
+                           controller_constructor(e) is not None)}
+
+    controllers = sorted(
+        ControllerDiscovery(controller=controller_constructor(devices[0])(**kwargs), devices=devices, name=name) for
+        name, devices in devices_by_name.items())
+
+    return controllers
 
 
-def has_buttons(device):
-    return device.capabilities().get(1) is not None
+def print_devices():
+    """
+    Simple test function which prints out all devices found by evdev
+    """
+
+    def device_verbose_info(device: InputDevice) -> {}:
+        """
+        Gather and format as much info as possible about the supplied InputDevice. Used mostly for debugging at this point.
+
+        :param device:
+            An InputDevice to examine
+        :return:
+            A dict containing as much information as possible about the input device.
+        """
+
+        def axis_name(axis_code):
+            try:
+                return ecodes.ABS[axis_code]
+            except KeyError:
+                return 'EXTENDED_CODE_{}'.format(axis_code)
+
+        def rel_axis_name(axis_code):
+            try:
+                return ecodes.REL[axis_code]
+            except KeyError:
+                return 'EXTENDED_CODE_{}'.format(axis_code)
+
+        axes = None
+        if has_abs_axes(device):
+            axes = {
+                axis_name(axis_code): {'code': axis_code, 'min': axis_info.min, 'max': axis_info.max,
+                                       'fuzz': axis_info.fuzz,
+                                       'flat': axis_info.flat, 'res': axis_info.resolution} for
+                axis_code, axis_info in device.capabilities().get(3)}
+
+        rel_axes = None
+        if has_rel_axes(device):
+            print(device.capabilities().get(2))
+            rel_axes = {
+                rel_axis_name(axis_code): {'code': axis_code} for
+                axis_code in device.capabilities().get(2)}
+
+        buttons = None
+        if has_buttons(device):
+            buttons = {code: names for (names, code) in
+                       dict(util.resolve_ecodes_dict({1: device.capabilities().get(1)})).get(('EV_KEY', 1))}
+
+        return {'fn': device.fn, 'name': device.name, 'phys': device.phys, 'uniq': device.uniq,
+                'vendor': device.info.vendor, 'product': device.info.product, 'version': device.info.version,
+                'bus': device.info.bustype, 'axes': axes, 'rel_axes': rel_axes, 'buttons': buttons,
+                'unique_name': unique_name(device)}
+
+    def has_abs_axes(device):
+        return device.capabilities().get(3) is not None
+
+    def has_rel_axes(device):
+        return device.capabilities().get(2) is not None
+
+    def has_buttons(device):
+        return device.capabilities().get(1) is not None
+
+    _check_import()
+    for d in [InputDevice(fn) for fn in list_devices()]:
+        if has_abs_axes(d) or has_rel_axes(d):
+            pp = pprint.PrettyPrinter(indent=2, width=100)
+            pp.pprint(device_verbose_info(d))
 
 
 def print_controllers():
@@ -214,8 +278,8 @@ def print_controllers():
     """
     _check_import()
     pp = pprint.PrettyPrinter(indent=2)
-    for controller in find_controllers():
-        pp.pprint(controller)
+    for discovery in find_all_controllers():
+        pp.pprint(discovery.controller)
 
 
 def _check_import():

@@ -1,8 +1,9 @@
+from functools import reduce
 from select import select
 from threading import Thread
 
 import approxeng.input.sys as sys
-from approxeng.input.controllers import find_single_controller, find_any_controller, unique_name
+from approxeng.input.controllers import *
 
 EV_KEY = 1
 EV_ABS = 3
@@ -15,54 +16,25 @@ class ControllerResource:
     the name property of the controller object.
     """
 
-    def __init__(self, controller_class=None, devices=None, controller=None, print_events=False, **kwargs):
+    def __init__(self, requirements=None, print_events=False, **kwargs):
         """
-        Create a new controller resource. The type of the resource is the controller class, so when used in a with block
-        the bound resource will be a controller from which axis and button values can be read. Note - if all of 
-        controller_class, devices and controller are None this will attempt to bind to the first controller it can find
-        which we support. Use this if you're feeling lazy, or need to be agnostic about what kind of controller your
-        code uses. Obviously you'll need to use the standard names for buttons and axes, and make sure you're not
-        relying on a particular controller's physical features, but doing this does give you the option to make use of
-        any controller you have at the time, whether you developed for that device or not.
-        
-        :param controller_class: 
-            If specified, this class is used to locate the first matching controller of this kind anywhere on the evdev
-            bus. If this is not None then devices and controller are ignored, and IOError will be raised if we can't
-            find an appropriate controller. If this is a list then  match any controllers in the list.
-        :param devices: 
-            If controller_classes is None, this can be non-None and should contain at least one instance of InputDevice
-            to which we should bind to extract evdev events
-        :param controller: 
-            If controller_classes is None, this can be an instance of Controller to which events can be pushed
+        Create a new resource to bind and access one or more controllers. If no additional arguments are supplied this
+        will find the first controller of any kind enabled by the library. Otherwise the requirements must be provided
+        as a list of ControllerRequirement
+
+        :param requirements:
+            A list of ControllerRequirement instances used, in order, to find and bind controllers. If not specified
+            this will be equivalent to supplying a single unfiltered requirement and will match the first specified
+            controller.
         :param print_events:
             Defaults to False, if set to True then all events picked up by the binder will be printed to stdout. Use
             this when you're trying to figure out what events correspond to what axes and buttons!
-        :raises IOError:
+        :raises ControllerNotFoundError:
             If a controller class is specified but we can't find a connected instance of the class, or nothing has been
             specified and we can't find any controller at all.
-        :raises ValueError:
-            If the controller class is not specified, and we have no devices or controller is None
         """
-        if controller_class is not None:
-            if type(controller_class) in [list, tuple]:
-                self.devices, self.controller, physical_address = None, None, None
-                for controller_single_class in controller_class:
-                    try:
-                        self.devices, self.controller, physical_address = find_single_controller(controller_single_class,
-                                                                                                 **kwargs)
-                        break
-                    except IOError:
-                        pass
-                if self.devices is None:
-                    raise IOError('Unable to locate any compatible controllers')
-            else:
-                self.devices, self.controller, physical_address = find_single_controller(controller_class, **kwargs)
-        else:
-            if devices is None or controller is None or len(devices) == 0:
-                self.devices, self.controller, physical_address = find_any_controller(**kwargs)
-            else:
-                self.devices = devices
-                self.controller = controller
+
+        self.discoveries = find_matching_controllers(requirements, **kwargs)
         self.unbind = None
         self.print_events = print_events
 
@@ -70,8 +42,11 @@ class ControllerResource:
         """
         Called on entering the resource block, returns the controller passed into the constructor.
         """
-        self.unbind = bind_controller(self.devices, self.controller, print_events=self.print_events)
-        return self.controller
+        self.unbind = bind_controllers(self.discoveries, print_events=self.print_events)
+        if len(self.discoveries) == 1:
+            return self.discoveries[0].controller
+        else:
+            return tuple(discovery.controller for discovery in self.discoveries)
 
     def __exit__(self, exc_type, exc_value, traceback):
         """
@@ -80,14 +55,13 @@ class ControllerResource:
         self.unbind()
 
 
-def bind_controller(devices, controller, print_events=False):
+def bind_controllers(discoveries: [ControllerDiscovery], print_events=False):
     """
-    Bind a controller to a set of evdev InputDevice instances
+    Bind a controller or controllers to a set of evdev InputDevice instances, starting a thread to keep those
+    controllers in sync with the state of the hardware.
     
-    :param devices: 
-        A list of InputDevice instance which should be polled for events
-    :param controller: 
-        A Controller instance to which events can be pushed
+    :param discoveries:
+        A list of ControllerDiscovery instances specifying the controllers and their associated input devices
     :param print_events:
         Defaults to False, if set to True then all events picked up by this binder will be printed to stdout
     :return: 
@@ -99,17 +73,28 @@ def bind_controller(devices, controller, print_events=False):
             Thread.__init__(self, name='evdev select thread')
             self.daemon = True
             self.running = True
-            self.devices = {dev.fd: dev for dev in devices}
+
+            self.device_to_controller_discovery = {}
+            for discovery in discoveries:
+                for d in discovery.devices:
+                    self.device_to_controller_discovery[d.fn] = discovery
+            self.all_devices = reduce(lambda x, y: x + y, [discovery.devices for discovery in discoveries])
 
         def run(self):
-            controller.device_unique_name = unique_name(devices[0])
+
+            for discovery in discoveries:
+                discovery.controller.device_unique_name = discovery.name
+
             while self.running:
                 try:
-                    r, w, x = select(self.devices, [], [], 0.5)
+                    r, w, x = select(self.all_devices, [], [], 0.5)
                     for fd in r:
-                        active_device = self.devices[fd]
+                        active_device = fd
+                        controller_discovery = self.device_to_controller_discovery[active_device.fn]
+                        controller = controller_discovery.controller
+                        controller_devices = controller_discovery.devices
                         prefix = None
-                        if controller.node_mappings is not None and len(self.devices) > 1:
+                        if controller.node_mappings is not None and len(controller_devices) > 1:
                             try:
                                 prefix = controller.node_mappings[active_device.name]
                             except KeyError:
@@ -131,8 +116,11 @@ def bind_controller(devices, controller, print_events=False):
                     self.stop(e)
 
         def stop(self, exception=None):
-            controller.device_unique_name = None
-            controller.exception = exception
+
+            for discovery in discoveries:
+                discovery.controller.device_unique_name = None
+                discovery.controller.exception = exception
+
             self.running = False
 
     polling_thread = SelectThread()
@@ -140,12 +128,12 @@ def bind_controller(devices, controller, print_events=False):
     # Force an update of the LED and battery system cache
     sys.scan_cache(force_update=True)
 
-    for device in devices:
+    for device in polling_thread.all_devices:
         device.grab()
 
     def unbind():
         polling_thread.stop()
-        for dev in devices:
+        for dev in polling_thread.all_devices:
             try:
                 dev.ungrab()
             except IOError:

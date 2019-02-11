@@ -5,6 +5,11 @@ This library simplifies access to the axes and buttons on game controller hardwa
 written to support my PiWars_ robots, and remains focused on similar projects, but can be used wherever game controller
 functionality is required. The current code only supports Linux based systems, including the Raspberry Pi.
 
+.. note::
+    Check out the :ref:`changelog-label` to see what's new. In particular, version 2.3 introduces changes to the way
+    controllers are discovered and allows for multiple controllers to be used simultaneously. This release also drops
+    support for Python2, this and subsequent releases will be Python3 only.
+
 Supported Controllers
 ---------------------
 

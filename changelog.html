@@ -89,6 +89,7 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-2-3-0">Version 2.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-2-0">Version 2.2.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-1-0">Version 2.1.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-0-3-2-0-4">Version 2.0.3, 2.0.4</a></li>
@@ -173,7 +174,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="change-log">
-<h1>Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h1>
+<span id="changelog-label"></span><h1>Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>This documentation, and the code it documents, is the original SixAxis controller code from my <a class="reference external" href="http://piwars.org">PiWars</a> 2015 robot,
@@ -182,6 +183,13 @@ addition to the original support for PS3 controllers.</p>
 <p class="last">A newer version was used for my <a class="reference external" href="http://piwars.org">PiWars</a> 2017 entry, this time using a PS4 controller. Several other robots in that
 year also used the library, and my aim is to make this the definitive library for connecting game controllers to
 Python code, especially for robots (but it’ll work elsewhere if needed!)</p>
+</div>
+<div class="section" id="version-2-3-0">
+<h2>Version 2.3.0<a class="headerlink" href="#version-2-3-0" title="Permalink to this headline">¶</a></h2>
+<p>Significant refactorying and reworking of the controller discovery process. Can now bind to multiple controllers in a
+single call or resource, and can be more specific about exactly what capabilities are required when discovering
+controllers. See <a class="reference internal" href="api/discovery.html#discovery-reference-label"><span class="std std-ref">Controller Discovery - approxeng.input.controllers</span></a> for more details. Updated examples to match. Added support for the
+3dConnexion SpaceMouse Pro (wired), although I suspect I’m the only person who’ll use it…</p>
 </div>
 <div class="section" id="version-2-2-0">
 <h2>Version 2.2.0<a class="headerlink" href="#version-2-2-0" title="Permalink to this headline">¶</a></h2>

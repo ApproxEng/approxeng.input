@@ -53,6 +53,35 @@ present. Rather than having to know that the XBox controller has 'A','B'... and 
 controllers have 'cross', 'circle' etc the API defines a standard set of names for buttons and axes (they're based on
 the PS3 controller as it happens, mostly because that's the one I first used when I started writing the library!).
 
+Connecting to multiple controllers
+**********************************
+
+To connect to multiple controllers, or to be more specific about the types and capabilities of controllers you need,
+ see :ref:`discovery-reference-label`. The example below shows binding to two controllers, the first of which must be
+a PS3 controller, the second of which must have a left X and Y axis:
+
+.. code-block:: python
+
+    from approxeng.input.selectbinder import ControllerResource
+    from approxeng.input.dualshock3 import DualShock3
+    from approxeng.input.controllers import ControllerRequirement
+
+    while True:
+        try:
+            with ControllerResource(ControllerRequirement(require_class=DualShock3),
+                                    ControllerRequirement(require_snames=['lx','ly'])) as ds3, joystick:
+                print('Found two joysticks and connected')
+                while joystick.connected and ds3.connected:
+                    # Do stuff with your joystick here!
+                    # ....
+                    # ....
+            # One or both joystick(s) disconnected...
+            print('Connection to joystick(s) lost')
+        except IOError:
+            # No matching joystick found, wait for a bit before trying again
+            print('Unable to find matching joysticks')
+            sleep(1.0)
+
 Reading Analogue Axes
 *********************
 

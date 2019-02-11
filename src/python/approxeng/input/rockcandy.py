@@ -1,4 +1,4 @@
-from approxeng.input import Controller, Button, CentredAxis, TriggerAxis, BinaryAxis
+from approxeng.input import Controller, Button, CentredAxis, BinaryAxis
 
 RC_VENDOR_ID = 3695
 RC_PRODUCT_ID = 296

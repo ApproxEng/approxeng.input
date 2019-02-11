@@ -1,6 +1,7 @@
+import logging
 from os import listdir
 
-from approxeng.input import logger
+logger = logging.getLogger(name='approxeng.input.sys')
 
 __CACHED_SCAN__ = None
 
@@ -37,7 +38,7 @@ def write_led_value(hw_id, led_name, value):
 def read_power_level(hw_id):
     if hw_id in __CACHED_SCAN__['power']:
         f = open(__CACHED_SCAN__['power'][hw_id], 'r')
-        return int(f.read())
+        return int(f.read() or 0)
     else:
         return None
 

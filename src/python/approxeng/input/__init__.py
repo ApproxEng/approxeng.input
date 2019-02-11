@@ -1,9 +1,8 @@
 import logging
 from time import time
 
-import logzero
-
-logger = logzero.setup_logger(name='approxeng.input', level=logging.NOTSET)
+#: Logger - explicitly set the level for this to see log messages
+logger = logging.getLogger(name='approxeng.input')
 
 
 def map_into_range(low, high, raw_value):

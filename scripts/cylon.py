@@ -1,13 +1,13 @@
 from time import sleep
 
 from approxeng.input.dualshock3 import DualShock3
-from approxeng.input.selectbinder import ControllerResource
+from approxeng.input.selectbinder import ControllerResource, ControllerRequirement
 
 while True:
     active_led = 0
     try:
         # Force waiting for a DS3
-        with ControllerResource(controller_class=DualShock3) as controller:
+        with ControllerResource(ControllerRequirement(require_class=DualShock3)) as controller:
             while controller.connected:
                 active_led = (active_led + 1) % 4
                 for led_number in range(4):

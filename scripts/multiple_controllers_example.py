@@ -28,8 +28,7 @@ def main(screen):
             # are. We could have specified more parameters to the ControllerRequirements objects, in which case they
             # would act as filters. So, you could, for example, require the first controller to be a PS3 and the second
             # a PS4, or, more usefully, the two halves of the joycon!
-            with ControllerResource(
-                    requirements=[ControllerRequirement(), ControllerRequirement()]) as (joystick_a, joystick_b):
+            with ControllerResource(ControllerRequirement(), ControllerRequirement()) as (joystick_a, joystick_b):
 
                 # When using this form, all controllers are connected, or they're all disconnected, so only need
                 # to check one of them. The logic is that if you needed two controllers, and you now only have

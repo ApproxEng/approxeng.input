@@ -1,14 +1,14 @@
 from time import sleep
 
 from approxeng.input.dualshock4 import DualShock4
-from approxeng.input.selectbinder import ControllerResource
+from approxeng.input.selectbinder import ControllerResource, ControllerRequirement
 
 while True:
     hue = 0.0
     try:
         # Force waiting for a DS4 controller, as that's the only one with the call
         # to set the light bar in this way.
-        with ControllerResource(controller_class=DualShock4) as ds4:
+        with ControllerResource(ControllerRequirement(require_class=DualShock4)) as ds4:
             while ds4.connected:
                 # Set the hue of the light bar, saturation and value default to 1.0
                 ds4.set_leds(hue=hue)

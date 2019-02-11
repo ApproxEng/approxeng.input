@@ -3,6 +3,7 @@ from approxeng.input import CentredAxis, TriggerAxis, Button, Controller, Binary
 SC_VENDOR_ID = 1118
 SC_PRODUCT_ID = 654
 
+
 class SteamController(Controller):
     """
     Wireless steam controller. Note that you must be running the xbox driver for the steam controller first, otherwise
@@ -21,32 +22,32 @@ class SteamController(Controller):
             :class:`approxeng.input.TriggerAxis` in the controller.
         """
         super(SteamController, self).__init__(vendor_id=SC_VENDOR_ID,
-                                               product_id=SC_PRODUCT_ID,
-                                               controls=[
-                                                   Button("X", 307, sname='square'),
-                                                   Button("Y", 308, sname='triangle'),
-                                                   Button("B", 305, sname='circle'),
-                                                   Button("A", 304, sname='cross'),
-                                                   Button("Right Stick", 318, sname='rs'),
-                                                   Button("Left Stick", 317, sname='ls'),
-                                                   Button("Left", 314, sname='select'),
-                                                   Button("Right", 315, sname='start'),
-                                                   Button("Steam", 316, sname='home'),
-                                                   Button("LB", 310, sname='l1'),
-                                                   Button("RB", 311, sname='r1'),
-                                                   CentredAxis("Left Horizontal", -32768, 32768, 0, sname='lx'),
-                                                   CentredAxis("Left Vertical", -32768, 32768, 1, invert=True,
-                                                               sname='ly'),
-                                                   CentredAxis("Right Horizontal", -32768, 32768, 3, sname='rx'),
-                                                   CentredAxis("Right Vertical", -32768, 32768, 4, invert=True,
-                                                               sname='ry'),
-                                                   TriggerAxis("Left Trigger", 0, 255, 2, sname='lt'),
-                                                   TriggerAxis("Right Trigger", 0, 255, 5, sname='rt'),
-                                                   BinaryAxis("D-pad Horizontal", 16, b1name='dleft', b2name='dright'),
-                                                   BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown')
-                                               ],
-                                               dead_zone=dead_zone,
-                                               hot_zone=hot_zone)
+                                              product_id=SC_PRODUCT_ID,
+                                              controls=[
+                                                  Button("X", 307, sname='square'),
+                                                  Button("Y", 308, sname='triangle'),
+                                                  Button("B", 305, sname='circle'),
+                                                  Button("A", 304, sname='cross'),
+                                                  Button("Right Stick", 318, sname='rs'),
+                                                  Button("Left Stick", 317, sname='ls'),
+                                                  Button("Left", 314, sname='select'),
+                                                  Button("Right", 315, sname='start'),
+                                                  Button("Steam", 316, sname='home'),
+                                                  Button("LB", 310, sname='l1'),
+                                                  Button("RB", 311, sname='r1'),
+                                                  CentredAxis("Left Horizontal", -32768, 32768, 0, sname='lx'),
+                                                  CentredAxis("Left Vertical", -32768, 32768, 1, invert=True,
+                                                              sname='ly'),
+                                                  CentredAxis("Right Horizontal", -32768, 32768, 3, sname='rx'),
+                                                  CentredAxis("Right Vertical", -32768, 32768, 4, invert=True,
+                                                              sname='ry'),
+                                                  TriggerAxis("Left Trigger", 0, 255, 2, sname='lt'),
+                                                  TriggerAxis("Right Trigger", 0, 255, 5, sname='rt'),
+                                                  BinaryAxis("D-pad Horizontal", 16, b1name='dleft', b2name='dright'),
+                                                  BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown')
+                                              ],
+                                              dead_zone=dead_zone,
+                                              hot_zone=hot_zone)
 
     def __repr__(self):
         return 'Valve Steam controller in XBox mode'

@@ -19,12 +19,12 @@ from approxeng.input.wiimote import WiiMote, WIIMOTE_PRODUCT_ID, WIIMOTE_VENDOR_
 from approxeng.input.sf30pro import SF30Pro, SF30Pro_PRODUCT_ID, SF30Pro_VENDOR_ID
 from approxeng.input.switch import SwitchJoyConLeft, SWITCH_VENDOR_ID, SWITCH_L_PRODUCT_ID, SwitchJoyConRight, \
     SWITCH_R_PRODUCT_ID
+from approxeng.input.spacemousepro import SMP_PRODUCT_ID, SMP_VENDOR_ID, SpaceMousePro
 
-import logzero
 import logging
 from functools import total_ordering
 
-logger = logzero.setup_logger(name='approxeng.input.controllers', level=logging.NOTSET)
+logger = logging.getLogger(name='approxeng.input.controllers')
 
 CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_id': DS3_PRODUCT_ID},
                {'constructor': DualShock4, 'vendor_id': DS4_VENDOR_ID, 'product_id': DS4_PRODUCT_ID},
@@ -42,7 +42,8 @@ CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_
                {'constructor': WiiMote, 'vendor_id': WIIMOTE_VENDOR_ID, 'product_id': WIIMOTE_PRODUCT_ID},
                {'constructor': SF30Pro, 'vendor_id': SF30Pro_VENDOR_ID, 'product_id': SF30Pro_PRODUCT_ID},
                {'constructor': SwitchJoyConLeft, 'vendor_id': SWITCH_VENDOR_ID, 'product_id': SWITCH_L_PRODUCT_ID},
-               {'constructor': SwitchJoyConRight, 'vendor_id': SWITCH_VENDOR_ID, 'product_id': SWITCH_R_PRODUCT_ID}]
+               {'constructor': SwitchJoyConRight, 'vendor_id': SWITCH_VENDOR_ID, 'product_id': SWITCH_R_PRODUCT_ID},
+               {'constructor': SpaceMousePro, 'vendor_id': SMP_VENDOR_ID, 'product_id': SMP_PRODUCT_ID}]
 
 
 @total_ordering
@@ -85,18 +86,33 @@ class ControllerRequirement:
     you can subclass this and pass it into the find_matching_controllers and similar functions.
     """
 
-    def __init__(self, require_class=None):
+    def __init__(self, require_class=None, require_snames=None):
+        """
+        Create a new requirement
+
+        :param require_class:
+            If specified, this should be a subclass of :class:`approxeng.input.Controller`, only controllers which match
+            this class will be accepted. Defaults to None, accepting any available controller class.
+        :param require_snames:
+            If specified, this should be a list of strings containing snames of controls (buttons or axes) that must be
+            present in the controller. Use this when you know what controls you need but don't mind which controller
+            actually implements them.
+        """
         self.require_class = require_class
+        self.snames = require_snames
 
     def accept(self, discovery: ControllerDiscovery):
         """
         Returns True if the supplied ControllerDiscovery matches this requirement, False otherwise
         """
-        if self.require_class is None:
-            return True
-        elif isinstance(discovery.controller, self.require_class):
-            return True
-        return False
+        if self.require_class is not None and not isinstance(discovery.controller, self.require_class):
+            return False
+        if self.snames is not None:
+            all_controls = discovery.controller.buttons.names + discovery.controller.axes.names
+            for sname in self.snames:
+                if sname not in all_controls:
+                    return False
+        return True
 
 
 class ControllerNotFoundError(IOError):
@@ -120,31 +136,26 @@ def unique_name(device: InputDevice) -> str:
         return device.uniq
     elif device.phys:
         return device.phys.split('/')[0]
-    return '{}-{}-{}-{}'.format(device.info.vendor, device.info.product, device.info.version, device.fn)
+    return '{}-{}-{}-{}'.format(device.info.vendor, device.info.product, device.info.version, device.path)
 
 
-def find_matching_controllers(requirements: [ControllerRequirement] = None, **kwargs) -> [ControllerDiscovery]:
+def find_matching_controllers(*requirements, **kwargs) -> [ControllerDiscovery]:
     """
     Find a sequence of controllers which match the supplied requirements, or raise an error if no such controllers
     exist.
 
     :param requirements:
-        A sequence of ControllerRequirement instances defining the requirements for controllers. If a single item is
-        passed in it will be treated as a single element list. If no item is passed it will be treated as a single
-        requirement with no filters applied and will therefore match the first controller found, this is also the case
-        if an empty list is supplied.
+        Zero or more ControllerRequirement instances defining the requirements for controllers. If no item is passed it
+        will be treated as a single requirement with no filters applied and will therefore match the first controller
+        found.
     :return:
         A sequence of the same length as the supplied requirements array containing ControllerDiscovery instances which
         match the requirements supplied.
     :raises:
         ControllerNotFoundError if no appropriately matching controllers can be located
     """
-
-    if requirements is None:
-        requirements = [ControllerRequirement()]
-    elif not isinstance(requirements, list):
-        requirements = [requirements]
-    if len(requirements) == 0:
+    requirements = list(requirements)
+    if requirements is None or len(requirements) == 0:
         requirements = [ControllerRequirement()]
 
     def pop_controller(r: ControllerRequirement, discoveries: [ControllerDiscovery]) -> ControllerDiscovery:
@@ -251,7 +262,7 @@ def print_devices():
             buttons = {code: names for (names, code) in
                        dict(util.resolve_ecodes_dict({1: device.capabilities().get(1)})).get(('EV_KEY', 1))}
 
-        return {'fn': device.fn, 'name': device.name, 'phys': device.phys, 'uniq': device.uniq,
+        return {'fn': device.fn, 'path': device.path, 'name': device.name, 'phys': device.phys, 'uniq': device.uniq,
                 'vendor': device.info.vendor, 'product': device.info.product, 'version': device.info.version,
                 'bus': device.info.bustype, 'axes': axes, 'rel_axes': rel_axes, 'buttons': buttons,
                 'unique_name': unique_name(device)}

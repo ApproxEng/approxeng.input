@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>XBox-One S Controller Support &mdash; Approximate Engineering - Input 2.2.0 documentation</title>
@@ -12,49 +13,62 @@
 
   
   
+  
+  
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.2.0 documentation" href="../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml"
+            title="Search within Approximate Engineering - Input 2.2.0 documentation"
+            href="../_static/opensearch.xml"/>
     
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Rock Candy Controller Support" href="rockcandy.html" />
+    <link rel="prev" title="PlayStation 4 Controller Support" href="dualshock4.html" /> 
 
   
-    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
-  
-
-  
-    <link rel="top" title="Approximate Engineering - Input 2.2.0 documentation" href="../index.html"/>
-        <link rel="up" title="API Documentation" href="../api.html"/>
-        <link rel="next" title="Rock Candy Controller Support" href="rockcandy.html"/>
-        <link rel="prev" title="PlayStation 4 Controller Support" href="dualshock4.html"/> 
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../index.html" class="fa fa-home"> Approximate Engineering - Input</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Approximate Engineering - Input
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -62,51 +76,32 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
           
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
+            
+            
+              
+            
+            
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-2-0">Version 2.2.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-1-0">Version 2.1.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-0-3-2-0-4">Version 2.0.3, 2.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-0-2">Version 2.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-0-1">Version 2.0.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-0-0">Version 2.0.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-7">Version 1.0.7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-6">Version 1.0.6</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-5">Version 1.0.5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-4">Version 1.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-2">Version 1.0.2</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#connecting-to-a-controller">Connecting to a controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#reading-analogue-axes">Reading Analogue Axes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#checking-for-held-buttons">Checking for Held Buttons</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#reading-multiple-axis-or-button-hold-values">Reading multiple Axis or Button Hold values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#querying-button-presses">Querying Button Presses</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#button-names">Button Names</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#axis-names">Axis Names</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../bluetooth.html#dependencies">Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../bluetooth.html#pairing-with-bluetoothctl">Pairing with Bluetoothctl</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">XBox-One S Controller Support</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">XBox-One S Controller Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#problems-with-button-mappings">Problems with button mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-approxeng.input.xboxone">Controller Classes</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="rockcandy.html">Rock Candy Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="steamcontroller.html">Steam Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wii.html">Wii Remote Pro Controller Support</a></li>
@@ -116,66 +111,73 @@
 <li class="toctree-l2"><a class="reference internal" href="spacemousepro.html">Wired SpaceMouse Pro Support</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../addingcontrollers.html#finding-your-product-and-vendor-id">Finding your product and vendor ID</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../addingcontrollers.html#clones-of-a-supported-controller">Clones of a supported controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../addingcontrollers.html#writing-a-new-controller-class">Writing a new controller class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../examples/camjam.html">CamJam Edukit 3 Robot</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/failover.html">Controller Failover</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/show_controls.html">Showing Controller Properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/streams.html">Streaming Axis and Button Hold values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/tiny4wd.html">Tiny4WD Robot Drive</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Advanced Usage Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howtouse.html#constructing-and-binding-a-controller">Constructing and Binding a Controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howtouse.html#handling-buttons">Handling Buttons</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howtouse.html#more-about-analogue-axes">More about Analogue Axes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../sys.html">LEDs and Battery Monitoring</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../sys.html#enabling-access-to-leds">Enabling access to LEDs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sys.html#writing-to-leds">Writing to LEDs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sys.html#reading-battery-levels">Reading Battery Levels</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
+            
           
-        
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">Approximate Engineering - Input</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Approximate Engineering - Input</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../api.html">API Documentation</a> &raquo;</li>
-      
-    <li>XBox-One S Controller Support</li>
+        
+      <li>XBox-One S Controller Support</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
+            
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="xbox-one-s-controller-support">
 <span id="api-xboxone"></span><h1>XBox-One S Controller Support<a class="headerlink" href="#xbox-one-s-controller-support" title="Permalink to this headline">¶</a></h1>
@@ -185,41 +187,106 @@
 </div>
 <p>The XBox One S controller (the most modern, with bluetooth support) can be used without any dongles, but you will have
 to change a configuration option in the bluetooth driver. This is done by creating a file in <cite>/etc/modprobe.d/</cite>. The
-file can be called anything, you&#8217;ll need to be root to create it, and must specify a single line. In my case I used</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>tom@Ogre ~ $ sudo nano /etc/modprobe.d/bluetooth.conf
+file can be called anything, you’ll need to be root to create it, and must specify a single line. In my case I used</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tom@Ogre ~ $ sudo nano /etc/modprobe.d/bluetooth.conf
 </pre></div>
 </div>
-<p>...to create a file, with a single line:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>options bluetooth <span class="nv">disable_ertm</span><span class="o">=</span>Y
+<p>…to create a file, with a single line:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>options bluetooth <span class="nv">disable_ertm</span><span class="o">=</span>Y
 </pre></div>
 </div>
-<p>After doing this you&#8217;ll need to reboot your computer. If you don&#8217;t perform this step your controller will pair, but will
-not stay connected for more than a couple of seconds (if you&#8217;re using the graphical bluetooth manager you&#8217;ll see it
-connecting and disconnecting forever). There don&#8217;t appear to be any drawbacks to setting this option, at least none that
-I&#8217;ve found in the context of making robots.</p>
-<p>Once this is done you should be able to pair with <a class="reference internal" href="../bluetooth.html#bluetooth"><span>Pairing Controllers over Bluetooth</span></a> as with any normal bluetooth device.</p>
+<p>After doing this you’ll need to reboot your computer. If you don’t perform this step your controller will pair, but will
+not stay connected for more than a couple of seconds (if you’re using the graphical bluetooth manager you’ll see it
+connecting and disconnecting forever). There don’t appear to be any drawbacks to setting this option, at least none that
+I’ve found in the context of making robots.</p>
+<p>Once this is done you should be able to pair with <a class="reference internal" href="../bluetooth.html#bluetooth"><span class="std std-ref">Pairing Controllers over Bluetooth</span></a> as with any normal bluetooth device.</p>
 <div class="section" id="problems-with-button-mappings">
 <h2>Problems with button mappings<a class="headerlink" href="#problems-with-button-mappings" title="Permalink to this headline">¶</a></h2>
-<p>When you first pair your controller, it may not work! If you&#8217;re seeing messages about button codes not being recognised,
+<p>When you first pair your controller, it may not work! If you’re seeing messages about button codes not being recognised,
 or buttons are mapping to the wrong controls, you need to un-pair the controller and go through the pairing process
-again. We&#8217;re not sure why, but in three separate cases this has fixed the issue. See
+again. We’re not sure why, but in three separate cases this has fixed the issue. See
 <a class="reference external" href="https://github.com/ApproxEng/approxeng.input/issues/17">Issue #17</a> for discussion!</p>
 </div>
-<div class="section" id="controller-classes">
-<h2>Controller Classes<a class="headerlink" href="#controller-classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-approxeng.input.xboxone">
+<span id="controller-classes"></span><h2>Controller Classes<a class="headerlink" href="#module-approxeng.input.xboxone" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="approxeng.input.xboxone.WiredXBoxOneSPad">
+<em class="property">class </em><code class="descclassname">approxeng.input.xboxone.</code><code class="descname">WiredXBoxOneSPad</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WiredXBoxOneSPad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WiredXBoxOneSPad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wired XBox One controller, tested with the newer controllers that use bluetooth and are supplied with the XBox One S
+but may work with older versions. Note that the codes and axis mappings for the wired controller are not the same
+as for the wireless!</p>
+<dl class="method">
+<dt id="approxeng.input.xboxone.WiredXBoxOneSPad.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WiredXBoxOneSPad.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WiredXBoxOneSPad.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new xbox one s controller instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="approxeng.input.xboxone.WirelessXBoxOneSPad">
+<em class="property">class </em><code class="descclassname">approxeng.input.xboxone.</code><code class="descname">WirelessXBoxOneSPad</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WirelessXBoxOneSPad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WirelessXBoxOneSPad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wireless over bluetooth - for some reason the control ranges on this are different to when wired and all the buttons
+are different.</p>
+<p>To make the wireless pair work with linux you need to set a kernel module option on the bluetooth module. This can
+be done by creating a file in /etc/modprobe.d with the line ‘options bluetooth disable_ertm=Y’ and rebooting.</p>
+<dl class="method">
+<dt id="approxeng.input.xboxone.WirelessXBoxOneSPad.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.1</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WirelessXBoxOneSPad.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WirelessXBoxOneSPad.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new xbox one s controller instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="approxeng.input.xboxone.WirelessXBoxOneSPad.battery_level">
+<code class="descname">battery_level</code><a class="headerlink" href="#approxeng.input.xboxone.WirelessXBoxOneSPad.battery_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the battery level, as a float from 0.0 to 1.0, or None if not available</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
 
+           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="rockcandy.html" class="btn btn-neutral float-right" title="Rock Candy Controller Support">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="rockcandy.html" class="btn btn-neutral float-right" title="Rock Candy Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="dualshock4.html" class="btn btn-neutral" title="PlayStation 4 Controller Support"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="dualshock4.html" class="btn btn-neutral" title="PlayStation 4 Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -228,14 +295,15 @@ again. We&#8217;re not sure why, but in three separate cases this has fixed the 
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn.
+        &copy; Copyright 2017, Tom Oinn
       Last updated on Feb 11, 2019.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -247,35 +315,24 @@ again. We&#8217;re not sure why, but in three separate cases this has fixed the 
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'2.2.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

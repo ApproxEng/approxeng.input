@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Advanced Usage Guide &mdash; Approximate Engineering - Input 2.2.0 documentation</title>
@@ -12,48 +13,62 @@
 
   
   
+  
+  
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.2.0 documentation" href="_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml"
+            title="Search within Approximate Engineering - Input 2.2.0 documentation"
+            href="_static/opensearch.xml"/>
     
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="LEDs and Battery Monitoring" href="sys.html" />
+    <link rel="prev" title="Tiny4WD Robot Drive" href="examples/tiny4wd.html" /> 
 
   
-    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
-  
-
-  
-    <link rel="top" title="Approximate Engineering - Input 2.2.0 documentation" href="index.html"/>
-        <link rel="next" title="LEDs and Battery Monitoring" href="sys.html"/>
-        <link rel="prev" title="Tiny4WD Robot Drive" href="examples/tiny4wd.html"/> 
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="index.html" class="fa fa-home"> Approximate Engineering - Input</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Approximate Engineering - Input
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -61,118 +76,96 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
           
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
+            
+            
+              
+            
+            
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-2-0">Version 2.2.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-1-0">Version 2.1.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-0-3-2-0-4">Version 2.0.3, 2.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-0-2">Version 2.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-0-1">Version 2.0.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-0-0">Version 2.0.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-7">Version 1.0.7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-6">Version 1.0.6</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-5">Version 1.0.5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-4">Version 1.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-2">Version 1.0.2</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#connecting-to-a-controller">Connecting to a controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#reading-analogue-axes">Reading Analogue Axes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#checking-for-held-buttons">Checking for Held Buttons</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#reading-multiple-axis-or-button-hold-values">Reading multiple Axis or Button Hold values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#querying-button-presses">Querying Button Presses</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="simpleusage.html#standard-names">Standard Names</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#button-names">Button Names</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#axis-names">Axis Names</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="bluetooth.html#dependencies">Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bluetooth.html#pairing-with-bluetoothctl">Pairing with Bluetoothctl</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/input.html">Common APIs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/dualshock3.html">PlayStation 3 Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/dualshock4.html">PlayStation 4 Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/xboxone.html">XBox-One S Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/rockcandy.html">Rock Candy Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/steamcontroller.html">Steam Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/wii.html">Wii Remote Pro Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/wiimote.html">WiiMote Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pihut.html">PiHut Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/sf30pro.html">8Bitdo SF30Pro/SN30Pro Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/spacemousepro.html">Wired SpaceMouse Pro Support</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="addingcontrollers.html#finding-your-product-and-vendor-id">Finding your product and vendor ID</a></li>
-<li class="toctree-l2"><a class="reference internal" href="addingcontrollers.html#clones-of-a-supported-controller">Clones of a supported controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="addingcontrollers.html#writing-a-new-controller-class">Writing a new controller class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples/camjam.html">CamJam Edukit 3 Robot</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/failover.html">Controller Failover</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/show_controls.html">Showing Controller Properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/streams.html">Streaming Axis and Button Hold values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/tiny4wd.html">Tiny4WD Robot Drive</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Advanced Usage Guide</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced Usage Guide</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#constructing-and-binding-a-controller">Constructing and Binding a Controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#handling-buttons">Handling Buttons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#handling-buttons">Handling Buttons</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#handling-button-presses-as-events">Handling Button Presses as Events</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#more-about-analogue-axes">More about Analogue Axes</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="sys.html">LEDs and Battery Monitoring</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sys.html#enabling-access-to-leds">Enabling access to LEDs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sys.html#writing-to-leds">Writing to LEDs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sys.html#reading-battery-levels">Reading Battery Levels</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
+            
           
-        
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">Approximate Engineering - Input</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Approximate Engineering - Input</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="index.html">Docs</a> &raquo;</li>
-      
-    <li>Advanced Usage Guide</li>
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Advanced Usage Guide</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
+            
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="advanced-usage-guide">
 <h1>Advanced Usage Guide<a class="headerlink" href="#advanced-usage-guide" title="Permalink to this headline">¶</a></h1>
@@ -180,64 +173,64 @@
 joystick axes which are used for any kind of controller, particular controllers and binding mechanisms are implemented
 in sub-modules. The key classes shared across all controllers are:</p>
 <ul class="simple">
-<li><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code> <code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code> and <code class="xref py py-class docutils literal"><span class="pre">approxeng.input.BinaryAxis</span></code>
+<li><a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> <a class="reference internal" href="api/input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> and <a class="reference internal" href="api/input.html#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.BinaryAxis</span></code></a>
 represent different kinds of axis of an analogue control. The centred axis is used for joysticks with a negative value
 at one end of the range and positive at the other, whereas the trigger axis is used for axes with zero at the resting
 position and increasingly positive values as the control is pressed. As the names suggest, these are used for centred
 and trigger controls respectively - a PS3 joystick consists of two centred axes, an XBox One front trigger consists of
 a single trigger axis. The BinaryAxis is used for controllers which export buttons as axes (both the PS4 and the XBox
-controller D-pads are actually a pair of axes in terms of implementation, although they don&#8217;t have any analogue
+controller D-pads are actually a pair of axes in terms of implementation, although they don’t have any analogue
 control, they just emit either -1, 0 or 1)</li>
-<li><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Button</span></code> represents a single button. As with the Axis class you don&#8217;t create these, instead you
+<li><a class="reference internal" href="api/input.html#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Button</span></code></a> represents a single button. As with the Axis class you don’t create these, instead you
 need to use the instances provided by the driver classes.</li>
-<li><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Buttons</span></code> represents the state of all the buttons on the controller. You&#8217;ll use the provided
+<li><a class="reference internal" href="api/input.html#approxeng.input.Buttons" title="approxeng.input.Buttons"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Buttons</span></code></a> represents the state of all the buttons on the controller. You’ll use the provided
 instance of this class to register button handlers, ask whether any buttons were pressed, and get information about
 how long a button has been held down.</li>
-<li>Finally, all controller classes inherit from <code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Controller</span></code>. This provides a
-<code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Buttons</span></code> instance called &#8216;buttons&#8217;, and an <code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Axes</span></code> instance called
-&#8216;axes&#8217;. These will come in handy later!</li>
+<li>Finally, all controller classes inherit from <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Controller</span></code></a>. This provides a
+<a class="reference internal" href="api/input.html#approxeng.input.Buttons" title="approxeng.input.Buttons"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Buttons</span></code></a> instance called ‘buttons’, and an <a class="reference internal" href="api/input.html#approxeng.input.Axes" title="approxeng.input.Axes"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Axes</span></code></a> instance called
+‘axes’. These will come in handy later!</li>
 </ul>
 <div class="section" id="constructing-and-binding-a-controller">
 <h2>Constructing and Binding a Controller<a class="headerlink" href="#constructing-and-binding-a-controller" title="Permalink to this headline">¶</a></h2>
 <p>Once your controller is physically connected to the computer (whether by USB, bluetooth or magic) and you have a
 corresponding entry in the dev filesystem, you need to create an object to receive and interpret events from the
 hardware, and you need to set up a mechanism by which events will be sent to that object. The object in this case will
-be a subclass of <code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Controller</span></code>, currently the following controllers are supported:</p>
+be a subclass of <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Controller</span></code></a>, currently the following controllers are supported:</p>
 <ul class="simple">
-<li><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.dualshock3.DualShock3</span></code> handles PS3 controllers</li>
-<li><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.dualshock4.DualShock4</span></code> is for PS4 controllers</li>
-<li><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.xboxone.WiredXBoxOneSPad</span></code> and <code class="xref py py-class docutils literal"><span class="pre">approxeng.input.xboxone.WirelessXBoxOneSPad</span></code> are for the
+<li><a class="reference internal" href="api/dualshock3.html#approxeng.input.dualshock3.DualShock3" title="approxeng.input.dualshock3.DualShock3"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.dualshock3.DualShock3</span></code></a> handles PS3 controllers</li>
+<li><a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4" title="approxeng.input.dualshock4.DualShock4"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.dualshock4.DualShock4</span></code></a> is for PS4 controllers</li>
+<li><a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WiredXBoxOneSPad" title="approxeng.input.xboxone.WiredXBoxOneSPad"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.xboxone.WiredXBoxOneSPad</span></code></a> and <a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad" title="approxeng.input.xboxone.WirelessXBoxOneSPad"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.xboxone.WirelessXBoxOneSPad</span></code></a> are for the
 newer XBox One controllers. For whatever reason this controller reports different axes and buttons when connected over
-bluetooth to when it&#8217;s connected with a wire, so you&#8217;ll need to use the correct one!</li>
-<li><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.rockcandy.RockCandy</span></code> for the Rock Candy PS4 controller clone (it appears to describe itself as
+bluetooth to when it’s connected with a wire, so you’ll need to use the correct one!</li>
+<li><a class="reference internal" href="api/rockcandy.html#approxeng.input.rockcandy.RockCandy" title="approxeng.input.rockcandy.RockCandy"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.rockcandy.RockCandy</span></code></a> for the Rock Candy PS4 controller clone (it appears to describe itself as
 a PS3 controller, but has the controls of a PS4 one!)</li>
-<li><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.steamcontroller.SteamController</span></code> for the Valve Steam controller. This is a bit of a strange
-one, and you&#8217;ll need to be running a driver which creates a virtual XBox360 device to use it, but it does work. See
-<a class="reference internal" href="api/steamcontroller.html#api-steamcontroller"><span>Steam Controller Support</span></a> for details.</li>
-<li><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.wii.WiiRemotePro</span></code> for the Nintendo Wii Remote Pro. If you&#8217;re running in a graphical
-environment you&#8217;ll probably want to disable the default behaviour where the left stick controls the mouse - see
-<a class="reference internal" href="api/wii.html#wii-remote-pro-label"><span>Disabling &#8216;Stick as Mouse&#8217; functionality</span></a> for instructions.</li>
-<li><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.wiimote.WiiMote</span></code> for <a class="reference internal" href="api/wiimote.html#api-wiimote"><span>WiiMote Controller Support</span></a>.</li>
-<li><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.sf30pro.SF30Pro</span></code> for <a class="reference internal" href="api/sf30pro.html#api-sf30pro"><span>8Bitdo SF30Pro/SN30Pro Controller Support</span></a>.</li>
-<li><code class="xref py py-class docutils literal"><span class="pre">approxeng.input.pihut.PiHut</span></code> for <a class="reference internal" href="api/pihut.html#api-pihut"><span>PiHut Controller Support</span></a>.</li>
+<li><a class="reference internal" href="api/steamcontroller.html#approxeng.input.steamcontroller.SteamController" title="approxeng.input.steamcontroller.SteamController"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.steamcontroller.SteamController</span></code></a> for the Valve Steam controller. This is a bit of a strange
+one, and you’ll need to be running a driver which creates a virtual XBox360 device to use it, but it does work. See
+<a class="reference internal" href="api/steamcontroller.html#api-steamcontroller"><span class="std std-ref">Steam Controller Support</span></a> for details.</li>
+<li><a class="reference internal" href="api/wii.html#approxeng.input.wii.WiiRemotePro" title="approxeng.input.wii.WiiRemotePro"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.wii.WiiRemotePro</span></code></a> for the Nintendo Wii Remote Pro. If you’re running in a graphical
+environment you’ll probably want to disable the default behaviour where the left stick controls the mouse - see
+<a class="reference internal" href="api/wii.html#wii-remote-pro-label"><span class="std std-ref">Disabling ‘Stick as Mouse’ functionality</span></a> for instructions.</li>
+<li><a class="reference internal" href="api/wiimote.html#approxeng.input.wiimote.WiiMote" title="approxeng.input.wiimote.WiiMote"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.wiimote.WiiMote</span></code></a> for <a class="reference internal" href="api/wiimote.html#api-wiimote"><span class="std std-ref">WiiMote Controller Support</span></a>.</li>
+<li><a class="reference internal" href="api/sf30pro.html#approxeng.input.sf30pro.SF30Pro" title="approxeng.input.sf30pro.SF30Pro"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.sf30pro.SF30Pro</span></code></a> for <a class="reference internal" href="api/sf30pro.html#api-sf30pro"><span class="std std-ref">8Bitdo SF30Pro/SN30Pro Controller Support</span></a>.</li>
+<li><a class="reference internal" href="api/pihut.html#approxeng.input.pihut.PiHut" title="approxeng.input.pihut.PiHut"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.pihut.PiHut</span></code></a> for <a class="reference internal" href="api/pihut.html#api-pihut"><span class="std std-ref">PiHut Controller Support</span></a>.</li>
 </ul>
 <p>In general you will not explicitly create these objects yourself, instead you can use the binding layer to discover a
 connected controller (optionally supplying a particular kind of controller you want, otherwise it just finds the first
 one it can). This will create the controller object from which you can read things like axis values, and also set up the
 necessary logic to pull events out of the evdev linux system and update the values without you having to do anything.</p>
-<p>The only time you&#8217;re likely to use these classes is to reference them when binding, this allows you to wait for a
-specific kind of controller to become available - handy if, say, you really have to have a PS4 controller but you&#8217;ve
-got a rock candy dongle plugged in. The details of the binding process are described at <a class="reference internal" href="api/selectbinder.html#binding-reference-label"><span>Binding - approxeng.input.selectbinder</span></a>.</p>
+<p>The only time you’re likely to use these classes is to reference them when binding, this allows you to wait for a
+specific kind of controller to become available - handy if, say, you really have to have a PS4 controller but you’ve
+got a rock candy dongle plugged in. The details of the binding process are described at <a class="reference internal" href="api/selectbinder.html#binding-reference-label"><span class="std std-ref">Binding - approxeng.input.selectbinder</span></a>.</p>
 </div>
 <div class="section" id="handling-buttons">
 <h2>Handling Buttons<a class="headerlink" href="#handling-buttons" title="Permalink to this headline">¶</a></h2>
-<p>There are two styles of button handler. The simplest, and the one you&#8217;re likely to use in almost all cases, is a polling
+<p>There are two styles of button handler. The simplest, and the one you’re likely to use in almost all cases, is a polling
 mechanism - you can ask the Controller object what buttons have been pressed since you last asked that question. This
-is easy to use, you don&#8217;t have to worry you&#8217;ll miss a button press because you were off doing something else, and it
+is easy to use, you don’t have to worry you’ll miss a button press because you were off doing something else, and it
 uses the standard name system. At its simplest you get back an array of standard names of buttons which were pressed
 since last time. This part of the API also allows you to test for held buttons, including the duration for which the
 button has been held. Handy for where you want the magnitude of a response to be determined by how long a button is held
-(could be useful for simulating a &#8216;power charge&#8217; or similar).</p>
+(could be useful for simulating a ‘power charge’ or similar).</p>
 <p>The second kind is to register a callback function which should be called when a button is pressed. In general you no
 longer need to do this - it was used primarily for cases where e.g. a button should interrupt whatever was going on with
 a robot and bounce the system back to some safe state, but there are better ways to do this. Nonetheless, this mechanism
@@ -246,12 +239,12 @@ is still present and you can use it if you really need to.</p>
 <h3>Handling Button Presses as Events<a class="headerlink" href="#handling-button-presses-as-events" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Only use this method if you are absolutely sure it&#8217;s what you need. Callback functions will be called from the event
-processing thread - you need to handle these extremely fast or you&#8217;ll cause issues with missed events! It&#8217;s almost
-never going to be the right thing to do, you&#8217;re almost certainly better off using the polling for buttons mechanism
-described in <a class="reference internal" href="simpleusage.html#poll-presses-label"><span>Querying Button Presses</span></a>. With that caveat, here&#8217;s how to do it if you insist!</p>
+<p class="last">Only use this method if you are absolutely sure it’s what you need. Callback functions will be called from the event
+processing thread - you need to handle these extremely fast or you’ll cause issues with missed events! It’s almost
+never going to be the right thing to do, you’re almost certainly better off using the polling for buttons mechanism
+described in <a class="reference internal" href="simpleusage.html#poll-presses-label"><span class="std std-ref">Querying Button Presses</span></a>. With that caveat, here’s how to do it if you insist!</p>
 </div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
 <span class="c1"># Get a joystick</span>
 <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">controller_class</span> <span class="o">=</span> <span class="n">DualShock3</span><span class="p">)</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
@@ -269,17 +262,17 @@ described in <a class="reference internal" href="simpleusage.html#poll-presses-l
         <span class="k">pass</span>
 </pre></div>
 </div>
-<p>Registering a button handler, a function which is called whenever the button is pressed, can be useful when you don&#8217;t
-want to repeatedly check whether something&#8217;s been pressed. I used event handlers in Triangula&#8217;s code to jump the robot
-back to her main menu any time I pressed the home button on the controller. Because I used an event to do this, I didn&#8217;t
-need to worry about getting into some kind of locked state where the robot was out of control and I couldn&#8217;t stop her -
+<p>Registering a button handler, a function which is called whenever the button is pressed, can be useful when you don’t
+want to repeatedly check whether something’s been pressed. I used event handlers in Triangula’s code to jump the robot
+back to her main menu any time I pressed the home button on the controller. Because I used an event to do this, I didn’t
+need to worry about getting into some kind of locked state where the robot was out of control and I couldn’t stop her -
 the button always did the same thing.</p>
 <p>The register_button_handler function actually returns a function which can be called to de-register the handler, you
-should do this to stop your handler being called when it&#8217;s no longer needed.</p>
-<p>As you can see, there&#8217;s quite a lot of thinking required to make button handlers work properly. They may be the right
+should do this to stop your handler being called when it’s no longer needed.</p>
+<p>As you can see, there’s quite a lot of thinking required to make button handlers work properly. They may be the right
 way to do things (for example, you might want a handler which reset the centre point of the analogue sticks, this would
-be best done as a handler because it could be called at any time from anywhere else in your code and you wouldn&#8217;t have
-to worry about it). If, however, you&#8217;re in a polling loop such as Triangula&#8217;s task framework or PyGame&#8217;s event loop you
+be best done as a handler because it could be called at any time from anywhere else in your code and you wouldn’t have
+to worry about it). If, however, you’re in a polling loop such as Triangula’s task framework or PyGame’s event loop you
 probably just want to know whether a button was pressed since you last checked.</p>
 </div>
 </div>
@@ -293,29 +286,29 @@ modelled as two independent centred axes, one for the horizontal part and one fo
 we might want to do first, and which the code provides:</p>
 <ul class="simple">
 <li>The centre point of the hardware is often not the numeric centre of the range. This is because hardware exists in the
-real world, where things can be slightly messy. It&#8217;s generally not far off, but often the resting position isn&#8217;t at
+real world, where things can be slightly messy. It’s generally not far off, but often the resting position isn’t at
 0.0.</li>
 <li>The theoretical range of the controller is often larger than the actual range produced. For example, we might have a
 controller which claims to produce values from -255 to 255 (before we normalise down to -1.0 to 1.0) but which
 actually only ever produces values between, say, -251 and 243.</li>
-<li>It&#8217;s often desirable to have a dead zone near the resting position, so only intentional movements of the controller
+<li>It’s often desirable to have a dead zone near the resting position, so only intentional movements of the controller
 are detected as motion. Analogue controls often have a bit of noise - the joystick may rest at 0 in theory, but in
 practice we might see a string of values such as -1, -1, 0, 1, 1, 0, 0 etc etc.</li>
-<li>Similarly, we might want a &#8216;hot zone&#8217; near the extreme positions of the axis, where any higher magnitude values should
-be interpreted as the maximum value. This means we&#8217;re able to get to the highest value without having to worry about
+<li>Similarly, we might want a ‘hot zone’ near the extreme positions of the axis, where any higher magnitude values should
+be interpreted as the maximum value. This means we’re able to get to the highest value without having to worry about
 controller noise.</li>
 </ul>
 <p>Different controllers report different ranges (for example, the PS3 controller range is from 0 to 255 whereas the XBox
 controller is from -32768 to 32768 when plugged in and, for some ungodly reason, 0 to 65335 when wireless), but you
-don&#8217;t have to worry about this as the controller implementations specify this internally and you&#8217;ll only ever see values
+don’t have to worry about this as the controller implementations specify this internally and you’ll only ever see values
 between -1.0 and 1.0, or between 0.0 and 1.0 for trigger axes.</p>
-<p>The <code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code> and <code class="xref py py-class docutils literal"><span class="pre">approxeng.input.TriggerAxis</span></code> both auto-range, in that they start
-off with a maximum and minimum value that&#8217;s well within the theoretical range, and expand this out when they see higher
-values from the controller. This means we don&#8217;t have to worry that the theoretical range of the controller isn&#8217;t fully
-used, we&#8217;ll always have our -1.0 to 1.0 correspond to the actual controller movement.</p>
-<p>Auto-centring isn&#8217;t possible as we can&#8217;t know whether the user is touching the controller, but you can set the centre
-point for an individual <code class="xref py py-class docutils literal"><span class="pre">approxeng.input.CentredAxis</span></code> by setting its &#8216;centre&#8217; property, or for a complete set
-defined by an <code class="xref py py-class docutils literal"><span class="pre">approxeng.input.Axes</span></code> object by calling the set_axis_centres() function on the Axes object. This
+<p>The <a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and <a class="reference internal" href="api/input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> both auto-range, in that they start
+off with a maximum and minimum value that’s well within the theoretical range, and expand this out when they see higher
+values from the controller. This means we don’t have to worry that the theoretical range of the controller isn’t fully
+used, we’ll always have our -1.0 to 1.0 correspond to the actual controller movement.</p>
+<p>Auto-centring isn’t possible as we can’t know whether the user is touching the controller, but you can set the centre
+point for an individual <a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> by setting its ‘centre’ property, or for a complete set
+defined by an <a class="reference internal" href="api/input.html#approxeng.input.Axes" title="approxeng.input.Axes"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Axes</span></code></a> object by calling the set_axis_centres() function on the Axes object. This
 function takes an arbitrary number of parameters and ignores all of them - this is done so you can specify the function
 as a button handler.</p>
 <p>Dead zones and hot zones are defined as a proportion of the range of the axis:</p>
@@ -329,20 +322,22 @@ edge of the hot zone.</li>
 above 0.8 will return a corrected value of 1.0, and those below 0.1 will return 0.0. For negative values the same
 applies, except that values below -0.8 will return -1.0 and those above -0.1 will return 0.0</li>
 </ul>
-<p>To obtain the corrected values for an axis you need to retrieve the &#8216;value&#8217; property on the axis object.</p>
+<p>To obtain the corrected values for an axis you need to retrieve the ‘value’ property on the axis object.</p>
 </div>
 </div>
 
 
+           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="sys.html" class="btn btn-neutral float-right" title="LEDs and Battery Monitoring">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="sys.html" class="btn btn-neutral float-right" title="LEDs and Battery Monitoring" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="examples/tiny4wd.html" class="btn btn-neutral" title="Tiny4WD Robot Drive"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="examples/tiny4wd.html" class="btn btn-neutral" title="Tiny4WD Robot Drive" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -351,14 +346,15 @@ applies, except that values below -0.8 will return -1.0 and those above -0.1 wil
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn.
+        &copy; Copyright 2017, Tom Oinn
       Last updated on Feb 11, 2019.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -370,35 +366,24 @@ applies, except that values below -0.8 will return -1.0 and those above -0.1 wil
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'2.2.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>PlayStation 3 Controller Support &mdash; Approximate Engineering - Input 2.2.0 documentation</title>
@@ -12,49 +13,62 @@
 
   
   
+  
+  
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.2.0 documentation" href="../_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml"
+            title="Search within Approximate Engineering - Input 2.2.0 documentation"
+            href="../_static/opensearch.xml"/>
     
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PlayStation 4 Controller Support" href="dualshock4.html" />
+    <link rel="prev" title="Binding - approxeng.input.selectbinder" href="selectbinder.html" /> 
 
   
-    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
-  
-
-  
-    <link rel="top" title="Approximate Engineering - Input 2.2.0 documentation" href="../index.html"/>
-        <link rel="up" title="API Documentation" href="../api.html"/>
-        <link rel="next" title="PlayStation 4 Controller Support" href="dualshock4.html"/>
-        <link rel="prev" title="Binding - approxeng.input.selectbinder" href="selectbinder.html"/> 
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="../index.html" class="fa fa-home"> Approximate Engineering - Input</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Approximate Engineering - Input
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -62,49 +76,36 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
           
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
+            
+            
+              
+            
+            
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-2-0">Version 2.2.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-1-0">Version 2.1.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-0-3-2-0-4">Version 2.0.3, 2.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-0-2">Version 2.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-0-1">Version 2.0.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-0-0">Version 2.0.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-7">Version 1.0.7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-6">Version 1.0.6</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-5">Version 1.0.5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-4">Version 1.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-2">Version 1.0.2</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#connecting-to-a-controller">Connecting to a controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#reading-analogue-axes">Reading Analogue Axes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#checking-for-held-buttons">Checking for Held Buttons</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#reading-multiple-axis-or-button-hold-values">Reading multiple Axis or Button Hold values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#querying-button-presses">Querying Button Presses</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#button-names">Button Names</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#axis-names">Axis Names</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../bluetooth.html#dependencies">Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../bluetooth.html#pairing-with-bluetoothctl">Pairing with Bluetoothctl</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">PlayStation 3 Controller Support</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">PlayStation 3 Controller Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#newer-bluez-versions">Newer BlueZ versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-note-on-pairing">A note on pairing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hardware">Hardware</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#bluetooth-dongles">Bluetooth dongles</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#software">Software</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pairing">Pairing</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="xboxone.html">XBox-One S Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="rockcandy.html">Rock Candy Controller Support</a></li>
@@ -116,66 +117,73 @@
 <li class="toctree-l2"><a class="reference internal" href="spacemousepro.html">Wired SpaceMouse Pro Support</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../addingcontrollers.html#finding-your-product-and-vendor-id">Finding your product and vendor ID</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../addingcontrollers.html#clones-of-a-supported-controller">Clones of a supported controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../addingcontrollers.html#writing-a-new-controller-class">Writing a new controller class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../examples/camjam.html">CamJam Edukit 3 Robot</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/failover.html">Controller Failover</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/show_controls.html">Showing Controller Properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/streams.html">Streaming Axis and Button Hold values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../examples/tiny4wd.html">Tiny4WD Robot Drive</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Advanced Usage Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howtouse.html#constructing-and-binding-a-controller">Constructing and Binding a Controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howtouse.html#handling-buttons">Handling Buttons</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howtouse.html#more-about-analogue-axes">More about Analogue Axes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../sys.html">LEDs and Battery Monitoring</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../sys.html#enabling-access-to-leds">Enabling access to LEDs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sys.html#writing-to-leds">Writing to LEDs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../sys.html#reading-battery-levels">Reading Battery Levels</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
+            
           
-        
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">Approximate Engineering - Input</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Approximate Engineering - Input</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
           <li><a href="../api.html">API Documentation</a> &raquo;</li>
-      
-    <li>PlayStation 3 Controller Support</li>
+        
+      <li>PlayStation 3 Controller Support</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
+            
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="playstation-3-controller-support">
 <span id="api-dualshock3"></span><h1>PlayStation 3 Controller Support<a class="headerlink" href="#playstation-3-controller-support" title="Permalink to this headline">¶</a></h1>
@@ -185,14 +193,14 @@
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you are starting from scratch and don&#8217;t have any PS3 controllers I recommend using the PS4 controller instead.
-It&#8217;s a better piece of hardware, and pairing is considerably simpler. The most recent XBox One controllers are also
+<p class="last">If you are starting from scratch and don’t have any PS3 controllers I recommend using the PS4 controller instead.
+It’s a better piece of hardware, and pairing is considerably simpler. The most recent XBox One controllers are also
 an option. This guide therefore is largely for those who have existing controllers and want to make use of them.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you are using a new (5.49 onwards) version of BlueZ with the SixAxis plugin installed you can ignore most of this
-guide and skip to the &#8216;pairing with new BlueZ&#8217; section.</p>
+guide and skip to the ‘pairing with new BlueZ’ section.</p>
 </div>
 <div class="section" id="newer-bluez-versions">
 <h2>Newer BlueZ versions<a class="headerlink" href="#newer-bluez-versions" title="Permalink to this headline">¶</a></h2>
@@ -202,29 +210,29 @@ build of BlueZ 5.49.</p>
 <ol class="arabic simple">
 <li>Run bluetoothctl as a normal user and enable to default agent</li>
 <li>Connect your PS3 controller with a mini-USB cable and press the PS button</li>
-<li>Answer &#8216;yes&#8217; at the prompt to authorise</li>
+<li>Answer ‘yes’ at the prompt to authorise</li>
 <li>Disconnect your PS3 controller and press the PS button to turn it on. It should now connect over bluetooth</li>
 </ol>
 </div>
 <div class="section" id="a-note-on-pairing">
 <h2>A note on pairing<a class="headerlink" href="#a-note-on-pairing" title="Permalink to this headline">¶</a></h2>
-<p>One of the reasons the SixAxis isn&#8217;t as easy as it could be to use is how pairing works. Normal bluetooth devices will
+<p>One of the reasons the SixAxis isn’t as easy as it could be to use is how pairing works. Normal bluetooth devices will
 establish a link between the device and the host once, then the host can initiate connection using this previously
-stored information. In the case of the SixAxis, it&#8217;s actually the controller that initiates the process, so we have to
+stored information. In the case of the SixAxis, it’s actually the controller that initiates the process, so we have to
 do some setup beforehand. We need to tell the controller to which bluetooth host it should attempt to connect, and we
-need to tell the host (the Pi) that it should allow the controller&#8217;s connection.</p>
+need to tell the host (the Pi) that it should allow the controller’s connection.</p>
 </div>
 <div class="section" id="hardware">
 <h2>Hardware<a class="headerlink" href="#hardware" title="Permalink to this headline">¶</a></h2>
-<p>This guide assumes you&#8217;re using a Raspberry Pi (I&#8217;m using a Pi 2, but there&#8217;s no reason this wouldn&#8217;t work with older
-ones). You&#8217;ll also need a USB bluetooth dongle and, obviously, a SixAxis controller. I&#8217;ve only tried this with genuine
-Sony ones, many of the cheaper ones you&#8217;ll find online are clones, they should work but YMMV (experimentation suggests
-that you&#8217;ll be extremely lucky to make one of the clones work, go for the genuine ones!)</p>
+<p>This guide assumes you’re using a Raspberry Pi (I’m using a Pi 2, but there’s no reason this wouldn’t work with older
+ones). You’ll also need a USB bluetooth dongle and, obviously, a SixAxis controller. I’ve only tried this with genuine
+Sony ones, many of the cheaper ones you’ll find online are clones, they should work but YMMV (experimentation suggests
+that you’ll be extremely lucky to make one of the clones work, go for the genuine ones!)</p>
 <div class="section" id="bluetooth-dongles">
 <h3>Bluetooth dongles<a class="headerlink" href="#bluetooth-dongles" title="Permalink to this headline">¶</a></h3>
 <p>Some people are finding this guide does not work. I suspect this is down to the bluetooth dongle, having eliminated
-everything else in the process. The one I&#8217;m using is an Asus USB-BT400, it&#8217;s tiny and supports all the current Bluetooth
-standards. If you get this to work with a different dongle can you let me know on twitter at &#64;approx_eng_ and I&#8217;ll add
+everything else in the process. The one I’m using is an Asus USB-BT400, it’s tiny and supports all the current Bluetooth
+standards. If you get this to work with a different dongle can you let me know on twitter at &#64;approx_eng_ and I’ll add
 it to this list:</p>
 <ul class="simple">
 <li>Asus USB-BT400</li>
@@ -236,67 +244,67 @@ it to this list:</p>
 <h2>Software<a class="headerlink" href="#software" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This is assuming you&#8217;re starting from a clean installation of the Jessie based Raspbian. Other
+<p class="last">This is assuming you’re starting from a clean installation of the Jessie based Raspbian. Other
 distributions may need varying combinations of dev libraries etc. For testing I was using the minimal installation with
-filename <code class="docutils literal"><span class="pre">2015-11-21-raspbian-jessie-lite.zip</span></code> but these instructions should apply to any recent version. As always,
-it&#8217;s not a bad idea to run <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">update</span></code> and <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">upgrade</span></code> to get any changes to packages since
+filename <code class="docutils literal notranslate"><span class="pre">2015-11-21-raspbian-jessie-lite.zip</span></code> but these instructions should apply to any recent version. As always,
+it’s not a bad idea to run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">update</span></code> and <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">upgrade</span></code> to get any changes to packages since
 your distribution was built.</p>
 </div>
-<p>You&#8217;ll need to install some packages on your Pi first, and enable the bluetooth services:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ sudo apt-get install bluetooth libbluetooth3 libusb-dev
+<p>You’ll need to install some packages on your Pi first, and enable the bluetooth services:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ sudo apt-get install bluetooth libbluetooth3 libusb-dev
 pi@raspberrypi ~ $ sudo systemctl <span class="nb">enable</span> bluetooth.service
 </pre></div>
 </div>
-<p>You also need to add the default user to the <code class="docutils literal"><span class="pre">bluetooth</span></code> group:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ sudo usermod -G bluetooth -a pi
+<p>You also need to add the default user to the <code class="docutils literal notranslate"><span class="pre">bluetooth</span></code> group:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ sudo usermod -G bluetooth -a pi
 </pre></div>
 </div>
 <p>You must now <strong>power cycle</strong> your Pi. Do not just reboot, actually shut down, pull the power, wait a few seconds and
-reconnect. This may be overkill, but it&#8217;s been the best way I&#8217;ve found to consistently have the next steps succeed.</p>
+reconnect. This may be overkill, but it’s been the best way I’ve found to consistently have the next steps succeed.</p>
 </div>
 <div class="section" id="pairing">
 <h2>Pairing<a class="headerlink" href="#pairing" title="Permalink to this headline">¶</a></h2>
 <p>Get and build the command line pairing tool:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ wget http://www.pabr.org/sixlinux/sixpair.c
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ wget http://www.pabr.org/sixlinux/sixpair.c
 pi@raspberrypi ~ $ gcc -o sixpair sixpair.c -lusb
 </pre></div>
 </div>
 <p>Firstly we need to tell the controller the address of the bluetooth dongle. To do this you need to connect the
 controller to your Pi with a mini-USB cable. Also make sure your Pi is powered from an external supply - the extra
-power needed when you connect the controllers can be too much for a laptop USB socket and you&#8217;ll get random errors or
-the process won&#8217;t work at all. The &#8216;sixpair&#8217; command, run as root, updates the controller&#8217;s bluetooth master address:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ sudo ./sixpair
+power needed when you connect the controllers can be too much for a laptop USB socket and you’ll get random errors or
+the process won’t work at all. The ‘sixpair’ command, run as root, updates the controller’s bluetooth master address:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ sudo ./sixpair
 Current Bluetooth master: 5c:f3:70:66:5c:e2
 Setting master bd_addr to 5c:f3:70:66:5c:e2
 </pre></div>
 </div>
 <p>You should see a message indicating that the bluetooth master address on the controller has been changed (you can
 specify the address to which it should change, the default with no arguments is to use the first installed bluetooth
-adapter, which is what you want unless for some reason you&#8217;ve got more than one plugged in). The controller will now
-attempt to connect to your bluetooth dongle when you press the PS button (don&#8217;t do this just yet, it won&#8217;t work). The
+adapter, which is what you want unless for some reason you’ve got more than one plugged in). The controller will now
+attempt to connect to your bluetooth dongle when you press the PS button (don’t do this just yet, it won’t work). The
 example above shows that no change has been made, as this particular controller had been paired with the dongle before,
 but you should see two different addresses - the first is the address the controller was trusting, the second is the one
 it now trusts.</p>
 <p>Next we need to configure the bluetooth software on the Pi to accept connections from the controller.</p>
-<p>Disconnect your controller from the USB port, and run the &#8216;bluetoothctl&#8217; command as a regular user (you don&#8217;t need to
+<p>Disconnect your controller from the USB port, and run the ‘bluetoothctl’ command as a regular user (you don’t need to
 be root for this):</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ bluetoothctl
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ bluetoothctl
 <span class="o">[</span>NEW<span class="o">]</span> Controller 5C:F3:70:66:5C:E2 raspberrypi <span class="o">[</span>default<span class="o">]</span>
 ... <span class="o">(</span>other messages may appear here <span class="k">if</span> you have other bluetooth hardware<span class="o">)</span>
 </pre></div>
 </div>
 <p>Now re-connect your controller with the mini-USB cable. You should see messages in the terminal indicating that
-something has connected (but don&#8217;t worry if you don&#8217;t, as long as something useful appears in the next step!)</p>
-<p>Type &#8216;devices&#8217; in the terminal. You will see a list of possible devices, including at least your SixAxis controller.
+something has connected (but don’t worry if you don’t, as long as something useful appears in the next step!)</p>
+<p>Type ‘devices’ in the terminal. You will see a list of possible devices, including at least your SixAxis controller.
 You need to take note of the MAC address of the controller for the next step:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># devices</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># devices</span>
 Device <span class="m">60</span>:38:0E:CC:OC:E3 PLAYSTATION<span class="o">(</span>R<span class="o">)</span><span class="m">3</span> Controller
 ... <span class="o">(</span>other devices may appear here<span class="o">)</span>
 </pre></div>
 </div>
-<p>Type &#8216;agent on&#8217; and then &#8216;trust MAC&#8217;, replacing MAC with the MAC address you noted in the previous step (they won&#8217;t
-be the same as mine!). Quit the tool once you&#8217;re done.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># agent on</span>
+<p>Type ‘agent on’ and then ‘trust MAC’, replacing MAC with the MAC address you noted in the previous step (they won’t
+be the same as mine!). Quit the tool once you’re done.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># agent on</span>
 Agent registered
 <span class="o">[</span>bluetooth<span class="o">]</span><span class="c1"># trust 60:38:0E:CC:0C:E3</span>
 <span class="o">[</span>CHG<span class="o">]</span> Device <span class="m">60</span>:38:0E:CC:0C:E3 Trusted: yes
@@ -308,35 +316,86 @@ Agent unregistered
 </div>
 <p>Disconnect your controller, you should now be able to connect wirelessly. To check this, first list everything in
 /dev/input:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ ls /dev/input
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ ls /dev/input
 by-id  by-path  event0  event1  event2  event3  event5  mice  mouse0
 </pre></div>
 </div>
 <p>Now press the PS button, the lights on the front of the controller should flash for a couple of seconds then stop,
 leaving a single light on. If you now look again at the contents of /dev/input you should see a new device, probably
-called something like &#8216;js0&#8217;:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ ls /dev/input
+called something like ‘js0’:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pi@raspberrypi ~ $ ls /dev/input
 by-id    event0  event2  event4  js0   mouse0
 by-path  event1  event3  event5  mice
 </pre></div>
 </div>
 <p>If a new device has appeared here then congratulations, you have successfully paired your
 dongle and SixAxis controller. This will persist across reboots, so from now on you can just connect by pressing the PS
-button on the controller. Pressing and holding this button will shut the controller down - at the moment there&#8217;s no
-timeout so be sure to turn the controller off when you&#8217;re not going to be using it for a while.</p>
+button on the controller. Pressing and holding this button will shut the controller down - at the moment there’s no
+timeout so be sure to turn the controller off when you’re not going to be using it for a while.</p>
+<span class="target" id="module-approxeng.input.dualshock3"></span><dl class="class">
+<dt id="approxeng.input.dualshock3.DualShock3">
+<em class="property">class </em><code class="descclassname">approxeng.input.dualshock3.</code><code class="descname">DualShock3</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Driver for the Sony PlayStation 3 controller, the DualShock3</p>
+<dl class="method">
+<dt id="approxeng.input.dualshock3.DualShock3.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discover and initialise a PS3 SixAxis controller connected to this computer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> in the controller.</li>
+<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> in the controller.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="approxeng.input.dualshock3.DualShock3.battery_level">
+<code class="descname">battery_level</code><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.battery_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the battery level, as a float from 0.0 to 1.0, or None if not available</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="approxeng.input.dualshock3.DualShock3.set_led">
+<code class="descname">set_led</code><span class="sig-paren">(</span><em>led_number</em>, <em>led_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.set_led"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.set_led" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set front-panel controller LEDs. The DS3 controller has four, labelled, LEDs on the front panel that can
+be either on or off.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>led_number</strong> – Integer between 1 and 4</li>
+<li><strong>led_value</strong> – Value, set to 0 to turn the LED off, 1 to turn it on</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
 
+           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="dualshock4.html" class="btn btn-neutral float-right" title="PlayStation 4 Controller Support">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="dualshock4.html" class="btn btn-neutral float-right" title="PlayStation 4 Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="selectbinder.html" class="btn btn-neutral" title="Binding - approxeng.input.selectbinder"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="selectbinder.html" class="btn btn-neutral" title="Binding - approxeng.input.selectbinder" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -345,14 +404,15 @@ timeout so be sure to turn the controller off when you&#8217;re not going to be 
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn.
+        &copy; Copyright 2017, Tom Oinn
       Last updated on Feb 11, 2019.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -364,35 +424,24 @@ timeout so be sure to turn the controller off when you&#8217;re not going to be 
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'2.2.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

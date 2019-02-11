@@ -5,6 +5,7 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Welcome to Approximate Engineering’s Python Game Controller Documentation! &mdash; Approximate Engineering - Input 2.2.0 documentation</title>
@@ -12,47 +13,61 @@
 
   
   
+  
+  
 
   
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
     
-      <link rel="search" type="application/opensearchdescription+xml" title="Search within Approximate Engineering - Input 2.2.0 documentation" href="_static/opensearch.xml"/>
+      <link rel="search" type="application/opensearchdescription+xml"
+            title="Search within Approximate Engineering - Input 2.2.0 documentation"
+            href="_static/opensearch.xml"/>
     
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Change Log" href="changelog.html" /> 
 
   
-    <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
-  
-
-  
-    <link rel="top" title="Approximate Engineering - Input 2.2.0 documentation" href="#"/>
-        <link rel="next" title="Change Log" href="changelog.html"/> 
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+  <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
+   
   <div class="wy-grid-for-nav">
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        
-          <a href="#" class="fa fa-home"> Approximate Engineering - Input</a>
-        
-        
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> Approximate Engineering - Input
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.0
+              </div>
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -60,121 +75,91 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
           
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
+            
+            
+              
+            
+            
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-2-0">Version 2.2.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-1-0">Version 2.1.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-0-3-2-0-4">Version 2.0.3, 2.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-0-2">Version 2.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-0-1">Version 2.0.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-0-0">Version 2.0.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-7">Version 1.0.7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-6">Version 1.0.6</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-5">Version 1.0.5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-4">Version 1.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-1-0-2">Version 1.0.2</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#connecting-to-a-controller">Connecting to a controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#reading-analogue-axes">Reading Analogue Axes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#checking-for-held-buttons">Checking for Held Buttons</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#reading-multiple-axis-or-button-hold-values">Reading multiple Axis or Button Hold values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#querying-button-presses">Querying Button Presses</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="simpleusage.html#standard-names">Standard Names</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#button-names">Button Names</a></li>
-<li class="toctree-l2"><a class="reference internal" href="simpleusage.html#axis-names">Axis Names</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="bluetooth.html#dependencies">Dependencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="bluetooth.html#pairing-with-bluetoothctl">Pairing with Bluetoothctl</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/input.html">Common APIs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/dualshock3.html">PlayStation 3 Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/dualshock4.html">PlayStation 4 Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/xboxone.html">XBox-One S Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/rockcandy.html">Rock Candy Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/steamcontroller.html">Steam Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/wii.html">Wii Remote Pro Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/wiimote.html">WiiMote Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/pihut.html">PiHut Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/sf30pro.html">8Bitdo SF30Pro/SN30Pro Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/spacemousepro.html">Wired SpaceMouse Pro Support</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="addingcontrollers.html#finding-your-product-and-vendor-id">Finding your product and vendor ID</a></li>
-<li class="toctree-l2"><a class="reference internal" href="addingcontrollers.html#clones-of-a-supported-controller">Clones of a supported controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="addingcontrollers.html#writing-a-new-controller-class">Writing a new controller class</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples/camjam.html">CamJam Edukit 3 Robot</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/failover.html">Controller Failover</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/show_controls.html">Showing Controller Properties</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/streams.html">Streaming Axis and Button Hold values</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples/tiny4wd.html">Tiny4WD Robot Drive</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="howtouse.html">Advanced Usage Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="howtouse.html#constructing-and-binding-a-controller">Constructing and Binding a Controller</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howtouse.html#handling-buttons">Handling Buttons</a></li>
-<li class="toctree-l2"><a class="reference internal" href="howtouse.html#more-about-analogue-axes">More about Analogue Axes</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="sys.html">LEDs and Battery Monitoring</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sys.html#enabling-access-to-leds">Enabling access to LEDs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sys.html#writing-to-leds">Writing to LEDs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sys.html#reading-battery-levels">Reading Battery Levels</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
+            
           
-        
+        </div>
       </div>
-      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="#">Approximate Engineering - Input</a>
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Approximate Engineering - Input</a>
+        
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
-    <li><a href="#">Docs</a> &raquo;</li>
-      
-    <li>Welcome to Approximate Engineering&#8217;s Python Game Controller Documentation!</li>
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Welcome to Approximate Engineering’s Python Game Controller Documentation!</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
         
+            
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
-          <div role="main" class="document">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="welcome-to-approximate-engineering-s-python-game-controller-documentation">
-<h1>Welcome to Approximate Engineering&#8217;s Python Game Controller Documentation!<a class="headerlink" href="#welcome-to-approximate-engineering-s-python-game-controller-documentation" title="Permalink to this headline">¶</a></h1>
+<h1>Welcome to Approximate Engineering’s Python Game Controller Documentation!<a class="headerlink" href="#welcome-to-approximate-engineering-s-python-game-controller-documentation" title="Permalink to this headline">¶</a></h1>
 <p>This library simplifies access to the axes and buttons on game controller hardware from Python. It was originally
 written to support my <a class="reference external" href="http://piwars.org">PiWars</a> robots, and remains focused on similar projects, but can be used wherever game controller
 functionality is required. The current code only supports Linux based systems, including the Raspberry Pi.</p>
@@ -189,20 +174,20 @@ functionality is required. The current code only supports Linux based systems, i
 <a class="reference internal image-reference" href="_images/wiimote.jpg"><img alt="_images/wiimote.jpg" src="_images/wiimote.jpg" style="width: 20%;" /></a>
 <a class="reference internal image-reference" href="_images/xbox-one.jpg"><img alt="_images/xbox-one.jpg" src="_images/xbox-one.jpg" style="width: 20%;" /></a>
 <a class="reference internal image-reference" href="_images/sf30pro.jpg"><img alt="_images/sf30pro.jpg" src="_images/sf30pro.jpg" style="width: 20%;" /></a>
-<p>In general you don&#8217;t need to code to a specific controller, but some may need extra steps when connecting to your Pi or
-other computer. In other cases, some controllers offer unique features such as the PS4&#8217;s light bar. You can see more
+<p>In general you don’t need to code to a specific controller, but some may need extra steps when connecting to your Pi or
+other computer. In other cases, some controllers offer unique features such as the PS4’s light bar. You can see more
 details for specific controller types at the following:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="api/dualshock3.html#api-dualshock3"><span>PlayStation 3 Controller Support</span></a></li>
-<li><a class="reference internal" href="api/dualshock4.html#api-dualshock4"><span>PlayStation 4 Controller Support</span></a></li>
-<li><a class="reference internal" href="api/pihut.html#api-pihut"><span>PiHut Controller Support</span></a></li>
-<li><a class="reference internal" href="api/rockcandy.html#api-rockcandy"><span>Rock Candy Controller Support</span></a></li>
-<li><a class="reference internal" href="api/steamcontroller.html#api-steamcontroller"><span>Steam Controller Support</span></a></li>
-<li><a class="reference internal" href="api/wii.html#api-wii"><span>Wii Remote Pro Controller Support</span></a></li>
-<li><a class="reference internal" href="api/wiimote.html#api-wiimote"><span>WiiMote Controller Support</span></a></li>
-<li><a class="reference internal" href="api/xboxone.html#api-xboxone"><span>XBox-One S Controller Support</span></a></li>
-<li><a class="reference internal" href="api/sf30pro.html#api-sf30pro"><span>8Bitdo SF30Pro/SN30Pro Controller Support</span></a></li>
+<li><a class="reference internal" href="api/dualshock3.html#api-dualshock3"><span class="std std-ref">PlayStation 3 Controller Support</span></a></li>
+<li><a class="reference internal" href="api/dualshock4.html#api-dualshock4"><span class="std std-ref">PlayStation 4 Controller Support</span></a></li>
+<li><a class="reference internal" href="api/pihut.html#api-pihut"><span class="std std-ref">PiHut Controller Support</span></a></li>
+<li><a class="reference internal" href="api/rockcandy.html#api-rockcandy"><span class="std std-ref">Rock Candy Controller Support</span></a></li>
+<li><a class="reference internal" href="api/steamcontroller.html#api-steamcontroller"><span class="std std-ref">Steam Controller Support</span></a></li>
+<li><a class="reference internal" href="api/wii.html#api-wii"><span class="std std-ref">Wii Remote Pro Controller Support</span></a></li>
+<li><a class="reference internal" href="api/wiimote.html#api-wiimote"><span class="std std-ref">WiiMote Controller Support</span></a></li>
+<li><a class="reference internal" href="api/xboxone.html#api-xboxone"><span class="std std-ref">XBox-One S Controller Support</span></a></li>
+<li><a class="reference internal" href="api/sf30pro.html#api-sf30pro"><span class="std std-ref">8Bitdo SF30Pro/SN30Pro Controller Support</span></a></li>
 </ul>
 </div></blockquote>
 </div>
@@ -214,29 +199,29 @@ for updates!</li>
 <li>Keith Ellis (<a class="reference external" href="https://twitter.com/PiTutorials">&#64;PiTutorials</a>) contributed initial support for Rock Candy
 controllers.</li>
 <li>Mike Horne (<a class="reference external" href="https://twitter.com/recantha">&#64;recantha</a>) add support for the <a class="reference external" href="https://thepihut.com/products/raspberry-pi-compatible-wireless-gamepad-controller">PiHut</a> controller and an example for
-the <a class="reference internal" href="examples/camjam.html#example-camjam"><span>CamJam Edukit 3 Robot</span></a></li>
+the <a class="reference internal" href="examples/camjam.html#example-camjam"><span class="std std-ref">CamJam Edukit 3 Robot</span></a></li>
 <li>Tom Broughton (<a class="reference external" href="https://twitter.com/dpolymath">&#64;dpolymath</a>) added support for the SF30Pro controller.</li>
 <li>Clare Macrae (<a class="reference external" href="https://twitter.com/ClareMacraeUK">&#64;ClareMacraeUK</a>) helped herd the documentation beasts.</li>
 </ul>
 </div>
 <div class="section" id="getting-the-code">
 <h2>Getting the code<a class="headerlink" href="#getting-the-code" title="Permalink to this headline">¶</a></h2>
-<p>You can install the code using pip, you&#8217;ll have to add a few native libraries first though:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ sudo apt-get install python-dev python-pip gcc
+<p>You can install the code using pip, you’ll have to add a few native libraries first though:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install python-dev python-pip gcc
 $ pip install approxeng.input
 </pre></div>
 </div>
 <p>(The exact dependencies may vary depending on your operating system, they come from using evdev and having to compile
 that particular python module against whatever underlying libraries your OS is using). I <em>strongly</em> recommend using a
-virtual environment (virtualenv) so you don&#8217;t have to install python libraries as root.</p>
+virtual environment (virtualenv) so you don’t have to install python libraries as root.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The controller support code is written in Python, but relies on some underlying operating system functionality which
-is exclusive to Linux based computers like the Pi. As a result, it won&#8217;t work on Windows or OSX. If you need to
+is exclusive to Linux based computers like the Pi. As a result, it won’t work on Windows or OSX. If you need to
 handle joysticks on those platforms I recommend taking a look at <a class="reference external" href="http://pygame.org">PyGame</a>, which includes joystick support amongst
 its other functionality.</p>
 </div>
-<p>To work with the code on other platforms you&#8217;ll want to clone it from <a class="reference external" href="https://github.com/ApproxEng/approxeng.input">GitHub</a>, it&#8217;s available under the ASL, the same as
+<p>To work with the code on other platforms you’ll want to clone it from <a class="reference external" href="https://github.com/ApproxEng/approxeng.input">GitHub</a>, it’s available under the ASL, the same as
 almost everything Python based. Documentation (this site) is generated using Sphinx.</p>
 </div>
 <div class="section" id="contents">
@@ -295,13 +280,13 @@ almost everything Python based. Documentation (this site) is generated using Sph
 <li class="toctree-l2"><a class="reference internal" href="api/dualshock4.html">PlayStation 4 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/xboxone.html">XBox-One S Controller Support</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/xboxone.html#problems-with-button-mappings">Problems with button mappings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/xboxone.html#controller-classes">Controller Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/xboxone.html#module-approxeng.input.xboxone">Controller Classes</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="api/rockcandy.html">Rock Candy Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/steamcontroller.html">Steam Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api/wii.html">Wii Remote Pro Controller Support</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api/wii.html#disabling-stick-as-mouse-functionality">Disabling &#8216;Stick as Mouse&#8217; functionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/wii.html#disabling-stick-as-mouse-functionality">Disabling ‘Stick as Mouse’ functionality</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="api/wiimote.html">WiiMote Controller Support</a></li>
@@ -349,12 +334,14 @@ almost everything Python based. Documentation (this site) is generated using Sph
 </div>
 
 
+           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="changelog.html" class="btn btn-neutral float-right" title="Change Log">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Change Log" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -364,14 +351,15 @@ almost everything Python based. Documentation (this site) is generated using Sph
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn.
+        &copy; Copyright 2017, Tom Oinn
       Last updated on Feb 11, 2019.
+
     </p>
   </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
 </footer>
+
         </div>
       </div>
 
@@ -383,35 +371,24 @@ almost everything Python based. Documentation (this site) is generated using Sph
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'2.2.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

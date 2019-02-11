@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Common APIs &mdash; Approximate Engineering - Input 2.2.0 documentation</title>
@@ -13,10 +12,9 @@
 
   
   
-  
-  
 
   
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
 
   
   
@@ -36,47 +34,27 @@
   
 
   
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="Approximate Engineering - Input 2.2.0 documentation" href="../index.html"/>
         <link rel="up" title="API Documentation" href="../api.html"/>
         <link rel="next" title="Binding - approxeng.input.selectbinder" href="selectbinder.html"/>
         <link rel="prev" title="API Documentation" href="../api.html"/> 
 
   
-  <script src="../_static/js/modernizr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 </head>
 
 <body class="wy-body-for-nav" role="document">
 
-   
   <div class="wy-grid-for-nav">
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
-          
-
-          
-            <a href="../index.html" class="icon icon-home"> Approximate Engineering - Input
-          
-
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                2.2.0
-              </div>
-            
-          
-
-          
+      <div class="wy-side-nav-search">
+        
+          <a href="../index.html" class="fa fa-home"> Approximate Engineering - Input</a>
+        
+        
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -84,24 +62,47 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+      </div>
 
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
           
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
-            
-            
-              
-            
-            
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-2-0">Version 2.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-1-0">Version 2.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-0-3-2-0-4">Version 2.0.3, 2.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-0-2">Version 2.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-0-1">Version 2.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-2-0-0">Version 2.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-7">Version 1.0.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-6">Version 1.0.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-5">Version 1.0.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-4">Version 1.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#version-1-0-2">Version 1.0.2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#connecting-to-a-controller">Connecting to a controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#reading-analogue-axes">Reading Analogue Axes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#checking-for-held-buttons">Checking for Held Buttons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#reading-multiple-axis-or-button-hold-values">Reading multiple Axis or Button Hold values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#querying-button-presses">Querying Button Presses</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#button-names">Button Names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../simpleusage.html#axis-names">Axis Names</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../bluetooth.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../bluetooth.html#pairing-with-bluetoothctl">Pairing with Bluetoothctl</a></li>
+</ul>
+</li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Common APIs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Common APIs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
@@ -112,710 +113,84 @@
 <li class="toctree-l2"><a class="reference internal" href="wiimote.html">WiiMote Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pihut.html">PiHut Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sf30pro.html">8Bitdo SF30Pro/SN30Pro Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacemousepro.html">Wired SpaceMouse Pro Support</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Advanced Usage Guide</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../sys.html">LEDs and Battery Monitoring</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../addingcontrollers.html#finding-your-product-and-vendor-id">Finding your product and vendor ID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addingcontrollers.html#clones-of-a-supported-controller">Clones of a supported controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addingcontrollers.html#writing-a-new-controller-class">Writing a new controller class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/camjam.html">CamJam Edukit 3 Robot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/failover.html">Controller Failover</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/show_controls.html">Showing Controller Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/streams.html">Streaming Axis and Button Hold values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/tiny4wd.html">Tiny4WD Robot Drive</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Advanced Usage Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../howtouse.html#constructing-and-binding-a-controller">Constructing and Binding a Controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howtouse.html#handling-buttons">Handling Buttons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howtouse.html#more-about-analogue-axes">More about Analogue Axes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../sys.html">LEDs and Battery Monitoring</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../sys.html#enabling-access-to-leds">Enabling access to LEDs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sys.html#writing-to-leds">Writing to LEDs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sys.html#reading-battery-levels">Reading Battery Levels</a></li>
+</ul>
+</li>
 </ul>
 
-            
           
-        </div>
+        
       </div>
+      &nbsp;
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Approximate Engineering - Input</a>
-        
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Approximate Engineering - Input</a>
       </nav>
 
 
       
       <div class="wy-nav-content">
         <div class="rst-content">
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
           <li><a href="../api.html">API Documentation</a> &raquo;</li>
-        
-      <li>Common APIs</li>
-    
-    
+      
+    <li>Common APIs</li>
       <li class="wy-breadcrumbs-aside">
         
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+          <div role="main" class="document">
             
   <div class="section" id="common-apis">
 <h1>Common APIs<a class="headerlink" href="#common-apis" title="Permalink to this headline">¶</a></h1>
-<dl class="class">
-<dt id="approxeng.input.Controller">
-<em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">Controller</code><span class="sig-paren">(</span><em>vendor_id</em>, <em>product_id</em>, <em>controls</em>, <em>node_mappings=None</em>, <em>dead_zone=None</em>, <em>hot_zone=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller" title="Permalink to this definition">¶</a></dt>
-<dd><p>Superclass for controller implementations</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first simple">
-<li><strong>vendor_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Vendor ID used to identify the controller type.</li>
-<li><strong>product_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Product ID used to identify the controller type.</li>
-<li><strong>axes</strong> (<a class="reference internal" href="#approxeng.input.Axes" title="approxeng.input.Axes"><em>approxeng.input.Axes</em></a>) – All analogue axes. You can get the individual axis objects from this, but you shouldn’t ever need to do this,
-use methods on Controller instead!</li>
-<li><strong>buttons</strong> (<a class="reference internal" href="#approxeng.input.Buttons" title="approxeng.input.Buttons"><em>approxeng.input.Buttons</em></a>) – All buttons are managed by this object. This can be used to access Button objects representing buttons on the
-controller, but you will almost never need to do this - use the methods on Controller instead!</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Ivar:</th><td class="field-body"><p class="first last">boolean connected:
-True if the controller is connected to a source of events, False otherwise. This can be used as a break
-condition to check for controller disconnection.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="approxeng.input.Controller.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>vendor_id</em>, <em>product_id</em>, <em>controls</em>, <em>node_mappings=None</em>, <em>dead_zone=None</em>, <em>hot_zone=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Populate the controller name, button set and axis set.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>vendor_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The USB vendor ID for the controller</li>
-<li><strong>product_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The USB product ID for the controller</li>
-<li><strong>controls</strong> – A sequence of Button, CentredAxis, TriggerAxis and BinaryAxis instances</li>
-<li><strong>node_mappings</strong> – A dict from device name to a prefix which will be applied to all events from nodes with a
-matching name before dispatching the corresponding events. This is used to handle controller
-types which create multiple nodes in /dev/input by keying on the device names reported to evdev
-for each node. Nodes are grouped by physical or unique ID first so should, in an ideal world at least,
-all correspond to the same physical controller. This is necessary to support some controllers on modern
-kernels, particularly 4.15. If not specified, or none, then no per-node renaming is applied. Device
-names which do not appear in this map are not assigned a prefix, so it’s legitimate to only assign
-prefixes for ‘new’ functionality which has magically appeared in a later kernel. Similarly, this is
-ignored if there is only one device node bound to the controller instance, so the best practice is to
-leave the older mappings named simply by their code, and only use this to handle secondary device nodes
-such as motion sensors.</li>
-<li><strong>dead_zone</strong> – If specified, this is applied to all axes</li>
-<li><strong>hot_zone</strong> – If specified, this is applied to all axes</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="approxeng.input.Controller.battery_level">
-<code class="descname">battery_level</code><a class="headerlink" href="#approxeng.input.Controller.battery_level" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the battery level, as a float from 0.0 to 1.0, or None if not available</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.Controller.check_presses">
-<code class="descname">check_presses</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.check_presses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.check_presses" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the set of Buttons which have been pressed since this call was last made, clearing it as we do. This is
-a shortcut to doing ‘buttons.get_and_clear_button_press_history’</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A ButtonPresses instance which contains buttons which were pressed since this call was last made.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="approxeng.input.Controller.connected">
-<code class="descname">connected</code><a class="headerlink" href="#approxeng.input.Controller.connected" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns True if the controller object is associated correctly with a physical device, False otherwise. Use this
-to detect a loss of controller pairing.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="approxeng.input.Controller.controls">
-<code class="descname">controls</code><a class="headerlink" href="#approxeng.input.Controller.controls" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A struct containing all the names of controls on this controller</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="approxeng.input.Controller.presses">
-<code class="descname">presses</code><a class="headerlink" href="#approxeng.input.Controller.presses" title="Permalink to this definition">¶</a></dt>
-<dd><p>The ButtonPresses containing buttons pressed between the two most recent calls to check_presses</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.Controller.register_button_handler">
-<code class="descname">register_button_handler</code><span class="sig-paren">(</span><em>button_handler</em>, <em>button_sname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Controller.register_button_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Controller.register_button_handler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Register a handler function which will be called when a button is pressed</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>button_handler</strong> – A function which will be called when any of the specified buttons are pressed. The
-function is called with the Button that was pressed as the sole argument.</li>
-<li><strong>button_sname</strong> – The sname of the button which should trigger the handler function</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A no-arg function which can be used to remove this registration</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="approxeng.input.CentredAxis">
-<em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">CentredAxis</code><span class="sig-paren">(</span><em>name</em>, <em>min_raw_value</em>, <em>max_raw_value</em>, <em>axis_event_code</em>, <em>invert=False</em>, <em>dead_zone=0.0</em>, <em>hot_zone=0.0</em>, <em>sname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#CentredAxis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.CentredAxis" title="Permalink to this definition">¶</a></dt>
-<dd><p>A single analogue axis on a controller where the expected output range is -1.0 to 1.0 and the resting position of
-the control is at 0.0, at least in principle.</p>
-<dl class="method">
-<dt id="approxeng.input.CentredAxis.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>min_raw_value</em>, <em>max_raw_value</em>, <em>axis_event_code</em>, <em>invert=False</em>, <em>dead_zone=0.0</em>, <em>hot_zone=0.0</em>, <em>sname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#CentredAxis.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.CentredAxis.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new CentredAxis - this will be done internally within the controller classes i.e.
-<code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.sixaxis.SixAxis</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> – A friendly name for the axis</li>
-<li><strong>min_raw_value</strong> – The value read from the event system when the axis is at its minimum value</li>
-<li><strong>max_raw_value</strong> – The value read from the event system when the axis is at its maximum value</li>
-<li><strong>axis_event_code</strong> – The evdev code for this axis, used to dispatch events to the axis from the event system</li>
-<li><strong>invert</strong> – True to invert data, used when the raw data is in the opposite sense to normal</li>
-<li><strong>dead_zone</strong> – Size of the dead zone in the centre of the axis, within which all values will be mapped to 0.0</li>
-<li><strong>hot_zone</strong> – Size of the hot zones at the ends of the axis, where values will be mapped to -1.0 or 1.0</li>
-<li><strong>sname</strong> – The standard name for this axis, if specified</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="approxeng.input.CentredAxis.raw_value">
-<code class="descname">raw_value</code><a class="headerlink" href="#approxeng.input.CentredAxis.raw_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get an uncorrected value for this axis</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a float value, negative to the left or down, and ranging from -1.0 to 1.0</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.CentredAxis.reset">
-<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#CentredAxis.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.CentredAxis.reset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reset calibration (max, min and centre values) for this axis specifically. Not generally needed, you can just
-call the reset method on the SixAxis instance.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Internal:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.CentredAxis.set_raw_value">
-<code class="descname">set_raw_value</code><span class="sig-paren">(</span><em>raw_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#CentredAxis.set_raw_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.CentredAxis.set_raw_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a new value, called from within the joystick implementation class when parsing the event queue.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>raw_value</strong> – the raw value from the joystick hardware</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Internal:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="approxeng.input.CentredAxis.value">
-<code class="descname">value</code><a class="headerlink" href="#approxeng.input.CentredAxis.value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a centre-compensated, scaled, value for the axis, taking any dead-zone into account. The value will
-scale from 0.0 at the edge of the dead-zone to 1.0 (positive) or -1.0 (negative) at the extreme position of
-the controller or the edge of the hot zone, if defined as other than 1.0. The axis will auto-calibrate for
-maximum value, initially it will behave as if the highest possible value from the hardware is 0.9 in each
-direction, and will expand this as higher values are observed. This is scaled by this function and should
-always return 1.0 or -1.0 at the extreme ends of the axis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a float value, negative to the left or down and ranging from -1.0 to 1.0</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="approxeng.input.TriggerAxis">
-<em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">TriggerAxis</code><span class="sig-paren">(</span><em>name</em>, <em>min_raw_value</em>, <em>max_raw_value</em>, <em>axis_event_code</em>, <em>dead_zone=0.0</em>, <em>hot_zone=0.0</em>, <em>sname=None</em>, <em>button_sname=None</em>, <em>button_trigger_value=0.5</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#TriggerAxis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.TriggerAxis" title="Permalink to this definition">¶</a></dt>
-<dd><p>A single analogue axis where the expected output range is 0.0 to 1.0. Typically this is used for triggers, where the
-resting position is 0.0 and any interaction causes higher values. Whether a particular controller exposes triggers
-as axes or as buttons depends on the hardware - the PS3 front triggers appear as buttons, the XBox One triggers as
-axes.</p>
-<dl class="method">
-<dt id="approxeng.input.TriggerAxis.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>min_raw_value</em>, <em>max_raw_value</em>, <em>axis_event_code</em>, <em>dead_zone=0.0</em>, <em>hot_zone=0.0</em>, <em>sname=None</em>, <em>button_sname=None</em>, <em>button_trigger_value=0.5</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#TriggerAxis.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.TriggerAxis.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new TriggerAxis - this will be done internally within the controller classes i.e.
-<code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.xboxone.XBoxOneSPad</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> – A friendly name for the axis</li>
-<li><strong>min_raw_value</strong> – The value read from the event system when the trigger is not pressed</li>
-<li><strong>max_raw_value</strong> – The value read from the event system when the trigger is fully pressed</li>
-<li><strong>axis_event_code</strong> – The evdev code for this axis, used when dispatching events to it from an Axes object</li>
-<li><strong>dead_zone</strong> – The proportion of the trigger range which will be treated as equivalent to no press</li>
-<li><strong>hot_zone</strong> – The proportion of the trigger range which will be treated as equivalent to fully depressing the trigger</li>
-<li><strong>sname</strong> – The standard name for this trigger, if specified</li>
-<li><strong>button_sname</strong> – If provided, this creates a new Button internally which will be triggered by changes to the axis value. This
-is useful for triggers which have axis representations but no corresponding button presses such as the XBox1
-controller front triggers. If this is set to None then no button is created</li>
-<li><strong>button_trigger_value</strong> – Defaulting to 0.5, this value determines the point in the trigger axis’ range at which point the button is
-regarded as being pressed or released.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="approxeng.input.TriggerAxis.raw_value">
-<code class="descname">raw_value</code><a class="headerlink" href="#approxeng.input.TriggerAxis.raw_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get an uncorrected value for this trigger</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a float value, 0.0 when not pressed, to 1.0 when fully pressed</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.TriggerAxis.reset">
-<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#TriggerAxis.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.TriggerAxis.reset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reset calibration (max, min and centre values) for this axis specifically.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Internal:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.TriggerAxis.set_raw_value">
-<code class="descname">set_raw_value</code><span class="sig-paren">(</span><em>raw_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#TriggerAxis.set_raw_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.TriggerAxis.set_raw_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a new value, called from within the joystick implementation class when parsing the event queue.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>raw_value</strong> – the raw value from the joystick hardware</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Internal:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="approxeng.input.TriggerAxis.value">
-<code class="descname">value</code><a class="headerlink" href="#approxeng.input.TriggerAxis.value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a centre-compensated, scaled, value for the axis, taking any dead-zone into account. The value will
-scale from 0.0 at the edge of the dead-zone to 1.0 (positive) at the extreme position of
-the trigger or the edge of the hot zone, if defined as other than 1.0.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a float value, 0.0 when not pressed or within the dead zone, to 1.0 when fully pressed or in the hot zone</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="approxeng.input.BinaryAxis">
-<em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">BinaryAxis</code><span class="sig-paren">(</span><em>name</em>, <em>axis_event_code</em>, <em>invert=False</em>, <em>b1name=None</em>, <em>b2name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#BinaryAxis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.BinaryAxis" title="Permalink to this definition">¶</a></dt>
-<dd><p>A fake ‘analogue’ axis which actually corresponds to a pair of buttons. Once associated with a Buttons instance
-it routes events through to the Buttons instance to create button presses corresponding to axis movements.</p>
-<dl class="method">
-<dt id="approxeng.input.BinaryAxis.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>axis_event_code</em>, <em>invert=False</em>, <em>b1name=None</em>, <em>b2name=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#BinaryAxis.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.BinaryAxis.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new binary axis, used to route axis events through to a pair of buttons, which are created as
-part of this constructor</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> – Name for the axis, use this to describe the axis, it’s not used for anything else</li>
-<li><strong>axis_event_code</strong> – The evdev event code for changes to this axis</li>
-<li><strong>invert</strong> – True to invert data, used when the raw data is in the opposite sense to normal</li>
-<li><strong>b1name</strong> – The sname of the button corresponding to negative values of the axis.</li>
-<li><strong>b2name</strong> – The sname of the button corresponding to positive values of the axis</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="approxeng.input.Axes">
-<em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">Axes</code><span class="sig-paren">(</span><em>axes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Axes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Axes" title="Permalink to this definition">¶</a></dt>
-<dd><p>A set of TriggerAxis or CentredAxis instances to which events should be routed based on event code. Contains methods
-to reset calibration on all axes, or to centre all axes for which this is meaningful.</p>
-<dl class="method">
-<dt id="approxeng.input.Axes.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>axes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Axes.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Axes.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new Axes instance, this will be done within the controller classes, you never have to explicitly
-instantiate this yourself.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>axes</strong> – a sequence of <a class="reference internal" href="#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> or <a class="reference internal" href="#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> or
-<a class="reference internal" href="#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.BinaryAxis</span></code></a> containing all the axes the controller supports.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="approxeng.input.Axes.active_axes">
-<code class="descname">active_axes</code><a class="headerlink" href="#approxeng.input.Axes.active_axes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a sequence of all Axis objects which are not in their resting positions</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.Axes.axis_updated">
-<code class="descname">axis_updated</code><span class="sig-paren">(</span><em>event</em>, <em>prefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Axes.axis_updated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Axes.axis_updated" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called to process an absolute axis event from evdev, this is called internally by the controller implementations</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Internal:</th><td class="field-body"></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>event</strong> – The evdev event to process</li>
-<li><strong>prefix</strong> – If present, a named prefix that should be applied to the event code when searching for the axis</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="approxeng.input.Axes.names">
-<code class="descname">names</code><a class="headerlink" href="#approxeng.input.Axes.names" title="Permalink to this definition">¶</a></dt>
-<dd><p>The snames of all axis objects</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.Axes.reset_axis_calibration">
-<code class="descname">reset_axis_calibration</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Axes.reset_axis_calibration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Axes.reset_axis_calibration" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resets any previously defined axis calibration to 0.0 for all axes</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.Axes.set_axis_centres">
-<code class="descname">set_axis_centres</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Axes.set_axis_centres"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Axes.set_axis_centres" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the centre points for each axis to the current value for that axis. This centre value is used when
-computing the value for the axis and is subtracted before applying any scaling. This will only be applied
-to CentredAxis instances</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="approxeng.input.Button">
-<em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">Button</code><span class="sig-paren">(</span><em>name</em>, <em>key_code=None</em>, <em>sname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Button"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Button" title="Permalink to this definition">¶</a></dt>
-<dd><p>A single button on a controller</p>
-<dl class="method">
-<dt id="approxeng.input.Button.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>name</em>, <em>key_code=None</em>, <em>sname=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Button.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Button.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new Button - this will be done by the controller implementation classes, you shouldn’t create your own
-unless you’re writing such a class.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> – A friendly name for the button</li>
-<li><strong>key_code</strong> – The key code for the button, typically an integer used within the button press and release events. Defaults
-to None if not used.</li>
-<li><strong>sname</strong> – The standard name for the button, if available.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="approxeng.input.Buttons">
-<em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">Buttons</code><span class="sig-paren">(</span><em>buttons_and_axes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons" title="Permalink to this definition">¶</a></dt>
-<dd><p>A set of buttons on a controller. This class manages event binding and triggering, as well as monitoring button
-states and tracking whether buttons are held down, and how long if so. Controller implementations instantiate and
-configure an instance of this class when they want to provide button information, the controller is responsible for
-translating button events from the underlying operating system frameworks and updating this object appropriately,
-user code (i.e. your code if you’re reading this) uses the methods on this object to react to button presses.</p>
-<dl class="class">
-<dt id="approxeng.input.Buttons.ButtonState">
-<em class="property">class </em><code class="descname">ButtonState</code><span class="sig-paren">(</span><em>button</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.ButtonState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.ButtonState" title="Permalink to this definition">¶</a></dt>
-<dd><p>Per-button state, including any handlers registered, whether the button was pressed since the last call to
-check, whether it is currently pressed, and the timestamp of the last button press. From this we can handle all
-possible forms of interaction required.</p>
-<dl class="method">
-<dt id="approxeng.input.Buttons.ButtonState.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>button</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.ButtonState.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.ButtonState.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.Buttons.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>buttons_and_axes</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Instantiate a new button manager</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>buttons_and_axes</strong> – a list of <a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Button</span></code></a> instances which will be managed by this class</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.Buttons.button_pressed">
-<code class="descname">button_pressed</code><span class="sig-paren">(</span><em>key_code</em>, <em>prefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.button_pressed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.button_pressed" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called from the controller classes to update the state of this button manager when a button is pressed.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Internal:</th><td class="field-body"></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>key_code</strong> – The code specified when populating Button instances</li>
-<li><strong>prefix</strong> – Applied to key code if present</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.Buttons.button_released">
-<code class="descname">button_released</code><span class="sig-paren">(</span><em>key_code</em>, <em>prefix=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.button_released"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.button_released" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called from the controller classes to update the state of this button manager when a button is released.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Internal:</th><td class="field-body"></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>key_code</strong> – The code specified when populating Button instance</li>
-<li><strong>prefix</strong> – Applied to key code if present</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.Buttons.check_presses">
-<code class="descname">check_presses</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.check_presses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.check_presses" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the set of Buttons which have been pressed since this call was last made, clearing it as we do.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A ButtonPresses instance which contains buttons which were pressed since this call was last made.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.Buttons.held">
-<code class="descname">held</code><span class="sig-paren">(</span><em>sname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.held"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.held" title="Permalink to this definition">¶</a></dt>
-<dd><p>Determines whether a button is currently held, identifying it by standard name</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sname</strong> – The standard name of the button</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None if the button is not held down, or is not available, otherwise the number of seconds as a floating
-point value since it was pressed</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="approxeng.input.Buttons.names">
-<code class="descname">names</code><a class="headerlink" href="#approxeng.input.Buttons.names" title="Permalink to this definition">¶</a></dt>
-<dd><p>The snames of all button objects</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="approxeng.input.Buttons.presses">
-<code class="descname">presses</code><a class="headerlink" href="#approxeng.input.Buttons.presses" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the ButtonPresses containing buttons pressed between the most recent two calls to check_presses. This will
-call the check_presses method if it has never been called before, and is therefore always safe even if your code
-has never called the update function. To make this property actually do something useful, however, you do need
-to call check_presses, preferably once immediately before you then want to handle any button presses that may
-have happened.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a ButtonPresses object containing information about which buttons were pressed</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="approxeng.input.Buttons.register_button_handler">
-<code class="descname">register_button_handler</code><span class="sig-paren">(</span><em>button_handler</em>, <em>buttons</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#Buttons.register_button_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.Buttons.register_button_handler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Register a handler function which will be called when a button is pressed</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>button_handler</strong> – A function which will be called when any of the specified buttons are pressed. The
-function is called with the Button that was pressed as the sole argument.</li>
-<li><strong>buttons</strong> (<em>[</em><a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><em>Button</em></a><em>]</em>) – A list or one or more buttons which should trigger the handler when pressed. Buttons
-are specified as <a class="reference internal" href="#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Button</span></code></a> instances, in general controller implementations will
-expose these as constants such as SixAxis.BUTTON_CIRCLE. A single Button can be specified if only one button
-binding is required.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A no-arg function which can be used to remove this registration</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="approxeng.input.ButtonPresses">
-<em class="property">class </em><code class="descclassname">approxeng.input.</code><code class="descname">ButtonPresses</code><span class="sig-paren">(</span><em>buttons</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#ButtonPresses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.ButtonPresses" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stores the set of buttons pressed within a given time interval</p>
-<dl class="method">
-<dt id="approxeng.input.ButtonPresses.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>buttons</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input.html#ButtonPresses.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.ButtonPresses.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
-</dd></dl>
-
-</dd></dl>
-
 </div>
 
 
-           </div>
-           <div class="articleComments">
-            
-           </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="selectbinder.html" class="btn btn-neutral float-right" title="Binding - approxeng.input.selectbinder" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="selectbinder.html" class="btn btn-neutral float-right" title="Binding - approxeng.input.selectbinder">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../api.html" class="btn btn-neutral" title="API Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../api.html" class="btn btn-neutral" title="API Documentation"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -825,14 +200,13 @@ binding is required.</li>
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, Tom Oinn.
-      Last updated on Jun 12, 2018.
-
+      Last updated on Feb 11, 2019.
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
 </footer>
-
         </div>
       </div>
 
@@ -850,14 +224,13 @@ binding is required.</li>
             VERSION:'2.2.0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
+            HAS_SOURCE:  true
         };
     </script>
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Controller Discovery - approxeng.input.controllers &mdash; Approximate Engineering - Input 2.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+      <link rel="search" type="application/opensearchdescription+xml"
+            title="Search within Approximate Engineering - Input 2.2.0 documentation"
+            href="../_static/opensearch.xml"/>
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="PlayStation 3 Controller Support" href="dualshock3.html" />
+    <link rel="prev" title="Binding - approxeng.input.selectbinder" href="selectbinder.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Approximate Engineering - Input
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Controller Discovery - approxeng.input.controllers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simple-discovery">Simple discovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#specifying-properties">Specifying properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#specifying-multiple-controllers">Specifying multiple controllers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#discovery-failures">Discovery failures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="xboxone.html">XBox-One S Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rockcandy.html">Rock Candy Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="steamcontroller.html">Steam Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wii.html">Wii Remote Pro Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wiimote.html">WiiMote Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pihut.html">PiHut Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sf30pro.html">8Bitdo SF30Pro/SN30Pro Controller Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacemousepro.html">Wired SpaceMouse Pro Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../addingcontrollers.html">Adding support for a new controller type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sys.html">LEDs and Battery Monitoring</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Approximate Engineering - Input</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">API Documentation</a> &raquo;</li>
+        
+      <li>Controller Discovery - approxeng.input.controllers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="controller-discovery-approxeng-input-controllers">
+<span id="discovery-reference-label"></span><h1>Controller Discovery - approxeng.input.controllers<a class="headerlink" href="#controller-discovery-approxeng-input-controllers" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">New in 2.3, the discovery layer tidies up and abstracts the process of finding a controller or controllers matching
+a particular set of requirements. In previous versions you had to handle evdev device nodes directly which wasn’t
+particularly friendly, especially as some controllers used multiple OS devices.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are using the resource binding via <a class="reference internal" href="selectbinder.html#approxeng.input.selectbinder.ControllerResource" title="approxeng.input.selectbinder.ControllerResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.selectbinder.ControllerResource</span></code></a> the same classes
+are used within that binding to specify controllers.</p>
+</div>
+<div class="section" id="simple-discovery">
+<h2>Simple discovery<a class="headerlink" href="#simple-discovery" title="Permalink to this headline">¶</a></h2>
+<p>Before you can use a controller, you need to find it:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.controllers</span> <span class="kn">import</span> <span class="n">find_matching_controllers</span>
+
+<span class="n">discoveries</span> <span class="o">=</span> <span class="n">find_matching_controllers</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This is all you need to perform the most basic discovery process, specifically one which will attempt to find a single
+connected controller.</p>
+</div>
+<div class="section" id="specifying-properties">
+<h2>Specifying properties<a class="headerlink" href="#specifying-properties" title="Permalink to this headline">¶</a></h2>
+<p>You may not want to just pick the first controller available (although the library does attempt to order controllers
+such that the first one will be the most capable). You can use the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.controllers.ControllerRequirement</span></code> to specify exactly what you want. At the moment this class
+supports two filters:</p>
+<ol class="arabic simple">
+<li>You can specify an exact controller class with ‘require_class’, such as specifying that you only want a DualShock4</li>
+<li>You can specify a set of controls on the controller, identified by sname, with ‘require_snames’ that any controller
+must have to be included in the results. This is great when you know that you need a pair of analogue triggers but
+don’t care what exact controller type you get as long as it has them.</li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.controllers</span> <span class="kn">import</span> <span class="n">find_matching_controllers</span><span class="p">,</span> <span class="n">ControllerRequirement</span>
+
+<span class="n">discoveries</span> <span class="o">=</span> <span class="n">find_matching_controllers</span><span class="p">(</span><span class="n">ControllerRequirement</span><span class="p">(</span><span class="n">require_snames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lx&#39;</span><span class="p">,</span><span class="s1">&#39;ly&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="specifying-multiple-controllers">
+<h2>Specifying multiple controllers<a class="headerlink" href="#specifying-multiple-controllers" title="Permalink to this headline">¶</a></h2>
+<p>Both the above examples return a single controller. This is because they both have a single requirement - when you
+don’t provide any requirements as in the first example the library treats it as if you’d given it a single requirement
+with no filters applied.</p>
+<p>The result of the <cite>find_matching_controllers</cite> call is a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.controllers.ControllerDiscovery</span></code>
+objects, each of which contains both the actual controller class and the matching evdev device nodes. In both these
+cases this list contains a single item.</p>
+<p>To discover multiple controllers, specify multiple requirements when calling:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.controllers</span> <span class="kn">import</span> <span class="n">find_matching_controllers</span><span class="p">,</span> <span class="n">ControllerRequirement</span>
+
+<span class="n">discoveries</span> <span class="o">=</span> <span class="n">find_matching_controllers</span><span class="p">(</span><span class="n">ControllerRequirement</span><span class="p">(</span><span class="n">require_snames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lx&#39;</span><span class="p">,</span><span class="s1">&#39;ly&#39;</span><span class="p">]),</span>
+                                        <span class="n">ControllerRequirement</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The above will attempt to find two controllers. The first one must have the specified axes, the second can be any
+connected device. The result will be a two item list, with the controller discoveries in the same order as the supplied
+controller requirements.</p>
+</div>
+<div class="section" id="discovery-failures">
+<h2>Discovery failures<a class="headerlink" href="#discovery-failures" title="Permalink to this headline">¶</a></h2>
+<p>If the system does not have the controllers you’ve requested, the discovery process will raise a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.controllers.ControllerNotFoundError</span></code>, in general you should catch this and wait before trying
+to bind again.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dualshock3.html" class="btn btn-neutral float-right" title="PlayStation 3 Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="selectbinder.html" class="btn btn-neutral" title="Binding - approxeng.input.selectbinder" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Tom Oinn
+      Last updated on Feb 11, 2019.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

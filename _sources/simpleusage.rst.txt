@@ -57,7 +57,7 @@ Connecting to multiple controllers
 **********************************
 
 To connect to multiple controllers, or to be more specific about the types and capabilities of controllers you need,
- see :ref:`discovery-reference-label`. The example below shows binding to two controllers, the first of which must be
+see :ref:`discovery-reference-label`. The example below shows binding to two controllers, the first of which must be
 a PS3 controller, the second of which must have a left X and Y axis:
 
 .. code-block:: python

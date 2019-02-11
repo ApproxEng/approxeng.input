@@ -192,7 +192,7 @@ how long a button has been held down.</li>
 </ul>
 <div class="section" id="constructing-and-binding-a-controller">
 <h2>Constructing and Binding a Controller<a class="headerlink" href="#constructing-and-binding-a-controller" title="Permalink to this headline">¶</a></h2>
-<p>Once your controller is physically connected to the computer (whether by USB, bluetooth or magic) and you have a
+<p>Once your controller is physically connected to the computer (whether by USB, bluetooth, or magic) and you have a
 corresponding entry in the dev filesystem, you need to create an object to receive and interpret events from the
 hardware, and you need to set up a mechanism by which events will be sent to that object. The object in this case will
 be a subclass of <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Controller</span></code></a>, currently the following controllers are supported:</p>
@@ -213,6 +213,7 @@ environment you’ll probably want to disable the default behaviour where the le
 <li><a class="reference internal" href="api/wiimote.html#approxeng.input.wiimote.WiiMote" title="approxeng.input.wiimote.WiiMote"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.wiimote.WiiMote</span></code></a> for <a class="reference internal" href="api/wiimote.html#api-wiimote"><span class="std std-ref">WiiMote Controller Support</span></a>.</li>
 <li><a class="reference internal" href="api/sf30pro.html#approxeng.input.sf30pro.SF30Pro" title="approxeng.input.sf30pro.SF30Pro"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.sf30pro.SF30Pro</span></code></a> for <a class="reference internal" href="api/sf30pro.html#api-sf30pro"><span class="std std-ref">8Bitdo SF30Pro/SN30Pro Controller Support</span></a>.</li>
 <li><a class="reference internal" href="api/pihut.html#approxeng.input.pihut.PiHut" title="approxeng.input.pihut.PiHut"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.pihut.PiHut</span></code></a> for <a class="reference internal" href="api/pihut.html#api-pihut"><span class="std std-ref">PiHut Controller Support</span></a>.</li>
+<li><a class="reference internal" href="api/spacemousepro.html#approxeng.input.spacemousepro.SpaceMousePro" title="approxeng.input.spacemousepro.SpaceMousePro"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.spacemousepro.SpaceMousePro</span></code></a> for <a class="reference internal" href="api/spacemousepro.html#api-spacemousepro"><span class="std std-ref">Wired SpaceMouse Pro Support</span></a>.</li>
 </ul>
 <p>In general you will not explicitly create these objects yourself, instead you can use the binding layer to discover a
 connected controller (optionally supplying a particular kind of controller you want, otherwise it just finds the first
@@ -220,7 +221,9 @@ one it can). This will create the controller object from which you can read thin
 necessary logic to pull events out of the evdev linux system and update the values without you having to do anything.</p>
 <p>The only time you’re likely to use these classes is to reference them when binding, this allows you to wait for a
 specific kind of controller to become available - handy if, say, you really have to have a PS4 controller but you’ve
-got a rock candy dongle plugged in. The details of the binding process are described at <a class="reference internal" href="api/selectbinder.html#binding-reference-label"><span class="std std-ref">Binding - approxeng.input.selectbinder</span></a>.</p>
+got a rock candy dongle plugged in. The details of the discovery process are at <a class="reference internal" href="discovery.html#discovery-reference-label"><span class="std std-ref">Controller Discovery - approxeng.input.controllers</span></a>, once
+you’ve discovered the appropriate controllers you use the binding API to attach to their event streams; the details of
+the binding process are described at <a class="reference internal" href="api/selectbinder.html#binding-reference-label"><span class="std std-ref">Binding - approxeng.input.selectbinder</span></a>.</p>
 </div>
 <div class="section" id="handling-buttons">
 <h2>Handling Buttons<a class="headerlink" href="#handling-buttons" title="Permalink to this headline">¶</a></h2>

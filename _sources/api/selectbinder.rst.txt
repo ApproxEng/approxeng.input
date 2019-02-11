@@ -5,12 +5,12 @@ Binding - approxeng.input.selectbinder
 
 .. note::
 
-    This replaces the previous approxeng.input.asyncorebinder. The main advantage is that it is compatible with both
-    Python 2 and 3, removing the only feature of the library that wasn't working with Python 3, but it's also much
-    simpler to use. Where the asyncore binder used device names and paths to try to find an appropriate controller, the
-    new code uses vendor and product identifiers - these are much more consistent and are guaranteed to be unique. You
-    don't need to care about any of these things though, you just need to know that this new version is much easier to
-    use!
+    This has been re-written almost entirely in version 2.3. The simplest usage of the controller resource remains
+    compatible, but all more sophisticated use will have changed. In general the binder now only handles the binding
+    between controllers and the evdev events, leaving all forms of discovery to :ref:`discovery-reference-label`
+
+    A significant change is that you can now bind to and use multiple controllers by simply specifying multiple
+    requirements for discovery.
 
 The binder provides a bridge between the low level operating system representation of your connected controller and the
 high level python classes such as :class:`approxeng.input.dualshock3.DualShock3` which your code uses. The binder starts
@@ -19,27 +19,24 @@ you don't have to continuously poll the controller, it just updates in the backg
 any functions you've bound to buttons as event handlers. You can either manually bind the controller yourself (in which
 case you're also responsible for un-binding it after you're done!) or you can use the python 'with' functionality.
 
-To bind a controller manually you'll need both an instance of the controller class, and one or more evdev InputDevice
-instances from which events should be extracted. The following code shows use of the 'find_single_controller' function
-to make this reasonably easy:
+To bind a controller manually you'll need to have already discovered it using the discovery layer. Once you have one
+or more instances of :class:`approxeng.input.controllers.ControllerDiscovery` you can bind them manually as follows:
 
 .. code-block:: python
 
-    from approxeng.input.selectbinder import bind_controller
-    from approxeng.input.dualshock3 import DualShock3
-    from approxeng.input.controllers import find_single_controller
+    from approxeng.input.controllers import find_matching_controllers, ControllerRequirement
+    from approxeng.input.selectbinder import bind_controllers
 
-    # Locate a controller, instantiate it, and retrieve the InputDevice devices with which it's associated
-    # This will raise IOError if it can't find an appropriate controller
-    devices, controller, p = find_single_controller(controller_class = DualShock3)
+    discoveries = find_matching_controllers(ControllerRequirement(require_snames=['lx','ly']))
 
-    unbind_function = bind_controller(devices = devices, controller = controller)
-    # At this point the joystick object is bound to the device and will receive updates.
+    unbind_function = bind_controllers(*discoveries)
+    # At this point the joystick object is bound to the device and will receive updates. You can get the controller
+    # object itself, used to read axes and buttons etc, from the discovery - in this case the discoveries value is a
+    # single item list because we only asked for a single controller:
+    controller = discoveries[0].controller
     # .... do stuff ....
     # When we're finished, call the unbind function to free up the resources used by the binder
     unbind_function()
-
-
 
 Binding a controller manually works, but there's a simpler way to handle the process (and one which avoids ever having
 to worry about explicitly unbinding the controller!):
@@ -49,77 +46,26 @@ to worry about explicitly unbinding the controller!):
     from approxeng.input.selectbinder import ControllerResource
     from approxeng.input.dualshock3 import DualShock3
 
-    # Locate a controller, instantiate it, and retrieve the InputDevice devices with which it's associated
-    # This will raise IOError if it can't find an appropriate controller
-    devices, controller, p = find_single_controller(controller_class = DualShock3)
-
-    with ControllerResource(devices = devices, controller = controller) as joystick:
+    with ControllerResource(ControllerRequirement(require_class=DualShock3)) as joystick:
         # .... do stuff, the controller is bound to 'joystick' which is a DualShock3 instance....
 
 On exit from the 'with' block the binder is automatically unbound, this includes cases where we break out of the block
 because of exceptions or other error conditions. It's a simpler and more robust way to handle the binding and I suggest
 you use it instead of explicitly binding it yourself.
 
-This still requires you to go and find your controller, in most cases you'll only have one controller of a given kind.
-There's a shorter form of the resource binding that takes advantage of this case:
+Either form can be used to bind multiple controllers as well. Either by calling `bind_controllers` with more than one
+controller discovery, or by specifying multiple controller requirements to the `ControllerResource`:
 
 .. code-block:: python
 
     from approxeng.input.selectbinder import ControllerResource
     from approxeng.input.dualshock3 import DualShock3
 
-    # Specifying a controller_class here will search for an attached controller of the given kind
-    # If one can't be found we'll raise IOError as with the previous code
-    with ControllerResource(controller_class = DualShock3) as joystick:
-        # .... do stuff, the controller is bound to 'joystick' which is a DualShock3 instance....
-
-This can be made even simpler in the case where you're not bothered about what kind of controller you have, or you
-explicitly want to be able to work with one of a range of controllers. Omitting the controller_class argument will bind
-to the first controller of any kind that's found! This, along with the use of standardised names for the axes and
-buttons on the controllers, means you can create a robot that works with PS3, PS4 or XBoxOne controllers based on what
-you have lying around, very handy for those PiWars moments when your controller dies and you need to borrow one from the
-next table along...
-
-.. code-block:: python
-
-    from approxeng.input.selectbinder import ControllerResource
-
-    # No controller_class is specified, so we look for any joystick from the list we support, and use the first one!
-    # If one can't be found we'll raise IOError as with the previous code
-    with ControllerResource() as joystick:
-        # .... do stuff, the controller is bound to 'joystick' is definitely a subclass of Controller but could be
-        # a PS3, PS4, XBoxOne....
+    with ControllerResource(ControllerRequirement(require_class=DualShock3),
+                            ControllerRequirement(require_snames=['lx','ly'])) as ds3, joystick:
+        # Do stuff, if we didn't raise an error, two controllers are now bound and receiving events.
+        # The first controller is a DualShock3, the second is any connected controller with lx and ly
+        # controls.
 
 .. automodule:: approxeng.input.selectbinder
     :members:
-
-Using an Unsupported Controller
--------------------------------
-
-The library's automatic detection of controllers relies on vendor and product identifiers. These are IDs allocated by
-the USB consortium and won't be duplicated in, for example, a clone PS3 controller like the Rock Candy ones. These
-controllers therefore won't be detected as PS3 controllers even though they'd respond to the same events. You can,
-however, explicitly tell the library to route events from a particular evdev InputDevice to a previously constructed
-controller instance. This works with either the explicit binding mechanism or with the resource. You'll have to acquire
-the appropriate InputDevice from the evdev APIs first, that part's up to you, but when you have one you can do this:
-
-.. code-block:: python
-
-    from approxeng.input.selectbinder import ControllerResource
-    from approxeng.input.dualshock3 import DualShock3
-
-    # This is an InputDevice from which events should be pulled
-    input_device = ....
-
-    # Explicitly construct a controller, in this case a PS3 sixaxis. This will receive events from the InputDevice
-    # and interpret them. As long as your controller uses the same event codes and axes as those expected by the
-    # controller class you should be good to do
-    controller = DualShock3(dead_zone=0.5, hot_zone=0.1)
-
-    # Now just use the controller resource to bind the two together, your explicitly created controller instance will
-    # be fed events from your InputDevice. The with block returns the controller, so in this case it's actually the
-    # same reference as you just created. You could create the controller instance anonymously as an argument here and
-    # use the returned type
-    with ControllerResource(devices = [input_device], controller = controller) as joystick:
-        # joystick and controller are the same object!
-        # Do stuff as before, if your hardware uses the same codes as the controller class expects it'll just work.

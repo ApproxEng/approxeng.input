@@ -1,3 +1,5 @@
+.. _changelog-label:
+
 Change Log
 ==========
 
@@ -10,6 +12,14 @@ Change Log
     A newer version was used for my PiWars_ 2017 entry, this time using a PS4 controller. Several other robots in that
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
+
+Version 2.3.0
+-------------
+
+Significant refactorying and reworking of the controller discovery process. Can now bind to multiple controllers in a
+single call or resource, and can be more specific about exactly what capabilities are required when discovering
+controllers. See :ref:`discovery-reference-label` for more details. Updated examples to match. Added support for the
+3dConnexion SpaceMouse Pro (wired), although I suspect I'm the only person who'll use it...
 
 Version 2.2.0
 -------------

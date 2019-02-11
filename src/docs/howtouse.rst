@@ -28,7 +28,7 @@ in sub-modules. The key classes shared across all controllers are:
 Constructing and Binding a Controller
 -------------------------------------
 
-Once your controller is physically connected to the computer (whether by USB, bluetooth or magic) and you have a
+Once your controller is physically connected to the computer (whether by USB, bluetooth, or magic) and you have a
 corresponding entry in the dev filesystem, you need to create an object to receive and interpret events from the
 hardware, and you need to set up a mechanism by which events will be sent to that object. The object in this case will
 be a subclass of :class:`approxeng.input.Controller`, currently the following controllers are supported:
@@ -58,6 +58,8 @@ be a subclass of :class:`approxeng.input.Controller`, currently the following co
 
 - :class:`approxeng.input.pihut.PiHut` for :ref:`api_pihut`.
 
+- :class:`approxeng.input.spacemousepro.SpaceMousePro` for :ref:`api_spacemousepro`.
+
 In general you will not explicitly create these objects yourself, instead you can use the binding layer to discover a
 connected controller (optionally supplying a particular kind of controller you want, otherwise it just finds the first
 one it can). This will create the controller object from which you can read things like axis values, and also set up the
@@ -65,7 +67,9 @@ necessary logic to pull events out of the evdev linux system and update the valu
 
 The only time you're likely to use these classes is to reference them when binding, this allows you to wait for a
 specific kind of controller to become available - handy if, say, you really have to have a PS4 controller but you've
-got a rock candy dongle plugged in. The details of the binding process are described at :ref:`binding-reference-label`.
+got a rock candy dongle plugged in. The details of the discovery process are at :ref:`discovery-reference-label`, once
+you've discovered the appropriate controllers you use the binding API to attach to their event streams; the details of
+the binding process are described at :ref:`binding-reference-label`.
 
 Handling Buttons
 ----------------

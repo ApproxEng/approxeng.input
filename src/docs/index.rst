@@ -5,6 +5,11 @@ This library simplifies access to the axes and buttons on game controller hardwa
 written to support my PiWars_ robots, and remains focused on similar projects, but can be used wherever game controller
 functionality is required. The current code only supports Linux based systems, including the Raspberry Pi.
 
+.. note::
+    Check out the :ref:`changelog-label` to see what's new. In particular, version 2.3 introduces changes to the way
+    controllers are discovered and allows for multiple controllers to be used simultaneously. This release also drops
+    support for Python2, this and subsequent releases will be Python3 only.
+
 Supported Controllers
 ---------------------
 
@@ -35,6 +40,8 @@ Supported Controllers
 .. image:: images/sf30pro.jpg
     :width: 20%
 
+.. image:: images/spacemousepro.jpg
+    :width: 20%
 
 In general you don't need to code to a specific controller, but some may need extra steps when connecting to your Pi or
 other computer. In other cases, some controllers offer unique features such as the PS4's light bar. You can see more
@@ -57,6 +64,8 @@ details for specific controller types at the following:
  - :ref:`api_xboxone`
 
  - :ref:`api_sf30pro`
+
+ - :ref:`api_spacemousepro`
 
 Contributors
 ------------

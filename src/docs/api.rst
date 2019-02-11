@@ -10,6 +10,7 @@ largely self explanatory although you'll need at least a reasonable level of Pyt
 
     api/input
     api/selectbinder
+    api/discovery
     api/dualshock3
     api/dualshock4
     api/xboxone
@@ -19,3 +20,4 @@ largely self explanatory although you'll need at least a reasonable level of Pyt
     api/wiimote
     api/pihut
     api/sf30pro
+    api/spacemousepro

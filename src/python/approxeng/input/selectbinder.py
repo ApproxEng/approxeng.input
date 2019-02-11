@@ -22,7 +22,7 @@ class ControllerResource:
         as a list of ControllerRequirement
 
         :param requirements:
-            A list of ControllerRequirement instances used, in order, to find and bind controllers. If empty this will
+            ControllerRequirement instances used, in order, to find and bind controllers. If empty this will
             be equivalent to supplying a single unfiltered requirement and will match the first specified controller.
         :param print_events:
             Defaults to False, if set to True then all events picked up by the binder will be printed to stdout. Use

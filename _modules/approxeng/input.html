@@ -424,7 +424,8 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">presses</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ButtonPresses&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The ButtonPresses containing buttons pressed between the two most recent calls to check_presses</span>
+<span class="sd">        The :class:`~approxeng.input.ButtonPresses` containing buttons pressed between the two most recent calls to</span>
+<span class="sd">        :meth:`~approxeng.input.Controller.check_presses`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">presses</span>
 
@@ -432,7 +433,9 @@
     <span class="k">def</span> <span class="nf">controls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return:</span>
-<span class="sd">            A struct containing all the names of controls on this controller</span>
+<span class="sd">            A struct containing all the names of controls on this controller, this takes the form of a dict with two</span>
+<span class="sd">            keys, `axes` and `buttons`, the values for each of which are lists of strings containing the names of each</span>
+<span class="sd">            type of control.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;axes&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">names</span><span class="p">,</span>
                 <span class="s1">&#39;buttons&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">names</span><span class="p">}</span>

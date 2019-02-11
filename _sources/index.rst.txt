@@ -35,6 +35,8 @@ Supported Controllers
 .. image:: images/sf30pro.jpg
     :width: 20%
 
+.. image:: images/spacemousepro.jpg
+    :width: 20%
 
 In general you don't need to code to a specific controller, but some may need extra steps when connecting to your Pi or
 other computer. In other cases, some controllers offer unique features such as the PS4's light bar. You can see more
@@ -57,6 +59,8 @@ details for specific controller types at the following:
  - :ref:`api_xboxone`
 
  - :ref:`api_sf30pro`
+
+ - :ref:`api_spacemousepro`
 
 Contributors
 ------------

@@ -182,10 +182,9 @@
 <img alt="../_images/ps4.jpg" src="../_images/ps4.jpg" />
 <p class="caption"><span class="caption-text">DualShock4 Controller</span></p>
 </div>
-<p>Nothing more to do for this controller, it pairs over <a class="reference internal" href="../bluetooth.html#bluetooth"><span class="std std-ref">Pairing Controllers over Bluetooth</span></a> with no issues. This library doesn’t provide any
-support for the motion sensing, or for the trackpad (other than using it as a button). This is partly because it’s the
-only controller with those controls, and partly because only some sub-versions of the controller hardware actually work
-with the current Linux driver (mine, for example, doesn’t).</p>
+<p>Nothing more to do for this controller, it pairs over <a class="reference internal" href="../bluetooth.html#bluetooth"><span class="std std-ref">Pairing Controllers over Bluetooth</span></a> with no issues. On modern kernels this now does
+support motion events as well as the touchpad, treating the touchpad as a pair of axes reading the last location of a
+single touch. See the last part of <a class="reference internal" href="../simpleusage.html#sname-label"><span class="std std-ref">Standard Names</span></a> for details on how to access these properties.</p>
 <span class="target" id="module-approxeng.input.dualshock4"></span><dl class="class">
 <dt id="approxeng.input.dualshock4.DualShock4">
 <em class="property">class </em><code class="descclassname">approxeng.input.dualshock4.</code><code class="descname">DualShock4</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.05</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock4.html#DualShock4"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock4.DualShock4" title="Permalink to this definition">¶</a></dt>

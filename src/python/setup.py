@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 # Docs are built with 'make html' in the docs directory parallel to this one
 setup(
     name='approxeng.input',
-    version='2.2.0',
+    version='2.3.0',
     description='Python game controller support using evDev for Raspberry Pi and other Linux systems',
     classifiers=['Programming Language :: Python :: 3.4'],
     url='https://github.com/ApproxEng/approxeng.input/',

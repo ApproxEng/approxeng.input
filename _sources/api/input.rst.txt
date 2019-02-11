@@ -1,5 +1,5 @@
-Common APIs
-===========
+Common APIs - approxeng.input
+=============================
 
 .. autoclass:: approxeng.input.Controller
     :members:

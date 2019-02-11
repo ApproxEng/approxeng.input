@@ -93,7 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs - approxeng.input</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discovery.html">Controller Discovery - approxeng.input.controllers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
@@ -211,7 +211,8 @@ know you’ll need to code specifically for it!</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>vendor_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The USB vendor ID for the controller</li>
 <li><strong>product_id</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – The USB product ID for the controller</li>
-<li><strong>controls</strong> – A sequence of Button, CentredAxis, TriggerAxis and BinaryAxis instances</li>
+<li><strong>controls</strong> – A list of <a class="reference internal" href="input.html#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code></a>, <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">CentredAxis</span></code></a>,
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">TriggerAxis</span></code></a> and <a class="reference internal" href="input.html#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">BinaryAxis</span></code></a> instances</li>
 <li><strong>node_mappings</strong> – A dict from device name to a prefix which will be applied to all events from nodes with a
 matching name before dispatching the corresponding events. This is used to handle controller
 types which create multiple nodes in /dev/input by keying on the device names reported to evdev

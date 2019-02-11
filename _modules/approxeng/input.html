@@ -289,7 +289,8 @@
 <span class="sd">        :param int product_id:</span>
 <span class="sd">            The USB product ID for the controller</span>
 <span class="sd">        :param controls:</span>
-<span class="sd">            A sequence of Button, CentredAxis, TriggerAxis and BinaryAxis instances</span>
+<span class="sd">            A list of :class:`~approxeng.input.Button`, :class:`~approxeng.input.CentredAxis`,</span>
+<span class="sd">            :class:`~approxeng.input.TriggerAxis` and :class:`~approxeng.input.BinaryAxis` instances</span>
 <span class="sd">        :param node_mappings:</span>
 <span class="sd">            A dict from device name to a prefix which will be applied to all events from nodes with a</span>
 <span class="sd">            matching name before dispatching the corresponding events. This is used to handle controller</span>
@@ -414,11 +415,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">check_presses</span><span class="p">()</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">has_presses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">has_presses</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">presses</span><span class="o">.</span><span class="n">has_presses</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">presses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">presses</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ButtonPresses&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The ButtonPresses containing buttons pressed between the two most recent calls to check_presses</span>
 <span class="sd">        &quot;&quot;&quot;</span>

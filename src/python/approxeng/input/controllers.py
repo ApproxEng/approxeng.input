@@ -1,4 +1,30 @@
+import logging
 import pprint
+from functools import total_ordering
+
+from approxeng.input import Controller
+# noinspection PyUnresolvedReferences
+from approxeng.input.dualshock3 import DualShock3
+# noinspection PyUnresolvedReferences
+from approxeng.input.dualshock4 import DualShock4
+# noinspection PyUnresolvedReferences
+from approxeng.input.pihut import PiHut
+# noinspection PyUnresolvedReferences
+from approxeng.input.rockcandy import RockCandy
+# noinspection PyUnresolvedReferences
+from approxeng.input.sf30pro import SF30Pro
+# noinspection PyUnresolvedReferences
+from approxeng.input.spacemousepro import SpaceMousePro
+# noinspection PyUnresolvedReferences
+from approxeng.input.steamcontroller import SteamController
+# noinspection PyUnresolvedReferences
+from approxeng.input.switch import SwitchJoyConRight, SwitchJoyConLeft
+# noinspection PyUnresolvedReferences
+from approxeng.input.wii import WiiRemotePro
+# noinspection PyUnresolvedReferences
+from approxeng.input.wiimote import WiiMote
+# noinspection PyUnresolvedReferences
+from approxeng.input.xboxone import WiredXBoxOneSPad, WirelessXBoxOneSPad
 
 try:
     from evdev import InputDevice, list_devices, ecodes, util
@@ -7,43 +33,7 @@ except ImportError:
     list_devices = None
     print('Attempt to import evdev failed - if you are not running Sphinx this is a critical error.')
 
-from approxeng.input.dualshock3 import DS3_PRODUCT_ID, DS3_VENDOR_ID, DualShock3
-from approxeng.input.dualshock4 import DS4_PRODUCT_ID, DS4_VENDOR_ID, DS4V2_PRODUCT_ID, DualShock4
-from approxeng.input.pihut import PH_PRODUCT_ID, PH_VENDOR_ID, PiHut
-from approxeng.input.steamcontroller import SC_PRODUCT_ID, SC_VENDOR_ID, SteamController
-from approxeng.input.xboxone import XB1S_VENDOR_ID, XB1S_WIRED_PRODUCT_ID, XB1S_WIRELESS_PRODUCT_ID, WiredXBoxOneSPad, \
-    WirelessXBoxOneSPad, XB1S_WIRELESS_PRODUCT_ID_2
-from approxeng.input.rockcandy import RockCandy, RC_PRODUCT_ID, RC_VENDOR_ID
-from approxeng.input.wii import WiiRemotePro, WII_REMOTE_PRO_VENDOR, WII_REMOTE_PRO_PRODUCT
-from approxeng.input.wiimote import WiiMote, WIIMOTE_PRODUCT_ID, WIIMOTE_VENDOR_ID
-from approxeng.input.sf30pro import SF30Pro, SF30Pro_PRODUCT_ID, SF30Pro_VENDOR_ID
-from approxeng.input.switch import SwitchJoyConLeft, SWITCH_VENDOR_ID, SWITCH_L_PRODUCT_ID, SwitchJoyConRight, \
-    SWITCH_R_PRODUCT_ID
-from approxeng.input.spacemousepro import SMP_PRODUCT_ID, SMP_VENDOR_ID, SpaceMousePro
-
-import logging
-from functools import total_ordering
-
 logger = logging.getLogger(name='approxeng.input.controllers')
-
-CONTROLLERS = [{'constructor': DualShock3, 'vendor_id': DS3_VENDOR_ID, 'product_id': DS3_PRODUCT_ID},
-               {'constructor': DualShock4, 'vendor_id': DS4_VENDOR_ID, 'product_id': DS4_PRODUCT_ID},
-               {'constructor': DualShock4, 'vendor_id': DS4_VENDOR_ID, 'product_id': DS4V2_PRODUCT_ID},
-               {'constructor': PiHut, 'vendor_id': PH_VENDOR_ID, 'product_id': PH_PRODUCT_ID},
-               {'constructor': WiredXBoxOneSPad, 'vendor_id': XB1S_VENDOR_ID, 'product_id': XB1S_WIRED_PRODUCT_ID},
-               {'constructor': WirelessXBoxOneSPad, 'vendor_id': XB1S_VENDOR_ID,
-                'product_id': XB1S_WIRELESS_PRODUCT_ID},
-               {'constructor': WirelessXBoxOneSPad, 'vendor_id': XB1S_VENDOR_ID,
-                'product_id': XB1S_WIRELESS_PRODUCT_ID_2},
-               {'constructor': SteamController, 'vendor_id': SC_VENDOR_ID,
-                'product_id': SC_PRODUCT_ID},
-               {'constructor': RockCandy, 'vendor_id': RC_VENDOR_ID, 'product_id': RC_PRODUCT_ID},
-               {'constructor': WiiRemotePro, 'vendor_id': WII_REMOTE_PRO_VENDOR, 'product_id': WII_REMOTE_PRO_PRODUCT},
-               {'constructor': WiiMote, 'vendor_id': WIIMOTE_VENDOR_ID, 'product_id': WIIMOTE_PRODUCT_ID},
-               {'constructor': SF30Pro, 'vendor_id': SF30Pro_VENDOR_ID, 'product_id': SF30Pro_PRODUCT_ID},
-               {'constructor': SwitchJoyConLeft, 'vendor_id': SWITCH_VENDOR_ID, 'product_id': SWITCH_L_PRODUCT_ID},
-               {'constructor': SwitchJoyConRight, 'vendor_id': SWITCH_VENDOR_ID, 'product_id': SWITCH_R_PRODUCT_ID},
-               {'constructor': SpaceMousePro, 'vendor_id': SMP_VENDOR_ID, 'product_id': SMP_PRODUCT_ID}]
 
 
 @total_ordering
@@ -189,12 +179,30 @@ def find_matching_controllers(*requirements, **kwargs) -> [ControllerDiscovery]:
 def find_all_controllers(**kwargs) -> [ControllerDiscovery]:
     """
     :return:
-        A list of ControllerDiscovery instances corresponding to controllers attached to this host, ordered by the
-        ordering on ControllerDiscovery. Any controllers found will be constructed with kwargs passed to their
-        constructor function
+        A list of :class:`~approxeng.input.controllers.ControllerDiscovery` instances corresponding to controllers
+        attached to this host, ordered by the ordering on ControllerDiscovery. Any controllers found will be
+        constructed with kwargs passed to their constructor function, particularly useful for dead and hot zone
+        parameters.
     """
 
-    id_to_constructor = {'{}-{}'.format(c['vendor_id'], c['product_id']): c['constructor'] for c in CONTROLLERS}
+    def get_controller_classes() -> [{}]:
+        """
+        Scans for subclasses of :class:`~approxeng.input.Controller` and reads out data from their
+        :meth:`~approxeng.input.Controller.registrations_ids` method. This should return a list of
+        tuples of `(vendor_id, product_id)` which are then used along with the subclass itself to
+        populate a registry of known subclasses.
+
+        :return:
+            A generator that produces known subclasses and their registration information
+        """
+        for controller_class in Controller.__subclasses__():
+            for vendor_id, product_id in controller_class.registration_ids():
+                yield {'constructor': controller_class,
+                       'vendor_id': vendor_id,
+                       'product_id': product_id}
+
+    id_to_constructor = {'{}-{}'.format(c['vendor_id'], c['product_id']): c['constructor'] for c in
+                         get_controller_classes()}
 
     def controller_constructor(d: InputDevice):
         id = '{}-{}'.format(d.info.vendor, d.info.product)

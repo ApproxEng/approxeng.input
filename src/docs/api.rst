@@ -1,8 +1,8 @@
 API Documentation
 =================
 
-This code is intended to be help as well as useful, as such it is very heavily commented - you should hopefully find it
-largely self explanatory although you'll need at least a reasonable level of Python knowledge.
+These are the core APIs provided by this library. From here you can link to the source, or you can browse and clone it
+from GitHub_.
 
 .. toctree::
     :maxdepth: 2
@@ -21,3 +21,5 @@ largely self explanatory although you'll need at least a reasonable level of Pyt
     api/pihut
     api/sf30pro
     api/spacemousepro
+
+.. _GitHub: https://github.com/ApproxEng/approxeng.input

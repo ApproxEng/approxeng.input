@@ -1,5 +1,9 @@
 import logging
+from abc import ABC, abstractmethod
 from time import time
+from typing import Optional, Union, Tuple
+
+from evdev import InputEvent
 
 #: Logger - explicitly set the level for this to see log messages
 logger = logging.getLogger(name='approxeng.input')
@@ -100,7 +104,7 @@ def map_dual_axis(low, high, centre, dead_zone, hot_zone, value):
         return map_single_axis(centre, high, dead_zone, hot_zone, value)
 
 
-class Controller(object):
+class Controller(ABC):
     """
     Superclass for controller implementations
 
@@ -119,17 +123,14 @@ class Controller(object):
         condition to check for controller disconnection.
     """
 
-    def __init__(self, vendor_id, product_id, controls, node_mappings=None, dead_zone=None,
+    def __init__(self, controls, node_mappings=None, dead_zone=None,
                  hot_zone=None):
         """
         Populate the controller name, button set and axis set.
 
-        :param int vendor_id:
-            The USB vendor ID for the controller
-        :param int product_id:
-            The USB product ID for the controller
         :param controls:
-            A sequence of Button, CentredAxis, TriggerAxis and BinaryAxis instances
+            A list of :class:`~approxeng.input.Button`, :class:`~approxeng.input.CentredAxis`,
+            :class:`~approxeng.input.TriggerAxis` and :class:`~approxeng.input.BinaryAxis` instances
         :param node_mappings:
             A dict from device name to a prefix which will be applied to all events from nodes with a
             matching name before dispatching the corresponding events. This is used to handle controller
@@ -147,8 +148,6 @@ class Controller(object):
         :param hot_zone:
             If specified, this is applied to all axes
         """
-        self.vendor_id = vendor_id
-        self.product_id = product_id
         self.axes = Axes([control for control in controls if
                           isinstance(control, CentredAxis) or
                           isinstance(control, BinaryAxis) or
@@ -166,38 +165,58 @@ class Controller(object):
         self.node_mappings = node_mappings
         self.device_unique_name = None
         self.exception = None
-        self.stream = Controller.ControllerStream(self)
+
+        class ControllerStream(object):
+            """
+            Class to produce streams for values from the parent controller on demand.
+            """
+
+            def __init__(self, controller):
+                self.controller = controller
+
+            def __getitem__(self, item):
+                """
+                :param item:
+                    Name of an item or items to fetch, referring to them by sname, so either axes or
+                    buttons.
+                :return:
+                    A generator which will emit the value of that item or items every time it's called, in effect
+                    creating an infinite stream of values for the given item or items.
+                """
+
+                def generator():
+                    while self.controller.connected:
+                        yield self.controller.__getitem__(item)
+
+                return generator()
+
+        self.stream = ControllerStream(self)
+
+    @staticmethod
+    @abstractmethod
+    def registration_ids() -> [Tuple[int, int]]:
+        pass
 
     @property
-    def connected(self):
+    def connected(self) -> bool:
         """
-        Returns True if the controller object is associated correctly with a physical device, False otherwise. Use this
-        to detect a loss of controller pairing.
+        :return:
+            True if the controller object is associated correctly with a physical device, False otherwise. Use this
+            to detect a loss of controller pairing.
         """
         if self.device_unique_name:
             return True
         return False
 
     @property
-    def battery_level(self):
+    def battery_level(self) -> Optional[float]:
         """
-        Returns the battery level, as a float from 0.0 to 1.0, or None if not available
+        :return:
+            Battery level, as a float from 0.0 to 1.0, or None if not available
         """
         return None
 
-    class ControllerStream(object):
-
-        def __init__(self, controller):
-            self.controller = controller
-
-        def __getitem__(self, item):
-            def generator():
-                while self.controller.connected:
-                    yield self.controller.__getitem__(item)
-
-            return generator()
-
-    def __getitem__(self, item):
+    def __getitem__(self, item: Union[str, Tuple[str, ...]]) -> [Optional[float]]:
         """
         Simple index access to axis corrected values and button held times
 
@@ -213,7 +232,7 @@ class Controller(object):
             return [self.__getattr__(single_item) for single_item in item]
         return self.__getattr__(item)
 
-    def __getattr__(self, item):
+    def __getattr__(self, item: str) -> Optional[float]:
         """
         Property access to axis values and button hold times
 
@@ -228,7 +247,7 @@ class Controller(object):
             return self.buttons.held(item)
         raise AttributeError
 
-    def __contains__(self, item):
+    def __contains__(self, item: str) -> bool:
         """
         A Controller contains a named attribute if it has either an axis or a button with the attribute as its sname
 
@@ -243,7 +262,7 @@ class Controller(object):
             return True
         return False
 
-    def check_presses(self):
+    def check_presses(self) -> 'ButtonPresses':
         """
         Return the set of Buttons which have been pressed since this call was last made, clearing it as we do. This is
         a shortcut to doing 'buttons.get_and_clear_button_press_history'
@@ -254,26 +273,32 @@ class Controller(object):
         return self.buttons.check_presses()
 
     @property
-    def has_presses(self):
+    def has_presses(self) -> bool:
+        """
+        :return: True if there were button presses since the last check.
+        """
         return self.buttons.presses.has_presses
 
     @property
-    def presses(self):
+    def presses(self) -> 'ButtonPresses':
         """
-        The ButtonPresses containing buttons pressed between the two most recent calls to check_presses
+        The :class:`~approxeng.input.ButtonPresses` containing buttons pressed between the two most recent calls to
+        :meth:`~approxeng.input.Controller.check_presses`
         """
         return self.buttons.presses
 
     @property
-    def controls(self):
+    def controls(self) -> {}:
         """
         :return:
-            A struct containing all the names of controls on this controller
+            A dict containing all the names of controls on this controller, this takes the form of a dict with two
+            keys, `axes` and `buttons`, the values for each of which are lists of strings containing the names of each
+            type of control.
         """
         return {'axes': self.axes.names,
                 'buttons': self.buttons.names}
 
-    def register_button_handler(self, button_handler, button_sname):
+    def register_button_handler(self, button_handler, button_sname: str):
         """
         Register a handler function which will be called when a button is pressed
 
@@ -287,7 +312,7 @@ class Controller(object):
         """
         return self.buttons.register_button_handler(button_handler, self.buttons[button_sname])
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "{}, axes={}, buttons={}".format(self.__class__.__name__, self.axes, self.buttons)
 
 
@@ -310,7 +335,7 @@ class Axes(object):
         self.axes_by_code = {axis.axis_event_code: axis for axis in axes}
         self.axes_by_sname = {axis.sname: axis for axis in axes}
 
-    def axis_updated(self, event, prefix=None):
+    def axis_updated(self, event: InputEvent, prefix=None):
         """
         Called to process an absolute axis event from evdev, this is called internally by the controller implementations
 
@@ -326,7 +351,7 @@ class Axes(object):
         else:
             axis = self.axes_by_code.get(event.code)
         if axis is not None:
-            axis.set_raw_value(float(event.value))
+            axis.receive_device_value(event.value)
         else:
             logger.debug('Unknown axis code {} ({}), value {}'.format(event.code, prefix, event.value))
 
@@ -351,20 +376,20 @@ class Axes(object):
         return list("{}={}".format(axis.name, axis.value) for axis in self.axes_by_code.values()).__str__()
 
     @property
-    def names(self):
+    def names(self) -> [str]:
         """
         The snames of all axis objects
         """
         return sorted([name for name in self.axes_by_sname.keys() if name is not ''])
 
     @property
-    def active_axes(self):
+    def active_axes(self) -> ['Axis']:
         """
         Return a sequence of all Axis objects which are not in their resting positions
         """
         return [axis for axis in self.axes if axis.value != 0]
 
-    def __getitem__(self, sname):
+    def __getitem__(self, sname: str) -> Optional['Axis']:
         """
         Get an axis by sname, if present
 
@@ -375,7 +400,7 @@ class Axes(object):
         """
         return self.axes_by_sname.get(sname)
 
-    def __getattr__(self, item):
+    def __getattr__(self, item) -> 'Axis':
         """
         Called when an unresolved attribute is requested, retrieves the Axis object for the given sname
 
@@ -383,12 +408,14 @@ class Axes(object):
             the standard name of the axis to query
         :return:
             the corrected value of the axis, or raise AttributeError if no such axis is present
+        :raise:
+            AttributeError if there's no axis with this name
         """
         if item in self.axes_by_sname:
             return self.get(item)
         raise AttributeError
 
-    def __contains__(self, item):
+    def __contains__(self, item: str) -> bool:
         """
         Check whether a given axis, referenced by sname, exists
 
@@ -400,7 +427,34 @@ class Axes(object):
         return item in self.axes_by_sname
 
 
-class TriggerAxis(object):
+class Axis(ABC):
+    """
+    Abstract base class for axis types.
+    """
+
+    @property
+    @abstractmethod
+    def value(self) -> float:
+        """
+        :return:
+            A corrected floating point value, either in the range -1 to 1 for centred axes, or 0 to 1 for non-centred,
+            adjusted for dead and hot zones.
+        """
+        pass
+
+    @abstractmethod
+    def receive_device_value(self, value: int):
+        """
+        Receive a value from the underlying operating system code, in our case evdev, and update the internal state of
+        this axis object appropriately.
+
+        :param value:
+            Integer value received from the evdev event handler.
+        """
+        pass
+
+
+class TriggerAxis(Axis):
     """
     A single analogue axis where the expected output range is 0.0 to 1.0. Typically this is used for triggers, where the
     resting position is 0.0 and any interaction causes higher values. Whether a particular controller exposes triggers
@@ -408,8 +462,9 @@ class TriggerAxis(object):
     axes.
     """
 
-    def __init__(self, name, min_raw_value, max_raw_value, axis_event_code, dead_zone=0.0, hot_zone=0.0, sname=None,
-                 button_sname=None, button_trigger_value=0.5):
+    def __init__(self, name: str, min_raw_value: int, max_raw_value: int, axis_event_code: int, dead_zone=0.0,
+                 hot_zone=0.0, sname: Optional[str] = None, button_sname: Optional[str] = None,
+                 button_trigger_value=0.5):
         """
         Create a new TriggerAxis - this will be done internally within the controller classes i.e.
         :class:`approxeng.input.xboxone.XBoxOneSPad`
@@ -455,7 +510,7 @@ class TriggerAxis(object):
         else:
             self.button = None
 
-    def _input_to_raw_value(self, value):
+    def _input_to_raw_value(self, value: int) -> float:
         """
         Convert the value read from evdev to a 0.0 to 1.0 range.
 
@@ -464,12 +519,12 @@ class TriggerAxis(object):
         :param value:
             a value ranging from the defined minimum to the defined maximum value.
         :return:
-            0.0 at minumum, 1.0 at maximum, linearly interpolating between those two points.
+            0.0 at minimum, 1.0 at maximum, linearly interpolating between those two points.
         """
-        return (value - self.min_raw_value) / self.max_raw_value
+        return (float(value) - self.min_raw_value) / self.max_raw_value
 
     @property
-    def raw_value(self):
+    def raw_value(self) -> float:
         """
         Get an uncorrected value for this trigger
 
@@ -478,7 +533,7 @@ class TriggerAxis(object):
         return self.__value
 
     @property
-    def value(self):
+    def value(self) -> float:
         """
         Get a centre-compensated, scaled, value for the axis, taking any dead-zone into account. The value will
         scale from 0.0 at the edge of the dead-zone to 1.0 (positive) at the extreme position of
@@ -498,7 +553,7 @@ class TriggerAxis(object):
         self.max = 0.9
         self.min = 0.1
 
-    def set_raw_value(self, raw_value):
+    def receive_device_value(self, raw_value: int):
         """
         Set a new value, called from within the joystick implementation class when parsing the event queue.
 
@@ -522,10 +577,12 @@ class TriggerAxis(object):
         return "TriggerAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.value)
 
 
-class BinaryAxis(object):
+class BinaryAxis(Axis):
     """
     A fake 'analogue' axis which actually corresponds to a pair of buttons. Once associated with a Buttons instance
-    it routes events through to the Buttons instance to create button presses corresponding to axis movements.
+    it routes events through to the Buttons instance to create button presses corresponding to axis movements. This is
+    necessary as some controllers expose buttons, especially D-pad buttons, as a pair of axes rather than four buttons,
+    but we almost certainly want to treat them as buttons the way most controllers do.
     """
 
     def __init__(self, name, axis_event_code, invert=False, b1name=None, b2name=None):
@@ -554,7 +611,7 @@ class BinaryAxis(object):
         self.sname = ''
         self.__value = 0
 
-    def set_raw_value(self, raw_value):
+    def receive_device_value(self, raw_value: int):
         self.__value = raw_value
         if self.buttons is not None:
             if self.last_value < 0:
@@ -578,7 +635,7 @@ class BinaryAxis(object):
         return "BinaryAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.value)
 
 
-class CentredAxis(object):
+class CentredAxis(Axis):
     """
     A single analogue axis on a controller where the expected output range is -1.0 to 1.0 and the resting position of
     the control is at 0.0, at least in principle.
@@ -620,7 +677,7 @@ class CentredAxis(object):
         self.axis_event_code = axis_event_code
         self.sname = sname
 
-    def _input_to_raw_value(self, value):
+    def _input_to_raw_value(self, value: int):
         """
         Convert the value read from evdev to a -1.0 to 1.0 range.
 
@@ -631,10 +688,10 @@ class CentredAxis(object):
         :return:
             -1.0 at minumum, 1.0 at maximum, linearly interpolating between those two points.
         """
-        return (value - self.min_raw_value) * (2 / (self.max_raw_value - self.min_raw_value)) - 1.0
+        return (float(value) - self.min_raw_value) * (2 / (self.max_raw_value - self.min_raw_value)) - 1.0
 
     @property
-    def raw_value(self):
+    def raw_value(self) -> float:
         """
         Get an uncorrected value for this axis
 
@@ -643,7 +700,7 @@ class CentredAxis(object):
         return self.__value
 
     @property
-    def value(self):
+    def value(self) -> float:
         """
         Get a centre-compensated, scaled, value for the axis, taking any dead-zone into account. The value will
         scale from 0.0 at the edge of the dead-zone to 1.0 (positive) or -1.0 (negative) at the extreme position of
@@ -671,7 +728,7 @@ class CentredAxis(object):
         self.max = 0.9
         self.min = -0.9
 
-    def set_raw_value(self, raw_value):
+    def receive_device_value(self, raw_value: int):
         """
         Set a new value, called from within the joystick implementation class when parsing the event queue.
 
@@ -687,7 +744,7 @@ class CentredAxis(object):
         elif new_value < self.min:
             self.min = new_value
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "CentredAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.value)
 
 

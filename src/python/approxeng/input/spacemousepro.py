@@ -1,7 +1,6 @@
 from approxeng.input import Controller, CentredAxis, Button
 
-SMP_VENDOR_ID = 0x46d
-SMP_PRODUCT_ID = 0xc62b
+__all__ = ['SpaceMousePro']
 
 
 class SpaceMousePro(Controller):
@@ -21,30 +20,35 @@ class SpaceMousePro(Controller):
     """
 
     def __init__(self, dead_zone=0.05, hot_zone=0.01):
-        super(SpaceMousePro, self).__init__(vendor_id=SMP_VENDOR_ID,
-                                            product_id=SMP_PRODUCT_ID,
-                                            controls=[
-                                                CentredAxis('X', -350, 350, 0, sname='lx'),
-                                                CentredAxis('Y', -350, 350, 1, sname='ly', invert=True),
-                                                CentredAxis('Z', -350, 350, 2, sname='lz', invert=True),
-                                                CentredAxis('Roll', -350, 350, 3, sname='pitch'),
-                                                CentredAxis('Pitch', -350, 350, 4, sname='roll', invert=True),
-                                                CentredAxis('Yaw', -350, 350, 5, sname='yaw'),
-                                                Button('Menu', 256, sname='menu'),
-                                                Button('Alt', 279, sname='alt'),
-                                                Button('Ctrl', 281, sname='ctrl'),
-                                                Button('Shift', 280, sname='shift'),
-                                                Button('Esc', 278, sname='esc'),
-                                                Button('1', 268, sname='1'),
-                                                Button('2', 269, sname='2'),
-                                                Button('3', 270, sname='3'),
-                                                Button('4', 271, sname='4'),
-                                                Button('Rotate', 264, sname='rotate'),
-                                                Button('T', 258, sname='t'),
-                                                Button('F', 261, sname='f'),
-                                                Button('R', 260, sname='r'),
-                                                Button('Lock', 282, sname='lock'),
-                                                Button('Fit', 257, sname='fit')
-                                            ],
-                                            dead_zone=dead_zone,
-                                            hot_zone=hot_zone)
+        super(SpaceMousePro, self).__init__(controls=[
+            CentredAxis('X', -350, 350, 0, sname='lx'),
+            CentredAxis('Y', -350, 350, 1, sname='ly', invert=True),
+            CentredAxis('Z', -350, 350, 2, sname='lz', invert=True),
+            CentredAxis('Roll', -350, 350, 3, sname='pitch'),
+            CentredAxis('Pitch', -350, 350, 4, sname='roll', invert=True),
+            CentredAxis('Yaw', -350, 350, 5, sname='yaw'),
+            Button('Menu', 256, sname='menu'),
+            Button('Alt', 279, sname='alt'),
+            Button('Ctrl', 281, sname='ctrl'),
+            Button('Shift', 280, sname='shift'),
+            Button('Esc', 278, sname='esc'),
+            Button('1', 268, sname='1'),
+            Button('2', 269, sname='2'),
+            Button('3', 270, sname='3'),
+            Button('4', 271, sname='4'),
+            Button('Rotate', 264, sname='rotate'),
+            Button('T', 258, sname='t'),
+            Button('F', 261, sname='f'),
+            Button('R', 260, sname='r'),
+            Button('Lock', 282, sname='lock'),
+            Button('Fit', 257, sname='fit')
+        ],
+            dead_zone=dead_zone,
+            hot_zone=hot_zone)
+
+    @staticmethod
+    def registration_ids():
+        """
+        :return: list of (vendor_id, product_id) for this controller
+        """
+        return [(0x46d, 0xc62b)]

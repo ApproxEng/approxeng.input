@@ -1,10 +1,7 @@
 from approxeng.input import CentredAxis, TriggerAxis, Button, Controller, BinaryAxis
 from approxeng.input.sys import read_power_level
 
-XB1S_VENDOR_ID = 1118
-XB1S_WIRED_PRODUCT_ID = 746
-XB1S_WIRELESS_PRODUCT_ID = 765
-XB1S_WIRELESS_PRODUCT_ID_2 = 736
+__all__ = ['WiredXBoxOneSPad', 'WirelessXBoxOneSPad']
 
 
 class WiredXBoxOneSPad(Controller):
@@ -25,35 +22,37 @@ class WiredXBoxOneSPad(Controller):
             Used to set the hot zone for each :class:`approxeng.input.CentredAxis` and
             :class:`approxeng.input.TriggerAxis` in the controller.
         """
-        super(WiredXBoxOneSPad, self).__init__(vendor_id=XB1S_VENDOR_ID,
-                                               product_id=XB1S_WIRED_PRODUCT_ID,
-                                               controls=[
-                                                   Button("X", 307, sname='square'),
-                                                   Button("Y", 308, sname='triangle'),
-                                                   Button("B", 305, sname='circle'),
-                                                   Button("A", 304, sname='cross'),
-                                                   Button("Right Stick", 318, sname='rs'),
-                                                   Button("Left Stick", 317, sname='ls'),
-                                                   Button("View", 314, sname='select'),
-                                                   Button("Menu", 315, sname='start'),
-                                                   Button("XBox", 316, sname='home'),
-                                                   Button("LB", 310, sname='l1'),
-                                                   Button("RB", 311, sname='r1'),
-                                                   CentredAxis("Left Horizontal", -32768, 32768, 0, sname='lx'),
-                                                   CentredAxis("Left Vertical", -32768, 32768, 1, invert=True,
-                                                               sname='ly'),
-                                                   CentredAxis("Right Horizontal", -32768, 32768, 3, sname='rx'),
-                                                   CentredAxis("Right Vertical", -32768, 32768, 4, invert=True,
-                                                               sname='ry'),
-                                                   TriggerAxis("Left Trigger", 0, 1023, 2, sname='lt',
-                                                               button_sname='l2', button_trigger_value=0.2),
-                                                   TriggerAxis("Right Trigger", 0, 1023, 5, sname='rt',
-                                                               button_sname='r2', button_trigger_value=0.2),
-                                                   BinaryAxis("D-pad Horizontal", 16, b1name='dleft', b2name='dright'),
-                                                   BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown')
-                                               ],
-                                               dead_zone=dead_zone,
-                                               hot_zone=hot_zone)
+        super(WiredXBoxOneSPad, self).__init__(
+            controls=[
+                Button("X", 307, sname='square'),
+                Button("Y", 308, sname='triangle'),
+                Button("B", 305, sname='circle'),
+                Button("A", 304, sname='cross'),
+                Button("Right Stick", 318, sname='rs'),
+                Button("Left Stick", 317, sname='ls'),
+                Button("View", 314, sname='select'),
+                Button("Menu", 315, sname='start'),
+                Button("XBox", 316, sname='home'),
+                Button("LB", 310, sname='l1'),
+                Button("RB", 311, sname='r1'),
+                CentredAxis("Left Horizontal", -32768, 32768, 0, sname='lx'),
+                CentredAxis("Left Vertical", -32768, 32768, 1, invert=True, sname='ly'),
+                CentredAxis("Right Horizontal", -32768, 32768, 3, sname='rx'),
+                CentredAxis("Right Vertical", -32768, 32768, 4, invert=True, sname='ry'),
+                TriggerAxis("Left Trigger", 0, 1023, 2, sname='lt', button_sname='l2', button_trigger_value=0.2),
+                TriggerAxis("Right Trigger", 0, 1023, 5, sname='rt', button_sname='r2', button_trigger_value=0.2),
+                BinaryAxis("D-pad Horizontal", 16, b1name='dleft', b2name='dright'),
+                BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown')
+            ],
+            dead_zone=dead_zone,
+            hot_zone=hot_zone)
+
+    @staticmethod
+    def registration_ids():
+        """
+        :return: list of (vendor_id, product_id) for this controller
+        """
+        return [(0x45e, 0x2ea)]
 
     def __repr__(self):
         return 'Wired Microsoft XBox One S controller'
@@ -79,36 +78,38 @@ class WirelessXBoxOneSPad(Controller):
             Used to set the hot zone for each :class:`approxeng.input.CentredAxis` and
             :class:`approxeng.input.TriggerAxis` in the controller.
         """
-        super(WirelessXBoxOneSPad, self).__init__(vendor_id=XB1S_VENDOR_ID,
-                                                  product_id=XB1S_WIRELESS_PRODUCT_ID,
-                                                  controls=[
-                                                      Button("X", 306, sname='square'),
-                                                      Button("Y", 307, sname='triangle'),
-                                                      Button("B", 305, sname='circle'),
-                                                      Button("A", 304, sname='cross'),
-                                                      Button("Right Stick", 313, sname='rs'),
-                                                      Button("Left Stick", 312, sname='ls'),
-                                                      Button("View", 310, sname='select'),
-                                                      Button("Menu", 311, sname='start'),
-                                                      Button("XBox", 139, sname='home'),
-                                                      Button("LB", 308, sname='l1'),
-                                                      Button("RB", 309, sname='r1'),
-                                                      CentredAxis("Left Horizontal", 0, 65335, 0, sname='lx'),
-                                                      CentredAxis("Left Vertical", 0, 65335, 1, invert=True,
-                                                                  sname='ly'),
-                                                      CentredAxis("Right Horizontal", 0, 65335, 3, sname='rx'),
-                                                      CentredAxis("Right Vertical", 0, 65335, 4, invert=True,
-                                                                  sname='ry'),
-                                                      TriggerAxis("Left Trigger", 0, 1023, 2, sname='lt',
-                                                                  button_sname='l2', button_trigger_value=0.1),
-                                                      TriggerAxis("Right Trigger", 0, 1023, 5, sname='rt',
-                                                                  button_sname='r2', button_trigger_value=0.1),
-                                                      BinaryAxis("D-pad Horizontal", 16, b1name='dleft',
-                                                                 b2name='dright'),
-                                                      BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown')
-                                                  ],
-                                                  dead_zone=dead_zone,
-                                                  hot_zone=hot_zone)
+        super(WirelessXBoxOneSPad, self).__init__(
+            controls=[
+                Button("X", 306, sname='square'),
+                Button("Y", 307, sname='triangle'),
+                Button("B", 305, sname='circle'),
+                Button("A", 304, sname='cross'),
+                Button("Right Stick", 313, sname='rs'),
+                Button("Left Stick", 312, sname='ls'),
+                Button("View", 310, sname='select'),
+                Button("Menu", 311, sname='start'),
+                Button("XBox", 139, sname='home'),
+                Button("LB", 308, sname='l1'),
+                Button("RB", 309, sname='r1'),
+                CentredAxis("Left Horizontal", 0, 65335, 0, sname='lx'),
+                CentredAxis("Left Vertical", 0, 65335, 1, invert=True, sname='ly'),
+                CentredAxis("Right Horizontal", 0, 65335, 3, sname='rx'),
+                CentredAxis("Right Vertical", 0, 65335, 4, invert=True, sname='ry'),
+                TriggerAxis("Left Trigger", 0, 1023, 2, sname='lt', button_sname='l2', button_trigger_value=0.1),
+                TriggerAxis("Right Trigger", 0, 1023, 5, sname='rt', button_sname='r2', button_trigger_value=0.1),
+                BinaryAxis("D-pad Horizontal", 16, b1name='dleft', b2name='dright'),
+                BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown')
+            ],
+            dead_zone=dead_zone,
+            hot_zone=hot_zone)
+
+    @staticmethod
+    def registration_ids():
+        """
+        :return: list of (vendor_id, product_id) for this controller
+        """
+        return [(0x45e, 0x2fd),
+                (0x45e, 0x2e0)]
 
     @property
     def battery_level(self):

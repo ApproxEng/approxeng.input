@@ -1,7 +1,6 @@
 from colorsys import hsv_to_rgb
 
 from approxeng.input import Controller, Button, CentredAxis, TriggerAxis, BinaryAxis
-from approxeng.input.sys import write_led_value, read_power_level
 
 __all__ = ['DualShock4']
 
@@ -89,10 +88,6 @@ class DualShock4(Controller):
             value between 0.0 and 1.0
         """
         r, g, b = hsv_to_rgb(hue, saturation, value)
-        write_led_value(self.device_unique_name, 'red', r * 255.0)
-        write_led_value(self.device_unique_name, 'green', g * 255.0)
-        write_led_value(self.device_unique_name, 'blue', b * 255.0)
-
-    @property
-    def battery_level(self):
-        return float(read_power_level(self.device_unique_name)) / 100.0
+        self.write_led_value('red', r * 255.0)
+        self.write_led_value('green', g * 255.0)
+        self.write_led_value('blue', b * 255.0)

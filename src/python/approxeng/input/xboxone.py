@@ -1,5 +1,4 @@
 from approxeng.input import CentredAxis, TriggerAxis, Button, Controller, BinaryAxis
-from approxeng.input.sys import read_power_level
 
 __all__ = ['WiredXBoxOneSPad', 'WirelessXBoxOneSPad']
 
@@ -110,10 +109,6 @@ class WirelessXBoxOneSPad(Controller):
         """
         return [(0x45e, 0x2fd),
                 (0x45e, 0x2e0)]
-
-    @property
-    def battery_level(self):
-        return float(read_power_level(self.device_unique_name)) / 100.0
 
     def __repr__(self):
         return 'Wireless Microsoft XBox One S controller'

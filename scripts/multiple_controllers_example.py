@@ -10,6 +10,7 @@ def main(screen):
     curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
     curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
     curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK)
+    curses.init_pair(4, curses.COLOR_MAGENTA, curses.COLOR_BLACK)
     curses.start_color()
 
     def red(s):
@@ -20,6 +21,9 @@ def main(screen):
 
     def yellow(s):
         screen.addstr(s, curses.color_pair(3))
+
+    def magenta(s):
+        screen.addstr(s, curses.color_pair(4))
 
     while True:
         try:
@@ -42,13 +46,18 @@ def main(screen):
                         for axis_name in joystick.axes.names:
                             screen.addstr(' {}='.format(axis_name))
                             axis_value = joystick[axis_name]
-                            text = '{:.2f}'.format(axis_value)
-                            if axis_value > 0:
-                                green(text)
-                            elif axis_value < 0:
-                                red(text)
+                            if not isinstance(axis_value, tuple):
+                                text = '{:.2f}'.format(axis_value)
+                                if axis_value > 0:
+                                    green(text)
+                                elif axis_value < 0:
+                                    red(text)
+                                else:
+                                    yellow(text)
                             else:
-                                yellow(text)
+                                x, y = axis_value
+                                text = f'({x:.2f},{y:.2f})'
+                                magenta(text)
 
                     # Print the live axes of both connected controllers
                     print_axes(joystick_a, 1, 'A')

@@ -1,9 +1,12 @@
 import logging
 from abc import ABC, abstractmethod
+from math import sqrt
 from time import time
 from typing import Optional, Union, Tuple
 
 from evdev import InputEvent
+
+from approxeng.input.sys import sys_nodes
 
 #: Logger - explicitly set the level for this to see log messages
 logger = logging.getLogger(name='approxeng.input')
@@ -108,19 +111,12 @@ class Controller(ABC):
     """
     Superclass for controller implementations
 
-    :ivar int vendor_id:
-        Vendor ID used to identify the controller type.
-    :ivar int product_id:
-        Product ID used to identify the controller type.
     :ivar approxeng.input.Axes axes:
         All analogue axes. You can get the individual axis objects from this, but you shouldn't ever need to do this,
         use methods on Controller instead!
     :ivar approxeng.input.Buttons buttons:
         All buttons are managed by this object. This can be used to access Button objects representing buttons on the
         controller, but you will almost never need to do this - use the methods on Controller instead!
-    :ivar: boolean connected:
-        True if the controller is connected to a source of events, False otherwise. This can be used as a break
-        condition to check for controller disconnection.
     """
 
     def __init__(self, controls, node_mappings=None, dead_zone=None,
@@ -192,6 +188,53 @@ class Controller(ABC):
 
         self.stream = ControllerStream(self)
 
+    @property
+    def sys_nodes(self) -> {}:
+        """
+        Returns a dict of discovered sys nodes representing power and LED status for this controller. If the controller
+        isn't bound to a physical device, or there aren't LED or power nodes available this returns an empty dict.
+        """
+        if self.device_unique_name is not None:
+            return sys_nodes(self.device_unique_name)
+        return {}
+
+    def read_led_value(self, led_name) -> Optional[int]:
+        """
+        Read an existing LED value. This may or may not work depending on the underlying implementation. Requires
+        a bound controller with the specified name present in its LED sys classes. Returns None if this does not
+        apply.
+
+        :param led_name:
+            Name of LED to query
+        :return:
+            Integer value of LED, or None if either unbound or no such LED name
+        """
+        if self.device_unique_name is not None:
+            return sys.read_led_value(self.device_unique_name, led_name)
+        return None
+
+    def write_led_value(self, led_name: str, value: int):
+        """
+        Write a value to a named LED. Does nothing if either we're not bound to a device, or there's no
+        such LED name.
+
+        :param led_name:
+            LED name within this device - use self.sys_nodes['leds'] keys to discover LED names.
+        :param value:
+            Value to write, should be an integer.
+        """
+        if self.device_unique_name is not None:
+            sys.write_led_value(self.device_unique_name, led_name, value)
+
+    @property
+    def battery_level(self) -> Optional[float]:
+        """
+        Read the battery capacity, if available, as a percentage. If not available, return None
+        """
+        if self.device_unique_name is not None:
+            return sys.read_power_level(self.device_unique_name)
+        return None
+
     @staticmethod
     @abstractmethod
     def registration_ids() -> [Tuple[int, int]]:
@@ -207,14 +250,6 @@ class Controller(ABC):
         if self.device_unique_name:
             return True
         return False
-
-    @property
-    def battery_level(self) -> Optional[float]:
-        """
-        :return:
-            Battery level, as a float from 0.0 to 1.0, or None if not available
-        """
-        return None
 
     def __getitem__(self, item: Union[str, Tuple[str, ...]]) -> [Optional[float]]:
         """
@@ -335,6 +370,17 @@ class Axes(object):
         self.axes_by_code = {axis.axis_event_code: axis for axis in axes}
         self.axes_by_sname = {axis.sname: axis for axis in axes}
 
+        # Look to see whether we've got pairs of lx,ly and / or rx,ry and create corresponding circular axes
+        def add_circular_axis(rootname):
+            xname = f'{rootname}x'
+            yname = f'{rootname}y'
+            if xname in self.axes_by_sname and yname in self.axes_by_sname:
+                self.axes_by_sname[rootname] = CircularCentredAxis(x=self.axes_by_sname[xname],
+                                                                   y=self.axes_by_sname[yname])
+
+        add_circular_axis('l')
+        add_circular_axis('r')
+
     def axis_updated(self, event: InputEvent, prefix=None):
         """
         Called to process an absolute axis event from evdev, this is called internally by the controller implementations
@@ -396,7 +442,7 @@ class Axes(object):
         :param sname:
             The standard name to search
         :return:
-            An axis object, or None if no such button exists
+            An axis object, or None if no such axis exists
         """
         return self.axes_by_sname.get(sname)
 
@@ -466,8 +512,8 @@ class TriggerAxis(Axis):
                  hot_zone=0.0, sname: Optional[str] = None, button_sname: Optional[str] = None,
                  button_trigger_value=0.5):
         """
-        Create a new TriggerAxis - this will be done internally within the controller classes i.e.
-        :class:`approxeng.input.xboxone.XBoxOneSPad`
+        Create a new TriggerAxis - this will be done internally within the :class:`~approxeng.input.Controller`
+        sub-class.
 
         :param name:
             A friendly name for the axis
@@ -626,6 +672,12 @@ class BinaryAxis(Axis):
 
     @property
     def value(self):
+        """
+        You probably don't want to actually get the value of this axis, use the generated buttons instead.
+
+        :returns int:
+            The raw value from the evdev events driving this axis.
+        """
         if self.invert:
             return -self.__value
         else:
@@ -633,6 +685,72 @@ class BinaryAxis(Axis):
 
     def __str__(self):
         return "BinaryAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.value)
+
+
+class CircularCentredAxis:
+    """
+    An aggregation of a pair of :class:`~approxeng.input.CentredAxis` instances.
+
+    When using a pair of centred axes to model a single joystick there are some unexpected and probably undesirable
+    issues with dead zones. As each axis is treated independently, the dead zones are also applied independently - this
+    means that, for example, with the joystick fully pushed forwards you still have the dead zone behaviour between left
+    and right. You may prefer a behaviour where both axes are zero if the stick is within a certain distance of its
+    centre position in any direction. This class provides that, and is created from a pair of centred axes, i.e. 'lx'
+    and 'ly'. The value is returns is a tuple of (x,y) positions. Use of this class will constrain the overall motion
+    of the paired axes into the unit circle - in many controllers this is true because of the physical layout of the
+    controller, but it may not always be in hardware terms.
+    """
+
+    def __init__(self, x: "CentredAxis", y: "CentredAxis", dead_zone=0.1, hot_zone=0.1):
+        """
+        Create a new circular centred axis
+
+        :param CentredAxis x:
+            Axis to use for x value
+        :param CentredAxis y:
+            Axis to use for y value
+        :param float dead_zone:
+            Specifies the distance from the centre prior to which both x and y will return 0.0, defaults to 0.1
+        :param float hot_zone:
+            Specifies the distance from the 1.0 distance beyond which both x and y will return +-1.0, i.e. if the hot
+            zone is set to 0.1 then all positions where the distance is greater than 0.9 will return magnitude 1 total
+            distances. Defaults to 0.1
+        """
+        self.x = x
+        self.y = y
+        self.dead_zone = dead_zone
+        self.hot_zone = hot_zone
+
+    def _calculate_position(self, raw_x: float, raw_y: float):
+        """
+        Map x and y to a corrected x,y tuple based on the configured dead and hot zones.
+
+        :param raw_x:
+            Raw x axis position, -1.0 to 1.0
+        :param raw_y:
+            Raw y axis position, -1.0 to 1.0
+        :return:
+            x,y corrected position
+        """
+        # Avoid trying to take sqrt(0) in pathological case
+        if raw_x is not 0 or raw_y is not 0:
+            distance = sqrt(raw_x * raw_x + raw_y * raw_y)
+        else:
+            return 0.0, 0.0
+        if distance >= 1.0 - self.hot_zone:
+            # Return normalised value, which corresponds to the unit vector in that direction
+            return raw_x / distance, raw_y / distance
+        elif distance <= self.dead_zone:
+            # Return zero vector
+            return 0.0, 0.0
+        # Guarantee distance to be between dead_zone and 1.0-hot_zone at this point, scale it and return
+        effective_distance = (distance - self.dead_zone) / (1.0 - (self.dead_zone + self.hot_zone))
+        scale = effective_distance / distance
+        return raw_x * scale, raw_y * scale
+
+    @property
+    def value(self) -> (float, float):
+        return self._calculate_position(raw_x=self.x.raw_value, raw_y=self.y.raw_value)
 
 
 class CentredAxis(Axis):
@@ -644,8 +762,8 @@ class CentredAxis(Axis):
     def __init__(self, name, min_raw_value, max_raw_value, axis_event_code, invert=False, dead_zone=0.0, hot_zone=0.0,
                  sname=None):
         """
-        Create a new CentredAxis - this will be done internally within the controller classes i.e.
-        :class:`approxeng.input.sixaxis.SixAxis`
+        Create a new CentredAxis - this will be done internally within the :class:`~approxeng.input.Controller`
+        sub-class.
 
         :param name:
             A friendly name for the axis
@@ -787,7 +905,7 @@ class ButtonPresses(object):
         """
         Return true if a button was pressed, referencing by standard name
 
-        :param sname: the name to check
+        :param item: the name to check
         :return: true if contained within the press set, false otherwise
         """
         if isinstance(item, tuple):

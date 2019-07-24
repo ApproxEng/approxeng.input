@@ -1,6 +1,7 @@
 import logging
 import pprint
 from functools import total_ordering
+from typing import Type, List
 
 from approxeng.input import Controller
 # noinspection PyUnresolvedReferences
@@ -176,7 +177,7 @@ def find_matching_controllers(*requirements, **kwargs) -> [ControllerDiscovery]:
         raise exception
 
 
-def find_all_controllers(**kwargs) -> [ControllerDiscovery]:
+def find_all_controllers(**kwargs) -> List[ControllerDiscovery]:
     """
     :return:
         A list of :class:`~approxeng.input.controllers.ControllerDiscovery` instances corresponding to controllers
@@ -195,6 +196,7 @@ def find_all_controllers(**kwargs) -> [ControllerDiscovery]:
         :return:
             A generator that produces known subclasses and their registration information
         """
+        controller_class: Type[Controller]
         for controller_class in Controller.__subclasses__():
             for vendor_id, product_id in controller_class.registration_ids():
                 yield {'constructor': controller_class,

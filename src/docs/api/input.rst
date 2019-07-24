@@ -13,6 +13,9 @@ Common APIs - approxeng.input
 .. autoclass:: approxeng.input.BinaryAxis
     :members:
 
+.. autoclass:: approxeng.input.CircularCentredAxis
+    :members:
+
 .. autoclass:: approxeng.input.Axes
     :members:
 

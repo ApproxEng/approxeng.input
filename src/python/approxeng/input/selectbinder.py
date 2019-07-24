@@ -21,10 +21,10 @@ class ControllerResource:
         will find the first controller of any kind enabled by the library. Otherwise the requirements must be provided
         as a list of ControllerRequirement
 
-        :param requirements:
+        :param  ControllerRequirement requirements:
             ControllerRequirement instances used, in order, to find and bind controllers. If empty this will
             be equivalent to supplying a single unfiltered requirement and will match the first specified controller.
-        :param print_events:
+        :param bool print_events:
             Defaults to False, if set to True then all events picked up by the binder will be printed to stdout. Use
             this when you're trying to figure out what events correspond to what axes and buttons!
         :param kwargs:
@@ -60,9 +60,9 @@ def bind_controllers(*discoveries, print_events=False):
     Bind a controller or controllers to a set of evdev InputDevice instances, starting a thread to keep those
     controllers in sync with the state of the hardware.
     
-    :param discoveries:
+    :param ControllerDiscovery discoveries:
         ControllerDiscovery instances specifying the controllers and their associated input devices
-    :param print_events:
+    :param bool print_events:
         Defaults to False, if set to True then all events picked up by this binder will be printed to stdout
     :return: 
         A function which can be used to stop the event reading thread and unbind from the device

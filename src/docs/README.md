@@ -2,6 +2,13 @@
 
 Approxeng.input's docs are built using Sphinx, making use of a theme from readthedocs.
 
+## Make targets
+
+(these will only work for me, as they assume things about my git directory structures and permissions on github)
+
+1. `make html` to build docs locally
+2. `make push` to push to https://approxeng.github.io/approxeng.input/index.html
+
 ## Sphinx installation
 
 Using whichever version of Python makes you happiest:

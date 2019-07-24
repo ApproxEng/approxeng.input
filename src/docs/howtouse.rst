@@ -5,7 +5,7 @@ This module contains general support for game controllers. It includes the top l
 joystick axes which are used for any kind of controller, particular controllers and binding mechanisms are implemented
 in sub-modules. The key classes shared across all controllers are:
 
-- :class:`approxeng.input.CentredAxis` :class:`approxeng.input.TriggerAxis` and :class:`approxeng.input.BinaryAxis`
+- :class:`~approxeng.input.CentredAxis` :class:`~approxeng.input.TriggerAxis` and :class:`~approxeng.input.BinaryAxis`
   represent different kinds of axis of an analogue control. The centred axis is used for joysticks with a negative value
   at one end of the range and positive at the other, whereas the trigger axis is used for axes with zero at the resting
   position and increasingly positive values as the control is pressed. As the names suggest, these are used for centred
@@ -14,15 +14,15 @@ in sub-modules. The key classes shared across all controllers are:
   controller D-pads are actually a pair of axes in terms of implementation, although they don't have any analogue
   control, they just emit either -1, 0 or 1)
 
-- :class:`approxeng.input.Button` represents a single button. As with the Axis class you don't create these, instead you
-  need to use the instances provided by the driver classes.
+- :class:`~approxeng.input.Button` represents a single button. As with the Axis class you don't create these, instead
+  you need to use the instances provided by the driver classes.
 
-- :class:`approxeng.input.Buttons` represents the state of all the buttons on the controller. You'll use the provided
+- :class:`~approxeng.input.Buttons` represents the state of all the buttons on the controller. You'll use the provided
   instance of this class to register button handlers, ask whether any buttons were pressed, and get information about
   how long a button has been held down.
 
-- Finally, all controller classes inherit from :class:`approxeng.input.Controller`. This provides a
-  :class:`approxeng.input.Buttons` instance called 'buttons', and an :class:`approxeng.input.Axes` instance called
+- Finally, all controller classes inherit from :class:`~approxeng.input.Controller`. This provides a
+  :class:`~approxeng.input.Buttons` instance called 'buttons', and an :class:`~approxeng.input.Axes` instance called
   'axes'. These will come in handy later!
 
 Constructing and Binding a Controller
@@ -31,7 +31,7 @@ Constructing and Binding a Controller
 Once your controller is physically connected to the computer (whether by USB, bluetooth, or magic) and you have a
 corresponding entry in the dev filesystem, you need to create an object to receive and interpret events from the
 hardware, and you need to set up a mechanism by which events will be sent to that object. The object in this case will
-be a subclass of :class:`approxeng.input.Controller`, currently the following controllers are supported:
+be a subclass of :class:`~approxeng.input.Controller`, currently the following controllers are supported:
 
 - :class:`approxeng.input.dualshock3.DualShock3` handles PS3 controllers
 
@@ -164,14 +164,14 @@ controller is from -32768 to 32768 when plugged in and, for some ungodly reason,
 don't have to worry about this as the controller implementations specify this internally and you'll only ever see values
 between -1.0 and 1.0, or between 0.0 and 1.0 for trigger axes.
 
-The :class:`approxeng.input.CentredAxis` and :class:`approxeng.input.TriggerAxis` both auto-range, in that they start
+The :class:`~approxeng.input.CentredAxis` and :class:`~approxeng.input.TriggerAxis` both auto-range, in that they start
 off with a maximum and minimum value that's well within the theoretical range, and expand this out when they see higher
 values from the controller. This means we don't have to worry that the theoretical range of the controller isn't fully
 used, we'll always have our -1.0 to 1.0 correspond to the actual controller movement.
 
 Auto-centring isn't possible as we can't know whether the user is touching the controller, but you can set the centre
-point for an individual :class:`approxeng.input.CentredAxis` by setting its 'centre' property, or for a complete set
-defined by an :class:`approxeng.input.Axes` object by calling the set_axis_centres() function on the Axes object. This
+point for an individual :class:`~approxeng.input.CentredAxis` by setting its 'centre' property, or for a complete set
+defined by an :class:`~approxeng.input.Axes` object by calling the set_axis_centres() function on the Axes object. This
 function takes an arbitrary number of parameters and ignores all of them - this is done so you can specify the function
 as a button handler.
 

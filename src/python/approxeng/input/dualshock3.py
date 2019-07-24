@@ -1,5 +1,4 @@
 from approxeng.input import CentredAxis, Controller, Button, TriggerAxis
-from approxeng.input.sys import read_power_level, write_led_value
 
 __all__ = ['DualShock3']
 
@@ -73,8 +72,4 @@ class DualShock3(Controller):
         """
         if 1 > led_number > 4:
             return
-        write_led_value(hw_id=self.device_unique_name, led_name='sony{}'.format(led_number), value=led_value)
-
-    @property
-    def battery_level(self):
-        return float(read_power_level(self.device_unique_name)) / 100.0
+        self.write_led_value(led_name='sony{}'.format(led_number), value=led_value)

@@ -1,5 +1,6 @@
 import logging
 from os import listdir
+from typing import Optional
 
 logger = logging.getLogger(name='approxeng.input.sys')
 
@@ -23,24 +24,61 @@ def scan_cache(force_update=False):
     return __CACHED_SCAN__
 
 
-def write_led_value(hw_id, led_name, value):
+def read_led_value(hw_id, led_name) -> int:
     if hw_id in __CACHED_SCAN__['leds']:
         if led_name in __CACHED_SCAN__['leds'][hw_id]:
-            f = open(__CACHED_SCAN__['leds'][hw_id][led_name], 'w')
-            f.write(str(int(value)))
-            f.close()
+            with open(__CACHED_SCAN__['leds'][hw_id][led_name], 'r') as f:
+                return int(f.read() or None)
         else:
             logger.debug("No led called {} in {}".format(led_name, hw_id))
     else:
         logger.debug("No hardware ID {} in scan".format(hw_id))
 
 
-def read_power_level(hw_id):
+def write_led_value(hw_id, led_name, value):
+    if hw_id in __CACHED_SCAN__['leds']:
+        if led_name in __CACHED_SCAN__['leds'][hw_id]:
+            with open(__CACHED_SCAN__['leds'][hw_id][led_name], 'w') as f:
+                f.write(str(int(value)))
+        else:
+            logger.debug("No led called {} in {}".format(led_name, hw_id))
+    else:
+        logger.debug("No hardware ID {} in scan".format(hw_id))
+
+
+def read_power_level(hw_id) -> Optional[float]:
+    """
+    Power level as a percentage, or None if the device doesn't have a corresponding /sys/power_supply node
+
+    :param hw_id:
+        Unique hardware ID
+    :return:
+        Float 0.0-100.0 percentage of battery capacity, or None if no battery found.
+    """
     if hw_id in __CACHED_SCAN__['power']:
-        f = open(__CACHED_SCAN__['power'][hw_id], 'r')
-        return int(f.read() or 0)
+        with open(__CACHED_SCAN__['power'][hw_id], 'r') as f:
+            return float(f.read() or 0) / 100.0
     else:
         return None
+
+
+def sys_nodes(hw_id):
+    """
+    Returns a dict containing known power and LED sys nodes for a given hw_id, used by the 'sys_nodes' property on
+    :class:`~approxeng.input.Controller` instances.
+
+    :param hw_id:
+        Sensible hardware ID from uevent file path
+    :return:
+        Dict containing either nothing, or one or both of 'leds' and 'power' keys. Power is a single file path, LEDs
+        a dict from LED name to file path.
+    """
+    info = {}
+    if hw_id in __CACHED_SCAN__['power']:
+        info['power'] = __CACHED_SCAN__['power'][hw_id]
+    if hw_id in __CACHED_SCAN__['leds']:
+        info['leds'] = {name: __CACHED_SCAN__['leds'][hw_id][name] for name in __CACHED_SCAN__['leds'][hw_id]}
+    return info
 
 
 def scan_system():
@@ -93,6 +131,8 @@ def scan_system():
 
     power = {}
     for sub in ['/sys/class/power_supply/' + sub_dir for sub_dir in listdir('/sys/class/power_supply')]:
+        # From https://www.kernel.org/doc/Documentation/power/power_supply_class.txt - this is the
+        # capacity as a percentage, so will always be an integer in the range 0-100
         read_path = sub + '/capacity'
         device_id = find_device_hardware_id(sub + '/device/uevent')
         if device_id:

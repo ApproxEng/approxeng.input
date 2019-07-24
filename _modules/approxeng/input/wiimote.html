@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input.wiimote &mdash; Approximate Engineering - Input 2.3.0 documentation</title>
+  <title>approxeng.input.wiimote &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
   
 
   
@@ -17,37 +17,38 @@
   
 
   
-
-  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
   
     
-      <link rel="search" type="application/opensearchdescription+xml"
-            title="Search within Approximate Engineering - Input 2.3.0 documentation"
-            href="../../../_static/opensearch.xml"/>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
     
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          href="../../../_static/opensearch.xml"/>
 
   
-
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                2.3.0
+                2.4.0
               </div>
             
           
@@ -162,8 +163,7 @@
   <h1>Source code for approxeng.input.wiimote</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="k">import</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">CentredAxis</span>
 
-<span class="n">WIIMOTE_VENDOR_ID</span> <span class="o">=</span> <span class="mi">1406</span>
-<span class="n">WIIMOTE_PRODUCT_ID</span> <span class="o">=</span> <span class="mi">774</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;WiiMote&#39;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="WiiMote"><a class="viewcode-back" href="../../../api/wiimote.html#approxeng.input.wiimote.WiiMote">[docs]</a><span class="k">class</span> <span class="nc">WiiMote</span><span class="p">(</span><span class="n">Controller</span><span class="p">):</span>
@@ -180,38 +180,44 @@
 <span class="sd">        :param float hot_zone:</span>
 <span class="sd">            Used to set the hot zone for each :class:`approxeng.input.CentredAxis` in the controller.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">WiiMote</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vendor_id</span><span class="o">=</span><span class="n">WIIMOTE_VENDOR_ID</span><span class="p">,</span>
-                                      <span class="n">product_id</span><span class="o">=</span><span class="n">WIIMOTE_PRODUCT_ID</span><span class="p">,</span>
-                                      <span class="n">controls</span><span class="o">=</span><span class="p">[</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Nunchuck Z&quot;</span><span class="p">,</span> <span class="mi">309</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;r1&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Nunchuck C&quot;</span><span class="p">,</span> <span class="mi">306</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;r2&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote A&quot;</span><span class="p">,</span> <span class="mi">304</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;cross&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote B&quot;</span><span class="p">,</span> <span class="mi">305</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;circle&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote DUp&quot;</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;dup&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote DDown&quot;</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;ddown&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote DLeft&quot;</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;dleft&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote DRight&quot;</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;dright&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote -&quot;</span><span class="p">,</span> <span class="mi">412</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;select&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote +&quot;</span><span class="p">,</span> <span class="mi">407</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;start&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote home&quot;</span><span class="p">,</span> <span class="mi">316</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;home&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote 1&quot;</span><span class="p">,</span> <span class="mi">257</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;cross&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote 2&quot;</span><span class="p">,</span> <span class="mi">258</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;circle&quot;</span><span class="p">),</span>
-                                          <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Wiimote Roll&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;roll&quot;</span><span class="p">),</span>
-                                          <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Wiimote Pitch&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;pitch&quot;</span><span class="p">),</span>
-                                          <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Wiimote ???&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;???&quot;</span><span class="p">),</span>
-                                          <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Nunchuck Y&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;ry&quot;</span><span class="p">),</span>
-                                          <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Nunchuck X&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;rx&quot;</span><span class="p">),</span>
-                                          <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Classic lx&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;lx&quot;</span><span class="p">),</span>
-                                          <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Classic ly&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;ly&quot;</span><span class="p">),</span>
-                                          <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Classic rx&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;rx&quot;</span><span class="p">),</span>
-                                          <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Classic ry&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;ly&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Classic x&quot;</span><span class="p">,</span> <span class="mi">307</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;square&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Classic y&quot;</span><span class="p">,</span> <span class="mi">308</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;triangle&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Classic zr&quot;</span><span class="p">,</span> <span class="mi">313</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;r2&quot;</span><span class="p">),</span>
-                                          <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Classic zl&quot;</span><span class="p">,</span> <span class="mi">312</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;l2&quot;</span><span class="p">),</span>
-                                      <span class="p">],</span>
-                                      <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
-                                      <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WiiMote</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">controls</span><span class="o">=</span><span class="p">[</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Nunchuck Z&quot;</span><span class="p">,</span> <span class="mi">309</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;r1&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Nunchuck C&quot;</span><span class="p">,</span> <span class="mi">306</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;r2&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote A&quot;</span><span class="p">,</span> <span class="mi">304</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;cross&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote B&quot;</span><span class="p">,</span> <span class="mi">305</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;circle&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote DUp&quot;</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;dup&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote DDown&quot;</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;ddown&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote DLeft&quot;</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;dleft&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote DRight&quot;</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;dright&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote -&quot;</span><span class="p">,</span> <span class="mi">412</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;select&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote +&quot;</span><span class="p">,</span> <span class="mi">407</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;start&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote home&quot;</span><span class="p">,</span> <span class="mi">316</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;home&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote 1&quot;</span><span class="p">,</span> <span class="mi">257</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;cross&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Wiimote 2&quot;</span><span class="p">,</span> <span class="mi">258</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;circle&quot;</span><span class="p">),</span>
+                <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Wiimote Roll&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;roll&quot;</span><span class="p">),</span>
+                <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Wiimote Pitch&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;pitch&quot;</span><span class="p">),</span>
+                <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Wiimote ???&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;???&quot;</span><span class="p">),</span>
+                <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Nunchuck Y&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;ry&quot;</span><span class="p">),</span>
+                <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Nunchuck X&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;rx&quot;</span><span class="p">),</span>
+                <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Classic lx&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;lx&quot;</span><span class="p">),</span>
+                <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Classic ly&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;ly&quot;</span><span class="p">),</span>
+                <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Classic rx&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;rx&quot;</span><span class="p">),</span>
+                <span class="n">CentredAxis</span><span class="p">(</span><span class="s2">&quot;Classic ry&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;ly&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Classic x&quot;</span><span class="p">,</span> <span class="mi">307</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;square&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Classic y&quot;</span><span class="p">,</span> <span class="mi">308</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;triangle&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Classic zr&quot;</span><span class="p">,</span> <span class="mi">313</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;r2&quot;</span><span class="p">),</span>
+                <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Classic zl&quot;</span><span class="p">,</span> <span class="mi">312</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s2">&quot;l2&quot;</span><span class="p">),</span>
+            <span class="p">],</span>
+            <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
+            <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WiiMote.registration_ids"><a class="viewcode-back" href="../../../api/wiimote.html#approxeng.input.wiimote.WiiMote.registration_ids">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">registration_ids</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: list of (vendor_id, product_id) for this controller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="mh">0x57e</span><span class="p">,</span> <span class="mh">0x306</span><span class="p">)]</span></div>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;Nintendo WiiMote controller&#39;</span></div>
@@ -227,8 +233,10 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn
-      Last updated on Feb 11, 2019.
+        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jul 24, 2019.
+      </span>
 
     </p>
   </div>
@@ -245,26 +253,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

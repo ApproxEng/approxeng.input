@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Adding support for a new controller type &mdash; Approximate Engineering - Input 2.3.0 documentation</title>
+  <title>Adding support for a new controller type &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
   
 
   
@@ -17,17 +17,23 @@
   
 
   
-
-  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
-      <link rel="search" type="application/opensearchdescription+xml"
-            title="Search within Approximate Engineering - Input 2.3.0 documentation"
-            href="_static/opensearch.xml"/>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          href="_static/opensearch.xml"/>
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
@@ -35,21 +41,16 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Examples" href="examples.html" />
     <link rel="prev" title="Wired SpaceMouse Pro Support" href="api/spacemousepro.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -63,7 +64,7 @@
             
             
               <div class="version">
-                2.3.0
+                2.4.0
               </div>
             
           
@@ -189,36 +190,15 @@ identifiers. For example, with my XBox One controller paired and connected I see
 </div>
 <div class="section" id="clones-of-a-supported-controller">
 <h2>Clones of a supported controller<a class="headerlink" href="#clones-of-a-supported-controller" title="Permalink to this headline">¶</a></h2>
-<p>If you have a controller which is an exact copy of one the library supports, but isn’t autodetected, you can either bind
-it yourself, using the class from the library which most closely matches your controller, or you can add autodetect
-support to the library, again using the existing class. This might happen if you have, say, a clone PS4 controller which
-is identical in every way but which has a different USB vendor and product identifier.</p>
-<p>The <code class="xref py py-const docutils literal notranslate"><span class="pre">approxeng.input.controllers.CONTROLLERS</span></code> is an array of dicts containing class constructor, vendor ID and
-product ID values. This array is searched for matching controllers when a controller class is specified, when no class
-is provided this array is used to find any potential matches. If you add an appropriate entry to this array you can
-cause the library’s controller matching to match an existing class with a new pair of vendor and product IDs. So,
-supposing you had a new controller which used the <a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4" title="approxeng.input.dualshock4.DualShock4"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.dualshock4.DualShock4</span></code></a> codes for axes and
-buttons, but had a different vendor and product ID, you could add it to the match array with:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">approxeng.input.controllers</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.dualshock4</span> <span class="kn">import</span> <span class="n">DualShock4</span>
-
-<span class="n">VENDOR_ID</span> <span class="o">=</span> <span class="o">...</span>
-<span class="n">PRODUCT_ID</span> <span class="o">=</span> <span class="o">...</span>
-
-<span class="n">approxeng</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">controllers</span><span class="o">.</span><span class="n">CONTROLLERS</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">&#39;constructor&#39;</span><span class="p">:</span> <span class="n">DualShock4</span><span class="p">,</span>
-                                                <span class="s1">&#39;vendor_id&#39;</span><span class="p">:</span> <span class="n">VENDOR_ID</span><span class="p">,</span>
-                                                <span class="s1">&#39;product_id&#39;</span><span class="p">:</span> <span class="n">PRODUCT_ID</span><span class="p">})</span>
-</pre></div>
-</div>
-<p>This will now let you bind using the <cite>controller_class</cite> or no-argument form of the resource and should match your
-controller’s vendor and product IDs to the existing controller class.</p>
+<p>If you have a controller which is an exact copy of one the library supports, but isn’t autodetected, you can sub-class
+the existing one and specify the appropriate return values for <cite>registration_ids</cite></p>
 </div>
 <div class="section" id="writing-a-new-controller-class">
 <h2>Writing a new controller class<a class="headerlink" href="#writing-a-new-controller-class" title="Permalink to this headline">¶</a></h2>
 <p>It’s possible you have a controller which is completely different to the ones the library already supports. This might
 be because it’s something we’ve just never got our hands on, or because the manufacturer has decided to produce a clone
 controller with completely different codes for buttons or axes (it happens!). In this case you’ll need to create a new
-subclass of <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Controller</span></code></a> and use the mechanism above to register it. Fortunately this is fairly
+subclass of <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">Controller</span></code></a> and use the mechanism above to register it. Fortunately this is fairly
 simple. First create your class, this won’t include any button or axis bindings, we’ll add these later:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="kn">import</span> <span class="n">Controller</span>
 
@@ -259,15 +239,15 @@ controls until you’re not getting any of these ‘missing control’ messages 
 <p>Controls are all added to the <cite>controls</cite> parameter of the constructor, you should look at the documentation for the
 various axis and button classes to see what they take as arguments, these are currently:</p>
 <ul class="simple">
-<li><a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> for analogue axes which have a resting point in the centre of their range.</li>
-<li><a class="reference internal" href="api/input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> for analogue axes which have a resting point at one end of their range.</li>
-<li><a class="reference internal" href="api/input.html#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.BinaryAxis</span></code></a> for analogue axes which are really pairs of buttons, both the PS4 and XBox One
+<li><p><a class="reference internal" href="api/input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">CentredAxis</span></code></a> for analogue axes which have a resting point in the centre of their range.</p></li>
+<li><p><a class="reference internal" href="api/input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">TriggerAxis</span></code></a> for analogue axes which have a resting point at one end of their range.</p></li>
+<li><p><a class="reference internal" href="api/input.html#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">BinaryAxis</span></code></a> for analogue axes which are really pairs of buttons, both the PS4 and XBox One
 controllers use this for their direction pads, the buttons on these pads don’t appear as buttons in the event stream
-but as an analogue axis which only ever takes the values -1, 0 or 1.</li>
-<li><a class="reference internal" href="api/input.html#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Button</span></code></a> for buttons</li>
+but as an analogue axis which only ever takes the values -1, 0 or 1.</p></li>
+<li><p><a class="reference internal" href="api/input.html#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code></a> for buttons</p></li>
 </ul>
 <p>You should take a look at the source for the existing controller classes, i.e.
-<a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad" title="approxeng.input.xboxone.WirelessXBoxOneSPad"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.xboxone.WirelessXBoxOneSPad</span></code></a> to see how these are used. For every control you need to know the
+<a class="reference internal" href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad" title="approxeng.input.xboxone.WirelessXBoxOneSPad"><code class="xref py py-class docutils literal notranslate"><span class="pre">WirelessXBoxOneSPad</span></code></a> to see how these are used. For every control you need to know the
 event code, for analogue axes you’ll also need to know the range of values the controller can produce so the library
 can normalise these to a -1.0 to 1.0, or 0.0 to 1.0 range. Check out the list of <a class="reference internal" href="simpleusage.html#sname-label"><span class="std std-ref">Standard Names</span></a> to make your new
 controller class drop-in compatible with existing code, and let me know about it by raising either a pull request or a
@@ -286,7 +266,7 @@ new issue on github, I’m sure others would like to know about the new function
         <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="api/spacemousepro.html" class="btn btn-neutral" title="Wired SpaceMouse Pro Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="api/spacemousepro.html" class="btn btn-neutral float-left" title="Wired SpaceMouse Pro Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -295,8 +275,10 @@ new issue on github, I’m sure others would like to know about the new function
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn
-      Last updated on Feb 11, 2019.
+        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jul 24, 2019.
+      </span>
 
     </p>
   </div>
@@ -313,26 +295,16 @@ new issue on github, I’m sure others would like to know about the new function
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

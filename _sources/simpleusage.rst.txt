@@ -36,12 +36,12 @@ This example will loop forever. It will attempt to connect to any supported joys
 IOError if it can't find one, otherwise it will do all the necessary background work, create a controller object and, in
 this case, bind it to the 'joystick' variable which can then be used to read axes, buttons etc.
 
-The `connected` property on the joystick object indicates whether the underlying device is connected or not - if, for
-example, you have a controller that goes out of range, runs out of batteries, or is turned off while in use this will be
-set to False and you can handle the case correctly (if using this code in a robot, this would be an excellent time to
-turn of all your motors, for instance!)
+The :meth:`~approxeng.input.Controller.connected` property on the joystick object indicates whether the underlying
+device is connected or not - if, for example, you have a controller that goes out of range, runs out of batteries, or is
+turned off while in use this will be set to False and you can handle the case correctly (if using this code in a robot,
+this would be an excellent time to turn of all your motors, for instance!)
 
-The :class:`approxeng.input.selectbinder.ControllerResource` class accepts a number of, optional, arguments. These can be
+The :class:`~approxeng.input.selectbinder.ControllerResource` class accepts a number of, optional, arguments. These can be
 used to tell it which controller type to use (the default is to connect to the first controller it can understand, but
 if you have multiple controllers connected for some reason you might want to tell it to use your XBox1 rather than your
 PS4 controller). They can also be used to configure the default settings for axes, and there's an option to print out
@@ -112,6 +112,41 @@ handling from the first example, but you should still do it!):
 case all that stuff is taken care of in the background and you just have to read the information you want from the
 joystick object.
 
+Circular Analogue Axes
+======================
+
+As of version 2.4, if a controller defines pairs of `(lx,ly)`, or `(rx,ry)`, a new virtual axis is created called `l` or
+`r` respectively. This is an instance of :class:`~approxeng.input.CircularCentredAxis`. Unlike other axes which return
+a single floating point value, this axis type returns a tuple of `(x,y)` floats. Obviously you could do this yourself
+by calling the individual horizontal and vertical axes, but this circular axis has a subtle improvement to how it
+handles dead and hot zones - areas where you want either no output (the deadzone in the middle) or full output (the hot
+zones at either end of the range). Specifically, it judges whether a position is in the dead or hot zone based on the
+overall distance of the stick from the centre, taking both axes into account, and then scales both values such that the
+direction is preserved and the magnitude scaled. For cases where you genuinely want to control a two dimensional
+quantity with the stick this will result in much smoother, more consistent, motion, without the pauses in response as
+the stick crosses each of the independent x and y axis dead zones.
+
+If you're using a single stick to control two different quantities, such as a four wheel robot where you've mapped
+acceleration and steering onto a single stick, you probably want to continue to use the individual axes! Experiment and
+see which setting feels best for you.
+
+As with other axes and buttons, you can fetch the values of these extra axes in a couple of different ways:
+
+.. code-block:: python
+
+    from approxeng.input.selectbinder import ControllerResource
+
+    # Get a joystick
+    with ControllerResource() as joystick:
+        # Loop until disconnected
+        while joystick.connected:
+            # Get a corrected tuple of values from the left stick, assign the two values to x and y
+            x, y = joystick['l']
+            # We can also get values as attributes:
+            x, y = joystick.l
+
+
+
 Checking for Held Buttons
 *************************
 
@@ -165,13 +200,13 @@ whether the user pressed a button at any point since you last asked this questio
 often you won't miss button presses and you don't have to worry about the user pressing so fast you can't detect it.
 
 This is therefore a two-part process - you must first tell the controller to read out whether any buttons were pressed,
-this actually both returns a :class:approxeng.input.ButtonPresses object, and also stores that object as the 'presses'
+this actually both returns a :class:`~approxeng.input.ButtonPresses` object, and also stores that object as the :meth:`~approxeng.input.Controller.presses`
 property of the controller for later access.
 
 .. note::
 
-    This means the button presses are those buttons which were pressed between the most recent call to check_presses()
-    and the one before that. Only call check_presses() once per loop, before the code you then want to read the presses
+    This means the button presses are those buttons which were pressed between the most recent call to :meth:`~approxeng.input.Controller.check_presses`
+    and the one before that. Only call :meth:`~approxeng.input.Controller.check_presses` once per loop, before the code you then want to read the presses
     attribute
 
 .. code-block:: python

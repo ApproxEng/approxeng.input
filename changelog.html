@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Change Log &mdash; Approximate Engineering - Input 2.3.0 documentation</title>
+  <title>Change Log &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
   
 
   
@@ -17,17 +17,23 @@
   
 
   
-
-  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
-      <link rel="search" type="application/opensearchdescription+xml"
-            title="Search within Approximate Engineering - Input 2.3.0 documentation"
-            href="_static/opensearch.xml"/>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          href="_static/opensearch.xml"/>
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
@@ -35,21 +41,16 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Simple Usage" href="simpleusage.html" />
     <link rel="prev" title="Welcome to Approximate Engineering’s Python Game Controller Documentation!" href="index.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -63,7 +64,7 @@
             
             
               <div class="version">
-                2.3.0
+                2.4.0
               </div>
             
           
@@ -89,6 +90,7 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-2-4-0">Version 2.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-3-0">Version 2.3.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-2-0">Version 2.2.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-1-0">Version 2.1.0</a></li>
@@ -176,13 +178,19 @@
   <div class="section" id="change-log">
 <span id="changelog-label"></span><h1>Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>This documentation, and the code it documents, is the original SixAxis controller code from my <a class="reference external" href="http://piwars.org">PiWars</a> 2015 robot,
 Triangula. It has subsequently been extensively modified, and now supports the PS4 and XBox One controllers in
 addition to the original support for PS3 controllers.</p>
-<p class="last">A newer version was used for my <a class="reference external" href="http://piwars.org">PiWars</a> 2017 entry, this time using a PS4 controller. Several other robots in that
+<p>A newer version was used for my <a class="reference external" href="http://piwars.org">PiWars</a> 2017 entry, this time using a PS4 controller. Several other robots in that
 year also used the library, and my aim is to make this the definitive library for connecting game controllers to
 Python code, especially for robots (but it’ll work elsewhere if needed!)</p>
+</div>
+<div class="section" id="version-2-4-0">
+<h2>Version 2.4.0<a class="headerlink" href="#version-2-4-0" title="Permalink to this headline">¶</a></h2>
+<p>Added <a class="reference internal" href="api/input.html#approxeng.input.CircularCentredAxis" title="approxeng.input.CircularCentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">CircularCentredAxis</span></code></a> to allow for smoother two-dimensional control. Tidied up aspects
+of how controller discovery works, cleaned up some of the docs to match newer APIs. Note that some newly added axis
+types will return (x,y) tuples rather than floats!</p>
 </div>
 <div class="section" id="version-2-3-0">
 <h2>Version 2.3.0<a class="headerlink" href="#version-2-3-0" title="Permalink to this headline">¶</a></h2>
@@ -194,7 +202,7 @@ controllers. See <a class="reference internal" href="api/discovery.html#discover
 <div class="section" id="version-2-2-0">
 <h2>Version 2.2.0<a class="headerlink" href="#version-2-2-0" title="Permalink to this headline">¶</a></h2>
 <p>Added support for device LEDs where applicable. If your controller supports setting LEDs, these can be accessed through
-controller-class-specific methods, i.e. <a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4.set_leds" title="approxeng.input.dualshock4.DualShock4.set_leds"><code class="xref py py-meth docutils literal notranslate"><span class="pre">approxeng.input.dualshock4.DualShock4.set_leds()</span></code></a> for the DualShock4.
+controller-class-specific methods, i.e. <a class="reference internal" href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4.set_leds" title="approxeng.input.dualshock4.DualShock4.set_leds"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_leds()</span></code></a> for the DualShock4.
 There’s no general way to do this as all controllers are different. See <a class="reference internal" href="sys.html#sys"><span class="std std-ref">LEDs and Battery Monitoring</span></a></p>
 </div>
 <div class="section" id="version-2-1-0">
@@ -267,7 +275,7 @@ clone was dead on arrival…</p>
         <a href="simpleusage.html" class="btn btn-neutral float-right" title="Simple Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="Welcome to Approximate Engineering’s Python Game Controller Documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Approximate Engineering’s Python Game Controller Documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -276,8 +284,10 @@ clone was dead on arrival…</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn
-      Last updated on Feb 11, 2019.
+        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jul 24, 2019.
+      </span>
 
     </p>
   </div>
@@ -294,26 +304,16 @@ clone was dead on arrival…</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

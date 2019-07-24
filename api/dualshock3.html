@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PlayStation 3 Controller Support &mdash; Approximate Engineering - Input 2.3.0 documentation</title>
+  <title>PlayStation 3 Controller Support &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
   
 
   
@@ -17,17 +17,23 @@
   
 
   
-
-  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
-      <link rel="search" type="application/opensearchdescription+xml"
-            title="Search within Approximate Engineering - Input 2.3.0 documentation"
-            href="../_static/opensearch.xml"/>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
     
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          href="../_static/opensearch.xml"/>
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
@@ -35,21 +41,16 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="PlayStation 4 Controller Support" href="dualshock4.html" />
     <link rel="prev" title="Controller Discovery - approxeng.input.controllers" href="discovery.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -63,7 +64,7 @@
             
             
               <div class="version">
-                2.3.0
+                2.4.0
               </div>
             
           
@@ -188,19 +189,19 @@
             
   <div class="section" id="playstation-3-controller-support">
 <span id="api-dualshock3"></span><h1>PlayStation 3 Controller Support<a class="headerlink" href="#playstation-3-controller-support" title="Permalink to this headline">¶</a></h1>
-<div class="figure" id="id1">
+<div class="figure align-default" id="id1">
 <img alt="../_images/ps3.jpg" src="../_images/ps3.jpg" />
-<p class="caption"><span class="caption-text">DualShock 3 Controller</span></p>
+<p class="caption"><span class="caption-text">DualShock 3 Controller</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you are starting from scratch and don’t have any PS3 controllers I recommend using the PS4 controller instead.
+<p class="admonition-title">Note</p>
+<p>If you are starting from scratch and don’t have any PS3 controllers I recommend using the PS4 controller instead.
 It’s a better piece of hardware, and pairing is considerably simpler. The most recent XBox One controllers are also
 an option. This guide therefore is largely for those who have existing controllers and want to make use of them.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you are using a new (5.49 onwards) version of BlueZ with the SixAxis plugin installed you can ignore most of this
+<p class="admonition-title">Note</p>
+<p>If you are using a new (5.49 onwards) version of BlueZ with the SixAxis plugin installed you can ignore most of this
 guide and skip to the ‘pairing with new BlueZ’ section.</p>
 </div>
 <div class="section" id="newer-bluez-versions">
@@ -209,10 +210,10 @@ guide and skip to the ‘pairing with new BlueZ’ section.</p>
 have also compiled or otherwise installed the sixaxis plugin, the pairing process is much simpler. Tested with a custom
 build of BlueZ 5.49.</p>
 <ol class="arabic simple">
-<li>Run bluetoothctl as a normal user and enable to default agent</li>
-<li>Connect your PS3 controller with a mini-USB cable and press the PS button</li>
-<li>Answer ‘yes’ at the prompt to authorise</li>
-<li>Disconnect your PS3 controller and press the PS button to turn it on. It should now connect over bluetooth</li>
+<li><p>Run bluetoothctl as a normal user and enable to default agent</p></li>
+<li><p>Connect your PS3 controller with a mini-USB cable and press the PS button</p></li>
+<li><p>Answer ‘yes’ at the prompt to authorise</p></li>
+<li><p>Disconnect your PS3 controller and press the PS button to turn it on. It should now connect over bluetooth</p></li>
 </ol>
 </div>
 <div class="section" id="a-note-on-pairing">
@@ -236,16 +237,16 @@ everything else in the process. The one I’m using is an Asus USB-BT400, it’s
 standards. If you get this to work with a different dongle can you let me know on twitter at &#64;approx_eng_ and I’ll add
 it to this list:</p>
 <ul class="simple">
-<li>Asus USB-BT400</li>
-<li>Pi3 built-in bluetooth</li>
+<li><p>Asus USB-BT400</p></li>
+<li><p>Pi3 built-in bluetooth</p></li>
 </ul>
 </div>
 </div>
 <div class="section" id="software">
 <h2>Software<a class="headerlink" href="#software" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This is assuming you’re starting from a clean installation of the Jessie based Raspbian. Other
+<p class="admonition-title">Note</p>
+<p>This is assuming you’re starting from a clean installation of the Jessie based Raspbian. Other
 distributions may need varying combinations of dev libraries etc. For testing I was using the minimal installation with
 filename <code class="docutils literal notranslate"><span class="pre">2015-11-21-raspbian-jessie-lite.zip</span></code> but these instructions should apply to any recent version. As always,
 it’s not a bad idea to run <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">update</span></code> and <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">upgrade</span></code> to get any changes to packages since
@@ -335,49 +336,45 @@ button on the controller. Pressing and holding this button will shut the control
 timeout so be sure to turn the controller off when you’re not going to be using it for a while.</p>
 <span class="target" id="module-approxeng.input.dualshock3"></span><dl class="class">
 <dt id="approxeng.input.dualshock3.DualShock3">
-<em class="property">class </em><code class="descclassname">approxeng.input.dualshock3.</code><code class="descname">DualShock3</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.dualshock3.</code><code class="sig-name descname">DualShock3</code><span class="sig-paren">(</span><em class="sig-param">dead_zone=0.05</em>, <em class="sig-param">hot_zone=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3" title="Permalink to this definition">¶</a></dt>
 <dd><p>Driver for the Sony PlayStation 3 controller, the DualShock3</p>
 <dl class="method">
 <dt id="approxeng.input.dualshock3.DualShock3.__init__">
-<code class="descname">__init__</code><span class="sig-paren">(</span><em>dead_zone=0.05</em>, <em>hot_zone=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">dead_zone=0.05</em>, <em class="sig-param">hot_zone=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Discover and initialise a PS3 SixAxis controller connected to this computer.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> in the controller.</li>
-<li><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/2.7/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> in the controller.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> in the controller.</p></li>
+<li><p><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> in the controller.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="approxeng.input.dualshock3.DualShock3.battery_level">
-<code class="descname">battery_level</code><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.battery_level" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the battery level, as a float from 0.0 to 1.0, or None if not available</p>
+<dl class="method">
+<dt id="approxeng.input.dualshock3.DualShock3.registration_ids">
+<em class="property">static </em><code class="sig-name descname">registration_ids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.registration_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.registration_ids" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>list of (vendor_id, product_id) for this controller</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="approxeng.input.dualshock3.DualShock3.set_led">
-<code class="descname">set_led</code><span class="sig-paren">(</span><em>led_number</em>, <em>led_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.set_led"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.set_led" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_led</code><span class="sig-paren">(</span><em class="sig-param">led_number</em>, <em class="sig-param">led_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.set_led"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.set_led" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set front-panel controller LEDs. The DS3 controller has four, labelled, LEDs on the front panel that can
 be either on or off.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>led_number</strong> – Integer between 1 and 4</li>
-<li><strong>led_value</strong> – Value, set to 0 to turn the LED off, 1 to turn it on</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>led_number</strong> – Integer between 1 and 4</p></li>
+<li><p><strong>led_value</strong> – Value, set to 0 to turn the LED off, 1 to turn it on</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -396,7 +393,7 @@ be either on or off.</p>
         <a href="dualshock4.html" class="btn btn-neutral float-right" title="PlayStation 4 Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="discovery.html" class="btn btn-neutral" title="Controller Discovery - approxeng.input.controllers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="discovery.html" class="btn btn-neutral float-left" title="Controller Discovery - approxeng.input.controllers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -405,8 +402,10 @@ be either on or off.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn
-      Last updated on Feb 11, 2019.
+        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jul 24, 2019.
+      </span>
 
     </p>
   </div>
@@ -423,26 +422,16 @@ be either on or off.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

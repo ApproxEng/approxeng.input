@@ -1,0 +1,525 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>approxeng.input.controllers &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          href="../../../_static/opensearch.xml"/>
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Approximate Engineering - Input
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../simpleusage.html">Simple Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../addingcontrollers.html">Adding support for a new controller type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../sys.html">LEDs and Battery Monitoring</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Approximate Engineering - Input</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../input.html">approxeng.input</a> &raquo;</li>
+        
+      <li>approxeng.input.controllers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for approxeng.input.controllers</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">total_ordering</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="k">import</span> <span class="n">Controller</span>
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="k">import</span> <span class="n">DualShock3</span>
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.dualshock4</span> <span class="k">import</span> <span class="n">DualShock4</span>
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.pihut</span> <span class="k">import</span> <span class="n">PiHut</span>
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.rockcandy</span> <span class="k">import</span> <span class="n">RockCandy</span>
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.sf30pro</span> <span class="k">import</span> <span class="n">SF30Pro</span>
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.spacemousepro</span> <span class="k">import</span> <span class="n">SpaceMousePro</span>
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.steamcontroller</span> <span class="k">import</span> <span class="n">SteamController</span>
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.switch</span> <span class="k">import</span> <span class="n">SwitchJoyConRight</span><span class="p">,</span> <span class="n">SwitchJoyConLeft</span>
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.wii</span> <span class="k">import</span> <span class="n">WiiRemotePro</span>
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.wiimote</span> <span class="k">import</span> <span class="n">WiiMote</span>
+<span class="c1"># noinspection PyUnresolvedReferences</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.xboxone</span> <span class="k">import</span> <span class="n">WiredXBoxOneSPad</span><span class="p">,</span> <span class="n">WirelessXBoxOneSPad</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">evdev</span> <span class="k">import</span> <span class="n">InputDevice</span><span class="p">,</span> <span class="n">list_devices</span><span class="p">,</span> <span class="n">ecodes</span><span class="p">,</span> <span class="n">util</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">InputDevice</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">list_devices</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Attempt to import evdev failed - if you are not running Sphinx this is a critical error.&#39;</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;approxeng.input.controllers&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ControllerDiscovery"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.ControllerDiscovery">[docs]</a><span class="nd">@total_ordering</span>
+<span class="k">class</span> <span class="nc">ControllerDiscovery</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a single discovered controller attached to the host. Ordered, with controllers with more axes and buttons</span>
+<span class="sd">    being given a higher ordering, then falling back to the assigned name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ControllerDiscovery.__init__"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.ControllerDiscovery.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">devices</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">devices</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="p">[</span><span class="n">devices</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="n">devices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">fn</span> <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="n">self_axes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
+        <span class="n">other_axes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
+        <span class="n">self_buttons</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
+        <span class="n">other_buttons</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">self_axes</span> <span class="o">!=</span> <span class="n">other_axes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">self_axes</span> <span class="o">&lt;</span> <span class="n">other_axes</span>
+        <span class="k">elif</span> <span class="n">self_buttons</span> <span class="o">!=</span> <span class="n">other_buttons</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">self_buttons</span> <span class="o">&lt;</span> <span class="n">other_buttons</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span></div>
+
+
+<div class="viewcode-block" id="ControllerRequirement"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.ControllerRequirement">[docs]</a><span class="k">class</span> <span class="nc">ControllerRequirement</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a requirement for a single controller, allowing restriction on type. We might add more filtering options</span>
+<span class="sd">    later, such as requiring a minimum number of axes, or the presence of a particular control. If you want that now,</span>
+<span class="sd">    you can subclass this and pass it into the find_matching_controllers and similar functions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ControllerRequirement.__init__"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.ControllerRequirement.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">require_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">require_snames</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new requirement</span>
+
+<span class="sd">        :param require_class:</span>
+<span class="sd">            If specified, this should be a subclass of :class:`approxeng.input.Controller`, only controllers which match</span>
+<span class="sd">            this class will be accepted. Defaults to None, accepting any available controller class.</span>
+<span class="sd">        :param require_snames:</span>
+<span class="sd">            If specified, this should be a list of strings containing snames of controls (buttons or axes) that must be</span>
+<span class="sd">            present in the controller. Use this when you know what controls you need but don&#39;t mind which controller</span>
+<span class="sd">            actually implements them.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">require_class</span> <span class="o">=</span> <span class="n">require_class</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">snames</span> <span class="o">=</span> <span class="n">require_snames</span></div>
+
+<div class="viewcode-block" id="ControllerRequirement.accept"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.ControllerRequirement.accept">[docs]</a>    <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">discovery</span><span class="p">:</span> <span class="n">ControllerDiscovery</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns True if the supplied ControllerDiscovery matches this requirement, False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">require_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">discovery</span><span class="o">.</span><span class="n">controller</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">require_class</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">snames</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">all_controls</span> <span class="o">=</span> <span class="n">discovery</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">names</span> <span class="o">+</span> <span class="n">discovery</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">names</span>
+            <span class="k">for</span> <span class="n">sname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">snames</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">sname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">all_controls</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div></div>
+
+
+<div class="viewcode-block" id="ControllerNotFoundError"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.ControllerNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">ControllerNotFoundError</span><span class="p">(</span><span class="ne">IOError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Raised during controller discovery if the specified set of controller requirements cannot be satisfied</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="unique_name"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.unique_name">[docs]</a><span class="k">def</span> <span class="nf">unique_name</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">InputDevice</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct a unique name for the device based on, in order if available, the uniq ID, the phys ID and</span>
+<span class="sd">    finally a concatenation of vendor, product, version and filename.</span>
+
+<span class="sd">    :param device:</span>
+<span class="sd">        An InputDevice instance to query</span>
+<span class="sd">    :return:</span>
+<span class="sd">        A string containing as unique as possible a name for the physical entity represented by the device</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">device</span><span class="o">.</span><span class="n">uniq</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">device</span><span class="o">.</span><span class="n">uniq</span>
+    <span class="k">elif</span> <span class="n">device</span><span class="o">.</span><span class="n">phys</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">device</span><span class="o">.</span><span class="n">phys</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">vendor</span><span class="p">,</span> <span class="n">device</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">product</span><span class="p">,</span> <span class="n">device</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">device</span><span class="o">.</span><span class="n">path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="find_matching_controllers"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.find_matching_controllers">[docs]</a><span class="k">def</span> <span class="nf">find_matching_controllers</span><span class="p">(</span><span class="o">*</span><span class="n">requirements</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">ControllerDiscovery</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find a sequence of controllers which match the supplied requirements, or raise an error if no such controllers</span>
+<span class="sd">    exist.</span>
+
+<span class="sd">    :param requirements:</span>
+<span class="sd">        Zero or more ControllerRequirement instances defining the requirements for controllers. If no item is passed it</span>
+<span class="sd">        will be treated as a single requirement with no filters applied and will therefore match the first controller</span>
+<span class="sd">        found.</span>
+<span class="sd">    :return:</span>
+<span class="sd">        A sequence of the same length as the supplied requirements array containing ControllerDiscovery instances which</span>
+<span class="sd">        match the requirements supplied.</span>
+<span class="sd">    :raises:</span>
+<span class="sd">        ControllerNotFoundError if no appropriately matching controllers can be located</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">requirements</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">requirements</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">requirements</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">requirements</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">requirements</span> <span class="o">=</span> <span class="p">[</span><span class="n">ControllerRequirement</span><span class="p">()]</span>
+
+    <span class="k">def</span> <span class="nf">pop_controller</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">ControllerRequirement</span><span class="p">,</span> <span class="n">discoveries</span><span class="p">:</span> <span class="p">[</span><span class="n">ControllerDiscovery</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ControllerDiscovery</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find a single controller matching the supplied requirement from a list of ControllerDiscovery instances</span>
+
+<span class="sd">        :param r:</span>
+<span class="sd">            The ControllerRequirement to match</span>
+<span class="sd">        :param discoveries:</span>
+<span class="sd">            The [ControllerDiscovery] to search</span>
+<span class="sd">        :return:</span>
+<span class="sd">            A matching ControllerDiscovery. Modifies the supplied list of discoveries, removing the found item.</span>
+<span class="sd">        :raises:</span>
+<span class="sd">            ControllerNotFoundError if no matching controller can be found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">discoveries</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">discoveries</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ControllerNotFoundError</span><span class="p">()</span>
+
+    <span class="n">all_controllers</span> <span class="o">=</span> <span class="n">find_all_controllers</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">pop_controller</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">all_controllers</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">requirements</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ControllerNotFoundError</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Unable to satisfy controller requirements&#39;</span> <span class="o">+</span>
+                    <span class="s1">&#39;, required </span><span class="si">{}</span><span class="s1">, found </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">requirements</span><span class="p">,</span> <span class="n">find_all_controllers</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)))</span>
+        <span class="k">raise</span> <span class="n">exception</span></div>
+
+
+<div class="viewcode-block" id="find_all_controllers"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.find_all_controllers">[docs]</a><span class="k">def</span> <span class="nf">find_all_controllers</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ControllerDiscovery</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :return:</span>
+<span class="sd">        A list of :class:`~approxeng.input.controllers.ControllerDiscovery` instances corresponding to controllers</span>
+<span class="sd">        attached to this host, ordered by the ordering on ControllerDiscovery. Any controllers found will be</span>
+<span class="sd">        constructed with kwargs passed to their constructor function, particularly useful for dead and hot zone</span>
+<span class="sd">        parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">get_controller_classes</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[{}]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Scans for subclasses of :class:`~approxeng.input.Controller` and reads out data from their</span>
+<span class="sd">        :meth:`~approxeng.input.Controller.registrations_ids` method. This should return a list of</span>
+<span class="sd">        tuples of `(vendor_id, product_id)` which are then used along with the subclass itself to</span>
+<span class="sd">        populate a registry of known subclasses.</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">            A generator that produces known subclasses and their registration information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">controller_class</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Controller</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">controller_class</span> <span class="ow">in</span> <span class="n">Controller</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">vendor_id</span><span class="p">,</span> <span class="n">product_id</span> <span class="ow">in</span> <span class="n">controller_class</span><span class="o">.</span><span class="n">registration_ids</span><span class="p">():</span>
+                <span class="k">yield</span> <span class="p">{</span><span class="s1">&#39;constructor&#39;</span><span class="p">:</span> <span class="n">controller_class</span><span class="p">,</span>
+                       <span class="s1">&#39;vendor_id&#39;</span><span class="p">:</span> <span class="n">vendor_id</span><span class="p">,</span>
+                       <span class="s1">&#39;product_id&#39;</span><span class="p">:</span> <span class="n">product_id</span><span class="p">}</span>
+
+    <span class="n">id_to_constructor</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="s1">&#39;vendor_id&#39;</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;product_id&#39;</span><span class="p">]):</span> <span class="n">c</span><span class="p">[</span><span class="s1">&#39;constructor&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span>
+                         <span class="n">get_controller_classes</span><span class="p">()}</span>
+
+    <span class="k">def</span> <span class="nf">controller_constructor</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">InputDevice</span><span class="p">):</span>
+        <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">vendor</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">product</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">id_to_constructor</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">id_to_constructor</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">all_devices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">InputDevice</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">list_devices</span><span class="p">())</span>
+
+    <span class="n">devices_by_name</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">all_devices</span> <span class="k">if</span> <span class="n">unique_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">==</span> <span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span>
+                       <span class="nb">set</span><span class="p">(</span><span class="n">unique_name</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">all_devices</span> <span class="k">if</span>
+                           <span class="n">controller_constructor</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)}</span>
+
+    <span class="n">controllers</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+        <span class="n">ControllerDiscovery</span><span class="p">(</span><span class="n">controller</span><span class="o">=</span><span class="n">controller_constructor</span><span class="p">(</span><span class="n">devices</span><span class="p">[</span><span class="mi">0</span><span class="p">])(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">),</span> <span class="n">devices</span><span class="o">=</span><span class="n">devices</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">devices</span> <span class="ow">in</span> <span class="n">devices_by_name</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">controllers</span></div>
+
+
+<div class="viewcode-block" id="print_devices"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.print_devices">[docs]</a><span class="k">def</span> <span class="nf">print_devices</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simple test function which prints out all devices found by evdev</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">device_verbose_info</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">InputDevice</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">{}:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gather and format as much info as possible about the supplied InputDevice. Used mostly for debugging at this point.</span>
+
+<span class="sd">        :param device:</span>
+<span class="sd">            An InputDevice to examine</span>
+<span class="sd">        :return:</span>
+<span class="sd">            A dict containing as much information as possible about the input device.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">axis_name</span><span class="p">(</span><span class="n">axis_code</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ecodes</span><span class="o">.</span><span class="n">ABS</span><span class="p">[</span><span class="n">axis_code</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;EXTENDED_CODE_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_code</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">rel_axis_name</span><span class="p">(</span><span class="n">axis_code</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ecodes</span><span class="o">.</span><span class="n">REL</span><span class="p">[</span><span class="n">axis_code</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s1">&#39;EXTENDED_CODE_</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_code</span><span class="p">)</span>
+
+        <span class="n">axes</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">has_abs_axes</span><span class="p">(</span><span class="n">device</span><span class="p">):</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">axis_name</span><span class="p">(</span><span class="n">axis_code</span><span class="p">):</span> <span class="p">{</span><span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="n">axis_code</span><span class="p">,</span> <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="n">axis_info</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="n">axis_info</span><span class="o">.</span><span class="n">max</span><span class="p">,</span>
+                                       <span class="s1">&#39;fuzz&#39;</span><span class="p">:</span> <span class="n">axis_info</span><span class="o">.</span><span class="n">fuzz</span><span class="p">,</span>
+                                       <span class="s1">&#39;flat&#39;</span><span class="p">:</span> <span class="n">axis_info</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="s1">&#39;res&#39;</span><span class="p">:</span> <span class="n">axis_info</span><span class="o">.</span><span class="n">resolution</span><span class="p">}</span> <span class="k">for</span>
+                <span class="n">axis_code</span><span class="p">,</span> <span class="n">axis_info</span> <span class="ow">in</span> <span class="n">device</span><span class="o">.</span><span class="n">capabilities</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">3</span><span class="p">)}</span>
+
+        <span class="n">rel_axes</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">has_rel_axes</span><span class="p">(</span><span class="n">device</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">capabilities</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+            <span class="n">rel_axes</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">rel_axis_name</span><span class="p">(</span><span class="n">axis_code</span><span class="p">):</span> <span class="p">{</span><span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="n">axis_code</span><span class="p">}</span> <span class="k">for</span>
+                <span class="n">axis_code</span> <span class="ow">in</span> <span class="n">device</span><span class="o">.</span><span class="n">capabilities</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)}</span>
+
+        <span class="n">buttons</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">has_buttons</span><span class="p">(</span><span class="n">device</span><span class="p">):</span>
+            <span class="n">buttons</span> <span class="o">=</span> <span class="p">{</span><span class="n">code</span><span class="p">:</span> <span class="n">names</span> <span class="k">for</span> <span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">code</span><span class="p">)</span> <span class="ow">in</span>
+                       <span class="nb">dict</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">resolve_ecodes_dict</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span> <span class="n">device</span><span class="o">.</span><span class="n">capabilities</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)}))</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="s1">&#39;EV_KEY&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))}</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;fn&#39;</span><span class="p">:</span> <span class="n">device</span><span class="o">.</span><span class="n">fn</span><span class="p">,</span> <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">device</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">device</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;phys&#39;</span><span class="p">:</span> <span class="n">device</span><span class="o">.</span><span class="n">phys</span><span class="p">,</span> <span class="s1">&#39;uniq&#39;</span><span class="p">:</span> <span class="n">device</span><span class="o">.</span><span class="n">uniq</span><span class="p">,</span>
+                <span class="s1">&#39;vendor&#39;</span><span class="p">:</span> <span class="n">device</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">vendor</span><span class="p">,</span> <span class="s1">&#39;product&#39;</span><span class="p">:</span> <span class="n">device</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">product</span><span class="p">,</span> <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="n">device</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+                <span class="s1">&#39;bus&#39;</span><span class="p">:</span> <span class="n">device</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">bustype</span><span class="p">,</span> <span class="s1">&#39;axes&#39;</span><span class="p">:</span> <span class="n">axes</span><span class="p">,</span> <span class="s1">&#39;rel_axes&#39;</span><span class="p">:</span> <span class="n">rel_axes</span><span class="p">,</span> <span class="s1">&#39;buttons&#39;</span><span class="p">:</span> <span class="n">buttons</span><span class="p">,</span>
+                <span class="s1">&#39;unique_name&#39;</span><span class="p">:</span> <span class="n">unique_name</span><span class="p">(</span><span class="n">device</span><span class="p">)}</span>
+
+    <span class="k">def</span> <span class="nf">has_abs_axes</span><span class="p">(</span><span class="n">device</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">device</span><span class="o">.</span><span class="n">capabilities</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">has_rel_axes</span><span class="p">(</span><span class="n">device</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">device</span><span class="o">.</span><span class="n">capabilities</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">has_buttons</span><span class="p">(</span><span class="n">device</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">device</span><span class="o">.</span><span class="n">capabilities</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="n">_check_import</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">[</span><span class="n">InputDevice</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span> <span class="k">for</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">list_devices</span><span class="p">()]:</span>
+        <span class="k">if</span> <span class="n">has_abs_axes</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="ow">or</span> <span class="n">has_rel_axes</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+            <span class="n">pp</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">PrettyPrinter</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+            <span class="n">pp</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">device_verbose_info</span><span class="p">(</span><span class="n">d</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="print_controllers"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.print_controllers">[docs]</a><span class="k">def</span> <span class="nf">print_controllers</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pretty-print all controllers found</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_check_import</span><span class="p">()</span>
+    <span class="n">pp</span> <span class="o">=</span> <span class="n">pprint</span><span class="o">.</span><span class="n">PrettyPrinter</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">discovery</span> <span class="ow">in</span> <span class="n">find_all_controllers</span><span class="p">():</span>
+        <span class="n">pp</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">discovery</span><span class="o">.</span><span class="n">controller</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_check_import</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks whether we imported evdev - it&#39;s possible we didn&#39;t if we were run as part of a documentation build on a</span>
+<span class="sd">    system such as OSX which is quite capable of building the docs but can&#39;t install evdev. Any attempt to actually</span>
+<span class="sd">    run this code on such a system should fail as early as possible, we can&#39;t fail the import without being unable</span>
+<span class="sd">    to build docs, but all functions in this module will check to see whether we imported properly and fail if we</span>
+<span class="sd">    didn&#39;t</span>
+
+<span class="sd">    :raises ImportError:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">InputDevice</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s1">&#39;evdev was not imported successfully, nothing will work.&#39;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jul 24, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

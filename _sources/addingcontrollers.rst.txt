@@ -29,32 +29,8 @@ In general this should show you enough information to identify the controller yo
 Clones of a supported controller
 --------------------------------
 
-If you have a controller which is an exact copy of one the library supports, but isn't autodetected, you can either bind
-it yourself, using the class from the library which most closely matches your controller, or you can add autodetect
-support to the library, again using the existing class. This might happen if you have, say, a clone PS4 controller which
-is identical in every way but which has a different USB vendor and product identifier.
-
-The :py:const:`approxeng.input.controllers.CONTROLLERS` is an array of dicts containing class constructor, vendor ID and
-product ID values. This array is searched for matching controllers when a controller class is specified, when no class
-is provided this array is used to find any potential matches. If you add an appropriate entry to this array you can
-cause the library's controller matching to match an existing class with a new pair of vendor and product IDs. So,
-supposing you had a new controller which used the :class:`approxeng.input.dualshock4.DualShock4` codes for axes and
-buttons, but had a different vendor and product ID, you could add it to the match array with:
-
-.. code-block:: python
-
-    import approxeng.input.controllers
-    from approxeng.input.dualshock4 import DualShock4
-
-    VENDOR_ID = ...
-    PRODUCT_ID = ...
-
-    approxeng.input.controllers.CONTROLLERS.append({'constructor': DualShock4,
-                                                    'vendor_id': VENDOR_ID,
-                                                    'product_id': PRODUCT_ID})
-
-This will now let you bind using the `controller_class` or no-argument form of the resource and should match your
-controller's vendor and product IDs to the existing controller class.
+If you have a controller which is an exact copy of one the library supports, but isn't autodetected, you can sub-class
+the existing one and specify the appropriate return values for `registration_ids`
 
 Writing a new controller class
 ------------------------------
@@ -62,7 +38,7 @@ Writing a new controller class
 It's possible you have a controller which is completely different to the ones the library already supports. This might
 be because it's something we've just never got our hands on, or because the manufacturer has decided to produce a clone
 controller with completely different codes for buttons or axes (it happens!). In this case you'll need to create a new
-subclass of :class:`approxeng.input.Controller` and use the mechanism above to register it. Fortunately this is fairly
+subclass of :class:`~approxeng.input.Controller` and use the mechanism above to register it. Fortunately this is fairly
 simple. First create your class, this won't include any button or axis bindings, we'll add these later:
 
 .. code-block:: python
@@ -106,18 +82,18 @@ controls until you're not getting any of these 'missing control' messages and ev
 Controls are all added to the `controls` parameter of the constructor, you should look at the documentation for the
 various axis and button classes to see what they take as arguments, these are currently:
 
-- :class:`approxeng.input.CentredAxis` for analogue axes which have a resting point in the centre of their range.
+- :class:`~approxeng.input.CentredAxis` for analogue axes which have a resting point in the centre of their range.
 
-- :class:`approxeng.input.TriggerAxis` for analogue axes which have a resting point at one end of their range.
+- :class:`~approxeng.input.TriggerAxis` for analogue axes which have a resting point at one end of their range.
 
-- :class:`approxeng.input.BinaryAxis` for analogue axes which are really pairs of buttons, both the PS4 and XBox One
+- :class:`~approxeng.input.BinaryAxis` for analogue axes which are really pairs of buttons, both the PS4 and XBox One
   controllers use this for their direction pads, the buttons on these pads don't appear as buttons in the event stream
   but as an analogue axis which only ever takes the values -1, 0 or 1.
 
-- :class:`approxeng.input.Button` for buttons
+- :class:`~approxeng.input.Button` for buttons
 
 You should take a look at the source for the existing controller classes, i.e.
-:class:`approxeng.input.xboxone.WirelessXBoxOneSPad` to see how these are used. For every control you need to know the
+:class:`~approxeng.input.xboxone.WirelessXBoxOneSPad` to see how these are used. For every control you need to know the
 event code, for analogue axes you'll also need to know the range of values the controller can produce so the library
 can normalise these to a -1.0 to 1.0, or 0.0 to 1.0 range. Check out the list of :ref:`sname-label` to make your new
 controller class drop-in compatible with existing code, and let me know about it by raising either a pull request or a

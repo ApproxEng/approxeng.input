@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>LEDs and Battery Monitoring &mdash; Approximate Engineering - Input 2.3.0 documentation</title>
+  <title>LEDs and Battery Monitoring &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
   
 
   
@@ -17,38 +17,39 @@
   
 
   
-
-  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
-      <link rel="search" type="application/opensearchdescription+xml"
-            title="Search within Approximate Engineering - Input 2.3.0 documentation"
-            href="_static/opensearch.xml"/>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          href="_static/opensearch.xml"/>
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Advanced Usage Guide" href="howtouse.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -62,7 +63,7 @@
             
             
               <div class="version">
-                2.3.0
+                2.4.0
               </div>
             
           
@@ -171,8 +172,8 @@ the last of those only reporting battery levels when connected over bluetooth.</
 <div class="section" id="enabling-access-to-leds">
 <h2>Enabling access to LEDs<a class="headerlink" href="#enabling-access-to-leds" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">You must do the steps below if you want to write to LED state on your controller. If you do not, it will not work
+<p class="admonition-title">Note</p>
+<p>You must do the steps below if you want to write to LED state on your controller. If you do not, it will not work
 and you’ll probably encounter file permission errors.</p>
 </div>
 <p>We write to files in <cite>/sys/class/leds</cite> to change LED state on a connected controller. By default under linux these file
@@ -321,8 +322,8 @@ so you potentially need to handle the return value not being a number.</p>
 so you’ll probably only see 0, 0.25, 0.5, 0.75, and 1.0, whereas the DS4 reports to the nearest 0.1 and the XB1 is
 slightly finer grained.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Be aware that every time you read the <cite>battery_level</cite> property, the code has to open a file and read the value from
+<p class="admonition-title">Note</p>
+<p>Be aware that every time you read the <cite>battery_level</cite> property, the code has to open a file and read the value from
 it. While this is fast, because the file is a virtual one, the battery level only changes quite slowly so you should
 only query this property fairly infrequently to avoid excessive IO access. Checking every minute or so is almost
 certainly going to be good enough.</p>
@@ -408,7 +409,16 @@ certainly going to be good enough.</p>
 78
 79
 80
-81</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">curses</span>
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">curses</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
 
@@ -420,6 +430,7 @@ certainly going to be good enough.</p>
     <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_RED</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLACK</span><span class="p">)</span>
     <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_GREEN</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLACK</span><span class="p">)</span>
     <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_YELLOW</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLACK</span><span class="p">)</span>
+    <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_MAGENTA</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLACK</span><span class="p">)</span>
     <span class="n">curses</span><span class="o">.</span><span class="n">start_color</span><span class="p">()</span>
     <span class="n">last_presses</span> <span class="o">=</span> <span class="bp">None</span>
 
@@ -431,6 +442,9 @@ certainly going to be good enough.</p>
 
     <span class="k">def</span> <span class="nf">yellow</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
         <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">magenta</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
 
     <span class="c1"># Loop forever</span>
     <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
@@ -456,13 +470,18 @@ certainly going to be good enough.</p>
                     <span class="k">for</span> <span class="n">axis_name</span> <span class="ow">in</span> <span class="n">joystick</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
                         <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s1">&#39; {}=&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_name</span><span class="p">))</span>
                         <span class="n">axis_value</span> <span class="o">=</span> <span class="n">joystick</span><span class="p">[</span><span class="n">axis_name</span><span class="p">]</span>
-                        <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;{:.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_value</span><span class="p">)</span>
-                        <span class="k">if</span> <span class="n">axis_value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="n">green</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-                        <span class="k">elif</span> <span class="n">axis_value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="n">red</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axis_value</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                            <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;{:.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_value</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">axis_value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="n">green</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                            <span class="k">elif</span> <span class="n">axis_value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="n">red</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">yellow</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
                         <span class="k">else</span><span class="p">:</span>
-                            <span class="n">yellow</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+                            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">axis_value</span>
+                            <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;({x:.2f},{y:.2f})&#39;</span>
+                            <span class="n">magenta</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
                     <span class="c1"># Print button hold times</span>
                     <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;hold times:&#39;</span><span class="p">)</span>
@@ -503,7 +522,7 @@ certainly going to be good enough.</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="howtouse.html" class="btn btn-neutral" title="Advanced Usage Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="howtouse.html" class="btn btn-neutral float-left" title="Advanced Usage Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -512,8 +531,10 @@ certainly going to be good enough.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn
-      Last updated on Feb 11, 2019.
+        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jul 24, 2019.
+      </span>
 
     </p>
   </div>
@@ -530,26 +551,16 @@ certainly going to be good enough.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

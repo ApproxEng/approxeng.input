@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input.spacemousepro &mdash; Approximate Engineering - Input 2.3.0 documentation</title>
+  <title>approxeng.input.spacemousepro &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
   
 
   
@@ -17,37 +17,38 @@
   
 
   
-
-  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
   
     
-      <link rel="search" type="application/opensearchdescription+xml"
-            title="Search within Approximate Engineering - Input 2.3.0 documentation"
-            href="../../../_static/opensearch.xml"/>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
     
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          href="../../../_static/opensearch.xml"/>
 
   
-
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                2.3.0
+                2.4.0
               </div>
             
           
@@ -162,8 +163,7 @@
   <h1>Source code for approxeng.input.spacemousepro</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="k">import</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">CentredAxis</span><span class="p">,</span> <span class="n">Button</span>
 
-<span class="n">SMP_VENDOR_ID</span> <span class="o">=</span> <span class="mh">0x46d</span>
-<span class="n">SMP_PRODUCT_ID</span> <span class="o">=</span> <span class="mh">0xc62b</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SpaceMousePro&#39;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="SpaceMousePro"><a class="viewcode-back" href="../../../api/spacemousepro.html#approxeng.input.spacemousepro.SpaceMousePro">[docs]</a><span class="k">class</span> <span class="nc">SpaceMousePro</span><span class="p">(</span><span class="n">Controller</span><span class="p">):</span>
@@ -183,33 +183,38 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="SpaceMousePro.__init__"><a class="viewcode-back" href="../../../api/spacemousepro.html#approxeng.input.spacemousepro.SpaceMousePro.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SpaceMousePro</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vendor_id</span><span class="o">=</span><span class="n">SMP_VENDOR_ID</span><span class="p">,</span>
-                                            <span class="n">product_id</span><span class="o">=</span><span class="n">SMP_PRODUCT_ID</span><span class="p">,</span>
-                                            <span class="n">controls</span><span class="o">=</span><span class="p">[</span>
-                                                <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lx&#39;</span><span class="p">),</span>
-                                                <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ly&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-                                                <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lz&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-                                                <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;Roll&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;pitch&#39;</span><span class="p">),</span>
-                                                <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;Pitch&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;roll&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-                                                <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;Yaw&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;yaw&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Menu&#39;</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;menu&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Alt&#39;</span><span class="p">,</span> <span class="mi">279</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;alt&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Ctrl&#39;</span><span class="p">,</span> <span class="mi">281</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ctrl&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Shift&#39;</span><span class="p">,</span> <span class="mi">280</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;shift&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Esc&#39;</span><span class="p">,</span> <span class="mi">278</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;esc&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">268</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="mi">269</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;2&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="mi">270</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;3&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="mi">271</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;4&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Rotate&#39;</span><span class="p">,</span> <span class="mi">264</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rotate&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="mi">258</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;t&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="mi">261</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="mi">260</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Lock&#39;</span><span class="p">,</span> <span class="mi">282</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lock&#39;</span><span class="p">),</span>
-                                                <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Fit&#39;</span><span class="p">,</span> <span class="mi">257</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;fit&#39;</span><span class="p">)</span>
-                                            <span class="p">],</span>
-                                            <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
-                                            <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span></div></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SpaceMousePro</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">controls</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lx&#39;</span><span class="p">),</span>
+            <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ly&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lz&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;Roll&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;pitch&#39;</span><span class="p">),</span>
+            <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;Pitch&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;roll&#39;</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;Yaw&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;yaw&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Menu&#39;</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;menu&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Alt&#39;</span><span class="p">,</span> <span class="mi">279</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;alt&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Ctrl&#39;</span><span class="p">,</span> <span class="mi">281</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ctrl&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Shift&#39;</span><span class="p">,</span> <span class="mi">280</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;shift&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Esc&#39;</span><span class="p">,</span> <span class="mi">278</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;esc&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="mi">268</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="mi">269</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;2&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="mi">270</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;3&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="mi">271</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;4&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Rotate&#39;</span><span class="p">,</span> <span class="mi">264</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rotate&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">,</span> <span class="mi">258</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;t&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="mi">261</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="mi">260</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Lock&#39;</span><span class="p">,</span> <span class="mi">282</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lock&#39;</span><span class="p">),</span>
+            <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Fit&#39;</span><span class="p">,</span> <span class="mi">257</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;fit&#39;</span><span class="p">)</span>
+        <span class="p">],</span>
+            <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
+            <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpaceMousePro.registration_ids"><a class="viewcode-back" href="../../../api/spacemousepro.html#approxeng.input.spacemousepro.SpaceMousePro.registration_ids">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">registration_ids</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: list of (vendor_id, product_id) for this controller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="mh">0x46d</span><span class="p">,</span> <span class="mh">0xc62b</span><span class="p">)]</span></div></div>
 </pre></div>
 
            </div>
@@ -222,8 +227,10 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn
-      Last updated on Feb 11, 2019.
+        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jul 24, 2019.
+      </span>
 
     </p>
   </div>
@@ -240,26 +247,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Controller Discovery - approxeng.input.controllers &mdash; Approximate Engineering - Input 2.3.0 documentation</title>
+  <title>Controller Discovery - approxeng.input.controllers &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
   
 
   
@@ -17,17 +17,23 @@
   
 
   
-
-  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
   
     
-      <link rel="search" type="application/opensearchdescription+xml"
-            title="Search within Approximate Engineering - Input 2.3.0 documentation"
-            href="../_static/opensearch.xml"/>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
     
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          href="../_static/opensearch.xml"/>
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
@@ -35,21 +41,16 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="PlayStation 3 Controller Support" href="dualshock3.html" />
     <link rel="prev" title="Binding - approxeng.input.selectbinder" href="selectbinder.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -63,7 +64,7 @@
             
             
               <div class="version">
-                2.3.0
+                2.4.0
               </div>
             
           
@@ -93,13 +94,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs - approxeng.input</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Controller Discovery - approxeng.input.controllers</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#simple-discovery">Simple discovery</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#specifying-properties">Specifying properties</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#specifying-multiple-controllers">Specifying multiple controllers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#discovery-failures">Discovery failures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-approxeng.input.controllers">Discovery API</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
@@ -185,14 +187,14 @@
   <div class="section" id="controller-discovery-approxeng-input-controllers">
 <span id="discovery-reference-label"></span><h1>Controller Discovery - approxeng.input.controllers<a class="headerlink" href="#controller-discovery-approxeng-input-controllers" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">New in 2.3, the discovery layer tidies up and abstracts the process of finding a controller or controllers matching
+<p class="admonition-title">Note</p>
+<p>New in 2.3, the discovery layer tidies up and abstracts the process of finding a controller or controllers matching
 a particular set of requirements. In previous versions you had to handle evdev device nodes directly which wasn’t
 particularly friendly, especially as some controllers used multiple OS devices.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you are using the resource binding via <a class="reference internal" href="selectbinder.html#approxeng.input.selectbinder.ControllerResource" title="approxeng.input.selectbinder.ControllerResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.selectbinder.ControllerResource</span></code></a> the same classes
+<p class="admonition-title">Note</p>
+<p>If you are using the resource binding via <a class="reference internal" href="selectbinder.html#approxeng.input.selectbinder.ControllerResource" title="approxeng.input.selectbinder.ControllerResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">ControllerResource</span></code></a> the same classes
 are used within that binding to specify controllers.</p>
 </div>
 <div class="section" id="simple-discovery">
@@ -210,13 +212,13 @@ connected controller.</p>
 <h2>Specifying properties<a class="headerlink" href="#specifying-properties" title="Permalink to this headline">¶</a></h2>
 <p>You may not want to just pick the first controller available (although the library does attempt to order controllers
 such that the first one will be the most capable). You can use the
-<code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.controllers.ControllerRequirement</span></code> to specify exactly what you want. At the moment this class
+<a class="reference internal" href="#approxeng.input.controllers.ControllerRequirement" title="approxeng.input.controllers.ControllerRequirement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ControllerRequirement</span></code></a> to specify exactly what you want. At the moment this class
 supports two filters:</p>
 <ol class="arabic simple">
-<li>You can specify an exact controller class with ‘require_class’, such as specifying that you only want a DualShock4</li>
-<li>You can specify a set of controls on the controller, identified by sname, with ‘require_snames’ that any controller
+<li><p>You can specify an exact controller class with <cite>require_class</cite>, such as specifying that you only want a DualShock4</p></li>
+<li><p>You can specify a set of controls on the controller, identified by sname, with ‘require_snames’ that any controller
 must have to be included in the results. This is great when you know that you need a pair of analogue triggers but
-don’t care what exact controller type you get as long as it has them.</li>
+don’t care what exact controller type you get as long as it has them.</p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.controllers</span> <span class="kn">import</span> <span class="n">find_matching_controllers</span><span class="p">,</span> <span class="n">ControllerRequirement</span>
 
@@ -229,8 +231,9 @@ don’t care what exact controller type you get as long as it has them.</li>
 <p>Both the above examples return a single controller. This is because they both have a single requirement - when you
 don’t provide any requirements as in the first example the library treats it as if you’d given it a single requirement
 with no filters applied.</p>
-<p>The result of the <cite>find_matching_controllers</cite> call is a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.controllers.ControllerDiscovery</span></code>
-objects, each of which contains both the actual controller class and the matching evdev device nodes. In both these
+<p>The result of the <a class="reference internal" href="#approxeng.input.controllers.find_matching_controllers" title="approxeng.input.controllers.find_matching_controllers"><code class="xref py py-func docutils literal notranslate"><span class="pre">find_matching_controllers()</span></code></a> call is a list of
+<a class="reference internal" href="#approxeng.input.controllers.ControllerDiscovery" title="approxeng.input.controllers.ControllerDiscovery"><code class="xref py py-class docutils literal notranslate"><span class="pre">ControllerDiscovery</span></code></a>
+objects, each of which contains both the actual <a class="reference internal" href="input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">Controller</span></code></a> sub-class and the matching evdev device nodes. In both these
 cases this list contains a single item.</p>
 <p>To discover multiple controllers, specify multiple requirements when calling:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.controllers</span> <span class="kn">import</span> <span class="n">find_matching_controllers</span><span class="p">,</span> <span class="n">ControllerRequirement</span>
@@ -246,8 +249,122 @@ controller requirements.</p>
 <div class="section" id="discovery-failures">
 <h2>Discovery failures<a class="headerlink" href="#discovery-failures" title="Permalink to this headline">¶</a></h2>
 <p>If the system does not have the controllers you’ve requested, the discovery process will raise a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.controllers.ControllerNotFoundError</span></code>, in general you should catch this and wait before trying
+<a class="reference internal" href="#approxeng.input.controllers.ControllerNotFoundError" title="approxeng.input.controllers.ControllerNotFoundError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ControllerNotFoundError</span></code></a>, in general you should catch this and wait before trying
 to bind again.</p>
+</div>
+<div class="section" id="module-approxeng.input.controllers">
+<span id="discovery-api"></span><h2>Discovery API<a class="headerlink" href="#module-approxeng.input.controllers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="approxeng.input.controllers.ControllerDiscovery">
+<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">ControllerDiscovery</code><span class="sig-paren">(</span><em class="sig-param">controller</em>, <em class="sig-param">devices</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerDiscovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerDiscovery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a single discovered controller attached to the host. Ordered, with controllers with more axes and buttons
+being given a higher ordering, then falling back to the assigned name.</p>
+<dl class="method">
+<dt id="approxeng.input.controllers.ControllerDiscovery.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">controller</em>, <em class="sig-param">devices</em>, <em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerDiscovery.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerDiscovery.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="approxeng.input.controllers.ControllerNotFoundError">
+<em class="property">exception </em><code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">ControllerNotFoundError</code><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerNotFoundError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised during controller discovery if the specified set of controller requirements cannot be satisfied</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="approxeng.input.controllers.ControllerRequirement">
+<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">ControllerRequirement</code><span class="sig-paren">(</span><em class="sig-param">require_class=None</em>, <em class="sig-param">require_snames=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerRequirement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerRequirement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a requirement for a single controller, allowing restriction on type. We might add more filtering options
+later, such as requiring a minimum number of axes, or the presence of a particular control. If you want that now,
+you can subclass this and pass it into the find_matching_controllers and similar functions.</p>
+<dl class="method">
+<dt id="approxeng.input.controllers.ControllerRequirement.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">require_class=None</em>, <em class="sig-param">require_snames=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerRequirement.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerRequirement.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new requirement</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>require_class</strong> – If specified, this should be a subclass of <a class="reference internal" href="input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.Controller</span></code></a>, only controllers which match
+this class will be accepted. Defaults to None, accepting any available controller class.</p></li>
+<li><p><strong>require_snames</strong> – If specified, this should be a list of strings containing snames of controls (buttons or axes) that must be
+present in the controller. Use this when you know what controls you need but don’t mind which controller
+actually implements them.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="approxeng.input.controllers.ControllerRequirement.accept">
+<code class="sig-name descname">accept</code><span class="sig-paren">(</span><em class="sig-param">discovery: approxeng.input.controllers.ControllerDiscovery</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerRequirement.accept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerRequirement.accept" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the supplied ControllerDiscovery matches this requirement, False otherwise</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="approxeng.input.controllers.find_all_controllers">
+<code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">find_all_controllers</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span> &#x2192; List[approxeng.input.controllers.ControllerDiscovery]<a class="reference internal" href="../_modules/approxeng/input/controllers.html#find_all_controllers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.find_all_controllers" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A list of <a class="reference internal" href="#approxeng.input.controllers.ControllerDiscovery" title="approxeng.input.controllers.ControllerDiscovery"><code class="xref py py-class docutils literal notranslate"><span class="pre">ControllerDiscovery</span></code></a> instances corresponding to controllers
+attached to this host, ordered by the ordering on ControllerDiscovery. Any controllers found will be
+constructed with kwargs passed to their constructor function, particularly useful for dead and hot zone
+parameters.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="approxeng.input.controllers.find_matching_controllers">
+<code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">find_matching_controllers</code><span class="sig-paren">(</span><em class="sig-param">*requirements</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span> &#x2192; [&lt;class 'approxeng.input.controllers.ControllerDiscovery'&gt;]<a class="reference internal" href="../_modules/approxeng/input/controllers.html#find_matching_controllers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.find_matching_controllers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a sequence of controllers which match the supplied requirements, or raise an error if no such controllers
+exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>requirements</strong> – Zero or more ControllerRequirement instances defining the requirements for controllers. If no item is passed it
+will be treated as a single requirement with no filters applied and will therefore match the first controller
+found.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A sequence of the same length as the supplied requirements array containing ControllerDiscovery instances which
+match the requirements supplied.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>ControllerNotFoundError if no appropriately matching controllers can be located</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="approxeng.input.controllers.print_controllers">
+<code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">print_controllers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#print_controllers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.print_controllers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty-print all controllers found</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="approxeng.input.controllers.print_devices">
+<code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">print_devices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#print_devices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.print_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple test function which prints out all devices found by evdev</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="approxeng.input.controllers.unique_name">
+<code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">unique_name</code><span class="sig-paren">(</span><em class="sig-param">device: evdev.device.InputDevice</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/approxeng/input/controllers.html#unique_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.unique_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a unique name for the device based on, in order if available, the uniq ID, the phys ID and
+finally a concatenation of vendor, product, version and filename.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>device</strong> – An InputDevice instance to query</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A string containing as unique as possible a name for the physical entity represented by the device</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 </div>
 
@@ -262,7 +379,7 @@ to bind again.</p>
         <a href="dualshock3.html" class="btn btn-neutral float-right" title="PlayStation 3 Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="selectbinder.html" class="btn btn-neutral" title="Binding - approxeng.input.selectbinder" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="selectbinder.html" class="btn btn-neutral float-left" title="Binding - approxeng.input.selectbinder" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -271,8 +388,10 @@ to bind again.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn
-      Last updated on Feb 11, 2019.
+        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jul 24, 2019.
+      </span>
 
     </p>
   </div>
@@ -289,26 +408,16 @@ to bind again.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

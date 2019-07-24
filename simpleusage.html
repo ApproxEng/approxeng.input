@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Simple Usage &mdash; Approximate Engineering - Input 2.3.0 documentation</title>
+  <title>Simple Usage &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
   
 
   
@@ -17,17 +17,23 @@
   
 
   
-
-  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
-      <link rel="search" type="application/opensearchdescription+xml"
-            title="Search within Approximate Engineering - Input 2.3.0 documentation"
-            href="_static/opensearch.xml"/>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          href="_static/opensearch.xml"/>
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
@@ -35,21 +41,16 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Pairing Controllers over Bluetooth" href="bluetooth.html" />
     <link rel="prev" title="Change Log" href="changelog.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -63,7 +64,7 @@
             
             
               <div class="version">
-                2.3.0
+                2.4.0
               </div>
             
           
@@ -92,7 +93,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Simple Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#connecting-to-a-controller">Connecting to a controller</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#connecting-to-multiple-controllers">Connecting to multiple controllers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reading-analogue-axes">Reading Analogue Axes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reading-analogue-axes">Reading Analogue Axes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#circular-analogue-axes">Circular Analogue Axes</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#checking-for-held-buttons">Checking for Held Buttons</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#reading-multiple-axis-or-button-hold-values">Reading multiple Axis or Button Hold values</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#querying-button-presses">Querying Button Presses</a></li>
@@ -200,11 +204,11 @@ attributes of the controller class itself. Read on…</p>
 <p>This example will loop forever. It will attempt to connect to any supported joystick - the ControllerResource will raise
 IOError if it can’t find one, otherwise it will do all the necessary background work, create a controller object and, in
 this case, bind it to the ‘joystick’ variable which can then be used to read axes, buttons etc.</p>
-<p>The <cite>connected</cite> property on the joystick object indicates whether the underlying device is connected or not - if, for
-example, you have a controller that goes out of range, runs out of batteries, or is turned off while in use this will be
-set to False and you can handle the case correctly (if using this code in a robot, this would be an excellent time to
-turn of all your motors, for instance!)</p>
-<p>The <a class="reference internal" href="api/selectbinder.html#approxeng.input.selectbinder.ControllerResource" title="approxeng.input.selectbinder.ControllerResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.selectbinder.ControllerResource</span></code></a> class accepts a number of, optional, arguments. These can be
+<p>The <a class="reference internal" href="api/input.html#approxeng.input.Controller.connected" title="approxeng.input.Controller.connected"><code class="xref py py-meth docutils literal notranslate"><span class="pre">connected()</span></code></a> property on the joystick object indicates whether the underlying
+device is connected or not - if, for example, you have a controller that goes out of range, runs out of batteries, or is
+turned off while in use this will be set to False and you can handle the case correctly (if using this code in a robot,
+this would be an excellent time to turn of all your motors, for instance!)</p>
+<p>The <a class="reference internal" href="api/selectbinder.html#approxeng.input.selectbinder.ControllerResource" title="approxeng.input.selectbinder.ControllerResource"><code class="xref py py-class docutils literal notranslate"><span class="pre">ControllerResource</span></code></a> class accepts a number of, optional, arguments. These can be
 used to tell it which controller type to use (the default is to connect to the first controller it can understand, but
 if you have multiple controllers connected for some reason you might want to tell it to use your XBox1 rather than your
 PS4 controller). They can also be used to configure the default settings for axes, and there’s an option to print out
@@ -248,8 +252,8 @@ a PS3 controller, the second of which must have a left X and Y axis:</p>
 on or off, an analogue axis has a floating point value associated with its current position.</p>
 <blockquote>
 <div><ul class="simple">
-<li>Centred axes have a value ranging from -1.0 to 1.0</li>
-<li>Trigger axes have a value ranging from 0.0 to 1.0</li>
+<li><p>Centred axes have a value ranging from -1.0 to 1.0</p></li>
+<li><p>Trigger axes have a value ranging from 0.0 to 1.0</p></li>
 </ul>
 </div></blockquote>
 <p>Axis values are read as properties of the joystick object (in this and other examples we’re not showing the exception
@@ -269,6 +273,35 @@ handling from the first example, but you should still do it!):</p>
 <p>…and that’s it! You might have used other libraries which require you to do event handling and similar, but in this
 case all that stuff is taken care of in the background and you just have to read the information you want from the
 joystick object.</p>
+<div class="section" id="circular-analogue-axes">
+<h3>Circular Analogue Axes<a class="headerlink" href="#circular-analogue-axes" title="Permalink to this headline">¶</a></h3>
+<p>As of version 2.4, if a controller defines pairs of <cite>(lx,ly)</cite>, or <cite>(rx,ry)</cite>, a new virtual axis is created called <cite>l</cite> or
+<cite>r</cite> respectively. This is an instance of <a class="reference internal" href="api/input.html#approxeng.input.CircularCentredAxis" title="approxeng.input.CircularCentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">CircularCentredAxis</span></code></a>. Unlike other axes which return
+a single floating point value, this axis type returns a tuple of <cite>(x,y)</cite> floats. Obviously you could do this yourself
+by calling the individual horizontal and vertical axes, but this circular axis has a subtle improvement to how it
+handles dead and hot zones - areas where you want either no output (the deadzone in the middle) or full output (the hot
+zones at either end of the range). Specifically, it judges whether a position is in the dead or hot zone based on the
+overall distance of the stick from the centre, taking both axes into account, and then scales both values such that the
+direction is preserved and the magnitude scaled. For cases where you genuinely want to control a two dimensional
+quantity with the stick this will result in much smoother, more consistent, motion, without the pauses in response as
+the stick crosses each of the independent x and y axis dead zones.</p>
+<p>If you’re using a single stick to control two different quantities, such as a four wheel robot where you’ve mapped
+acceleration and steering onto a single stick, you probably want to continue to use the individual axes! Experiment and
+see which setting feels best for you.</p>
+<p>As with other axes and buttons, you can fetch the values of these extra axes in a couple of different ways:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
+
+<span class="c1"># Get a joystick</span>
+<span class="k">with</span> <span class="n">ControllerResource</span><span class="p">()</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
+    <span class="c1"># Loop until disconnected</span>
+    <span class="k">while</span> <span class="n">joystick</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+        <span class="c1"># Get a corrected tuple of values from the left stick, assign the two values to x and y</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">joystick</span><span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">]</span>
+        <span class="c1"># We can also get values as attributes:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">l</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="checking-for-held-buttons">
 <h2>Checking for Held Buttons<a class="headerlink" href="#checking-for-held-buttons" title="Permalink to this headline">¶</a></h2>
@@ -313,12 +346,12 @@ currently holding it down. This sounds obvious, but in fact it’s slightly more
 whether the user pressed a button at any point since you last asked this question! That way, even if you don’t ask very
 often you won’t miss button presses and you don’t have to worry about the user pressing so fast you can’t detect it.</p>
 <p>This is therefore a two-part process - you must first tell the controller to read out whether any buttons were pressed,
-this actually both returns a :class:approxeng.input.ButtonPresses object, and also stores that object as the ‘presses’
+this actually both returns a <a class="reference internal" href="api/input.html#approxeng.input.ButtonPresses" title="approxeng.input.ButtonPresses"><code class="xref py py-class docutils literal notranslate"><span class="pre">ButtonPresses</span></code></a> object, and also stores that object as the <a class="reference internal" href="api/input.html#approxeng.input.Controller.presses" title="approxeng.input.Controller.presses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">presses()</span></code></a>
 property of the controller for later access.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This means the button presses are those buttons which were pressed between the most recent call to check_presses()
-and the one before that. Only call check_presses() once per loop, before the code you then want to read the presses
+<p class="admonition-title">Note</p>
+<p>This means the button presses are those buttons which were pressed between the most recent call to <a class="reference internal" href="api/input.html#approxeng.input.Controller.check_presses" title="approxeng.input.Controller.check_presses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">check_presses()</span></code></a>
+and the one before that. Only call <a class="reference internal" href="api/input.html#approxeng.input.Controller.check_presses" title="approxeng.input.Controller.check_presses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">check_presses()</span></code></a> once per loop, before the code you then want to read the presses
 attribute</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
@@ -361,255 +394,255 @@ to you.</p>
 standard ones are as follows:</p>
 <div class="section" id="button-names">
 <h2>Button Names<a class="headerlink" href="#button-names" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="14%" />
-<col width="14%" />
-<col width="17%" />
-<col width="14%" />
-<col width="14%" />
-<col width="12%" />
-<col width="13%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 17%" />
+<col style="width: 14%" />
+<col style="width: 14%" />
+<col style="width: 12%" />
+<col style="width: 13%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Standard name</td>
-<td>PS3</td>
-<td>PS4</td>
-<td>XBoxOne</td>
-<td>Rock Candy</td>
-<td>Steam</td>
-<td>Wii Pro</td>
+<tbody>
+<tr class="row-odd"><td><p>Standard name</p></td>
+<td><p>PS3</p></td>
+<td><p>PS4</p></td>
+<td><p>XBoxOne</p></td>
+<td><p>Rock Candy</p></td>
+<td><p>Steam</p></td>
+<td><p>Wii Pro</p></td>
 </tr>
-<tr class="row-even"><td>square</td>
-<td>Square</td>
-<td>Square</td>
-<td>X</td>
-<td>4 Dot</td>
-<td>X</td>
-<td>Y</td>
+<tr class="row-even"><td><p>square</p></td>
+<td><p>Square</p></td>
+<td><p>Square</p></td>
+<td><p>X</p></td>
+<td><p>4 Dot</p></td>
+<td><p>X</p></td>
+<td><p>Y</p></td>
 </tr>
-<tr class="row-odd"><td>triangle</td>
-<td>Triangle</td>
-<td>Triangle</td>
-<td>Y</td>
-<td>3 Dot</td>
-<td>Y</td>
-<td>X</td>
+<tr class="row-odd"><td><p>triangle</p></td>
+<td><p>Triangle</p></td>
+<td><p>Triangle</p></td>
+<td><p>Y</p></td>
+<td><p>3 Dot</p></td>
+<td><p>Y</p></td>
+<td><p>X</p></td>
 </tr>
-<tr class="row-even"><td>circle</td>
-<td>Circle</td>
-<td>Circle</td>
-<td>B</td>
-<td>6 Dot</td>
-<td>B</td>
-<td>A</td>
+<tr class="row-even"><td><p>circle</p></td>
+<td><p>Circle</p></td>
+<td><p>Circle</p></td>
+<td><p>B</p></td>
+<td><p>6 Dot</p></td>
+<td><p>B</p></td>
+<td><p>A</p></td>
 </tr>
-<tr class="row-odd"><td>cross</td>
-<td>Cross</td>
-<td>Cross</td>
-<td>A</td>
-<td>5 Dot</td>
-<td>A</td>
-<td>B</td>
+<tr class="row-odd"><td><p>cross</p></td>
+<td><p>Cross</p></td>
+<td><p>Cross</p></td>
+<td><p>A</p></td>
+<td><p>5 Dot</p></td>
+<td><p>A</p></td>
+<td><p>B</p></td>
 </tr>
-<tr class="row-even"><td>ls</td>
-<td>Left Stick</td>
-<td>Left Stick</td>
-<td>Left Stick</td>
-<td>Left Stick</td>
-<td>Left Stick</td>
-<td>Left Stick</td>
+<tr class="row-even"><td><p>ls</p></td>
+<td><p>Left Stick</p></td>
+<td><p>Left Stick</p></td>
+<td><p>Left Stick</p></td>
+<td><p>Left Stick</p></td>
+<td><p>Left Stick</p></td>
+<td><p>Left Stick</p></td>
 </tr>
-<tr class="row-odd"><td>rs</td>
-<td>Right Stick</td>
-<td>Right Stick</td>
-<td>Right Stick</td>
-<td>Right Stick</td>
-<td>Right Stick</td>
-<td>Right Stick</td>
+<tr class="row-odd"><td><p>rs</p></td>
+<td><p>Right Stick</p></td>
+<td><p>Right Stick</p></td>
+<td><p>Right Stick</p></td>
+<td><p>Right Stick</p></td>
+<td><p>Right Stick</p></td>
+<td><p>Right Stick</p></td>
 </tr>
-<tr class="row-even"><td>select</td>
-<td>Select</td>
-<td>Share</td>
-<td>View</td>
-<td>Select</td>
-<td>Left Arrow</td>
-<td>Select</td>
+<tr class="row-even"><td><p>select</p></td>
+<td><p>Select</p></td>
+<td><p>Share</p></td>
+<td><p>View</p></td>
+<td><p>Select</p></td>
+<td><p>Left Arrow</p></td>
+<td><p>Select</p></td>
 </tr>
-<tr class="row-odd"><td>start</td>
-<td>Start</td>
-<td>Options</td>
-<td>Menu</td>
-<td>Start</td>
-<td>Right Arrow</td>
-<td>Start</td>
+<tr class="row-odd"><td><p>start</p></td>
+<td><p>Start</p></td>
+<td><p>Options</p></td>
+<td><p>Menu</p></td>
+<td><p>Start</p></td>
+<td><p>Right Arrow</p></td>
+<td><p>Start</p></td>
 </tr>
-<tr class="row-even"><td>home</td>
-<td>PS</td>
-<td>PS</td>
-<td>XBox</td>
-<td>Home</td>
-<td>Steam</td>
-<td>Home</td>
+<tr class="row-even"><td><p>home</p></td>
+<td><p>PS</p></td>
+<td><p>PS</p></td>
+<td><p>XBox</p></td>
+<td><p>Home</p></td>
+<td><p>Steam</p></td>
+<td><p>Home</p></td>
 </tr>
-<tr class="row-odd"><td>dleft</td>
-<td>DPad Left</td>
-<td>DPad Left</td>
-<td>DPad Left</td>
-<td>DPad Left</td>
-<td>DPad Left</td>
-<td>DPad Left</td>
+<tr class="row-odd"><td><p>dleft</p></td>
+<td><p>DPad Left</p></td>
+<td><p>DPad Left</p></td>
+<td><p>DPad Left</p></td>
+<td><p>DPad Left</p></td>
+<td><p>DPad Left</p></td>
+<td><p>DPad Left</p></td>
 </tr>
-<tr class="row-even"><td>dup</td>
-<td>DPad Up</td>
-<td>DPad Up</td>
-<td>DPad Up</td>
-<td>DPad Up</td>
-<td>DPad Up</td>
-<td>DPad Up</td>
+<tr class="row-even"><td><p>dup</p></td>
+<td><p>DPad Up</p></td>
+<td><p>DPad Up</p></td>
+<td><p>DPad Up</p></td>
+<td><p>DPad Up</p></td>
+<td><p>DPad Up</p></td>
+<td><p>DPad Up</p></td>
 </tr>
-<tr class="row-odd"><td>dright</td>
-<td>DPad Right</td>
-<td>DPad Right</td>
-<td>DPad Right</td>
-<td>DPad Right</td>
-<td>DPad Right</td>
-<td>DPad Right</td>
+<tr class="row-odd"><td><p>dright</p></td>
+<td><p>DPad Right</p></td>
+<td><p>DPad Right</p></td>
+<td><p>DPad Right</p></td>
+<td><p>DPad Right</p></td>
+<td><p>DPad Right</p></td>
+<td><p>DPad Right</p></td>
 </tr>
-<tr class="row-even"><td>ddown</td>
-<td>DPad Down</td>
-<td>DPad Down</td>
-<td>Dpad Down</td>
-<td>DPad Down</td>
-<td>DPad Down</td>
-<td>DPad Down</td>
+<tr class="row-even"><td><p>ddown</p></td>
+<td><p>DPad Down</p></td>
+<td><p>DPad Down</p></td>
+<td><p>Dpad Down</p></td>
+<td><p>DPad Down</p></td>
+<td><p>DPad Down</p></td>
+<td><p>DPad Down</p></td>
 </tr>
-<tr class="row-odd"><td>l1</td>
-<td>L1 Trigger</td>
-<td>L1 Trigger</td>
-<td>LB Trigger</td>
-<td>L1 Trigger</td>
-<td>LB</td>
-<td>L</td>
+<tr class="row-odd"><td><p>l1</p></td>
+<td><p>L1 Trigger</p></td>
+<td><p>L1 Trigger</p></td>
+<td><p>LB Trigger</p></td>
+<td><p>L1 Trigger</p></td>
+<td><p>LB</p></td>
+<td><p>L</p></td>
 </tr>
-<tr class="row-even"><td>l2</td>
-<td>L2 Trigger</td>
-<td>L2 Trigger</td>
-<td>LT Trigger</td>
-<td>L2 Trigger</td>
-<td>—</td>
-<td>LZ</td>
+<tr class="row-even"><td><p>l2</p></td>
+<td><p>L2 Trigger</p></td>
+<td><p>L2 Trigger</p></td>
+<td><p>LT Trigger</p></td>
+<td><p>L2 Trigger</p></td>
+<td><p>—</p></td>
+<td><p>LZ</p></td>
 </tr>
-<tr class="row-odd"><td>r1</td>
-<td>R1 Trigger</td>
-<td>R1 Trigger</td>
-<td>RB Trigger</td>
-<td>R1 Trigger</td>
-<td>RB</td>
-<td>R</td>
+<tr class="row-odd"><td><p>r1</p></td>
+<td><p>R1 Trigger</p></td>
+<td><p>R1 Trigger</p></td>
+<td><p>RB Trigger</p></td>
+<td><p>R1 Trigger</p></td>
+<td><p>RB</p></td>
+<td><p>R</p></td>
 </tr>
-<tr class="row-even"><td>r2</td>
-<td>R2 Trigger</td>
-<td>R2 Trigger</td>
-<td>RT Trigger</td>
-<td>R2 Trigger</td>
-<td>—</td>
-<td>RZ</td>
+<tr class="row-even"><td><p>r2</p></td>
+<td><p>R2 Trigger</p></td>
+<td><p>R2 Trigger</p></td>
+<td><p>RT Trigger</p></td>
+<td><p>R2 Trigger</p></td>
+<td><p>—</p></td>
+<td><p>RZ</p></td>
 </tr>
-<tr class="row-odd"><td>ps4_pad</td>
-<td>—</td>
-<td>Trackpad</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
+<tr class="row-odd"><td><p>ps4_pad</p></td>
+<td><p>—</p></td>
+<td><p>Trackpad</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
 </tr>
 </tbody>
 </table>
 <p>…and some more, because we now have too many controllers to fit on one table!</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="54%" />
-<col width="46%" />
+<col style="width: 54%" />
+<col style="width: 46%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Standard name</td>
-<td>PiHut</td>
+<tbody>
+<tr class="row-odd"><td><p>Standard name</p></td>
+<td><p>PiHut</p></td>
 </tr>
-<tr class="row-even"><td>square</td>
-<td>Square</td>
+<tr class="row-even"><td><p>square</p></td>
+<td><p>Square</p></td>
 </tr>
-<tr class="row-odd"><td>triangle</td>
-<td>Triangle</td>
+<tr class="row-odd"><td><p>triangle</p></td>
+<td><p>Triangle</p></td>
 </tr>
-<tr class="row-even"><td>circle</td>
-<td>Circle</td>
+<tr class="row-even"><td><p>circle</p></td>
+<td><p>Circle</p></td>
 </tr>
-<tr class="row-odd"><td>cross</td>
-<td>Cross</td>
+<tr class="row-odd"><td><p>cross</p></td>
+<td><p>Cross</p></td>
 </tr>
-<tr class="row-even"><td>ls</td>
-<td>Left Stick</td>
+<tr class="row-even"><td><p>ls</p></td>
+<td><p>Left Stick</p></td>
 </tr>
-<tr class="row-odd"><td>rs</td>
-<td>Right Stick</td>
+<tr class="row-odd"><td><p>rs</p></td>
+<td><p>Right Stick</p></td>
 </tr>
-<tr class="row-even"><td>select</td>
-<td>Select</td>
+<tr class="row-even"><td><p>select</p></td>
+<td><p>Select</p></td>
 </tr>
-<tr class="row-odd"><td>start</td>
-<td>Start</td>
+<tr class="row-odd"><td><p>start</p></td>
+<td><p>Start</p></td>
 </tr>
-<tr class="row-even"><td>home</td>
-<td>Analog</td>
+<tr class="row-even"><td><p>home</p></td>
+<td><p>Analog</p></td>
 </tr>
-<tr class="row-odd"><td>dleft</td>
-<td>DPad Left</td>
+<tr class="row-odd"><td><p>dleft</p></td>
+<td><p>DPad Left</p></td>
 </tr>
-<tr class="row-even"><td>dup</td>
-<td>DPad Up</td>
+<tr class="row-even"><td><p>dup</p></td>
+<td><p>DPad Up</p></td>
 </tr>
-<tr class="row-odd"><td>dright</td>
-<td>DPad Right</td>
+<tr class="row-odd"><td><p>dright</p></td>
+<td><p>DPad Right</p></td>
 </tr>
-<tr class="row-even"><td>ddown</td>
-<td>DPad Down</td>
+<tr class="row-even"><td><p>ddown</p></td>
+<td><p>DPad Down</p></td>
 </tr>
-<tr class="row-odd"><td>l1</td>
-<td>L1 Trigger</td>
+<tr class="row-odd"><td><p>l1</p></td>
+<td><p>L1 Trigger</p></td>
 </tr>
-<tr class="row-even"><td>l2</td>
-<td>L2 Trigger</td>
+<tr class="row-even"><td><p>l2</p></td>
+<td><p>L2 Trigger</p></td>
 </tr>
-<tr class="row-odd"><td>r1</td>
-<td>R1 Trigger</td>
+<tr class="row-odd"><td><p>r1</p></td>
+<td><p>R1 Trigger</p></td>
 </tr>
-<tr class="row-even"><td>r2</td>
-<td>R2 Trigger</td>
+<tr class="row-even"><td><p>r2</p></td>
+<td><p>R2 Trigger</p></td>
 </tr>
-<tr class="row-odd"><td>ps4_pad</td>
-<td>—</td>
+<tr class="row-odd"><td><p>ps4_pad</p></td>
+<td><p>—</p></td>
 </tr>
 </tbody>
 </table>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The PiHut controller has a <cite>turbo</cite> button which isn’t currently mapped to any button in the API.</p>
+<p class="admonition-title">Note</p>
+<p>The PiHut controller has a <cite>turbo</cite> button which isn’t currently mapped to any button in the API.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The lack of <cite>l2</cite> and <cite>r2</cite> for the Steam controller is because these buttons don’t appear as buttons in the
+<p class="admonition-title">Note</p>
+<p>The lack of <cite>l2</cite> and <cite>r2</cite> for the Steam controller is because these buttons don’t appear as buttons in the
 event stream.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The DualShock4 trackpad now (as of 2.1.0) works as both a button when pressed, and a pair of absolute axes <cite>tx</cite>
+<p class="admonition-title">Note</p>
+<p>The DualShock4 trackpad now (as of 2.1.0) works as both a button when pressed, and a pair of absolute axes <cite>tx</cite>
 and <cite>ty</cite> representing a single touch point. While the controller supports a pair of touches, the library doesn’t!
 The touch coordinates range from -1.0 to 1.0, with positive to the right and forwards when holding the controller.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Yes, the Wii Remote Pro buttons really are that way around. Although it has the same buttons as an XBox controller
+<p class="admonition-title">Note</p>
+<p>Yes, the Wii Remote Pro buttons really are that way around. Although it has the same buttons as an XBox controller
 they’re in different locations. The standard names are set to prioritise location (and therefore kinetic memory)
 so, for example, the <cite>X</cite> button on the Wii Remote Pro is in the same place as the triangle button on the PS3 and PS4
 so we call it <cite>triangle</cite>, whereas the XBox controller has a <cite>Y</cite> button there instead.</p>
@@ -618,176 +651,176 @@ so we call it <cite>triangle</cite>, whereas the XBox controller has a <cite>Y</
 <div class="section" id="axis-names">
 <h2>Axis Names<a class="headerlink" href="#axis-names" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">With a new kernel (4.13 upwards, tested with 4.15) the Sony controllers expose their motion events in a way we can
+<p class="admonition-title">Note</p>
+<p>With a new kernel (4.13 upwards, tested with 4.15) the Sony controllers expose their motion events in a way we can
 handle, so I’ve added pitch and roll for both controllers, and yaw rate for the DS4. There is no absolute yaw value
 available, you’d have to calculate this from the rates (tricky to do with any accuracy). Roll is positive clockwise
 when holding the controller, pitch is positive aiming the front of the controller towards the ceiling. Available
 in 2.1.0 of this library onwards.</p>
 </div>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="15%" />
-<col width="15%" />
-<col width="17%" />
-<col width="15%" />
-<col width="11%" />
-<col width="15%" />
-<col width="11%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+<col style="width: 17%" />
+<col style="width: 15%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+<col style="width: 11%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Standard name</td>
-<td>PS3</td>
-<td>PS4</td>
-<td>XBoxOne</td>
-<td>Rock Candy</td>
-<td>Steam</td>
-<td>Wii Pro</td>
+<tbody>
+<tr class="row-odd"><td><p>Standard name</p></td>
+<td><p>PS3</p></td>
+<td><p>PS4</p></td>
+<td><p>XBoxOne</p></td>
+<td><p>Rock Candy</p></td>
+<td><p>Steam</p></td>
+<td><p>Wii Pro</p></td>
 </tr>
-<tr class="row-even"><td>lx</td>
-<td>Left X</td>
-<td>Left X</td>
-<td>Left X</td>
-<td>Left X</td>
-<td>Left X</td>
-<td>Left X</td>
+<tr class="row-even"><td><p>lx</p></td>
+<td><p>Left X</p></td>
+<td><p>Left X</p></td>
+<td><p>Left X</p></td>
+<td><p>Left X</p></td>
+<td><p>Left X</p></td>
+<td><p>Left X</p></td>
 </tr>
-<tr class="row-odd"><td>ly</td>
-<td>Left Y</td>
-<td>Left Y</td>
-<td>Left Y</td>
-<td>Left Y</td>
-<td>Left Y</td>
-<td>Left Y</td>
+<tr class="row-odd"><td><p>ly</p></td>
+<td><p>Left Y</p></td>
+<td><p>Left Y</p></td>
+<td><p>Left Y</p></td>
+<td><p>Left Y</p></td>
+<td><p>Left Y</p></td>
+<td><p>Left Y</p></td>
 </tr>
-<tr class="row-even"><td>rx</td>
-<td>Right X</td>
-<td>Right X</td>
-<td>Right X</td>
-<td>Right X</td>
-<td>Right X</td>
-<td>Right X</td>
+<tr class="row-even"><td><p>rx</p></td>
+<td><p>Right X</p></td>
+<td><p>Right X</p></td>
+<td><p>Right X</p></td>
+<td><p>Right X</p></td>
+<td><p>Right X</p></td>
+<td><p>Right X</p></td>
 </tr>
-<tr class="row-odd"><td>ry</td>
-<td>Right Y</td>
-<td>Right Y</td>
-<td>Right Y</td>
-<td>Right Y</td>
-<td>Right Y</td>
-<td>Right Y</td>
+<tr class="row-odd"><td><p>ry</p></td>
+<td><p>Right Y</p></td>
+<td><p>Right Y</p></td>
+<td><p>Right Y</p></td>
+<td><p>Right Y</p></td>
+<td><p>Right Y</p></td>
+<td><p>Right Y</p></td>
 </tr>
-<tr class="row-even"><td>lt</td>
-<td>L2 Trigger</td>
-<td>L2 Trigger</td>
-<td>LT Trigger</td>
-<td>—</td>
-<td>Left Trigger</td>
-<td>—</td>
+<tr class="row-even"><td><p>lt</p></td>
+<td><p>L2 Trigger</p></td>
+<td><p>L2 Trigger</p></td>
+<td><p>LT Trigger</p></td>
+<td><p>—</p></td>
+<td><p>Left Trigger</p></td>
+<td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td>rt</td>
-<td>R2 Trigger</td>
-<td>R2 Trigger</td>
-<td>RT Trigger</td>
-<td>—</td>
-<td>Right Trigger</td>
-<td>—</td>
+<tr class="row-odd"><td><p>rt</p></td>
+<td><p>R2 Trigger</p></td>
+<td><p>R2 Trigger</p></td>
+<td><p>RT Trigger</p></td>
+<td><p>—</p></td>
+<td><p>Right Trigger</p></td>
+<td><p>—</p></td>
 </tr>
-<tr class="row-even"><td>tx</td>
-<td>—</td>
-<td>Touch X</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
+<tr class="row-even"><td><p>tx</p></td>
+<td><p>—</p></td>
+<td><p>Touch X</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td>ty</td>
-<td>—</td>
-<td>Touch Y</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
+<tr class="row-odd"><td><p>ty</p></td>
+<td><p>—</p></td>
+<td><p>Touch Y</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
 </tr>
-<tr class="row-even"><td>pitch</td>
-<td>Motion</td>
-<td>Motion</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
+<tr class="row-even"><td><p>pitch</p></td>
+<td><p>Motion</p></td>
+<td><p>Motion</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td>roll</td>
-<td>Motion</td>
-<td>Motion</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
+<tr class="row-odd"><td><p>roll</p></td>
+<td><p>Motion</p></td>
+<td><p>Motion</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
 </tr>
-<tr class="row-even"><td>yaw_rate</td>
-<td>—</td>
-<td>Motion</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
-<td>—</td>
+<tr class="row-even"><td><p>yaw_rate</p></td>
+<td><p>—</p></td>
+<td><p>Motion</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
 </tr>
 </tbody>
 </table>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="42%" />
-<col width="29%" />
-<col width="29%" />
+<col style="width: 42%" />
+<col style="width: 29%" />
+<col style="width: 29%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Standard name</td>
-<td>PiHut</td>
-<td>SF30 Pro</td>
+<tbody>
+<tr class="row-odd"><td><p>Standard name</p></td>
+<td><p>PiHut</p></td>
+<td><p>SF30 Pro</p></td>
 </tr>
-<tr class="row-even"><td>lx</td>
-<td>Left X</td>
-<td>Left X</td>
+<tr class="row-even"><td><p>lx</p></td>
+<td><p>Left X</p></td>
+<td><p>Left X</p></td>
 </tr>
-<tr class="row-odd"><td>ly</td>
-<td>Left Y</td>
-<td>Left Y</td>
+<tr class="row-odd"><td><p>ly</p></td>
+<td><p>Left Y</p></td>
+<td><p>Left Y</p></td>
 </tr>
-<tr class="row-even"><td>rx</td>
-<td>Right X</td>
-<td>Right X</td>
+<tr class="row-even"><td><p>rx</p></td>
+<td><p>Right X</p></td>
+<td><p>Right X</p></td>
 </tr>
-<tr class="row-odd"><td>ry</td>
-<td>Right Y</td>
-<td>Right Y</td>
+<tr class="row-odd"><td><p>ry</p></td>
+<td><p>Right Y</p></td>
+<td><p>Right Y</p></td>
 </tr>
-<tr class="row-even"><td>lt</td>
-<td>L Trigger</td>
-<td>L Trigger</td>
+<tr class="row-even"><td><p>lt</p></td>
+<td><p>L Trigger</p></td>
+<td><p>L Trigger</p></td>
 </tr>
-<tr class="row-odd"><td>rt</td>
-<td>R Trigger</td>
-<td>R Trigger</td>
+<tr class="row-odd"><td><p>rt</p></td>
+<td><p>R Trigger</p></td>
+<td><p>R Trigger</p></td>
 </tr>
-<tr class="row-even"><td>tx</td>
-<td>—</td>
-<td>—</td>
+<tr class="row-even"><td><p>tx</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td>ty</td>
-<td>—</td>
-<td>—</td>
+<tr class="row-odd"><td><p>ty</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
 </tr>
-<tr class="row-even"><td>pitch</td>
-<td>—</td>
-<td>—</td>
+<tr class="row-even"><td><p>pitch</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
 </tr>
-<tr class="row-odd"><td>roll</td>
-<td>—</td>
-<td>—</td>
+<tr class="row-odd"><td><p>roll</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
 </tr>
-<tr class="row-even"><td>yaw_rate</td>
-<td>—</td>
-<td>—</td>
+<tr class="row-even"><td><p>yaw_rate</p></td>
+<td><p>—</p></td>
+<td><p>—</p></td>
 </tr>
 </tbody>
 </table>
@@ -805,7 +838,7 @@ in 2.1.0 of this library onwards.</p>
         <a href="bluetooth.html" class="btn btn-neutral float-right" title="Pairing Controllers over Bluetooth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="changelog.html" class="btn btn-neutral" title="Change Log" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="changelog.html" class="btn btn-neutral float-left" title="Change Log" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -814,8 +847,10 @@ in 2.1.0 of this library onwards.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn
-      Last updated on Feb 11, 2019.
+        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jul 24, 2019.
+      </span>
 
     </p>
   </div>
@@ -832,26 +867,16 @@ in 2.1.0 of this library onwards.</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

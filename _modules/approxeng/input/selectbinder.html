@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input.selectbinder &mdash; Approximate Engineering - Input 2.3.0 documentation</title>
+  <title>approxeng.input.selectbinder &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
   
 
   
@@ -17,37 +17,38 @@
   
 
   
-
-  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
   
     
-      <link rel="search" type="application/opensearchdescription+xml"
-            title="Search within Approximate Engineering - Input 2.3.0 documentation"
-            href="../../../_static/opensearch.xml"/>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
     
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          href="../../../_static/opensearch.xml"/>
 
   
-
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                2.3.0
+                2.4.0
               </div>
             
           
@@ -183,10 +184,10 @@
 <span class="sd">        will find the first controller of any kind enabled by the library. Otherwise the requirements must be provided</span>
 <span class="sd">        as a list of ControllerRequirement</span>
 
-<span class="sd">        :param requirements:</span>
+<span class="sd">        :param  ControllerRequirement requirements:</span>
 <span class="sd">            ControllerRequirement instances used, in order, to find and bind controllers. If empty this will</span>
 <span class="sd">            be equivalent to supplying a single unfiltered requirement and will match the first specified controller.</span>
-<span class="sd">        :param print_events:</span>
+<span class="sd">        :param bool print_events:</span>
 <span class="sd">            Defaults to False, if set to True then all events picked up by the binder will be printed to stdout. Use</span>
 <span class="sd">            this when you&#39;re trying to figure out what events correspond to what axes and buttons!</span>
 <span class="sd">        :param kwargs:</span>
@@ -222,9 +223,9 @@
 <span class="sd">    Bind a controller or controllers to a set of evdev InputDevice instances, starting a thread to keep those</span>
 <span class="sd">    controllers in sync with the state of the hardware.</span>
 <span class="sd">    </span>
-<span class="sd">    :param discoveries:</span>
+<span class="sd">    :param ControllerDiscovery discoveries:</span>
 <span class="sd">        ControllerDiscovery instances specifying the controllers and their associated input devices</span>
-<span class="sd">    :param print_events:</span>
+<span class="sd">    :param bool print_events:</span>
 <span class="sd">        Defaults to False, if set to True then all events picked up by this binder will be printed to stdout</span>
 <span class="sd">    :return: </span>
 <span class="sd">        A function which can be used to stop the event reading thread and unbind from the device</span>
@@ -318,8 +319,10 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn
-      Last updated on Feb 11, 2019.
+        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jul 24, 2019.
+      </span>
 
     </p>
   </div>
@@ -336,26 +339,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

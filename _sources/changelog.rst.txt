@@ -13,6 +13,13 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
+Version 2.4.0
+-------------
+
+Added :class:`~approxeng.input.CircularCentredAxis` to allow for smoother two-dimensional control. Tidied up aspects
+of how controller discovery works, cleaned up some of the docs to match newer APIs. Note that some newly added axis
+types will return (x,y) tuples rather than floats!
+
 Version 2.3.0
 -------------
 
@@ -25,7 +32,7 @@ Version 2.2.0
 -------------
 
 Added support for device LEDs where applicable. If your controller supports setting LEDs, these can be accessed through
-controller-class-specific methods, i.e. :meth:`approxeng.input.dualshock4.DualShock4.set_leds` for the DualShock4.
+controller-class-specific methods, i.e. :meth:`~approxeng.input.dualshock4.DualShock4.set_leds` for the DualShock4.
 There's no general way to do this as all controllers are different. See :ref:`sys`
 
 Version 2.1.0

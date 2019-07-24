@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; Approximate Engineering - Input 2.3.0 documentation</title>
+  <title>Index &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
   
 
   
@@ -18,37 +18,38 @@
   
 
   
-
-  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
-      <link rel="search" type="application/opensearchdescription+xml"
-            title="Search within Approximate Engineering - Input 2.3.0 documentation"
-            href="_static/opensearch.xml"/>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
     
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          href="_static/opensearch.xml"/>
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -62,7 +63,7 @@
             
             
               <div class="version">
-                2.3.0
+                2.4.0
               </div>
             
           
@@ -167,12 +168,14 @@
  | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
+ | <a href="#F"><strong>F</strong></a>
  | <a href="#H"><strong>H</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
  
@@ -195,9 +198,15 @@
 </li>
         <li><a href="api/input.html#approxeng.input.CentredAxis.__init__">(approxeng.input.CentredAxis method)</a>
 </li>
+        <li><a href="api/input.html#approxeng.input.CircularCentredAxis.__init__">(approxeng.input.CircularCentredAxis method)</a>
+</li>
         <li><a href="api/input.html#approxeng.input.Controller.__init__">(approxeng.input.Controller method)</a>
 </li>
         <li><a href="api/input.html#approxeng.input.TriggerAxis.__init__">(approxeng.input.TriggerAxis method)</a>
+</li>
+        <li><a href="api/discovery.html#approxeng.input.controllers.ControllerDiscovery.__init__">(approxeng.input.controllers.ControllerDiscovery method)</a>
+</li>
+        <li><a href="api/discovery.html#approxeng.input.controllers.ControllerRequirement.__init__">(approxeng.input.controllers.ControllerRequirement method)</a>
 </li>
         <li><a href="api/dualshock3.html#approxeng.input.dualshock3.DualShock3.__init__">(approxeng.input.dualshock3.DualShock3 method)</a>
 </li>
@@ -230,7 +239,11 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/input.html#approxeng.input.Axes.active_axes">active_axes (approxeng.input.Axes attribute)</a>
+      <li><a href="api/discovery.html#approxeng.input.controllers.ControllerRequirement.accept">accept() (approxeng.input.controllers.ControllerRequirement method)</a>
+</li>
+      <li><a href="api/input.html#approxeng.input.Axes.active_axes">active_axes() (approxeng.input.Axes property)</a>
+</li>
+      <li><a href="api/discovery.html#module-approxeng.input.controllers">approxeng.input.controllers (module)</a>
 </li>
       <li><a href="api/dualshock3.html#module-approxeng.input.dualshock3">approxeng.input.dualshock3 (module)</a>
 </li>
@@ -242,10 +255,10 @@
 </li>
       <li><a href="api/selectbinder.html#module-approxeng.input.selectbinder">approxeng.input.selectbinder (module)</a>
 </li>
-      <li><a href="api/sf30pro.html#module-approxeng.input.sf30pro">approxeng.input.sf30pro (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/sf30pro.html#module-approxeng.input.sf30pro">approxeng.input.sf30pro (module)</a>
+</li>
       <li><a href="api/spacemousepro.html#module-approxeng.input.spacemousepro">approxeng.input.spacemousepro (module)</a>
 </li>
       <li><a href="api/steamcontroller.html#module-approxeng.input.steamcontroller">approxeng.input.steamcontroller (module)</a>
@@ -266,24 +279,16 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/input.html#approxeng.input.Controller.battery_level">battery_level (approxeng.input.Controller attribute)</a>
-
-      <ul>
-        <li><a href="api/dualshock3.html#approxeng.input.dualshock3.DualShock3.battery_level">(approxeng.input.dualshock3.DualShock3 attribute)</a>
+      <li><a href="api/input.html#approxeng.input.Controller.battery_level">battery_level() (approxeng.input.Controller property)</a>
 </li>
-        <li><a href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4.battery_level">(approxeng.input.dualshock4.DualShock4 attribute)</a>
-</li>
-        <li><a href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad.battery_level">(approxeng.input.xboxone.WirelessXBoxOneSPad attribute)</a>
-</li>
-      </ul></li>
       <li><a href="api/input.html#approxeng.input.BinaryAxis">BinaryAxis (class in approxeng.input)</a>
 </li>
       <li><a href="api/selectbinder.html#approxeng.input.selectbinder.bind_controllers">bind_controllers() (in module approxeng.input.selectbinder)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/input.html#approxeng.input.Button">Button (class in approxeng.input)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/input.html#approxeng.input.Buttons.button_pressed">button_pressed() (approxeng.input.Buttons method)</a>
 </li>
       <li><a href="api/input.html#approxeng.input.Buttons.button_released">button_released() (approxeng.input.Buttons method)</a>
@@ -308,15 +313,23 @@
         <li><a href="api/input.html#approxeng.input.Controller.check_presses">(approxeng.input.Controller method)</a>
 </li>
       </ul></li>
+      <li><a href="api/input.html#approxeng.input.CircularCentredAxis">CircularCentredAxis (class in approxeng.input)</a>
+</li>
+      <li><a href="api/input.html#approxeng.input.Controller.connected">connected() (approxeng.input.Controller property)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/input.html#approxeng.input.Controller.connected">connected (approxeng.input.Controller attribute)</a>
-</li>
       <li><a href="api/input.html#approxeng.input.Controller">Controller (class in approxeng.input)</a>
+</li>
+      <li><a href="api/discovery.html#approxeng.input.controllers.ControllerDiscovery">ControllerDiscovery (class in approxeng.input.controllers)</a>
+</li>
+      <li><a href="api/discovery.html#approxeng.input.controllers.ControllerNotFoundError">ControllerNotFoundError</a>
+</li>
+      <li><a href="api/discovery.html#approxeng.input.controllers.ControllerRequirement">ControllerRequirement (class in approxeng.input.controllers)</a>
 </li>
       <li><a href="api/selectbinder.html#approxeng.input.selectbinder.ControllerResource">ControllerResource (class in approxeng.input.selectbinder)</a>
 </li>
-      <li><a href="api/input.html#approxeng.input.Controller.controls">controls (approxeng.input.Controller attribute)</a>
+      <li><a href="api/input.html#approxeng.input.Controller.controls">controls() (approxeng.input.Controller property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -333,10 +346,22 @@
   </ul></td>
 </tr></table>
 
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/discovery.html#approxeng.input.controllers.find_all_controllers">find_all_controllers() (in module approxeng.input.controllers)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/discovery.html#approxeng.input.controllers.find_matching_controllers">find_matching_controllers() (in module approxeng.input.controllers)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/input.html#approxeng.input.Controller.has_presses">has_presses (approxeng.input.Controller attribute)</a>
+      <li><a href="api/input.html#approxeng.input.Controller.has_presses">has_presses() (approxeng.input.Controller property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -348,10 +373,10 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/input.html#approxeng.input.Axes.names">names (approxeng.input.Axes attribute)</a>
+      <li><a href="api/input.html#approxeng.input.Axes.names">names() (approxeng.input.Axes property)</a>
 
       <ul>
-        <li><a href="api/input.html#approxeng.input.Buttons.names">(approxeng.input.Buttons attribute)</a>
+        <li><a href="api/input.html#approxeng.input.Buttons.names">(approxeng.input.Buttons property)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -362,30 +387,68 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/pihut.html#approxeng.input.pihut.PiHut">PiHut (class in approxeng.input.pihut)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/input.html#approxeng.input.Buttons.presses">presses (approxeng.input.Buttons attribute)</a>
+      <li><a href="api/input.html#approxeng.input.Buttons.presses">presses() (approxeng.input.Buttons property)</a>
 
       <ul>
-        <li><a href="api/input.html#approxeng.input.Controller.presses">(approxeng.input.Controller attribute)</a>
+        <li><a href="api/input.html#approxeng.input.Controller.presses">(approxeng.input.Controller property)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/discovery.html#approxeng.input.controllers.print_controllers">print_controllers() (in module approxeng.input.controllers)</a>
+</li>
+      <li><a href="api/discovery.html#approxeng.input.controllers.print_devices">print_devices() (in module approxeng.input.controllers)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/input.html#approxeng.input.CentredAxis.raw_value">raw_value (approxeng.input.CentredAxis attribute)</a>
+      <li><a href="api/input.html#approxeng.input.CentredAxis.raw_value">raw_value() (approxeng.input.CentredAxis property)</a>
 
       <ul>
-        <li><a href="api/input.html#approxeng.input.TriggerAxis.raw_value">(approxeng.input.TriggerAxis attribute)</a>
+        <li><a href="api/input.html#approxeng.input.TriggerAxis.raw_value">(approxeng.input.TriggerAxis property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/input.html#approxeng.input.Controller.read_led_value">read_led_value() (approxeng.input.Controller method)</a>
+</li>
+      <li><a href="api/input.html#approxeng.input.BinaryAxis.receive_device_value">receive_device_value() (approxeng.input.BinaryAxis method)</a>
+
+      <ul>
+        <li><a href="api/input.html#approxeng.input.CentredAxis.receive_device_value">(approxeng.input.CentredAxis method)</a>
+</li>
+        <li><a href="api/input.html#approxeng.input.TriggerAxis.receive_device_value">(approxeng.input.TriggerAxis method)</a>
 </li>
       </ul></li>
       <li><a href="api/input.html#approxeng.input.Buttons.register_button_handler">register_button_handler() (approxeng.input.Buttons method)</a>
 
       <ul>
         <li><a href="api/input.html#approxeng.input.Controller.register_button_handler">(approxeng.input.Controller method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/dualshock3.html#approxeng.input.dualshock3.DualShock3.registration_ids">registration_ids() (approxeng.input.dualshock3.DualShock3 static method)</a>
+
+      <ul>
+        <li><a href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4.registration_ids">(approxeng.input.dualshock4.DualShock4 static method)</a>
+</li>
+        <li><a href="api/pihut.html#approxeng.input.pihut.PiHut.registration_ids">(approxeng.input.pihut.PiHut static method)</a>
+</li>
+        <li><a href="api/rockcandy.html#approxeng.input.rockcandy.RockCandy.registration_ids">(approxeng.input.rockcandy.RockCandy static method)</a>
+</li>
+        <li><a href="api/sf30pro.html#approxeng.input.sf30pro.SF30Pro.registration_ids">(approxeng.input.sf30pro.SF30Pro static method)</a>
+</li>
+        <li><a href="api/spacemousepro.html#approxeng.input.spacemousepro.SpaceMousePro.registration_ids">(approxeng.input.spacemousepro.SpaceMousePro static method)</a>
+</li>
+        <li><a href="api/steamcontroller.html#approxeng.input.steamcontroller.SteamController.registration_ids">(approxeng.input.steamcontroller.SteamController static method)</a>
+</li>
+        <li><a href="api/wii.html#approxeng.input.wii.WiiRemotePro.registration_ids">(approxeng.input.wii.WiiRemotePro static method)</a>
+</li>
+        <li><a href="api/wiimote.html#approxeng.input.wiimote.WiiMote.registration_ids">(approxeng.input.wiimote.WiiMote static method)</a>
+</li>
+        <li><a href="api/xboxone.html#approxeng.input.xboxone.WiredXBoxOneSPad.registration_ids">(approxeng.input.xboxone.WiredXBoxOneSPad static method)</a>
+</li>
+        <li><a href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad.registration_ids">(approxeng.input.xboxone.WirelessXBoxOneSPad static method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -412,12 +475,6 @@
 </li>
       <li><a href="api/dualshock4.html#approxeng.input.dualshock4.DualShock4.set_leds">set_leds() (approxeng.input.dualshock4.DualShock4 method)</a>
 </li>
-      <li><a href="api/input.html#approxeng.input.CentredAxis.set_raw_value">set_raw_value() (approxeng.input.CentredAxis method)</a>
-
-      <ul>
-        <li><a href="api/input.html#approxeng.input.TriggerAxis.set_raw_value">(approxeng.input.TriggerAxis method)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/sf30pro.html#approxeng.input.sf30pro.SF30Pro">SF30Pro (class in approxeng.input.sf30pro)</a>
@@ -425,6 +482,8 @@
       <li><a href="api/spacemousepro.html#approxeng.input.spacemousepro.SpaceMousePro">SpaceMousePro (class in approxeng.input.spacemousepro)</a>
 </li>
       <li><a href="api/steamcontroller.html#approxeng.input.steamcontroller.SteamController">SteamController (class in approxeng.input.steamcontroller)</a>
+</li>
+      <li><a href="api/input.html#approxeng.input.Controller.sys_nodes">sys_nodes() (approxeng.input.Controller property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -437,13 +496,23 @@
   </ul></td>
 </tr></table>
 
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/discovery.html#approxeng.input.controllers.unique_name">unique_name() (in module approxeng.input.controllers)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api/input.html#approxeng.input.CentredAxis.value">value (approxeng.input.CentredAxis attribute)</a>
+      <li><a href="api/input.html#approxeng.input.BinaryAxis.value">value() (approxeng.input.BinaryAxis property)</a>
 
       <ul>
-        <li><a href="api/input.html#approxeng.input.TriggerAxis.value">(approxeng.input.TriggerAxis attribute)</a>
+        <li><a href="api/input.html#approxeng.input.CentredAxis.value">(approxeng.input.CentredAxis property)</a>
+</li>
+        <li><a href="api/input.html#approxeng.input.TriggerAxis.value">(approxeng.input.TriggerAxis property)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -462,6 +531,8 @@
 </li>
       <li><a href="api/xboxone.html#approxeng.input.xboxone.WirelessXBoxOneSPad">WirelessXBoxOneSPad (class in approxeng.input.xboxone)</a>
 </li>
+      <li><a href="api/input.html#approxeng.input.Controller.write_led_value">write_led_value() (approxeng.input.Controller method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -477,8 +548,10 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn
-      Last updated on Feb 11, 2019.
+        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jul 24, 2019.
+      </span>
 
     </p>
   </div>
@@ -495,26 +568,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

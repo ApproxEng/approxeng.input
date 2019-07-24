@@ -9,7 +9,7 @@ Controller Discovery - approxeng.input.controllers
     particularly friendly, especially as some controllers used multiple OS devices.
 
 .. note::
-    If you are using the resource binding via :class:`approxeng.input.selectbinder.ControllerResource` the same classes
+    If you are using the resource binding via :class:`~approxeng.input.selectbinder.ControllerResource` the same classes
     are used within that binding to specify controllers.
 
 Simple discovery
@@ -31,10 +31,10 @@ Specifying properties
 
 You may not want to just pick the first controller available (although the library does attempt to order controllers
 such that the first one will be the most capable). You can use the
-:class:`approxeng.input.controllers.ControllerRequirement` to specify exactly what you want. At the moment this class
+:class:`~approxeng.input.controllers.ControllerRequirement` to specify exactly what you want. At the moment this class
 supports two filters:
 
-1. You can specify an exact controller class with 'require_class', such as specifying that you only want a DualShock4
+1. You can specify an exact controller class with `require_class`, such as specifying that you only want a DualShock4
 2. You can specify a set of controls on the controller, identified by sname, with 'require_snames' that any controller
    must have to be included in the results. This is great when you know that you need a pair of analogue triggers but
    don't care what exact controller type you get as long as it has them.
@@ -54,8 +54,9 @@ Both the above examples return a single controller. This is because they both ha
 don't provide any requirements as in the first example the library treats it as if you'd given it a single requirement
 with no filters applied.
 
-The result of the `find_matching_controllers` call is a list of :class:`approxeng.input.controllers.ControllerDiscovery`
-objects, each of which contains both the actual controller class and the matching evdev device nodes. In both these
+The result of the :func:`~approxeng.input.controllers.find_matching_controllers` call is a list of
+:class:`~approxeng.input.controllers.ControllerDiscovery`
+objects, each of which contains both the actual :class:`~approxeng.input.Controller` sub-class and the matching evdev device nodes. In both these
 cases this list contains a single item.
 
 To discover multiple controllers, specify multiple requirements when calling:
@@ -78,5 +79,11 @@ Discovery failures
 ------------------
 
 If the system does not have the controllers you've requested, the discovery process will raise a
-:class:`approxeng.input.controllers.ControllerNotFoundError`, in general you should catch this and wait before trying
+:class:`~approxeng.input.controllers.ControllerNotFoundError`, in general you should catch this and wait before trying
 to bind again.
+
+Discovery API
+-------------
+
+.. automodule:: approxeng.input.controllers
+    :members:

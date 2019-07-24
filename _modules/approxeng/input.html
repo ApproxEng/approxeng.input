@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input &mdash; Approximate Engineering - Input 2.3.0 documentation</title>
+  <title>approxeng.input &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
   
 
   
@@ -17,37 +17,38 @@
   
 
   
-
-  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
   
     
-      <link rel="search" type="application/opensearchdescription+xml"
-            title="Search within Approximate Engineering - Input 2.3.0 documentation"
-            href="../../_static/opensearch.xml"/>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
     
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          href="../../_static/opensearch.xml"/>
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -61,7 +62,7 @@
             
             
               <div class="version">
-                2.3.0
+                2.4.0
               </div>
             
           
@@ -159,7 +160,14 @@
             
   <h1>Source code for approxeng.input</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="k">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">sqrt</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">evdev</span> <span class="k">import</span> <span class="n">InputEvent</span>
+
+<span class="kn">from</span> <span class="nn">approxeng.input.sys</span> <span class="k">import</span> <span class="n">sys_nodes</span>
 
 <span class="c1">#: Logger - explicitly set the level for this to see log messages</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;approxeng.input&#39;</span><span class="p">)</span>
@@ -260,34 +268,23 @@
         <span class="k">return</span> <span class="n">map_single_axis</span><span class="p">(</span><span class="n">centre</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">dead_zone</span><span class="p">,</span> <span class="n">hot_zone</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Controller"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller">[docs]</a><span class="k">class</span> <span class="nc">Controller</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Controller"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller">[docs]</a><span class="k">class</span> <span class="nc">Controller</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Superclass for controller implementations</span>
 
-<span class="sd">    :ivar int vendor_id:</span>
-<span class="sd">        Vendor ID used to identify the controller type.</span>
-<span class="sd">    :ivar int product_id:</span>
-<span class="sd">        Product ID used to identify the controller type.</span>
 <span class="sd">    :ivar approxeng.input.Axes axes:</span>
 <span class="sd">        All analogue axes. You can get the individual axis objects from this, but you shouldn&#39;t ever need to do this,</span>
 <span class="sd">        use methods on Controller instead!</span>
 <span class="sd">    :ivar approxeng.input.Buttons buttons:</span>
 <span class="sd">        All buttons are managed by this object. This can be used to access Button objects representing buttons on the</span>
 <span class="sd">        controller, but you will almost never need to do this - use the methods on Controller instead!</span>
-<span class="sd">    :ivar: boolean connected:</span>
-<span class="sd">        True if the controller is connected to a source of events, False otherwise. This can be used as a break</span>
-<span class="sd">        condition to check for controller disconnection.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Controller.__init__"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vendor_id</span><span class="p">,</span> <span class="n">product_id</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">node_mappings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="Controller.__init__"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">node_mappings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">hot_zone</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Populate the controller name, button set and axis set.</span>
 
-<span class="sd">        :param int vendor_id:</span>
-<span class="sd">            The USB vendor ID for the controller</span>
-<span class="sd">        :param int product_id:</span>
-<span class="sd">            The USB product ID for the controller</span>
 <span class="sd">        :param controls:</span>
 <span class="sd">            A list of :class:`~approxeng.input.Button`, :class:`~approxeng.input.CentredAxis`,</span>
 <span class="sd">            :class:`~approxeng.input.TriggerAxis` and :class:`~approxeng.input.BinaryAxis` instances</span>
@@ -308,8 +305,6 @@
 <span class="sd">        :param hot_zone:</span>
 <span class="sd">            If specified, this is applied to all axes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vendor_id</span> <span class="o">=</span> <span class="n">vendor_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">product_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="n">Axes</span><span class="p">([</span><span class="n">control</span> <span class="k">for</span> <span class="n">control</span> <span class="ow">in</span> <span class="n">controls</span> <span class="k">if</span>
                           <span class="nb">isinstance</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">CentredAxis</span><span class="p">)</span> <span class="ow">or</span>
                           <span class="nb">isinstance</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">BinaryAxis</span><span class="p">)</span> <span class="ow">or</span>
@@ -327,38 +322,97 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">node_mappings</span> <span class="o">=</span> <span class="n">node_mappings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device_unique_name</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stream</span> <span class="o">=</span> <span class="n">Controller</span><span class="o">.</span><span class="n">ControllerStream</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+        <span class="k">class</span> <span class="nc">ControllerStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Class to produce streams for values from the parent controller on demand.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+
+            <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span>
+
+            <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                :param item:</span>
+<span class="sd">                    Name of an item or items to fetch, referring to them by sname, so either axes or</span>
+<span class="sd">                    buttons.</span>
+<span class="sd">                :return:</span>
+<span class="sd">                    A generator which will emit the value of that item or items every time it&#39;s called, in effect</span>
+<span class="sd">                    creating an infinite stream of values for the given item or items.</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+
+                <span class="k">def</span> <span class="nf">generator</span><span class="p">():</span>
+                    <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+                        <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">generator</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stream</span> <span class="o">=</span> <span class="n">ControllerStream</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">sys_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">{}:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns True if the controller object is associated correctly with a physical device, False otherwise. Use this</span>
-<span class="sd">        to detect a loss of controller pairing.</span>
+<span class="sd">        Returns a dict of discovered sys nodes representing power and LED status for this controller. If the controller</span>
+<span class="sd">        isn&#39;t bound to a physical device, or there aren&#39;t LED or power nodes available this returns an empty dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_unique_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sys_nodes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_unique_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="Controller.read_led_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.read_led_value">[docs]</a>    <span class="k">def</span> <span class="nf">read_led_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">led_name</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read an existing LED value. This may or may not work depending on the underlying implementation. Requires</span>
+<span class="sd">        a bound controller with the specified name present in its LED sys classes. Returns None if this does not</span>
+<span class="sd">        apply.</span>
+
+<span class="sd">        :param led_name:</span>
+<span class="sd">            Name of LED to query</span>
+<span class="sd">        :return:</span>
+<span class="sd">            Integer value of LED, or None if either unbound or no such LED name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_unique_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">read_led_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_unique_name</span><span class="p">,</span> <span class="n">led_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Controller.write_led_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.write_led_value">[docs]</a>    <span class="k">def</span> <span class="nf">write_led_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">led_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write a value to a named LED. Does nothing if either we&#39;re not bound to a device, or there&#39;s no</span>
+<span class="sd">        such LED name.</span>
+
+<span class="sd">        :param led_name:</span>
+<span class="sd">            LED name within this device - use self.sys_nodes[&#39;leds&#39;] keys to discover LED names.</span>
+<span class="sd">        :param value:</span>
+<span class="sd">            Value to write, should be an integer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_unique_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">write_led_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_unique_name</span><span class="p">,</span> <span class="n">led_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">battery_level</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read the battery capacity, if available, as a percentage. If not available, return None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_unique_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">read_power_level</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_unique_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">registration_ids</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">connected</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return:</span>
+<span class="sd">            True if the controller object is associated correctly with a physical device, False otherwise. Use this</span>
+<span class="sd">            to detect a loss of controller pairing.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_unique_name</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">battery_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns the battery level, as a float from 0.0 to 1.0, or None if not available</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="k">class</span> <span class="nc">ControllerStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-
-        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span>
-
-        <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-            <span class="k">def</span> <span class="nf">generator</span><span class="p">():</span>
-                <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
-                    <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-
-            <span class="k">return</span> <span class="n">generator</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simple index access to axis corrected values and button held times</span>
 
@@ -374,7 +428,7 @@
             <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">single_item</span><span class="p">)</span> <span class="k">for</span> <span class="n">single_item</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattr__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Property access to axis values and button hold times</span>
 
@@ -389,7 +443,7 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">held</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">AttributeError</span>
 
-    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A Controller contains a named attribute if it has either an axis or a button with the attribute as its sname</span>
 
@@ -404,7 +458,7 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="Controller.check_presses"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.check_presses">[docs]</a>    <span class="k">def</span> <span class="nf">check_presses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Controller.check_presses"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.check_presses">[docs]</a>    <span class="k">def</span> <span class="nf">check_presses</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ButtonPresses&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the set of Buttons which have been pressed since this call was last made, clearing it as we do. This is</span>
 <span class="sd">        a shortcut to doing &#39;buttons.get_and_clear_button_press_history&#39;</span>
@@ -430,17 +484,17 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">presses</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">controls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">controls</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">{}:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return:</span>
-<span class="sd">            A struct containing all the names of controls on this controller, this takes the form of a dict with two</span>
+<span class="sd">            A dict containing all the names of controls on this controller, this takes the form of a dict with two</span>
 <span class="sd">            keys, `axes` and `buttons`, the values for each of which are lists of strings containing the names of each</span>
 <span class="sd">            type of control.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;axes&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">names</span><span class="p">,</span>
                 <span class="s1">&#39;buttons&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">names</span><span class="p">}</span>
 
-<div class="viewcode-block" id="Controller.register_button_handler"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.register_button_handler">[docs]</a>    <span class="k">def</span> <span class="nf">register_button_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button_handler</span><span class="p">,</span> <span class="n">button_sname</span><span class="p">):</span>
+<div class="viewcode-block" id="Controller.register_button_handler"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.register_button_handler">[docs]</a>    <span class="k">def</span> <span class="nf">register_button_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button_handler</span><span class="p">,</span> <span class="n">button_sname</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Register a handler function which will be called when a button is pressed</span>
 
@@ -454,7 +508,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">register_button_handler</span><span class="p">(</span><span class="n">button_handler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="p">[</span><span class="n">button_sname</span><span class="p">])</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">, axes=</span><span class="si">{}</span><span class="s2">, buttons=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="p">)</span></div>
 
 
@@ -475,9 +529,20 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_code</span> <span class="o">=</span> <span class="p">{</span><span class="n">axis</span><span class="o">.</span><span class="n">axis_event_code</span><span class="p">:</span> <span class="n">axis</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span> <span class="o">=</span> <span class="p">{</span><span class="n">axis</span><span class="o">.</span><span class="n">sname</span><span class="p">:</span> <span class="n">axis</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">}</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span> <span class="o">=</span> <span class="p">{</span><span class="n">axis</span><span class="o">.</span><span class="n">sname</span><span class="p">:</span> <span class="n">axis</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">}</span>
 
-<div class="viewcode-block" id="Axes.axis_updated"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Axes.axis_updated">[docs]</a>    <span class="k">def</span> <span class="nf">axis_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># Look to see whether we&#39;ve got pairs of lx,ly and / or rx,ry and create corresponding circular axes</span>
+        <span class="k">def</span> <span class="nf">add_circular_axis</span><span class="p">(</span><span class="n">rootname</span><span class="p">):</span>
+            <span class="n">xname</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{rootname}</span><span class="s1">x&#39;</span>
+            <span class="n">yname</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;</span><span class="si">{rootname}</span><span class="s1">y&#39;</span>
+            <span class="k">if</span> <span class="n">xname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span> <span class="ow">and</span> <span class="n">yname</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="p">[</span><span class="n">rootname</span><span class="p">]</span> <span class="o">=</span> <span class="n">CircularCentredAxis</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="p">[</span><span class="n">xname</span><span class="p">],</span>
+                                                                   <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="p">[</span><span class="n">yname</span><span class="p">])</span>
+
+        <span class="n">add_circular_axis</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="p">)</span>
+        <span class="n">add_circular_axis</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Axes.axis_updated"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Axes.axis_updated">[docs]</a>    <span class="k">def</span> <span class="nf">axis_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">InputEvent</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called to process an absolute axis event from evdev, this is called internally by the controller implementations</span>
 
@@ -493,7 +558,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_code</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">axis</span><span class="o">.</span><span class="n">set_raw_value</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+            <span class="n">axis</span><span class="o">.</span><span class="n">receive_device_value</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Unknown axis code </span><span class="si">{}</span><span class="s1"> (</span><span class="si">{}</span><span class="s1">), value </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">code</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">))</span></div>
 
@@ -518,31 +583,31 @@
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">axis</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_code</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The snames of all axis objects</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="s1">&#39;&#39;</span><span class="p">])</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">active_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">active_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="s1">&#39;Axis&#39;</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a sequence of all Axis objects which are not in their resting positions</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">axis</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="k">if</span> <span class="n">axis</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">&#39;Axis&#39;</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an axis by sname, if present</span>
 
 <span class="sd">        :param sname:</span>
 <span class="sd">            The standard name to search</span>
 <span class="sd">        :return:</span>
-<span class="sd">            An axis object, or None if no such button exists</span>
+<span class="sd">            An axis object, or None if no such axis exists</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">sname</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Axis&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Called when an unresolved attribute is requested, retrieves the Axis object for the given sname</span>
 
@@ -550,12 +615,14 @@
 <span class="sd">            the standard name of the axis to query</span>
 <span class="sd">        :return:</span>
 <span class="sd">            the corrected value of the axis, or raise AttributeError if no such axis is present</span>
+<span class="sd">        :raise:</span>
+<span class="sd">            AttributeError if there&#39;s no axis with this name</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">AttributeError</span>
 
-    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check whether a given axis, referenced by sname, exists</span>
 
@@ -567,7 +634,34 @@
         <span class="k">return</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span></div>
 
 
-<div class="viewcode-block" id="TriggerAxis"><a class="viewcode-back" href="../../api/input.html#approxeng.input.TriggerAxis">[docs]</a><span class="k">class</span> <span class="nc">TriggerAxis</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">Axis</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract base class for axis types.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return:</span>
+<span class="sd">            A corrected floating point value, either in the range -1 to 1 for centred axes, or 0 to 1 for non-centred,</span>
+<span class="sd">            adjusted for dead and hot zones.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">receive_device_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Receive a value from the underlying operating system code, in our case evdev, and update the internal state of</span>
+<span class="sd">        this axis object appropriately.</span>
+
+<span class="sd">        :param value:</span>
+<span class="sd">            Integer value received from the evdev event handler.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+
+<div class="viewcode-block" id="TriggerAxis"><a class="viewcode-back" href="../../api/input.html#approxeng.input.TriggerAxis">[docs]</a><span class="k">class</span> <span class="nc">TriggerAxis</span><span class="p">(</span><span class="n">Axis</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A single analogue axis where the expected output range is 0.0 to 1.0. Typically this is used for triggers, where the</span>
 <span class="sd">    resting position is 0.0 and any interaction causes higher values. Whether a particular controller exposes triggers</span>
@@ -575,11 +669,12 @@
 <span class="sd">    axes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TriggerAxis.__init__"><a class="viewcode-back" href="../../api/input.html#approxeng.input.TriggerAxis.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">min_raw_value</span><span class="p">,</span> <span class="n">max_raw_value</span><span class="p">,</span> <span class="n">axis_event_code</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">button_sname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">button_trigger_value</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<div class="viewcode-block" id="TriggerAxis.__init__"><a class="viewcode-back" href="../../api/input.html#approxeng.input.TriggerAxis.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">min_raw_value</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">max_raw_value</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">axis_event_code</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                 <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sname</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">button_sname</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">button_trigger_value</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a new TriggerAxis - this will be done internally within the controller classes i.e.</span>
-<span class="sd">        :class:`approxeng.input.xboxone.XBoxOneSPad`</span>
+<span class="sd">        Create a new TriggerAxis - this will be done internally within the :class:`~approxeng.input.Controller`</span>
+<span class="sd">        sub-class.</span>
 
 <span class="sd">        :param name:</span>
 <span class="sd">            A friendly name for the axis</span>
@@ -622,7 +717,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">button</span> <span class="o">=</span> <span class="kc">None</span></div>
 
-    <span class="k">def</span> <span class="nf">_input_to_raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_input_to_raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert the value read from evdev to a 0.0 to 1.0 range.</span>
 
@@ -631,12 +726,12 @@
 <span class="sd">        :param value:</span>
 <span class="sd">            a value ranging from the defined minimum to the defined maximum value.</span>
 <span class="sd">        :return:</span>
-<span class="sd">            0.0 at minumum, 1.0 at maximum, linearly interpolating between those two points.</span>
+<span class="sd">            0.0 at minimum, 1.0 at maximum, linearly interpolating between those two points.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_raw_value</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_raw_value</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_raw_value</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_raw_value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an uncorrected value for this trigger</span>
 
@@ -645,7 +740,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a centre-compensated, scaled, value for the axis, taking any dead-zone into account. The value will</span>
 <span class="sd">        scale from 0.0 at the edge of the dead-zone to 1.0 (positive) at the extreme position of</span>
@@ -665,7 +760,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="mf">0.9</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="mf">0.1</span></div>
 
-<div class="viewcode-block" id="TriggerAxis.set_raw_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.TriggerAxis.set_raw_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_value</span><span class="p">):</span>
+<div class="viewcode-block" id="TriggerAxis.receive_device_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.TriggerAxis.receive_device_value">[docs]</a>    <span class="k">def</span> <span class="nf">receive_device_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set a new value, called from within the joystick implementation class when parsing the event queue.</span>
 
@@ -689,10 +784,12 @@
         <span class="k">return</span> <span class="s2">&quot;TriggerAxis name=</span><span class="si">{}</span><span class="s2">, sname=</span><span class="si">{}</span><span class="s2">, corrected_value=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="BinaryAxis"><a class="viewcode-back" href="../../api/input.html#approxeng.input.BinaryAxis">[docs]</a><span class="k">class</span> <span class="nc">BinaryAxis</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="BinaryAxis"><a class="viewcode-back" href="../../api/input.html#approxeng.input.BinaryAxis">[docs]</a><span class="k">class</span> <span class="nc">BinaryAxis</span><span class="p">(</span><span class="n">Axis</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A fake &#39;analogue&#39; axis which actually corresponds to a pair of buttons. Once associated with a Buttons instance</span>
-<span class="sd">    it routes events through to the Buttons instance to create button presses corresponding to axis movements.</span>
+<span class="sd">    it routes events through to the Buttons instance to create button presses corresponding to axis movements. This is</span>
+<span class="sd">    necessary as some controllers expose buttons, especially D-pad buttons, as a pair of axes rather than four buttons,</span>
+<span class="sd">    but we almost certainly want to treat them as buttons the way most controllers do.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="BinaryAxis.__init__"><a class="viewcode-back" href="../../api/input.html#approxeng.input.BinaryAxis.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">axis_event_code</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">b1name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">b2name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -721,7 +818,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sname</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="mi">0</span></div>
 
-    <span class="k">def</span> <span class="nf">set_raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_value</span><span class="p">):</span>
+<div class="viewcode-block" id="BinaryAxis.receive_device_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.BinaryAxis.receive_device_value">[docs]</a>    <span class="k">def</span> <span class="nf">receive_device_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__value</span> <span class="o">=</span> <span class="n">raw_value</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -732,10 +829,16 @@
             <span class="k">if</span> <span class="n">raw_value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_pressed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b1</span><span class="o">.</span><span class="n">key_code</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">raw_value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_pressed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b2</span><span class="o">.</span><span class="n">key_code</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">button_pressed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">b2</span><span class="o">.</span><span class="n">key_code</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        You probably don&#39;t want to actually get the value of this axis, use the generated buttons instead.</span>
+
+<span class="sd">        :returns int:</span>
+<span class="sd">            The raw value from the evdev events driving this axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert</span><span class="p">:</span>
             <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
         <span class="k">else</span><span class="p">:</span>
@@ -745,7 +848,73 @@
         <span class="k">return</span> <span class="s2">&quot;BinaryAxis name=</span><span class="si">{}</span><span class="s2">, sname=</span><span class="si">{}</span><span class="s2">, corrected_value=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="CentredAxis"><a class="viewcode-back" href="../../api/input.html#approxeng.input.CentredAxis">[docs]</a><span class="k">class</span> <span class="nc">CentredAxis</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="CircularCentredAxis"><a class="viewcode-back" href="../../api/input.html#approxeng.input.CircularCentredAxis">[docs]</a><span class="k">class</span> <span class="nc">CircularCentredAxis</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An aggregation of a pair of :class:`~approxeng.input.CentredAxis` instances.</span>
+
+<span class="sd">    When using a pair of centred axes to model a single joystick there are some unexpected and probably undesirable</span>
+<span class="sd">    issues with dead zones. As each axis is treated independently, the dead zones are also applied independently - this</span>
+<span class="sd">    means that, for example, with the joystick fully pushed forwards you still have the dead zone behaviour between left</span>
+<span class="sd">    and right. You may prefer a behaviour where both axes are zero if the stick is within a certain distance of its</span>
+<span class="sd">    centre position in any direction. This class provides that, and is created from a pair of centred axes, i.e. &#39;lx&#39;</span>
+<span class="sd">    and &#39;ly&#39;. The value is returns is a tuple of (x,y) positions. Use of this class will constrain the overall motion</span>
+<span class="sd">    of the paired axes into the unit circle - in many controllers this is true because of the physical layout of the</span>
+<span class="sd">    controller, but it may not always be in hardware terms.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="CircularCentredAxis.__init__"><a class="viewcode-back" href="../../api/input.html#approxeng.input.CircularCentredAxis.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;CentredAxis&quot;</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="s2">&quot;CentredAxis&quot;</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new circular centred axis</span>
+
+<span class="sd">        :param CentredAxis x:</span>
+<span class="sd">            Axis to use for x value</span>
+<span class="sd">        :param CentredAxis y:</span>
+<span class="sd">            Axis to use for y value</span>
+<span class="sd">        :param float dead_zone:</span>
+<span class="sd">            Specifies the distance from the centre prior to which both x and y will return 0.0, defaults to 0.1</span>
+<span class="sd">        :param float hot_zone:</span>
+<span class="sd">            Specifies the distance from the 1.0 distance beyond which both x and y will return +-1.0, i.e. if the hot</span>
+<span class="sd">            zone is set to 0.1 then all positions where the distance is greater than 0.9 will return magnitude 1 total</span>
+<span class="sd">            distances. Defaults to 0.1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dead_zone</span> <span class="o">=</span> <span class="n">dead_zone</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hot_zone</span> <span class="o">=</span> <span class="n">hot_zone</span></div>
+
+    <span class="k">def</span> <span class="nf">_calculate_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">raw_y</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Map x and y to a corrected x,y tuple based on the configured dead and hot zones.</span>
+
+<span class="sd">        :param raw_x:</span>
+<span class="sd">            Raw x axis position, -1.0 to 1.0</span>
+<span class="sd">        :param raw_y:</span>
+<span class="sd">            Raw y axis position, -1.0 to 1.0</span>
+<span class="sd">        :return:</span>
+<span class="sd">            x,y corrected position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Avoid trying to take sqrt(0) in pathological case</span>
+        <span class="k">if</span> <span class="n">raw_x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">raw_y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">distance</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">raw_x</span> <span class="o">*</span> <span class="n">raw_x</span> <span class="o">+</span> <span class="n">raw_y</span> <span class="o">*</span> <span class="n">raw_y</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+        <span class="k">if</span> <span class="n">distance</span> <span class="o">&gt;=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">hot_zone</span><span class="p">:</span>
+            <span class="c1"># Return normalised value, which corresponds to the unit vector in that direction</span>
+            <span class="k">return</span> <span class="n">raw_x</span> <span class="o">/</span> <span class="n">distance</span><span class="p">,</span> <span class="n">raw_y</span> <span class="o">/</span> <span class="n">distance</span>
+        <span class="k">elif</span> <span class="n">distance</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dead_zone</span><span class="p">:</span>
+            <span class="c1"># Return zero vector</span>
+            <span class="k">return</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
+        <span class="c1"># Guarantee distance to be between dead_zone and 1.0-hot_zone at this point, scale it and return</span>
+        <span class="n">effective_distance</span> <span class="o">=</span> <span class="p">(</span><span class="n">distance</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">dead_zone</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dead_zone</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">hot_zone</span><span class="p">))</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">effective_distance</span> <span class="o">/</span> <span class="n">distance</span>
+        <span class="k">return</span> <span class="n">raw_x</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="n">raw_y</span> <span class="o">*</span> <span class="n">scale</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_position</span><span class="p">(</span><span class="n">raw_x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">raw_value</span><span class="p">,</span> <span class="n">raw_y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">raw_value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CentredAxis"><a class="viewcode-back" href="../../api/input.html#approxeng.input.CentredAxis">[docs]</a><span class="k">class</span> <span class="nc">CentredAxis</span><span class="p">(</span><span class="n">Axis</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A single analogue axis on a controller where the expected output range is -1.0 to 1.0 and the resting position of</span>
 <span class="sd">    the control is at 0.0, at least in principle.</span>
@@ -754,8 +923,8 @@
 <div class="viewcode-block" id="CentredAxis.__init__"><a class="viewcode-back" href="../../api/input.html#approxeng.input.CentredAxis.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">min_raw_value</span><span class="p">,</span> <span class="n">max_raw_value</span><span class="p">,</span> <span class="n">axis_event_code</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
                  <span class="n">sname</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create a new CentredAxis - this will be done internally within the controller classes i.e.</span>
-<span class="sd">        :class:`approxeng.input.sixaxis.SixAxis`</span>
+<span class="sd">        Create a new CentredAxis - this will be done internally within the :class:`~approxeng.input.Controller`</span>
+<span class="sd">        sub-class.</span>
 
 <span class="sd">        :param name:</span>
 <span class="sd">            A friendly name for the axis</span>
@@ -787,7 +956,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">axis_event_code</span> <span class="o">=</span> <span class="n">axis_event_code</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sname</span> <span class="o">=</span> <span class="n">sname</span></div>
 
-    <span class="k">def</span> <span class="nf">_input_to_raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_input_to_raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Convert the value read from evdev to a -1.0 to 1.0 range.</span>
 
@@ -798,10 +967,10 @@
 <span class="sd">        :return:</span>
 <span class="sd">            -1.0 at minumum, 1.0 at maximum, linearly interpolating between those two points.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_raw_value</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_raw_value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_raw_value</span><span class="p">))</span> <span class="o">-</span> <span class="mf">1.0</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_raw_value</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_raw_value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_raw_value</span><span class="p">))</span> <span class="o">-</span> <span class="mf">1.0</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get an uncorrected value for this axis</span>
 
@@ -810,7 +979,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a centre-compensated, scaled, value for the axis, taking any dead-zone into account. The value will</span>
 <span class="sd">        scale from 0.0 at the edge of the dead-zone to 1.0 (positive) or -1.0 (negative) at the extreme position of</span>
@@ -838,7 +1007,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">max</span> <span class="o">=</span> <span class="mf">0.9</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.9</span></div>
 
-<div class="viewcode-block" id="CentredAxis.set_raw_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.CentredAxis.set_raw_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_raw_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_value</span><span class="p">):</span>
+<div class="viewcode-block" id="CentredAxis.receive_device_value"><a class="viewcode-back" href="../../api/input.html#approxeng.input.CentredAxis.receive_device_value">[docs]</a>    <span class="k">def</span> <span class="nf">receive_device_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_value</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set a new value, called from within the joystick implementation class when parsing the event queue.</span>
 
@@ -854,7 +1023,7 @@
         <span class="k">elif</span> <span class="n">new_value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">min</span> <span class="o">=</span> <span class="n">new_value</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;CentredAxis name=</span><span class="si">{}</span><span class="s2">, sname=</span><span class="si">{}</span><span class="s2">, corrected_value=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
 
 
@@ -897,7 +1066,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return true if a button was pressed, referencing by standard name</span>
 
-<span class="sd">        :param sname: the name to check</span>
+<span class="sd">        :param item: the name to check</span>
 <span class="sd">        :return: true if contained within the press set, false otherwise</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
@@ -1159,8 +1328,10 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Tom Oinn
-      Last updated on Feb 11, 2019.
+        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jul 24, 2019.
+      </span>
 
     </p>
   </div>
@@ -1177,26 +1348,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

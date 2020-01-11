@@ -40,9 +40,9 @@ class WiiRemotePro(Controller):
                 Button("D Down", 545, sname='ddown'),
                 Button("D Left", 546, sname='dleft'),
                 CentredAxis("Left Horizontal", -1000, 1000, 0, sname='lx'),
-                CentredAxis("Left Vertical", -1000, 1000, 1, invert=True, sname='ly'),
+                CentredAxis("Left Vertical", 1000, -1000, 1, sname='ly'),
                 CentredAxis("Right Horizontal", -1000, 1000, 3, sname='rx'),
-                CentredAxis("Right Vertical", -1000, 1000, 4, invert=True, sname='ry'),
+                CentredAxis("Right Vertical", 1000, -1000, 4, sname='ry'),
             ],
             dead_zone=dead_zone,
             hot_zone=hot_zone)

@@ -372,8 +372,8 @@ class Axes(object):
 
         # Look to see whether we've got pairs of lx,ly and / or rx,ry and create corresponding circular axes
         def add_circular_axis(rootname):
-            xname = f'{rootname}x'
-            yname = f'{rootname}y'
+            xname = rootname + 'x'
+            yname = rootname + 'y'
             if xname in self.axes_by_sname and yname in self.axes_by_sname:
                 self.axes_by_sname[rootname] = CircularCentredAxis(x=self.axes_by_sname[xname],
                                                                    y=self.axes_by_sname[yname])
@@ -631,7 +631,7 @@ class BinaryAxis(Axis):
     but we almost certainly want to treat them as buttons the way most controllers do.
     """
 
-    def __init__(self, name, axis_event_code, invert=False, b1name=None, b2name=None):
+    def __init__(self, name, axis_event_code, b1name=None, b2name=None):
         """
         Create a new binary axis, used to route axis events through to a pair of buttons, which are created as
         part of this constructor
@@ -640,8 +640,6 @@ class BinaryAxis(Axis):
             Name for the axis, use this to describe the axis, it's not used for anything else
         :param axis_event_code:
             The evdev event code for changes to this axis
-        :param invert:
-            True to invert data, used when the raw data is in the opposite sense to normal
         :param b1name:
             The sname of the button corresponding to negative values of the axis.
         :param b2name:
@@ -651,7 +649,7 @@ class BinaryAxis(Axis):
         self.axis_event_code = axis_event_code
         self.b1 = Button('{}_left_button'.format(name), key_code='{}_left'.format(axis_event_code), sname=b1name)
         self.b2 = Button('{}_right_button'.format(name), key_code='{}_right'.format(axis_event_code), sname=b2name)
-        self.invert = invert
+
         self.buttons = None
         self.last_value = 0
         self.sname = ''
@@ -678,10 +676,7 @@ class BinaryAxis(Axis):
         :returns int:
             The raw value from the evdev events driving this axis.
         """
-        if self.invert:
-            return -self.__value
-        else:
-            return self.__value
+        return self.__value
 
     def __str__(self):
         return "BinaryAxis name={}, sname={}, corrected_value={}".format(self.name, self.sname, self.value)
@@ -759,7 +754,7 @@ class CentredAxis(Axis):
     the control is at 0.0, at least in principle.
     """
 
-    def __init__(self, name, min_raw_value, max_raw_value, axis_event_code, invert=False, dead_zone=0.0, hot_zone=0.0,
+    def __init__(self, name, min_raw_value, max_raw_value, axis_event_code, dead_zone=0.0, hot_zone=0.0,
                  sname=None):
         """
         Create a new CentredAxis - this will be done internally within the :class:`~approxeng.input.Controller`
@@ -773,8 +768,6 @@ class CentredAxis(Axis):
             The value read from the event system when the axis is at its maximum value
         :param axis_event_code:
             The evdev code for this axis, used to dispatch events to the axis from the event system
-        :param invert:
-            True to invert data, used when the raw data is in the opposite sense to normal
         :param dead_zone:
             Size of the dead zone in the centre of the axis, within which all values will be mapped to 0.0
         :param hot_zone:
@@ -787,11 +780,11 @@ class CentredAxis(Axis):
         self.max = 0.9
         self.min = -0.9
         self.__value = 0.0
-        self.invert = invert
+        self.invert = min_raw_value > max_raw_value
         self.dead_zone = dead_zone
         self.hot_zone = hot_zone
-        self.min_raw_value = float(min_raw_value)
-        self.max_raw_value = float(max_raw_value)
+        self.min_raw_value = float(min(min_raw_value, max_raw_value))
+        self.max_raw_value = float(max(min_raw_value, max_raw_value))
         self.axis_event_code = axis_event_code
         self.sname = sname
 

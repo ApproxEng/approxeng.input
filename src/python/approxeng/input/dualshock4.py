@@ -39,18 +39,18 @@ class DualShock4(Controller):
             Button("Left Stick", 317, sname='ls'),
             Button("Right Stick", 318, sname='rs'),
             CentredAxis("Left Horizontal", 0, 255, 0, sname='lx'),
-            CentredAxis("Left Vertical", 0, 255, 1, invert=True, sname='ly'),
+            CentredAxis("Left Vertical", 255, 0, 1, sname='ly'),
             CentredAxis("Right Horizontal", 0, 255, 3, sname='rx'),
-            CentredAxis("Right Vertical", 0, 255, 4, invert=True, sname='ry'),
+            CentredAxis("Right Vertical", 255, 0, 4, sname='ry'),
             TriggerAxis("Left Trigger", 0, 255, 2, sname='lt'),
             TriggerAxis("Right Trigger", 0, 255, 5, sname='rt'),
             BinaryAxis("D-pad Horizontal", 16, b1name='dleft', b2name='dright'),
             BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown'),
-            CentredAxis("Yaw rate", -2097152, 2097152, 'motion4', sname='yaw_rate', invert=True),
-            CentredAxis("Roll", -8500, 8500, 'motion0', sname='roll', invert=True),
-            CentredAxis("Pitch", -8500, 8500, 'motion2', sname='pitch', invert=True),
+            CentredAxis("Yaw rate", 2097152, -2097152, 'motion4', sname='yaw_rate'),
+            CentredAxis("Roll", 8500, -8500, 'motion0', sname='roll'),
+            CentredAxis("Pitch", 8500, -8500, 'motion2', sname='pitch'),
             CentredAxis("Touch X", 0, 1920, 'touch53', sname='tx'),
-            CentredAxis("Touch Y", 0, 942, 'touch54', sname='ty', invert=True)
+            CentredAxis("Touch Y", 942, 0, 'touch54', sname='ty')
 
         ],
             node_mappings={

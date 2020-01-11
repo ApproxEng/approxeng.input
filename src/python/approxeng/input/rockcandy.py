@@ -33,9 +33,9 @@ class RockCandy(Controller):
                 Button("Left Stick", 314, sname='ls'),
                 Button("Right Stick", 315, sname='rs'),
                 CentredAxis("Left Horizontal", 0, 255, 0, sname='lx'),
-                CentredAxis("Left Vertical", 0, 255, 1, invert=True, sname='ly'),
+                CentredAxis("Left Vertical", 255, 0, 1, sname='ly'),
                 CentredAxis("Right Horizontal", 0, 255, 2, sname='rx'),
-                CentredAxis("Right Vertical", 0, 255, 5, invert=True, sname='ry'),
+                CentredAxis("Right Vertical", 255, 0, 5, sname='ry'),
                 BinaryAxis("D-pad Horizontal", 16, b1name='dleft', b2name='dright'),
                 BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown')
             ],

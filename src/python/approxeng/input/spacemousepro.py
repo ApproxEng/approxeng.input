@@ -22,10 +22,10 @@ class SpaceMousePro(Controller):
     def __init__(self, dead_zone=0.05, hot_zone=0.01):
         super(SpaceMousePro, self).__init__(controls=[
             CentredAxis('X', -350, 350, 0, sname='lx'),
-            CentredAxis('Y', -350, 350, 1, sname='ly', invert=True),
-            CentredAxis('Z', -350, 350, 2, sname='lz', invert=True),
+            CentredAxis('Y', 350, -350, 1, sname='ly'),
+            CentredAxis('Z', 350, -350, 2, sname='lz'),
             CentredAxis('Roll', -350, 350, 3, sname='pitch'),
-            CentredAxis('Pitch', -350, 350, 4, sname='roll', invert=True),
+            CentredAxis('Pitch', 350, -350, 4, sname='roll'),
             CentredAxis('Yaw', -350, 350, 5, sname='yaw'),
             Button('Menu', 256, sname='menu'),
             Button('Alt', 279, sname='alt'),

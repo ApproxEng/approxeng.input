@@ -196,7 +196,6 @@ def find_all_controllers(**kwargs) -> List[ControllerDiscovery]:
         :return:
             A generator that produces known subclasses and their registration information
         """
-        controller_class: Type[Controller]
         for controller_class in Controller.__subclasses__():
             for vendor_id, product_id in controller_class.registration_ids():
                 yield {'constructor': controller_class,

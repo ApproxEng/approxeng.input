@@ -372,8 +372,8 @@ class Axes(object):
 
         # Look to see whether we've got pairs of lx,ly and / or rx,ry and create corresponding circular axes
         def add_circular_axis(rootname):
-            xname = f'{rootname}x'
-            yname = f'{rootname}y'
+            xname = rootname+'x'
+            yname = rootname+'y'
             if xname in self.axes_by_sname and yname in self.axes_by_sname:
                 self.axes_by_sname[rootname] = CircularCentredAxis(x=self.axes_by_sname[xname],
                                                                    y=self.axes_by_sname[yname])

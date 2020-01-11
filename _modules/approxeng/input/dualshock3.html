@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input.dualshock3 &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
+  <title>approxeng.input.dualshock3 &mdash; Approximate Engineering - Input 2.4.2 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          title="Search within Approximate Engineering - Input 2.4.2 documentation"
           href="../../../_static/opensearch.xml"/>
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                2.4.0
+                2.4.2
               </div>
             
           
@@ -161,7 +161,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for approxeng.input.dualshock3</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="k">import</span> <span class="n">CentredAxis</span><span class="p">,</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">TriggerAxis</span>
+<span></span><span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="kn">import</span> <span class="n">CentredAxis</span><span class="p">,</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">TriggerAxis</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DualShock3&#39;</span><span class="p">]</span>
 
@@ -171,7 +171,7 @@
 <span class="sd">    Driver for the Sony PlayStation 3 controller, the DualShock3</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="DualShock3.__init__"><a class="viewcode-back" href="../../../api/dualshock3.html#approxeng.input.dualshock3.DualShock3.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+<div class="viewcode-block" id="DualShock3.__init__"><a class="viewcode-back" href="../../../api/dualshock3.html#approxeng.input.dualshock3.DualShock3.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Discover and initialise a PS3 SixAxis controller connected to this computer.</span>
 
@@ -220,7 +220,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[(</span><span class="mh">0x54c</span><span class="p">,</span> <span class="mh">0x268</span><span class="p">)]</span></div>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;Sony DualShock3 (Playstation 3) controller&#39;</span>
 
 <div class="viewcode-block" id="DualShock3.set_led"><a class="viewcode-back" href="../../../api/dualshock3.html#approxeng.input.dualshock3.DualShock3.set_led">[docs]</a>    <span class="k">def</span> <span class="nf">set_led</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">led_number</span><span class="p">,</span> <span class="n">led_value</span><span class="p">):</span>
@@ -248,9 +248,9 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+        &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Jul 24, 2019.
+        Last updated on Jan 11, 2020.
       </span>
 
     </p>

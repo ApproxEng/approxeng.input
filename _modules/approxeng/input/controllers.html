@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input.controllers &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
+  <title>approxeng.input.controllers &mdash; Approximate Engineering - Input 2.4.2 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          title="Search within Approximate Engineering - Input 2.4.2 documentation"
           href="../../../_static/opensearch.xml"/>
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                2.4.0
+                2.4.2
               </div>
             
           
@@ -163,35 +163,35 @@
   <h1>Source code for approxeng.input.controllers</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">total_ordering</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="k">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">total_ordering</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span>
 
-<span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="k">import</span> <span class="n">Controller</span>
+<span class="kn">from</span> <span class="nn">approxeng.input</span> <span class="kn">import</span> <span class="n">Controller</span>
 <span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="k">import</span> <span class="n">DualShock3</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
 <span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.dualshock4</span> <span class="k">import</span> <span class="n">DualShock4</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.dualshock4</span> <span class="kn">import</span> <span class="n">DualShock4</span>
 <span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.pihut</span> <span class="k">import</span> <span class="n">PiHut</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.pihut</span> <span class="kn">import</span> <span class="n">PiHut</span>
 <span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.rockcandy</span> <span class="k">import</span> <span class="n">RockCandy</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.rockcandy</span> <span class="kn">import</span> <span class="n">RockCandy</span>
 <span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.sf30pro</span> <span class="k">import</span> <span class="n">SF30Pro</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.sf30pro</span> <span class="kn">import</span> <span class="n">SF30Pro</span>
 <span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.spacemousepro</span> <span class="k">import</span> <span class="n">SpaceMousePro</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.spacemousepro</span> <span class="kn">import</span> <span class="n">SpaceMousePro</span>
 <span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.steamcontroller</span> <span class="k">import</span> <span class="n">SteamController</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.steamcontroller</span> <span class="kn">import</span> <span class="n">SteamController</span>
 <span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.switch</span> <span class="k">import</span> <span class="n">SwitchJoyConRight</span><span class="p">,</span> <span class="n">SwitchJoyConLeft</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.switch</span> <span class="kn">import</span> <span class="n">SwitchJoyConRight</span><span class="p">,</span> <span class="n">SwitchJoyConLeft</span>
 <span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.wii</span> <span class="k">import</span> <span class="n">WiiRemotePro</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.wii</span> <span class="kn">import</span> <span class="n">WiiRemotePro</span>
 <span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.wiimote</span> <span class="k">import</span> <span class="n">WiiMote</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.wiimote</span> <span class="kn">import</span> <span class="n">WiiMote</span>
 <span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.xboxone</span> <span class="k">import</span> <span class="n">WiredXBoxOneSPad</span><span class="p">,</span> <span class="n">WirelessXBoxOneSPad</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.xboxone</span> <span class="kn">import</span> <span class="n">WiredXBoxOneSPad</span><span class="p">,</span> <span class="n">WirelessXBoxOneSPad</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">evdev</span> <span class="k">import</span> <span class="n">InputDevice</span><span class="p">,</span> <span class="n">list_devices</span><span class="p">,</span> <span class="n">ecodes</span><span class="p">,</span> <span class="n">util</span>
+    <span class="kn">from</span> <span class="nn">evdev</span> <span class="kn">import</span> <span class="n">InputDevice</span><span class="p">,</span> <span class="n">list_devices</span><span class="p">,</span> <span class="n">ecodes</span><span class="p">,</span> <span class="n">util</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">InputDevice</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">list_devices</span> <span class="o">=</span> <span class="kc">None</span>
@@ -207,7 +207,7 @@
 <span class="sd">    being given a higher ordering, then falling back to the assigned name.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ControllerDiscovery.__init__"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.ControllerDiscovery.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">devices</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="ControllerDiscovery.__init__"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.ControllerDiscovery.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controller</span><span class="p">,</span> <span class="n">devices</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">controller</span> <span class="o">=</span> <span class="n">controller</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">devices</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="p">[</span><span class="n">devices</span><span class="p">]</span>
@@ -215,13 +215,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">devices</span> <span class="o">=</span> <span class="n">devices</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span></div>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">device</span><span class="o">.</span><span class="n">fn</span> <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">devices</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">name</span>
 
-    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="n">self_axes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
         <span class="n">other_axes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
         <span class="n">self_buttons</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controller</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
@@ -240,7 +240,7 @@
 <span class="sd">    you can subclass this and pass it into the find_matching_controllers and similar functions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ControllerRequirement.__init__"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.ControllerRequirement.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">require_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">require_snames</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ControllerRequirement.__init__"><a class="viewcode-back" href="../../../api/discovery.html#approxeng.input.controllers.ControllerRequirement.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">require_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">require_snames</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a new requirement</span>
 
@@ -359,7 +359,6 @@
 <span class="sd">        :return:</span>
 <span class="sd">            A generator that produces known subclasses and their registration information</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">controller_class</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Controller</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">controller_class</span> <span class="ow">in</span> <span class="n">Controller</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">vendor_id</span><span class="p">,</span> <span class="n">product_id</span> <span class="ow">in</span> <span class="n">controller_class</span><span class="o">.</span><span class="n">registration_ids</span><span class="p">():</span>
                 <span class="k">yield</span> <span class="p">{</span><span class="s1">&#39;constructor&#39;</span><span class="p">:</span> <span class="n">controller_class</span><span class="p">,</span>
@@ -490,9 +489,9 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+        &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Jul 24, 2019.
+        Last updated on Jan 11, 2020.
       </span>
 
     </p>

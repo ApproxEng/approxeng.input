@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Simple Usage &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
+  <title>Simple Usage &mdash; Approximate Engineering - Input 2.4.2 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          title="Search within Approximate Engineering - Input 2.4.2 documentation"
           href="_static/opensearch.xml"/>
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                2.4.0
+                2.4.2
               </div>
             
           
@@ -185,19 +185,19 @@ attributes of the controller class itself. Read on…</p>
 <p>To connect to a controller you do the following (including error handling):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
-<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">()</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Found a joystick and connected&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Found a joystick and connected&#39;</span><span class="p">)</span>
             <span class="k">while</span> <span class="n">joystick</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
                 <span class="c1"># Do stuff with your joystick here!</span>
                 <span class="c1"># ....</span>
                 <span class="c1"># ....</span>
         <span class="c1"># Joystick disconnected...</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Connection to joystick lost&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Connection to joystick lost&#39;</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
         <span class="c1"># No joystick found, wait for a bit before trying again</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Unable to find any joysticks&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unable to find any joysticks&#39;</span><span class="p">)</span>
         <span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -228,20 +228,20 @@ a PS3 controller, the second of which must have a left X and Y axis:</p>
 <span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.controllers</span> <span class="kn">import</span> <span class="n">ControllerRequirement</span>
 
-<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">ControllerRequirement</span><span class="p">(</span><span class="n">require_class</span><span class="o">=</span><span class="n">DualShock3</span><span class="p">),</span>
                                 <span class="n">ControllerRequirement</span><span class="p">(</span><span class="n">require_snames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lx&#39;</span><span class="p">,</span><span class="s1">&#39;ly&#39;</span><span class="p">]))</span> <span class="k">as</span> <span class="n">ds3</span><span class="p">,</span> <span class="n">joystick</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Found two joysticks and connected&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Found two joysticks and connected&#39;</span><span class="p">)</span>
             <span class="k">while</span> <span class="n">joystick</span><span class="o">.</span><span class="n">connected</span> <span class="ow">and</span> <span class="n">ds3</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
                 <span class="c1"># Do stuff with your joystick here!</span>
                 <span class="c1"># ....</span>
                 <span class="c1"># ....</span>
         <span class="c1"># One or both joystick(s) disconnected...</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Connection to joystick(s) lost&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Connection to joystick(s) lost&#39;</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
         <span class="c1"># No matching joystick found, wait for a bit before trying again</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Unable to find matching joysticks&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unable to find matching joysticks&#39;</span><span class="p">)</span>
         <span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -315,9 +315,9 @@ see which setting feels best for you.</p>
         <span class="c1"># Hold times are accessible as attributes on the joystick object, passing a button name</span>
         <span class="n">held</span> <span class="o">=</span> <span class="n">joystick</span><span class="p">[</span><span class="s1">&#39;square&#39;</span><span class="p">]</span>
         <span class="c1"># If the button isn&#39;t held at the moment this will be None</span>
-        <span class="k">if</span> <span class="n">held</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">held</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="c1"># If the button was held, this is the number of seconds since it was initially pressed</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Square held for {} seconds&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">held</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Square held for </span><span class="si">{}</span><span class="s1"> seconds&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">held</span><span class="p">))</span>
         <span class="c1"># We can also access directly as an attribute</span>
         <span class="n">circle_held</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">circle</span>
 </pre></div>
@@ -363,17 +363,17 @@ attribute</p>
         <span class="c1"># This is an instance of approxeng.input.ButtonPresses</span>
         <span class="n">presses</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">check_presses</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">presses</span><span class="p">[</span><span class="s1">&#39;square&#39;</span><span class="p">]</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;SQUARE pressed since last check&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;SQUARE pressed since last check&#39;</span><span class="p">)</span>
         <span class="c1"># We can also use attributes directly, and get at the presses object from the controller:</span>
         <span class="k">if</span> <span class="n">joystick</span><span class="o">.</span><span class="n">presses</span><span class="o">.</span><span class="n">circle</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;CIRCLE pressed since last check&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;CIRCLE pressed since last check&#39;</span><span class="p">)</span>
         <span class="c1"># Or we can use the &#39;x in y&#39; syntax:</span>
         <span class="k">if</span> <span class="s1">&#39;triangle&#39;</span> <span class="ow">in</span> <span class="n">presses</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;TRIANGLE pressed since last check&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;TRIANGLE pressed since last check&#39;</span><span class="p">)</span>
 
         <span class="c1"># If we had any presses, print the list of pressed buttons by standard name</span>
         <span class="k">if</span> <span class="n">joystick</span><span class="o">.</span><span class="n">has_presses</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">joystick</span><span class="o">.</span><span class="n">presses</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">joystick</span><span class="o">.</span><span class="n">presses</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -847,9 +847,9 @@ in 2.1.0 of this library onwards.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+        &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Jul 24, 2019.
+        Last updated on Jan 11, 2020.
       </span>
 
     </p>

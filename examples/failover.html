@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Controller Failover &mdash; Approximate Engineering - Input 2.4.0 documentation</title>
+  <title>Controller Failover &mdash; Approximate Engineering - Input 2.4.2 documentation</title>
   
 
   
@@ -30,7 +30,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.4.0 documentation"
+          title="Search within Approximate Engineering - Input 2.4.2 documentation"
           href="../_static/opensearch.xml"/>
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                2.4.0
+                2.4.2
               </div>
             
           
@@ -275,10 +275,10 @@ loop, and so on.</p>
         <span class="c1"># keyword args are passed through to the constructor of the controller class, so if you know exactly what class</span>
         <span class="c1"># you&#39;re using (because you&#39;ve supplied a controller_class argument here) you can provide controller-specific</span>
         <span class="c1"># configuration in your resource. Setting controller_class to None just means &#39;find whatever joystick you can&#39;</span>
-        <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">print_events</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span> <span class="k">as</span> <span class="n">controller</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">(</span><span class="n">print_events</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span> <span class="k">as</span> <span class="n">controller</span><span class="p">:</span>
 
             <span class="c1"># We&#39;ve got a joystick, loop until it goes away. Print some details about the controller to the console.</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Found a controller, {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">controller</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Found a controller, </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">controller</span><span class="p">))</span>
 
             <span class="c1"># New in version 1.0.7 is detection for when a controller disconnects. This is handy, because it means we</span>
             <span class="c1"># know if your robot has run out of controller range (for example) and can stop it! Rather than looping</span>
@@ -295,7 +295,7 @@ loop, and so on.</p>
                 <span class="n">button_presses</span> <span class="o">=</span> <span class="n">controller</span><span class="o">.</span><span class="n">check_presses</span><span class="p">()</span>
                 <span class="k">if</span> <span class="n">button_presses</span><span class="o">.</span><span class="n">has_presses</span><span class="p">:</span>
                     <span class="c1"># Printing the ButtonPresses object prints a list of the snames of buttons which were pressed</span>
-                    <span class="k">print</span><span class="p">(</span><span class="n">button_presses</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">button_presses</span><span class="p">)</span>
 
                 <span class="c1"># The controller.axes property contains all analogue (and potentially digital) axes of your controller.</span>
                 <span class="c1"># As with the button presses these are updated behind the scenes, with dead and hot zones applied,</span>
@@ -306,7 +306,7 @@ loop, and so on.</p>
                 <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">controller</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">active_axes</span><span class="p">:</span>
                     <span class="c1"># Printing an axis object (CentredAxis, TriggerAxis or BinaryAxis) will print a summary of the</span>
                     <span class="c1"># axis including its current corrected value</span>
-                    <span class="k">print</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
 
                 <span class="c1"># Note - in real cases we probably want to get axis values even when they&#39;re not active, in which case</span>
                 <span class="c1"># we would use the methods on the Controller class to get single or multiple corrected axis values by</span>
@@ -320,12 +320,12 @@ loop, and so on.</p>
             <span class="c1"># We get here if controller.connected is False, this is set by the binder if it at any point fails to talk</span>
             <span class="c1"># to the controller. The result is that if you turn your controller off you should see a disconnection</span>
             <span class="c1"># message and the code will go back into looking for controllers.</span>
-            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Controller disconnected!&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Controller disconnected!&#39;</span><span class="p">)</span>
 
     <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
         <span class="c1"># This is thrown when attempting to create the controller resource if no controllers are present. In this case</span>
         <span class="c1"># we just pause for a second and try again.</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Waiting for controller...&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Waiting for controller...&#39;</span><span class="p">)</span>
         <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
@@ -351,9 +351,9 @@ loop, and so on.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, 2018, 2019 Tom Oinn
+        &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Jul 24, 2019.
+        Last updated on Jan 11, 2020.
       </span>
 
     </p>

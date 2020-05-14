@@ -22,7 +22,7 @@ There's really no reason to use earlier Python versions in 2019 so hopefully thi
 Get the code using pip:
 
 ```
-> pip install approxeng.input
+> pip3 install approxeng.input
 ```
 
 You may need to install some prerequisites first, and this will only work on Linux based 

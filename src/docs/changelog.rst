@@ -13,6 +13,11 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
+Version 2.4.2
+-------------
+
+Switched to using namespace packages, restored compatibility with Python 3.5.
+
 Version 2.4.0
 -------------
 

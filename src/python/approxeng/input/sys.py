@@ -102,21 +102,24 @@ def scan_system():
     """
 
     def find_device_hardware_id(uevent_file_path):
-        hid_uniq = None
-        phys = None
-        for line in open(uevent_file_path, 'r').read().split('\n'):
-            parts = line.split('=')
-            if len(parts) == 2:
-                name, value = parts
-                value = value.replace('"', '')
-                if name == 'HID_UNIQ' and value:
-                    hid_uniq = value
-                elif name == 'PHYS' and value:
-                    phys = value.split('/')[0]
-        if hid_uniq:
-            return hid_uniq
-        elif phys:
-            return phys
+        try:
+            hid_uniq = None
+            phys = None
+            for line in open(uevent_file_path, 'r').read().split('\n'):
+                parts = line.split('=')
+                if len(parts) == 2:
+                    name, value = parts
+                    value = value.replace('"', '')
+                    if name == 'HID_UNIQ' and value:
+                        hid_uniq = value
+                    elif name == 'PHYS' and value:
+                        phys = value.split('/')[0]
+            if hid_uniq:
+                return hid_uniq
+            elif phys:
+                return phys
+        except FileNotFoundError:
+            pass
         return None
 
     leds = {}

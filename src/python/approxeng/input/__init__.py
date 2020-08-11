@@ -1080,8 +1080,9 @@ class Buttons(object):
         """
         state = self.buttons_by_sname.get(sname)
         if state is not None:
-            if state.is_pressed and state.last_pressed is not None:
-                return time() - state.last_pressed
+            last_pressed = state.last_pressed
+            if state.is_pressed and last_pressed is not None:
+                return time() - last_pressed
         return None
 
     def __getitem__(self, item):

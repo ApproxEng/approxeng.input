@@ -1,42 +1,43 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to Approximate Engineering’s Python Game Controller Documentation! &mdash; Approximate Engineering - Input 2.4.2 documentation</title>
+  <title>Welcome to Approximate Engineering’s Python Game Controller Documentation! &mdash; Approximate Engineering - Input 2.4.3 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
-    <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.4.2 documentation"
-          href="_static/opensearch.xml"/>
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.3 documentation"
+          href="_static/opensearch.xml"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Change Log" href="changelog.html" /> 
@@ -53,7 +54,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> Approximate Engineering - Input
+            <a href="#" class="icon icon-home" alt="Documentation Home"> Approximate Engineering - Input
           
 
           
@@ -63,7 +64,7 @@
             
             
               <div class="version">
-                2.4.2
+                2.4.3
               </div>
             
           
@@ -80,6 +81,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -102,6 +104,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -140,7 +143,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
         
       <li>Welcome to Approximate Engineering’s Python Game Controller Documentation!</li>
     
@@ -217,12 +220,12 @@ the <a class="reference internal" href="examples/camjam.html#example-camjam"><sp
 <h2>Getting the code<a class="headerlink" href="#getting-the-code" title="Permalink to this headline">¶</a></h2>
 <p>You can install the code using pip, you’ll have to add a few native libraries first though:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install python-dev python-pip gcc
-$ pip install approxeng.input
+$ pip3 install approxeng.input
 </pre></div>
 </div>
 <p>(The exact dependencies may vary depending on your operating system, they come from using evdev and having to compile
 that particular python module against whatever underlying libraries your OS is using). I <em>strongly</em> recommend using a
-virtual environment (virtualenv) so you don’t have to install python libraries as root.</p>
+virtual environment (virtualenv) as a general practice.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The controller support code is written in Python, but relies on some underlying operating system functionality which
@@ -238,6 +241,7 @@ almost everything Python based. Documentation (this site) is generated using Sph
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-4-3">Version 2.4.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-4-2">Version 2.4.2</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-4-0">Version 2.4.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#version-2-3-0">Version 2.3.0</a></li>
@@ -372,14 +376,22 @@ almost everything Python based. Documentation (this site) is generated using Sph
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Jan 11, 2020.
+        Last updated on Sep 11, 2020.
       </span>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -390,7 +402,6 @@ almost everything Python based. Documentation (this site) is generated using Sph
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

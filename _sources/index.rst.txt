@@ -91,11 +91,11 @@ You can install the code using pip, you'll have to add a few native libraries fi
 .. code-block:: bash
 
     $ sudo apt-get install python-dev python-pip gcc
-    $ pip install approxeng.input
+    $ pip3 install approxeng.input
 
 (The exact dependencies may vary depending on your operating system, they come from using evdev and having to compile
 that particular python module against whatever underlying libraries your OS is using). I *strongly* recommend using a
-virtual environment (virtualenv) so you don't have to install python libraries as root.
+virtual environment (virtualenv) as a general practice.
 
 .. note::
 

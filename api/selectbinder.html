@@ -1,42 +1,43 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Binding - approxeng.input.selectbinder &mdash; Approximate Engineering - Input 2.4.2 documentation</title>
+  <title>Binding - approxeng.input.selectbinder &mdash; Approximate Engineering - Input 2.4.3 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-    <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.4.2 documentation"
-          href="../_static/opensearch.xml"/>
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.3 documentation"
+          href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Controller Discovery - approxeng.input.controllers" href="discovery.html" />
@@ -54,7 +55,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> Approximate Engineering - Input
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Approximate Engineering - Input
           
 
           
@@ -64,7 +65,7 @@
             
             
               <div class="version">
-                2.4.2
+                2.4.3
               </div>
             
           
@@ -81,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -118,6 +120,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -156,7 +159,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../api.html">API Documentation</a> &raquo;</li>
         
@@ -234,13 +237,13 @@ controller discovery, or by specifying multiple controller requirements to the <
     <span class="c1"># controls.</span>
 </pre></div>
 </div>
-<span class="target" id="module-approxeng.input.selectbinder"></span><dl class="class">
+<span class="target" id="module-approxeng.input.selectbinder"></span><dl class="py class">
 <dt id="approxeng.input.selectbinder.ControllerResource">
-<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.selectbinder.</code><code class="sig-name descname">ControllerResource</code><span class="sig-paren">(</span><em class="sig-param">*requirements</em>, <em class="sig-param">print_events=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#ControllerResource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.selectbinder.ControllerResource" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.selectbinder.</code><code class="sig-name descname">ControllerResource</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">requirements</span></em>, <em class="sig-param"><span class="n">print_events</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#ControllerResource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.selectbinder.ControllerResource" title="Permalink to this definition">¶</a></dt>
 <dd><p>General resource which binds one or more controllers on entry and unbinds the event listening thread on exit.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="approxeng.input.selectbinder.ControllerResource.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">*requirements</em>, <em class="sig-param">print_events=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#ControllerResource.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.selectbinder.ControllerResource.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">requirements</span></em>, <em class="sig-param"><span class="n">print_events</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#ControllerResource.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.selectbinder.ControllerResource.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new resource to bind and access one or more controllers. If no additional arguments are supplied this
 will find the first controller of any kind enabled by the library. Otherwise the requirements must be provided
 as a list of ControllerRequirement</p>
@@ -263,9 +266,9 @@ particularly to specify e.g. dead and hot zone ranges on discovery.</p></li>
 
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="approxeng.input.selectbinder.bind_controllers">
-<code class="sig-prename descclassname">approxeng.input.selectbinder.</code><code class="sig-name descname">bind_controllers</code><span class="sig-paren">(</span><em class="sig-param">*discoveries</em>, <em class="sig-param">print_events=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#bind_controllers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.selectbinder.bind_controllers" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">approxeng.input.selectbinder.</code><code class="sig-name descname">bind_controllers</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">discoveries</span></em>, <em class="sig-param"><span class="n">print_events</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#bind_controllers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.selectbinder.bind_controllers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bind a controller or controllers to a set of evdev InputDevice instances, starting a thread to keep those
 controllers in sync with the state of the hardware.</p>
 <dl class="field-list simple">
@@ -303,14 +306,22 @@ controllers in sync with the state of the hardware.</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Jan 11, 2020.
+        Last updated on Sep 11, 2020.
       </span>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -321,7 +332,6 @@ controllers in sync with the state of the hardware.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

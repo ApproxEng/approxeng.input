@@ -1,42 +1,43 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PlayStation 3 Controller Support &mdash; Approximate Engineering - Input 2.4.2 documentation</title>
+  <title>PlayStation 3 Controller Support &mdash; Approximate Engineering - Input 2.4.3 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-    <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.4.2 documentation"
-          href="../_static/opensearch.xml"/>
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.3 documentation"
+          href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="PlayStation 4 Controller Support" href="dualshock4.html" />
@@ -54,7 +55,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> Approximate Engineering - Input
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Approximate Engineering - Input
           
 
           
@@ -64,7 +65,7 @@
             
             
               <div class="version">
-                2.4.2
+                2.4.3
               </div>
             
           
@@ -81,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -128,6 +130,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -166,7 +169,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../api.html">API Documentation</a> &raquo;</li>
         
@@ -334,13 +337,13 @@ by-path  event1  event3  event5  mice
 dongle and SixAxis controller. This will persist across reboots, so from now on you can just connect by pressing the PS
 button on the controller. Pressing and holding this button will shut the controller down - at the moment there’s no
 timeout so be sure to turn the controller off when you’re not going to be using it for a while.</p>
-<span class="target" id="module-approxeng.input.dualshock3"></span><dl class="class">
+<span class="target" id="module-approxeng.input.dualshock3"></span><dl class="py class">
 <dt id="approxeng.input.dualshock3.DualShock3">
-<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.dualshock3.</code><code class="sig-name descname">DualShock3</code><span class="sig-paren">(</span><em class="sig-param">dead_zone=0.05</em>, <em class="sig-param">hot_zone=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.dualshock3.</code><code class="sig-name descname">DualShock3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.0</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3" title="Permalink to this definition">¶</a></dt>
 <dd><p>Driver for the Sony PlayStation 3 controller, the DualShock3</p>
-<dl class="method">
+<dl class="py method">
 <dt id="approxeng.input.dualshock3.DualShock3.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">dead_zone=0.05</em>, <em class="sig-param">hot_zone=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.0</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Discover and initialise a PS3 SixAxis controller connected to this computer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -352,7 +355,7 @@ timeout so be sure to turn the controller off when you’re not going to be usin
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="approxeng.input.dualshock3.DualShock3.registration_ids">
 <em class="property">static </em><code class="sig-name descname">registration_ids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.registration_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.registration_ids" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -362,9 +365,9 @@ timeout so be sure to turn the controller off when you’re not going to be usin
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="approxeng.input.dualshock3.DualShock3.set_led">
-<code class="sig-name descname">set_led</code><span class="sig-paren">(</span><em class="sig-param">led_number</em>, <em class="sig-param">led_value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.set_led"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.set_led" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_led</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">led_number</span></em>, <em class="sig-param"><span class="n">led_value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.set_led"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.set_led" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set front-panel controller LEDs. The DS3 controller has four, labelled, LEDs on the front panel that can
 be either on or off.</p>
 <dl class="field-list simple">
@@ -402,14 +405,22 @@ be either on or off.</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Jan 11, 2020.
+        Last updated on Sep 11, 2020.
       </span>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -420,7 +431,6 @@ be either on or off.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

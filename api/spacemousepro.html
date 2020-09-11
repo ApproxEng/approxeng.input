@@ -1,42 +1,43 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Wired SpaceMouse Pro Support &mdash; Approximate Engineering - Input 2.4.2 documentation</title>
+  <title>Wired SpaceMouse Pro Support &mdash; Approximate Engineering - Input 2.4.3 documentation</title>
   
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-    <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.4.2 documentation"
-          href="../_static/opensearch.xml"/>
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.4.3 documentation"
+          href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Adding support for a new controller type" href="../addingcontrollers.html" />
@@ -54,7 +55,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> Approximate Engineering - Input
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Approximate Engineering - Input
           
 
           
@@ -64,7 +65,7 @@
             
             
               <div class="version">
-                2.4.2
+                2.4.3
               </div>
             
           
@@ -81,6 +82,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -118,6 +120,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -156,7 +159,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../api.html">API Documentation</a> &raquo;</li>
         
@@ -187,9 +190,9 @@
 for robots but if you have one of these controllers the library can now drive it properly! Note that because this is so
 very different from the other joypad style controllers it doesn’t have the same set of controls available. Check the
 source for the driver to see exactly what controls are supported.</p>
-<span class="target" id="module-approxeng.input.spacemousepro"></span><dl class="class">
+<span class="target" id="module-approxeng.input.spacemousepro"></span><dl class="py class">
 <dt id="approxeng.input.spacemousepro.SpaceMousePro">
-<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.spacemousepro.</code><code class="sig-name descname">SpaceMousePro</code><span class="sig-paren">(</span><em class="sig-param">dead_zone=0.05</em>, <em class="sig-param">hot_zone=0.01</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.spacemousepro.</code><code class="sig-name descname">SpaceMousePro</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.01</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro" title="Permalink to this definition">¶</a></dt>
 <dd><p>Driver for the wired SpaceMouse Pro from 3dConnexion. This controller has a single six-axis puck which can respond
 to motion in all available axes, as well as a set of buttons. Buttons 1-4 seem to act differently to the others,
 they don’t generate events on presses consistently so while they do work they should be used with caution. Other
@@ -201,9 +204,9 @@ movement, but it then also uses lz for up and down, and pitch, roll, and yaw for
 will ‘just work’ if your code only uses the left stick and the motion sensing axes, but there aren’t any trigger
 buttons or axes, and there’s no right joystick x and y. On the other hand, if you’ve got one of these you already
 know you’ll need to code specifically for it!</p>
-<dl class="method">
+<dl class="py method">
 <dt id="approxeng.input.spacemousepro.SpaceMousePro.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">dead_zone=0.05</em>, <em class="sig-param">hot_zone=0.01</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.01</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populate the controller name, button set and axis set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -228,7 +231,7 @@ such as motion sensors.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="approxeng.input.spacemousepro.SpaceMousePro.registration_ids">
 <em class="property">static </em><code class="sig-name descname">registration_ids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro.registration_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro.registration_ids" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -262,14 +265,22 @@ such as motion sensors.</p></li>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Jan 11, 2020.
+        Last updated on Sep 11, 2020.
       </span>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -280,7 +291,6 @@ such as motion sensors.</p></li>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

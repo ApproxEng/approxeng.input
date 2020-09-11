@@ -130,7 +130,7 @@ def unique_name(device: InputDevice) -> str:
     return '{}-{}-{}-{}'.format(device.info.vendor, device.info.product, device.info.version, device.path)
 
 
-def find_matching_controllers(*requirements, **kwargs) -> [ControllerDiscovery]:
+def find_matching_controllers(*requirements, **kwargs) -> List[ControllerDiscovery]:
     """
     Find a sequence of controllers which match the supplied requirements, or raise an error if no such controllers
     exist.

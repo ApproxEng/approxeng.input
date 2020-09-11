@@ -49,7 +49,7 @@ class PiHut(Controller):
         """
         :return: list of (vendor_id, product_id) for this controller
         """
-        return [(0x2563, 0x526)]
+        return [(0x2563, 0x526), (0x2563, 0x575)]
 
     def __repr__(self):
         return 'PiHut PS3-alike controller'

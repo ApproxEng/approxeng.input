@@ -13,6 +13,12 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
+Version 2.4.3
+-------------
+
+Support for newer version of the PiHut controller, a couple of bug fixes from sainsaar_ to fix potential race
+conditions.
+
 Version 2.4.2
 -------------
 
@@ -110,3 +116,5 @@ Version 1.0.2
 Added support for the Rock Candy PS3 clones thanks to Keith Ellis.
 
 .. _PiWars: http://piwars.org
+
+.. _sainsaar: https://github.com/sainsaar

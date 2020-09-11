@@ -8,9 +8,9 @@ author = u'Tom Oinn'
 # built documents.
 #
 # The short X.Y version.
-version = '2.4.2'
+version = '2.4.3'
 # The full version, including alpha/beta/rc tags.
-release = '2.4.2'
+release = '2.4.3'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -124,7 +124,8 @@ html_theme = "sphinx_rtd_theme"
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # Configures links into the main Python language docs
-intersphinx_mapping = {'python': ('https://docs.python.org/3.7', None)}
+intersphinx_mapping = {'python': ('https://docs.python.org/3.7', None),
+                       'evdev': ('https://python-evdev.readthedocs.io/en/latest/', None)}
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied

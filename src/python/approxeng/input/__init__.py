@@ -315,12 +315,27 @@ class Controller(ABC):
         return self.buttons.presses.has_presses
 
     @property
+    def has_releases(self) -> bool:
+        """
+        :return: True if any buttons were released since the last check.
+        """
+        return self.buttons.releases.has_presses
+    
+    @property
     def presses(self) -> 'ButtonPresses':
         """
         The :class:`~approxeng.input.ButtonPresses` containing buttons pressed between the two most recent calls to
         :meth:`~approxeng.input.Controller.check_presses`
         """
         return self.buttons.presses
+
+    @property
+    def releases(self) -> 'ButtonPresses':
+        """
+        The :class:`~approxeng.input.ButtonPresses` containing buttons released between the two most recent calls to
+        :meth:`~approxeng.input.Controller.check_presses`
+        """
+        return self.buttons.releases
 
     @property
     def controls(self) -> {}:
@@ -426,7 +441,7 @@ class Axes(object):
         """
         The snames of all axis objects
         """
-        return sorted([name for name in self.axes_by_sname.keys() if name is not ''])
+        return sorted([name for name in self.axes_by_sname.keys() if name != ''])
 
     @property
     def active_axes(self) -> ['Axis']:
@@ -728,7 +743,7 @@ class CircularCentredAxis:
             x,y corrected position
         """
         # Avoid trying to take sqrt(0) in pathological case
-        if raw_x is not 0 or raw_y is not 0:
+        if raw_x != 0 or raw_y != 0:
             distance = sqrt(raw_x * raw_x + raw_y * raw_y)
         else:
             return 0.0, 0.0
@@ -954,7 +969,6 @@ class Buttons(object):
 
         :param buttons_and_axes:
             a list of :class:`approxeng.input.Button` instances which will be managed by this class
-
         """
         buttons = []
         for thing in buttons_and_axes:
@@ -972,6 +986,7 @@ class Buttons(object):
         self.buttons_by_code = {button.key_code: state for button, state in self.buttons.items()}
         self.buttons_by_sname = {button.sname: state for button, state in self.buttons.items()}
         self.__presses = None
+        self.__releases = None
 
     class ButtonState:
         """
@@ -984,6 +999,7 @@ class Buttons(object):
             self.button_handlers = []
             self.is_pressed = False
             self.was_pressed_since_last_check = False
+            self.was_released_since_last_check = False
             self.last_pressed = None
             self.button = button
 
@@ -1009,7 +1025,7 @@ class Buttons(object):
             state.last_pressed = time()
             state.was_pressed_since_last_check = True
         else:
-            logger.debug('Unknown button code {} ({})'.format(key_code, prefix))
+            logger.debug('button_pressed : Unknown button code {} ({})'.format(key_code, prefix))
 
     def button_released(self, key_code, prefix=None):
         """
@@ -1029,13 +1045,16 @@ class Buttons(object):
         if state is not None:
             state.is_pressed = False
             state.last_pressed = None
+            state.was_released_since_last_check = True
+        else:
+            logger.debug('button_released : Unknown button code {} ({})'.format(key_code, prefix))
 
     @property
     def names(self):
         """
         The snames of all button objects
         """
-        return sorted([name for name in self.buttons_by_sname.keys() if name is not ''])
+        return sorted([name for name in self.buttons_by_sname.keys() if name != ''])
 
     @property
     def presses(self):
@@ -1053,6 +1072,18 @@ class Buttons(object):
             self.check_presses()
         return self.__presses
 
+    @property
+    def releases(self):
+        """
+        Analogous to presses, but returns the set of buttons which were released
+
+        :return:
+            a ButtonPresses object containing information about which buttons were released
+        """
+        if self.__releases is None:
+            self.check_presses()
+        return self.__releases
+
     def check_presses(self):
         """
         Return the set of Buttons which have been pressed since this call was last made, clearing it as we do.
@@ -1061,11 +1092,16 @@ class Buttons(object):
             A ButtonPresses instance which contains buttons which were pressed since this call was last made.
         """
         pressed = []
+        released = []
         for button, state in self.buttons.items():
             if state.was_pressed_since_last_check:
                 pressed.append(button)
                 state.was_pressed_since_last_check = False
+            if state.was_released_since_last_check:
+                released.append(button)
+                state.was_released_since_last_check = False
         self.__presses = ButtonPresses(pressed)
+        self.__releases = ButtonPresses(released)
         return self.__presses
 
     def held(self, sname):

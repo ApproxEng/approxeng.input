@@ -13,6 +13,14 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
+Version 2.5.0
+-------------
+
+Added a new property `releases` to the :class:`~approxeng.input.Controller`, this works in the same
+way as `presses` but returns a set of buttons released in the time between the two most recent calls
+to :meth:`~approxeng.input.Controller.check_presses`, as requested on the PiWars discord channel. There's
+a corresponding property `has_releases` on the controller object as well which works similarly to `has_presses`.
+
 Version 2.4.3
 -------------
 

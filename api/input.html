@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Common APIs - approxeng.input &mdash; Approximate Engineering - Input 2.4.3 documentation</title>
+  <title>Common APIs - approxeng.input &mdash; Approximate Engineering - Input 2.5.0 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.4.3 documentation"
+          title="Search within Approximate Engineering - Input 2.5.0 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.4.3
+                2.5.0
               </div>
             
           
@@ -275,6 +275,16 @@ type of control.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="approxeng.input.Controller.has_releases">
+<em class="property">property </em><code class="sig-name descname">has_releases</code><a class="headerlink" href="#approxeng.input.Controller.has_releases" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if any buttons were released since the last check.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="approxeng.input.Controller.presses">
 <em class="property">property </em><code class="sig-name descname">presses</code><a class="headerlink" href="#approxeng.input.Controller.presses" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <a class="reference internal" href="#approxeng.input.ButtonPresses" title="approxeng.input.ButtonPresses"><code class="xref py py-class docutils literal notranslate"><span class="pre">ButtonPresses</span></code></a> containing buttons pressed between the two most recent calls to
@@ -313,6 +323,13 @@ function is called with the Button that was pressed as the sole argument.</p></l
 <dd class="field-even"><p>A no-arg function which can be used to remove this registration</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="approxeng.input.Controller.releases">
+<em class="property">property </em><code class="sig-name descname">releases</code><a class="headerlink" href="#approxeng.input.Controller.releases" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#approxeng.input.ButtonPresses" title="approxeng.input.ButtonPresses"><code class="xref py py-class docutils literal notranslate"><span class="pre">ButtonPresses</span></code></a> containing buttons released between the two most recent calls to
+<a class="reference internal" href="#approxeng.input.Controller.check_presses" title="approxeng.input.Controller.check_presses"><code class="xref py py-meth docutils literal notranslate"><span class="pre">check_presses()</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
@@ -797,6 +814,17 @@ binding is required.</p></li>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt id="approxeng.input.Buttons.releases">
+<em class="property">property </em><code class="sig-name descname">releases</code><a class="headerlink" href="#approxeng.input.Buttons.releases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analogous to presses, but returns the set of buttons which were released</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>a ButtonPresses object containing information about which buttons were released</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -836,7 +864,7 @@ binding is required.</p></li>
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Sep 11, 2020.
+        Last updated on Nov 19, 2020.
       </span>
 
     </p>

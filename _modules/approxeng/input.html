@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input &mdash; Approximate Engineering - Input 2.4.3 documentation</title>
+  <title>approxeng.input &mdash; Approximate Engineering - Input 2.5.0 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.4.3 documentation"
+          title="Search within Approximate Engineering - Input 2.5.0 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                2.4.3
+                2.5.0
               </div>
             
           
@@ -479,12 +479,27 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">presses</span><span class="o">.</span><span class="n">has_presses</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_releases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: True if any buttons were released since the last check.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">releases</span><span class="o">.</span><span class="n">has_presses</span>
+    
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">presses</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ButtonPresses&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The :class:`~approxeng.input.ButtonPresses` containing buttons pressed between the two most recent calls to</span>
 <span class="sd">        :meth:`~approxeng.input.Controller.check_presses`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">presses</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">releases</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ButtonPresses&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The :class:`~approxeng.input.ButtonPresses` containing buttons released between the two most recent calls to</span>
+<span class="sd">        :meth:`~approxeng.input.Controller.check_presses`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">releases</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">controls</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">{}:</span>
@@ -590,7 +605,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The snames of all axis objects</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="s1">&#39;&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">active_axes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="s1">&#39;Axis&#39;</span><span class="p">]:</span>
@@ -892,7 +907,7 @@
 <span class="sd">            x,y corrected position</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Avoid trying to take sqrt(0) in pathological case</span>
-        <span class="k">if</span> <span class="n">raw_x</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">raw_y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">raw_x</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">raw_y</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">distance</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">raw_x</span> <span class="o">*</span> <span class="n">raw_x</span> <span class="o">+</span> <span class="n">raw_y</span> <span class="o">*</span> <span class="n">raw_y</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span>
@@ -1118,7 +1133,6 @@
 
 <span class="sd">        :param buttons_and_axes:</span>
 <span class="sd">            a list of :class:`approxeng.input.Button` instances which will be managed by this class</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">buttons</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">thing</span> <span class="ow">in</span> <span class="n">buttons_and_axes</span><span class="p">:</span>
@@ -1135,7 +1149,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span> <span class="o">=</span> <span class="p">{</span><span class="n">button</span><span class="p">:</span> <span class="n">Buttons</span><span class="o">.</span><span class="n">ButtonState</span><span class="p">(</span><span class="n">button</span><span class="p">)</span> <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="n">buttons</span><span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_code</span> <span class="o">=</span> <span class="p">{</span><span class="n">button</span><span class="o">.</span><span class="n">key_code</span><span class="p">:</span> <span class="n">state</span> <span class="k">for</span> <span class="n">button</span><span class="p">,</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_sname</span> <span class="o">=</span> <span class="p">{</span><span class="n">button</span><span class="o">.</span><span class="n">sname</span><span class="p">:</span> <span class="n">state</span> <span class="k">for</span> <span class="n">button</span><span class="p">,</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__presses</span> <span class="o">=</span> <span class="kc">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__presses</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__releases</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="Buttons.ButtonState"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.ButtonState">[docs]</a>    <span class="k">class</span> <span class="nc">ButtonState</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1148,6 +1163,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">button_handlers</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">is_pressed</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">was_pressed_since_last_check</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">was_released_since_last_check</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">last_pressed</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">button</span> <span class="o">=</span> <span class="n">button</span></div></div>
 
@@ -1173,7 +1189,7 @@
             <span class="n">state</span><span class="o">.</span><span class="n">last_pressed</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
             <span class="n">state</span><span class="o">.</span><span class="n">was_pressed_since_last_check</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Unknown button code </span><span class="si">{}</span><span class="s1"> (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key_code</span><span class="p">,</span> <span class="n">prefix</span><span class="p">))</span></div>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;button_pressed : Unknown button code </span><span class="si">{}</span><span class="s1"> (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key_code</span><span class="p">,</span> <span class="n">prefix</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Buttons.button_released"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.button_released">[docs]</a>    <span class="k">def</span> <span class="nf">button_released</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_code</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1192,14 +1208,17 @@
             <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_code</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key_code</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">state</span><span class="o">.</span><span class="n">is_pressed</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="n">state</span><span class="o">.</span><span class="n">last_pressed</span> <span class="o">=</span> <span class="kc">None</span></div>
+            <span class="n">state</span><span class="o">.</span><span class="n">last_pressed</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">was_released_since_last_check</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;button_released : Unknown button code </span><span class="si">{}</span><span class="s1"> (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key_code</span><span class="p">,</span> <span class="n">prefix</span><span class="p">))</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The snames of all button objects</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_sname</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="s1">&#39;&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons_by_sname</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">name</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">])</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">presses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1217,6 +1236,18 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">check_presses</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__presses</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">releases</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Analogous to presses, but returns the set of buttons which were released</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">            a ButtonPresses object containing information about which buttons were released</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__releases</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_presses</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__releases</span>
+
 <div class="viewcode-block" id="Buttons.check_presses"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.check_presses">[docs]</a>    <span class="k">def</span> <span class="nf">check_presses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the set of Buttons which have been pressed since this call was last made, clearing it as we do.</span>
@@ -1225,11 +1256,16 @@
 <span class="sd">            A ButtonPresses instance which contains buttons which were pressed since this call was last made.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">pressed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">released</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">button</span><span class="p">,</span> <span class="n">state</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">was_pressed_since_last_check</span><span class="p">:</span>
                 <span class="n">pressed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
                 <span class="n">state</span><span class="o">.</span><span class="n">was_pressed_since_last_check</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">was_released_since_last_check</span><span class="p">:</span>
+                <span class="n">released</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">button</span><span class="p">)</span>
+                <span class="n">state</span><span class="o">.</span><span class="n">was_released_since_last_check</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__presses</span> <span class="o">=</span> <span class="n">ButtonPresses</span><span class="p">(</span><span class="n">pressed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__releases</span> <span class="o">=</span> <span class="n">ButtonPresses</span><span class="p">(</span><span class="n">released</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__presses</span></div>
 
 <div class="viewcode-block" id="Buttons.held"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Buttons.held">[docs]</a>    <span class="k">def</span> <span class="nf">held</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sname</span><span class="p">):</span>
@@ -1328,7 +1364,7 @@
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Sep 11, 2020.
+        Last updated on Nov 19, 2020.
       </span>
 
     </p>

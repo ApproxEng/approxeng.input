@@ -48,6 +48,7 @@ simple. First create your class, this won't include any button or axis bindings,
     MY_VENDOR_ID = ...
     MY_PRODUCT_ID = ...
 
+    __all__ = ['MyNewController']
 
     class MyNewController(Controller):
         """
@@ -63,11 +64,16 @@ simple. First create your class, this won't include any button or axis bindings,
             :param float hot_zone:
                 Used to set the hot zone for each :class:`approxeng.input.CentredAxis` in the controller.
             """
-            super(MyNewController, self).__init__(vendor_id=MY_VENDOR_ID,
-                                                  product_id=MY_PRODUCT_ID,
-                                                  controls=[],
+            super(MyNewController, self).__init__(controls=[],
                                                   dead_zone=dead_zone,
                                                   hot_zone=hot_zone)
+
+        @staticmethod
+        def registration_ids():
+            """
+            :return: list of (vendor_id, product_id) for this controller
+            """
+            return [(MY_VENDOR_ID, MY_PRODUCT_ID)]
 
         def __repr__(self):
             return 'My new controller'

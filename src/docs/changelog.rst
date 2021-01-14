@@ -13,6 +13,26 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
+Version 2.6.0
+-------------
+
+Introduced controller profiling as a way to add new controllers, or fix mappings in existing ones, without requiring
+any code changes. See :ref:`profiling` for more information. Also updated the built-in steam controller class to use
+the native support in recent linux versions. Removed some legacy controller classes as they've been replaced with
+profiled versions.
+
+I've also moved some things which were in scripts from there into the main code, and made them accessible as command
+line tools. When the library is correctly installed, you should be able to use the following:
+
+- `approxeng_input_show_controls` to test a connected controller
+- `approxeng_input_profile` to create a new controller profile
+
+There are also a pair of internal test commands, you'll only ever want to run these if you're writing custom controller
+classes, and that should now be a rare event, but they're here anyway:
+
+- `approxeng_input_list_devices` to list all attached evdev device nodes which look vaguely like game controllers
+- `approxeng_input_scan_sys` to perform a scan of `/sys` nodes
+
 Version 2.5.0
 -------------
 
@@ -87,7 +107,7 @@ Minor change to allow recognition of newer DS4 controllers with a different prod
 Version 2.0.1
 -------------
 
-Added support for the PiHut own brand controller, code from Mike Horne (see :ref:`api_pihut`)
+Added support for the PiHut own brand controller, code from Mike Horne
 
 Version 2.0.0
 -------------

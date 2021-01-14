@@ -1,0 +1,56 @@
+axes:
+  dx:
+    code: 16
+    invert: false
+    max_value: 1
+    min_value: -1
+  dy:
+    code: 17
+    invert: false
+    max_value: 1
+    min_value: -1
+  lt:
+    code: 10
+    invert: false
+    max_value: 1023
+    min_value: 0
+  lx:
+    code: 0
+    invert: false
+    max_value: 65535
+    min_value: 0
+  ly:
+    code: 1
+    invert: true
+    max_value: 65382
+    min_value: 0
+  rt:
+    code: 9
+    invert: false
+    max_value: 1023
+    min_value: 0
+  rx:
+    code: 2
+    invert: false
+    max_value: 65535
+    min_value: 0
+  ry:
+    code: 5
+    invert: true
+    max_value: 65535
+    min_value: 168
+buttons:
+  circle: 305
+  cross: 304
+  home: 172
+  l1: 310
+  ls: 317
+  r1: 311
+  rs: 318
+  select: 158
+  square: 307
+  start: 315
+  triangle: 308
+name: Xbox Wireless Controller
+product: 765
+vendor: 1118

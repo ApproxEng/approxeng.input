@@ -1,0 +1,48 @@
+axes:
+  dx:
+    code: 16
+    invert: false
+    max_value: 1
+    min_value: -1
+  dy:
+    code: 17
+    invert: false
+    max_value: 1
+    min_value: -1
+  lx:
+    code: 0
+    invert: false
+    max_value: 255
+    min_value: 0
+  ly:
+    code: 1
+    invert: true
+    max_value: 255
+    min_value: 0
+  rx:
+    code: 2
+    invert: false
+    max_value: 255
+    min_value: 0
+  ry:
+    code: 5
+    invert: true
+    max_value: 255
+    min_value: 0
+buttons:
+  circle: 306
+  cross: 305
+  home: 316
+  l1: 308
+  l2: 310
+  ls: 314
+  r1: 309
+  r2: 311
+  rs: 315
+  select: 312
+  square: 304
+  start: 313
+  triangle: 307
+name: Performance Designed Products Rock Candy Wireless Gamepad for PS3
+product: 296
+vendor: 3695

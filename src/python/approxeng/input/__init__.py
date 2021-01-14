@@ -320,7 +320,7 @@ class Controller(ABC):
         :return: True if any buttons were released since the last check.
         """
         return self.buttons.releases.has_presses
-    
+
     @property
     def presses(self) -> 'ButtonPresses':
         """
@@ -393,8 +393,8 @@ class Axes(object):
                 self.axes_by_sname[rootname] = CircularCentredAxis(x=self.axes_by_sname[xname],
                                                                    y=self.axes_by_sname[yname])
 
-        add_circular_axis('l')
-        add_circular_axis('r')
+        for prefix in ['l', 'r', 'd']:
+            add_circular_axis(prefix)
 
     def axis_updated(self, event: InputEvent, prefix=None):
         """
@@ -760,7 +760,8 @@ class CircularCentredAxis:
 
     @property
     def value(self) -> (float, float):
-        return self._calculate_position(raw_x=self.x.raw_value, raw_y=self.y.raw_value)
+        return self._calculate_position(raw_x=self.x.raw_value if not self.x.invert else -self.x.raw_value,
+                                        raw_y=self.y.raw_value if not self.y.invert else -self.y.raw_value)
 
 
 class CentredAxis(Axis):

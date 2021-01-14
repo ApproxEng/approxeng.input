@@ -1,17 +1,21 @@
+import importlib.resources as resources
 import logging
+import os
 import pprint
 from functools import total_ordering
-from typing import Type, List
+from pathlib import Path
+from typing import List
 
-from approxeng.input import Controller
+import yaml
+
 # noinspection PyUnresolvedReferences
 from approxeng.input.dualshock3 import DualShock3
 # noinspection PyUnresolvedReferences
 from approxeng.input.dualshock4 import DualShock4
 # noinspection PyUnresolvedReferences
 from approxeng.input.pihut import PiHut
-# noinspection PyUnresolvedReferences
-from approxeng.input.rockcandy import RockCandy
+from approxeng.input.profiling import Profile
+
 # noinspection PyUnresolvedReferences
 from approxeng.input.sf30pro import SF30Pro
 # noinspection PyUnresolvedReferences
@@ -24,8 +28,6 @@ from approxeng.input.switch import SwitchJoyConRight, SwitchJoyConLeft
 from approxeng.input.wii import WiiRemotePro
 # noinspection PyUnresolvedReferences
 from approxeng.input.wiimote import WiiMote
-# noinspection PyUnresolvedReferences
-from approxeng.input.xboxone import WiredXBoxOneSPad, WirelessXBoxOneSPad
 
 try:
     from evdev import InputDevice, list_devices, ecodes, util
@@ -177,6 +179,64 @@ def find_matching_controllers(*requirements, **kwargs) -> List[ControllerDiscove
         raise exception
 
 
+def get_controller_classes(scan_home=True, additional_locations=None):
+    """
+    Get a map of 'vendor-product' string to controller class. This loads known 'complex' controller classes
+    first, then loads simple YAML based ones from within the library, and finally loads from ~/.approxeng_input
+    treating this as a directory, iterating over files within it and loading definitions from each. This means that
+    users can override controller definitions by putting files in this directory.
+
+    :param scan_home:
+        if true, uses ~/.approxeng.input/ as a source for YAML templates, default to True
+    :param additional_locations:
+        if provided, is interpreted as a list of directory paths which will be scanned in order
+        for additional YAML definitions. If this is a single string it will be wrapped automatically in a list
+    """
+
+    def built_in_classes():
+        for controller_class in [DualShock3, DualShock4, SpaceMousePro, SteamController]:
+            for vendor_id, product_id in controller_class.registration_ids():
+                yield f'{vendor_id}-{product_id}', controller_class
+
+    def built_in_yaml_definitions():
+        package = 'approxeng.input.yaml_controllers'
+        for item in resources.contents(package):
+            if item.endswith('.yaml') and resources.is_resource(package, item):
+                yaml_string = resources.read_text('approxeng.input.yaml_controllers', item)
+                profile = Profile(d=yaml.load(yaml_string, Loader=yaml.SafeLoader))
+                controller_class = profile.build_controller_class()
+                for vendor_id, product_id in controller_class.registration_ids():
+                    yield f'{vendor_id}-{product_id}', controller_class
+
+    def yaml_definitions_from_path(path: Path):
+        if not path.exists():
+            logger.info(f'Creating new definition directory {path}')
+            os.makedirs(path)
+        elif not Path(path).is_dir():
+            logger.error(f'YAML definition path {path} exists, but is a file!')
+            return
+        for entry in path.glob('*.yaml'):
+            if entry.is_file():
+                with open(entry, 'r') as file:
+                    profile = Profile(d=yaml.load(file, Loader=yaml.SafeLoader))
+                    controller_class = profile.build_controller_class()
+                    for vendor_id, product_id in controller_class.registration_ids():
+                        yield f'{vendor_id}-{product_id}', controller_class
+
+    controllers = {key: value for key, value in built_in_classes()}
+    controllers.update({key: value for key, value in built_in_yaml_definitions()})
+    if scan_home:
+        controllers.update({key: value for key, value in yaml_definitions_from_path(Path.home() / '.approxeng.input')})
+    if additional_locations is not None and isinstance(additional_locations, str):
+        additional_locations = [additional_locations]
+    if additional_locations is not None and isinstance(additional_locations, list):
+        for location in additional_locations:
+            controllers.update(
+                {key: value for key, value in yaml_definitions_from_path(Path(location))})
+
+    return controllers
+
+
 def find_all_controllers(**kwargs) -> List[ControllerDiscovery]:
     """
     :return:
@@ -185,30 +245,13 @@ def find_all_controllers(**kwargs) -> List[ControllerDiscovery]:
         constructed with kwargs passed to their constructor function, particularly useful for dead and hot zone
         parameters.
     """
-
-    def get_controller_classes() -> [{}]:
-        """
-        Scans for subclasses of :class:`~approxeng.input.Controller` and reads out data from their
-        :meth:`~approxeng.input.Controller.registrations_ids` method. This should return a list of
-        tuples of `(vendor_id, product_id)` which are then used along with the subclass itself to
-        populate a registry of known subclasses.
-
-        :return:
-            A generator that produces known subclasses and their registration information
-        """
-        for controller_class in Controller.__subclasses__():
-            for vendor_id, product_id in controller_class.registration_ids():
-                yield {'constructor': controller_class,
-                       'vendor_id': vendor_id,
-                       'product_id': product_id}
-
-    id_to_constructor = {'{}-{}'.format(c['vendor_id'], c['product_id']): c['constructor'] for c in
-                         get_controller_classes()}
+    id_to_constructor = get_controller_classes()
 
     def controller_constructor(d: InputDevice):
         id = '{}-{}'.format(d.info.vendor, d.info.product)
         if id in id_to_constructor:
             return id_to_constructor[id]
+        logger.info(f'No controller defined for device {d}')
         return None
 
     all_devices = list(InputDevice(path) for path in list_devices())
@@ -224,72 +267,74 @@ def find_all_controllers(**kwargs) -> List[ControllerDiscovery]:
     return controllers
 
 
-def print_devices():
+def device_verbose_info(device: InputDevice):
     """
-    Simple test function which prints out all devices found by evdev
+    Gather and format as much info as possible about the supplied InputDevice. Used mostly for debugging at this point.
+
+    :param device:
+        An InputDevice to examine
+    :return:
+        A dict containing as much information as possible about the input device.
     """
 
-    def device_verbose_info(device: InputDevice) -> {}:
-        """
-        Gather and format as much info as possible about the supplied InputDevice. Used mostly for debugging at this point.
+    def axis_name(axis_code):
+        try:
+            return ecodes.ABS[axis_code]
+        except KeyError:
+            return 'EXTENDED_CODE_{}'.format(axis_code)
 
-        :param device:
-            An InputDevice to examine
-        :return:
-            A dict containing as much information as possible about the input device.
-        """
+    def rel_axis_name(axis_code):
+        try:
+            return ecodes.REL[axis_code]
+        except KeyError:
+            return 'EXTENDED_CODE_{}'.format(axis_code)
 
-        def axis_name(axis_code):
-            try:
-                return ecodes.ABS[axis_code]
-            except KeyError:
-                return 'EXTENDED_CODE_{}'.format(axis_code)
+    axes = None
+    if device.capabilities().get(3) is not None:
+        axes = {
+            axis_name(axis_code): {'code': axis_code, 'min': axis_info.min, 'max': axis_info.max,
+                                   'fuzz': axis_info.fuzz,
+                                   'flat': axis_info.flat, 'res': axis_info.resolution} for
+            axis_code, axis_info in device.capabilities().get(3)}
 
-        def rel_axis_name(axis_code):
-            try:
-                return ecodes.REL[axis_code]
-            except KeyError:
-                return 'EXTENDED_CODE_{}'.format(axis_code)
+    rel_axes = None
+    if device.capabilities().get(2) is not None:
+        print(device.capabilities().get(2))
+        rel_axes = {
+            rel_axis_name(axis_code): {'code': axis_code} for
+            axis_code in device.capabilities().get(2)}
 
-        axes = None
-        if has_abs_axes(device):
-            axes = {
-                axis_name(axis_code): {'code': axis_code, 'min': axis_info.min, 'max': axis_info.max,
-                                       'fuzz': axis_info.fuzz,
-                                       'flat': axis_info.flat, 'res': axis_info.resolution} for
-                axis_code, axis_info in device.capabilities().get(3)}
+    buttons = None
+    if device.capabilities().get(1) is not None:
+        buttons = {code: names for (names, code) in
+                   dict(util.resolve_ecodes_dict({1: device.capabilities().get(1)})).get(('EV_KEY', 1))}
 
-        rel_axes = None
-        if has_rel_axes(device):
-            print(device.capabilities().get(2))
-            rel_axes = {
-                rel_axis_name(axis_code): {'code': axis_code} for
-                axis_code in device.capabilities().get(2)}
+    return {'fn': device.fn, 'path': device.path, 'name': device.name, 'phys': device.phys, 'uniq': device.uniq,
+            'vendor': device.info.vendor, 'product': device.info.product, 'version': device.info.version,
+            'bus': device.info.bustype, 'axes': axes, 'rel_axes': rel_axes, 'buttons': buttons,
+            'unique_name': unique_name(device)}
 
-        buttons = None
-        if has_buttons(device):
-            buttons = {code: names for (names, code) in
-                       dict(util.resolve_ecodes_dict({1: device.capabilities().get(1)})).get(('EV_KEY', 1))}
 
-        return {'fn': device.fn, 'path': device.path, 'name': device.name, 'phys': device.phys, 'uniq': device.uniq,
-                'vendor': device.info.vendor, 'product': device.info.product, 'version': device.info.version,
-                'bus': device.info.bustype, 'axes': axes, 'rel_axes': rel_axes, 'buttons': buttons,
-                'unique_name': unique_name(device)}
-
+def get_valid_devices():
     def has_abs_axes(device):
         return device.capabilities().get(3) is not None
 
     def has_rel_axes(device):
         return device.capabilities().get(2) is not None
 
-    def has_buttons(device):
-        return device.capabilities().get(1) is not None
-
     _check_import()
     for d in [InputDevice(fn) for fn in list_devices()]:
         if has_abs_axes(d) or has_rel_axes(d):
-            pp = pprint.PrettyPrinter(indent=2, width=100)
-            pp.pprint(device_verbose_info(d))
+            yield d
+
+
+def print_devices():
+    """
+    Simple test function which prints out all devices found by evdev
+    """
+    for d in get_valid_devices():
+        pp = pprint.PrettyPrinter(indent=2, width=100)
+        pp.pprint(device_verbose_info(d))
 
 
 def print_controllers():

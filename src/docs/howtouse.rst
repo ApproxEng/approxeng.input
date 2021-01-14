@@ -14,6 +14,11 @@ in sub-modules. The key classes shared across all controllers are:
   controller D-pads are actually a pair of axes in terms of implementation, although they don't have any analogue
   control, they just emit either -1, 0 or 1)
 
+- :class:`~approxeng.input.CircularCentredAxis` instances are automatically created when a controller defines pairs of
+  axes named lx,ly, or similar (rx,ry and dx,dy are the only other ones used at the moment). These are more useful if
+  you want to treat the two axes as a 2d control, as they have a circular rather than cross shaped dead zone and
+  circular rather than box shaped hot zone.
+
 - :class:`~approxeng.input.Button` represents a single button. As with the Axis class you don't create these, instead
   you need to use the instances provided by the driver classes.
 
@@ -31,34 +36,25 @@ Constructing and Binding a Controller
 Once your controller is physically connected to the computer (whether by USB, bluetooth, or magic) and you have a
 corresponding entry in the dev filesystem, you need to create an object to receive and interpret events from the
 hardware, and you need to set up a mechanism by which events will be sent to that object. The object in this case will
-be a subclass of :class:`~approxeng.input.Controller`, currently the following controllers are supported:
+be a subclass of :class:`~approxeng.input.Controller`. As of version 2.6.0, the mechanism to specify controllers has
+been changed. For controllers which are close to standard, they can be defined within YAML files found within the
+library itself, or within a `~/.approxeng.input` directory. Non-standard controllers, such as ones which use multiple
+device nodes or have extra features such as LEDs, must be coded directly and added into the library itself.
 
-- :class:`approxeng.input.dualshock3.DualShock3` handles PS3 controllers
+Non-standard controller classes which include behaviour or controls which can't be handled by the YAML definitions
+are currently:
 
-- :class:`approxeng.input.dualshock4.DualShock4` is for PS4 controllers
+- :class:`approxeng.input.dualshock3.DualShock3` for PS3 controllers, see :ref:`api_dualshock3`
 
-- :class:`approxeng.input.xboxone.WiredXBoxOneSPad` and :class:`approxeng.input.xboxone.WirelessXBoxOneSPad` are for the
-  newer XBox One controllers. For whatever reason this controller reports different axes and buttons when connected over
-  bluetooth to when it's connected with a wire, so you'll need to use the correct one!
+- :class:`approxeng.input.dualshock4.DualShock4` for PS4 controllers, see :ref:`api_dualshock4`
 
-- :class:`approxeng.input.rockcandy.RockCandy` for the Rock Candy PS4 controller clone (it appears to describe itself as
-  a PS3 controller, but has the controls of a PS4 one!)
-
-- :class:`approxeng.input.steamcontroller.SteamController` for the Valve Steam controller. This is a bit of a strange
-  one, and you'll need to be running a driver which creates a virtual XBox360 device to use it, but it does work. See
+- :class:`approxeng.input.steamcontroller.SteamController` for the Valve Steam controller. See
   :ref:`api_steamcontroller` for details.
 
-- :class:`approxeng.input.wii.WiiRemotePro` for the Nintendo Wii Remote Pro. If you're running in a graphical
-  environment you'll probably want to disable the default behaviour where the left stick controls the mouse - see
-  :ref:`wii-remote-pro-label` for instructions.
-
-- :class:`approxeng.input.wiimote.WiiMote` for :ref:`api_wiimote`.
-
-- :class:`approxeng.input.sf30pro.SF30Pro` for :ref:`api_sf30pro`.
-
-- :class:`approxeng.input.pihut.PiHut` for :ref:`api_pihut`.
-
 - :class:`approxeng.input.spacemousepro.SpaceMousePro` for :ref:`api_spacemousepro`.
+
+Other controllers will appear as instances of a class called `ProfiledController`, this is dynamically created from
+the YAML definitions and consequently has no linked documentation.
 
 In general you will not explicitly create these objects yourself, instead you can use the binding layer to discover a
 connected controller (optionally supplying a particular kind of controller you want, otherwise it just finds the first

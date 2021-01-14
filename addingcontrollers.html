@@ -206,6 +206,7 @@ simple. First create your class, this won’t include any button or axis binding
 <span class="n">MY_VENDOR_ID</span> <span class="o">=</span> <span class="o">...</span>
 <span class="n">MY_PRODUCT_ID</span> <span class="o">=</span> <span class="o">...</span>
 
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;MyNewController&#39;</span><span class="p">]</span>
 
 <span class="k">class</span> <span class="nc">MyNewController</span><span class="p">(</span><span class="n">Controller</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -221,11 +222,16 @@ simple. First create your class, this won’t include any button or axis binding
 <span class="sd">        :param float hot_zone:</span>
 <span class="sd">            Used to set the hot zone for each :class:`approxeng.input.CentredAxis` in the controller.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MyNewController</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">vendor_id</span><span class="o">=</span><span class="n">MY_VENDOR_ID</span><span class="p">,</span>
-                                              <span class="n">product_id</span><span class="o">=</span><span class="n">MY_PRODUCT_ID</span><span class="p">,</span>
-                                              <span class="n">controls</span><span class="o">=</span><span class="p">[],</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyNewController</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">controls</span><span class="o">=</span><span class="p">[],</span>
                                               <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
                                               <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">registration_ids</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: list of (vendor_id, product_id) for this controller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="n">MY_VENDOR_ID</span><span class="p">,</span> <span class="n">MY_PRODUCT_ID</span><span class="p">)]</span>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;My new controller&#39;</span>

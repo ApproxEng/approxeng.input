@@ -265,9 +265,9 @@ has not changed, you can only access the button releases through the parent cont
 Standard Names
 --------------
 
-All the controllers supported by this library are fairly similar - they have two analogue joysticks, a bunch of buttons,
-some triggers etc. It would be helpful therefore to be able to make use of one controller type but make it as easy as
-possible to use others without substantial code changes in your own code.
+Most of the controllers supported by this library are fairly similar - they have two analogue joysticks, a bunch of
+buttons, some triggers etc. It would be helpful therefore to be able to make use of one controller type but make it as
+easy as possible to use others without substantial code changes in your own code.
 
 To do this the library assigns a standard name, or `sname` to each button and axis on every controller. These are based
 loosely on the buttons found on a PS3 controller, at the cost of minor confusion for the XBox users (where, for example,

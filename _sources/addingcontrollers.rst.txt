@@ -2,16 +2,20 @@ Adding support for a new controller type
 ========================================
 
 The library supports a number of controllers but it's quite possible, given the variety of cheap clones on the market,
-that your particular controller isn't one of them. You have a few options, depending on the scenario you find yourself
-in. Firstly though you'll need both product and vendor IDs for your device - these are allocated by the USB consortium
-so will definitely not be the same for a clone device as for an original one, for example.
+that your particular controller isn't one of them. Your first check should be, for relatively simple controllers,
+whether you can create a controller profile, see :ref:`profiling` - this approach needs no coding and is quick and
+largely error-proof.
+
+If you are unable to use that approach, typically because you're trying to add support for a complex or unusual
+controller, you'll need to implement a new controller class and either add it yourself to a local copy of this library,
+or submit it as a change request along with the corresponding documentation.
 
 Finding your product and vendor ID
 ----------------------------------
 
 Once you have a controller paired over bluetooth, or, in the case of those with specific dongles, otherwise connected,
-you can run the `scripts/list_devices.py` to print out a list of all connected devices, including the vendor and product
-identifiers. For example, with my XBox One controller paired and connected I see this:
+you can run the `approxeng_input_list_devices` command to print out a list of all connected devices, including the
+vendor and product identifiers. For example, with my XBox One controller paired and connected I see this:
 
 .. code-block:: bash
 
@@ -25,12 +29,6 @@ identifiers. For example, with my XBox One controller paired and connected I see
       'version': 2307}
 
 In general this should show you enough information to identify the controller you've just connected and get the details.
-
-Clones of a supported controller
---------------------------------
-
-If you have a controller which is an exact copy of one the library supports, but isn't autodetected, you can sub-class
-the existing one and specify the appropriate return values for `registration_ids`
 
 Writing a new controller class
 ------------------------------
@@ -93,7 +91,7 @@ various axis and button classes to see what they take as arguments, these are cu
 - :class:`~approxeng.input.Button` for buttons
 
 You should take a look at the source for the existing controller classes, i.e.
-:class:`~approxeng.input.xboxone.WirelessXBoxOneSPad` to see how these are used. For every control you need to know the
+:class:`~approxeng.input.dualshock4.DualShock4` to see how these are used. For every control you need to know the
 event code, for analogue axes you'll also need to know the range of values the controller can produce so the library
 can normalise these to a -1.0 to 1.0, or 0.0 to 1.0 range. Check out the list of :ref:`sname-label` to make your new
 controller class drop-in compatible with existing code, and let me know about it by raising either a pull request or a

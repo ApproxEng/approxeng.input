@@ -19,7 +19,7 @@ file can be called anything, you'll need to be root to create it, and must speci
 
 .. code-block:: bash
 
-    options bluetooth disable_ertm=Y
+    options bluetooth disable_ertm=1
 
 After doing this you'll need to reboot your computer. If you don't perform this step your controller will pair, but will
 not stay connected for more than a couple of seconds (if you're using the graphical bluetooth manager you'll see it
@@ -36,8 +36,5 @@ or buttons are mapping to the wrong controls, you need to un-pair the controller
 again. We're not sure why, but in three separate cases this has fixed the issue. See
 `Issue #17 <https://github.com/ApproxEng/approxeng.input/issues/17>`__ for discussion!
 
-Controller Classes
-------------------
-
-.. automodule:: approxeng.input.xboxone
-    :members:
+If this doesn't work, you can use the profiling tool to build an overriden set of button and axis bindings, see
+:ref:`profiling` for instructions.

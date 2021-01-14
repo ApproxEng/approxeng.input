@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>XBox-One S Controller Support &mdash; Approximate Engineering - Input 2.5.0 documentation</title>
+  <title>XBox-One S Controller Support &mdash; Approximate Engineering - Input 2.6.0 documentation</title>
   
 
   
@@ -36,11 +36,11 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.5.0 documentation"
+          title="Search within Approximate Engineering - Input 2.6.0 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Rock Candy Controller Support" href="rockcandy.html" />
+    <link rel="next" title="Steam Controller Support" href="steamcontroller.html" />
     <link rel="prev" title="PlayStation 4 Controller Support" href="dualshock4.html" /> 
 </head>
 
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.5.0
+                2.6.0
               </div>
             
           
@@ -95,6 +95,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../profiling.html">Profiling and Testing Controllers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs - approxeng.input</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
@@ -103,15 +104,10 @@
 <li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">XBox-One S Controller Support</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#problems-with-button-mappings">Problems with button mappings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-approxeng.input.xboxone">Controller Classes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="rockcandy.html">Rock Candy Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="steamcontroller.html">Steam Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wii.html">Wii Remote Pro Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wiimote.html">WiiMote Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pihut.html">PiHut Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sf30pro.html">8Bitdo SF30Pro/SN30Pro Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacemousepro.html">Wired SpaceMouse Pro Support</a></li>
 </ul>
 </li>
@@ -197,7 +193,7 @@ file can be called anything, you’ll need to be root to create it, and must spe
 </pre></div>
 </div>
 <p>…to create a file, with a single line:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>options bluetooth <span class="nv">disable_ertm</span><span class="o">=</span>Y
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>options bluetooth <span class="nv">disable_ertm</span><span class="o">=</span><span class="m">1</span>
 </pre></div>
 </div>
 <p>After doing this you’ll need to reboot your computer. If you don’t perform this step your controller will pair, but will
@@ -211,110 +207,8 @@ I’ve found in the context of making robots.</p>
 or buttons are mapping to the wrong controls, you need to un-pair the controller and go through the pairing process
 again. We’re not sure why, but in three separate cases this has fixed the issue. See
 <a class="reference external" href="https://github.com/ApproxEng/approxeng.input/issues/17">Issue #17</a> for discussion!</p>
-</div>
-<div class="section" id="module-approxeng.input.xboxone">
-<span id="controller-classes"></span><h2>Controller Classes<a class="headerlink" href="#module-approxeng.input.xboxone" title="Permalink to this headline">¶</a></h2>
-<dl class="py class">
-<dt id="approxeng.input.xboxone.WiredXBoxOnePadJack">
-<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.xboxone.</code><code class="sig-name descname">WiredXBoxOnePadJack</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WiredXBoxOnePadJack"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WiredXBoxOnePadJack" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wired XBox One controller, version 733 i.e. with headphone jack. It is exactly the same as the Xbox one S though the product ID is different.</p>
-<dl class="py method">
-<dt id="approxeng.input.xboxone.WiredXBoxOnePadJack.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WiredXBoxOnePadJack.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WiredXBoxOnePadJack.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new xbox one controller instance Product: 733</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</p></li>
-<li><p><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="approxeng.input.xboxone.WiredXBoxOnePadJack.registration_ids">
-<em class="property">static </em><code class="sig-name descname">registration_ids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WiredXBoxOnePadJack.registration_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WiredXBoxOnePadJack.registration_ids" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>list of (vendor_id, product_id) for this controller</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="approxeng.input.xboxone.WiredXBoxOneSPad">
-<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.xboxone.</code><code class="sig-name descname">WiredXBoxOneSPad</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WiredXBoxOneSPad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WiredXBoxOneSPad" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wired XBox One controller, tested with the newer controllers that use bluetooth and are supplied with the XBox One S
-but may work with older versions. Note that the codes and axis mappings for the wired controller are not the same
-as for the wireless!</p>
-<dl class="py method">
-<dt id="approxeng.input.xboxone.WiredXBoxOneSPad.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WiredXBoxOneSPad.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WiredXBoxOneSPad.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new xbox one s controller instance</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</p></li>
-<li><p><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="approxeng.input.xboxone.WiredXBoxOneSPad.registration_ids">
-<em class="property">static </em><code class="sig-name descname">registration_ids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WiredXBoxOneSPad.registration_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WiredXBoxOneSPad.registration_ids" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>list of (vendor_id, product_id) for this controller</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="approxeng.input.xboxone.WirelessXBoxOneSPad">
-<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.xboxone.</code><code class="sig-name descname">WirelessXBoxOneSPad</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WirelessXBoxOneSPad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WirelessXBoxOneSPad" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wireless over bluetooth - for some reason the control ranges on this are different to when wired and all the buttons
-are different.</p>
-<p>To make the wireless pair work with linux you need to set a kernel module option on the bluetooth module. This can
-be done by creating a file in /etc/modprobe.d with the line ‘options bluetooth disable_ertm=Y’ and rebooting.</p>
-<dl class="py method">
-<dt id="approxeng.input.xboxone.WirelessXBoxOneSPad.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WirelessXBoxOneSPad.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WirelessXBoxOneSPad.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new xbox one s controller instance</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</p></li>
-<li><p><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="approxeng.input.xboxone.WirelessXBoxOneSPad.registration_ids">
-<em class="property">static </em><code class="sig-name descname">registration_ids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/xboxone.html#WirelessXBoxOneSPad.registration_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.xboxone.WirelessXBoxOneSPad.registration_ids" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>list of (vendor_id, product_id) for this controller</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<p>If this doesn’t work, you can use the profiling tool to build an overriden set of button and axis bindings, see
+<a class="reference internal" href="../profiling.html#profiling"><span class="std std-ref">Profiling and Testing Controllers</span></a> for instructions.</p>
 </div>
 </div>
 
@@ -326,7 +220,7 @@ be done by creating a file in /etc/modprobe.d with the line ‘options bluetooth
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="rockcandy.html" class="btn btn-neutral float-right" title="Rock Candy Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="steamcontroller.html" class="btn btn-neutral float-right" title="Steam Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="dualshock4.html" class="btn btn-neutral float-left" title="PlayStation 4 Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -341,7 +235,7 @@ be done by creating a file in /etc/modprobe.d with the line ‘options bluetooth
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Nov 19, 2020.
+        Last updated on Jan 14, 2021.
       </span>
 
     </p>

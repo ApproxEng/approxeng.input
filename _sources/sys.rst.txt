@@ -83,9 +83,3 @@ slightly finer grained.
     it. While this is fast, because the file is a virtual one, the battery level only changes quite slowly so you should
     only query this property fairly infrequently to avoid excessive IO access. Checking every minute or so is almost
     certainly going to be good enough.
-
-The updated `show_controls.py` script now indicates battery level if the controller supports it (see line 67 below):
-
-.. literalinclude:: ../../scripts/show_controls.py
-    :language: python
-    :linenos:

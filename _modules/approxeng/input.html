@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input &mdash; Approximate Engineering - Input 2.5.0 documentation</title>
+  <title>approxeng.input &mdash; Approximate Engineering - Input 2.6.0 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.5.0 documentation"
+          title="Search within Approximate Engineering - Input 2.6.0 documentation"
           href="../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                2.5.0
+                2.6.0
               </div>
             
           
@@ -93,6 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../profiling.html">Profiling and Testing Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
@@ -484,7 +485,7 @@
 <span class="sd">        :return: True if any buttons were released since the last check.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">releases</span><span class="o">.</span><span class="n">has_presses</span>
-    
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">presses</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;ButtonPresses&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -557,8 +558,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="p">[</span><span class="n">rootname</span><span class="p">]</span> <span class="o">=</span> <span class="n">CircularCentredAxis</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="p">[</span><span class="n">xname</span><span class="p">],</span>
                                                                    <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axes_by_sname</span><span class="p">[</span><span class="n">yname</span><span class="p">])</span>
 
-        <span class="n">add_circular_axis</span><span class="p">(</span><span class="s1">&#39;l&#39;</span><span class="p">)</span>
-        <span class="n">add_circular_axis</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span></div>
+        <span class="k">for</span> <span class="n">prefix</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]:</span>
+            <span class="n">add_circular_axis</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Axes.axis_updated"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Axes.axis_updated">[docs]</a>    <span class="k">def</span> <span class="nf">axis_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">InputEvent</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -924,7 +925,8 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_position</span><span class="p">(</span><span class="n">raw_x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">raw_value</span><span class="p">,</span> <span class="n">raw_y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">raw_value</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_position</span><span class="p">(</span><span class="n">raw_x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">raw_value</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">invert</span> <span class="k">else</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">raw_value</span><span class="p">,</span>
+                                        <span class="n">raw_y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">raw_value</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">invert</span> <span class="k">else</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">raw_value</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="CentredAxis"><a class="viewcode-back" href="../../api/input.html#approxeng.input.CentredAxis">[docs]</a><span class="k">class</span> <span class="nc">CentredAxis</span><span class="p">(</span><span class="n">Axis</span><span class="p">):</span>
@@ -1364,7 +1366,7 @@
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Nov 19, 2020.
+        Last updated on Jan 14, 2021.
       </span>
 
     </p>

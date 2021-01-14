@@ -14,12 +14,8 @@ from GitHub_.
     api/dualshock3
     api/dualshock4
     api/xboxone
-    api/rockcandy
     api/steamcontroller
     api/wii
-    api/wiimote
-    api/pihut
-    api/sf30pro
     api/spacemousepro
 
 .. _GitHub: https://github.com/ApproxEng/approxeng.input

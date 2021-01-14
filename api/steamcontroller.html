@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Steam Controller Support &mdash; Approximate Engineering - Input 2.5.0 documentation</title>
+  <title>Steam Controller Support &mdash; Approximate Engineering - Input 2.6.0 documentation</title>
   
 
   
@@ -36,12 +36,12 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.5.0 documentation"
+          title="Search within Approximate Engineering - Input 2.6.0 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Wii Remote Pro Controller Support" href="wii.html" />
-    <link rel="prev" title="Rock Candy Controller Support" href="rockcandy.html" /> 
+    <link rel="prev" title="XBox-One S Controller Support" href="xboxone.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.5.0
+                2.6.0
               </div>
             
           
@@ -95,6 +95,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../profiling.html">Profiling and Testing Controllers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs - approxeng.input</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
@@ -102,12 +103,8 @@
 <li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="xboxone.html">XBox-One S Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rockcandy.html">Rock Candy Controller Support</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Steam Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wii.html">Wii Remote Pro Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wiimote.html">WiiMote Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pihut.html">PiHut Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sf30pro.html">8Bitdo SF30Pro/SN30Pro Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacemousepro.html">Wired SpaceMouse Pro Support</a></li>
 </ul>
 </li>
@@ -186,46 +183,152 @@
 <img alt="../_images/steam-controller.jpg" src="../_images/steam-controller.jpg" />
 <p class="caption"><span class="caption-text">Steam Controller</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
-<p>The Valve Steam controller is a strange beast, intended as it is to allow control of games which never expected to use
-a controller. Because of this the actual hardware and the way it interacts with the system is a little different to a
-regular game controller, and we have to use an additional driver which pulls information from the controller and pushes
-it to a virtual device to which we then bind.</p>
-<p>The steam controller userland driver can be found on github at <a class="reference external" href="https://github.com/ynsta/steamcontroller">SteamController</a>, you need to follow the instructions
-there to obtain and build the driver. You’ll need to add appropriate udev rules as specified on that page.</p>
-<p>Once you have it, there’s a script ‘scripts/sc-xbox.py’ directory of the driver which you must run as root:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo ~/viridia-env/bin/python ../scripts/sc-xbox.py start
-</pre></div>
-</div>
-<p>(In this case I’ve installed into my virtual environment, so I need to specify the full path to the Python interpreter)</p>
-<p>This will run in the background and create a virtual joystick device, the steam controller support in approxeng.input
-finds this device automatically just the same way it finds ‘real’ controllers.</p>
+<p>As of version 2.6.0, the library supports the steam controller natively, meaning you can access all its
+controls. While this controller does require a specific USB dongle, unlike most dongle-based controllers
+it is able to report disconnections - the device nodes only appear if the controller is turned on.</p>
 <span class="target" id="module-approxeng.input.steamcontroller"></span><dl class="py class">
 <dt id="approxeng.input.steamcontroller.SteamController">
 <em class="property">class </em><code class="sig-prename descclassname">approxeng.input.steamcontroller.</code><code class="sig-name descname">SteamController</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wireless steam controller. Note that you must be running the xbox driver for the steam controller first, otherwise
-this won’t pick up any appropriate devices. Once this is running though it works just fine.</p>
+<dd><p>Wireless steam controller. As of Jan 2021 this works with modern linux installations without
+any messing around, and supports a lot of extra controls as a result!</p>
+<p>The unusual controls are as follows, firstly buttons. Note that both the trackpads have
+touch buttons as well as the click (on the right trackpad) and the d-pad ‘buttons’ on the
+left one. The controller doesn’t have a true d-pad, but you can use the left trackpad in
+place of one (although it’s heavy to activate)</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 67%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Standard name</p></td>
+<td><p>Steam Controller</p></td>
+</tr>
+<tr class="row-even"><td><p>square</p></td>
+<td><p>X</p></td>
+</tr>
+<tr class="row-odd"><td><p>triangle</p></td>
+<td><p>Y</p></td>
+</tr>
+<tr class="row-even"><td><p>circle</p></td>
+<td><p>B</p></td>
+</tr>
+<tr class="row-odd"><td><p>cross</p></td>
+<td><p>A</p></td>
+</tr>
+<tr class="row-even"><td><p>ls</p></td>
+<td><p>Left stick click</p></td>
+</tr>
+<tr class="row-odd"><td><p>rs</p></td>
+<td><p>Right trackpad click</p></td>
+</tr>
+<tr class="row-even"><td><p>rtouch</p></td>
+<td><p>Right trackpad touch</p></td>
+</tr>
+<tr class="row-odd"><td><p>select</p></td>
+<td><p>Left arrow</p></td>
+</tr>
+<tr class="row-even"><td><p>start</p></td>
+<td><p>Right arrow</p></td>
+</tr>
+<tr class="row-odd"><td><p>home</p></td>
+<td><p>Steam button</p></td>
+</tr>
+<tr class="row-even"><td><p>dleft</p></td>
+<td><p>DPad left click</p></td>
+</tr>
+<tr class="row-odd"><td><p>dup</p></td>
+<td><p>DPad up click</p></td>
+</tr>
+<tr class="row-even"><td><p>dright</p></td>
+<td><p>DPad right click</p></td>
+</tr>
+<tr class="row-odd"><td><p>ddown</p></td>
+<td><p>DPad down click</p></td>
+</tr>
+<tr class="row-even"><td><p>dtouch</p></td>
+<td><p>DPad (left trackpad) touch</p></td>
+</tr>
+<tr class="row-odd"><td><p>l1</p></td>
+<td><p>Top left trigger</p></td>
+</tr>
+<tr class="row-even"><td><p>l2</p></td>
+<td><p>Middle left trigger</p></td>
+</tr>
+<tr class="row-odd"><td><p>l3</p></td>
+<td><p>Base left trigger</p></td>
+</tr>
+<tr class="row-even"><td><p>r1</p></td>
+<td><p>Top right trigger</p></td>
+</tr>
+<tr class="row-odd"><td><p>r2</p></td>
+<td><p>Middle right trigger</p></td>
+</tr>
+<tr class="row-even"><td><p>r3</p></td>
+<td><p>Base right trigger</p></td>
+</tr>
+</tbody>
+</table>
+<p>The controller has three xy axes with corresponding circular axes as well as analogue
+triggers on the middle trigger buttons:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 66%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Standard name</p></td>
+<td><p>Steam Controller</p></td>
+</tr>
+<tr class="row-even"><td><p>lx</p></td>
+<td><p>Stick horizontal</p></td>
+</tr>
+<tr class="row-odd"><td><p>ly</p></td>
+<td><p>Stick vertical</p></td>
+</tr>
+<tr class="row-even"><td><p>rx</p></td>
+<td><p>Right trackpad horizontal</p></td>
+</tr>
+<tr class="row-odd"><td><p>ry</p></td>
+<td><p>Right trackpad vertical</p></td>
+</tr>
+<tr class="row-even"><td><p>dx</p></td>
+<td><p>Left trackpad horizontal</p></td>
+</tr>
+<tr class="row-odd"><td><p>dy</p></td>
+<td><p>Left trackpad vertical</p></td>
+</tr>
+<tr class="row-even"><td><p>lt</p></td>
+<td><p>Middle left trigger</p></td>
+</tr>
+<tr class="row-odd"><td><p>rt</p></td>
+<td><p>Middle right trigger</p></td>
+</tr>
+</tbody>
+</table>
 <dl class="py method">
 <dt id="approxeng.input.steamcontroller.SteamController.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new steam controller</p>
+<dd><p>Populate the controller name, button set and axis set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">TriggerAxis</span></code></a> in the controller.</p></li>
-<li><p><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">TriggerAxis</span></code></a> in the controller.</p></li>
+<li><p><strong>controls</strong> – A list of <a class="reference internal" href="input.html#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code></a>, <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">CentredAxis</span></code></a>,
+<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">TriggerAxis</span></code></a> and <a class="reference internal" href="input.html#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">BinaryAxis</span></code></a> instances</p></li>
+<li><p><strong>node_mappings</strong> – A dict from device name to a prefix which will be applied to all events from nodes with a
+matching name before dispatching the corresponding events. This is used to handle controller
+types which create multiple nodes in /dev/input by keying on the device names reported to evdev
+for each node. Nodes are grouped by physical or unique ID first so should, in an ideal world at least,
+all correspond to the same physical controller. This is necessary to support some controllers on modern
+kernels, particularly 4.15. If not specified, or none, then no per-node renaming is applied. Device
+names which do not appear in this map are not assigned a prefix, so it’s legitimate to only assign
+prefixes for ‘new’ functionality which has magically appeared in a later kernel. Similarly, this is
+ignored if there is only one device node bound to the controller instance, so the best practice is to
+leave the older mappings named simply by their code, and only use this to handle secondary device nodes
+such as motion sensors.</p></li>
+<li><p><strong>dead_zone</strong> – If specified, this is applied to all axes</p></li>
+<li><p><strong>hot_zone</strong> – If specified, this is applied to all axes</p></li>
 </ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="approxeng.input.steamcontroller.SteamController.registration_ids">
-<em class="property">static </em><code class="sig-name descname">registration_ids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController.registration_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController.registration_ids" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>list of (vendor_id, product_id) for this controller</p>
 </dd>
 </dl>
 </dd></dl>
@@ -245,7 +348,7 @@ this won’t pick up any appropriate devices. Once this is running though it wor
         <a href="wii.html" class="btn btn-neutral float-right" title="Wii Remote Pro Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="rockcandy.html" class="btn btn-neutral float-left" title="Rock Candy Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="xboxone.html" class="btn btn-neutral float-left" title="XBox-One S Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -257,7 +360,7 @@ this won’t pick up any appropriate devices. Once this is running though it wor
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Nov 19, 2020.
+        Last updated on Jan 14, 2021.
       </span>
 
     </p>

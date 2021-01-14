@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Controller Discovery - approxeng.input.controllers &mdash; Approximate Engineering - Input 2.5.0 documentation</title>
+  <title>Controller Discovery - approxeng.input.controllers &mdash; Approximate Engineering - Input 2.6.0 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.5.0 documentation"
+          title="Search within Approximate Engineering - Input 2.6.0 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.5.0
+                2.6.0
               </div>
             
           
@@ -95,6 +95,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../profiling.html">Profiling and Testing Controllers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="input.html">Common APIs - approxeng.input</a></li>
 <li class="toctree-l2"><a class="reference internal" href="selectbinder.html">Binding - approxeng.input.selectbinder</a></li>
@@ -109,12 +110,8 @@
 <li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="xboxone.html">XBox-One S Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="rockcandy.html">Rock Candy Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="steamcontroller.html">Steam Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wii.html">Wii Remote Pro Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wiimote.html">WiiMote Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pihut.html">PiHut Controller Support</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sf30pro.html">8Bitdo SF30Pro/SN30Pro Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacemousepro.html">Wired SpaceMouse Pro Support</a></li>
 </ul>
 </li>
@@ -308,6 +305,20 @@ actually implements them.</p></li>
 </dd></dl>
 
 <dl class="py function">
+<dt id="approxeng.input.controllers.device_verbose_info">
+<code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">device_verbose_info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">device</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://python-evdev.readthedocs.io/en/latest/apidoc.html#evdev.device.InputDevice" title="(in python-evdev v1.3.0)">evdev.device.InputDevice</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#device_verbose_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.device_verbose_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gather and format as much info as possible about the supplied InputDevice. Used mostly for debugging at this point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>device</strong> – An InputDevice to examine</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dict containing as much information as possible about the input device.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="approxeng.input.controllers.find_all_controllers">
 <code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">find_all_controllers</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span><a class="reference internal" href="#approxeng.input.controllers.ControllerDiscovery" title="approxeng.input.controllers.ControllerDiscovery">approxeng.input.controllers.ControllerDiscovery</a><span class="p">]</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#find_all_controllers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.find_all_controllers" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -337,6 +348,24 @@ match the requirements supplied.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p>ControllerNotFoundError if no appropriately matching controllers can be located</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="approxeng.input.controllers.get_controller_classes">
+<code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">get_controller_classes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">scan_home</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">additional_locations</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#get_controller_classes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.get_controller_classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a map of ‘vendor-product’ string to controller class. This loads known ‘complex’ controller classes
+first, then loads simple YAML based ones from within the library, and finally loads from ~/.approxeng_input
+treating this as a directory, iterating over files within it and loading definitions from each. This means that
+users can override controller definitions by putting files in this directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scan_home</strong> – if true, uses ~/.approxeng.input/ as a source for YAML templates, default to True</p></li>
+<li><p><strong>additional_locations</strong> – if provided, is interpreted as a list of directory paths which will be scanned in order
+for additional YAML definitions. If this is a single string it will be wrapped automatically in a list</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -394,7 +423,7 @@ finally a concatenation of vendor, product, version and filename.</p>
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Nov 19, 2020.
+        Last updated on Jan 14, 2021.
       </span>
 
     </p>

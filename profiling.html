@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Profiling and Testing Controllers &mdash; Approximate Engineering - Input 2.6.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Approximate Engineering - Input 2.6.0 documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Documentation" href="api.html" />
+    <link rel="prev" title="Pairing Controllers over Bluetooth" href="bluetooth.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Approximate Engineering - Input
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.6.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Profiling and Testing Controllers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Profiling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing">Testing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howtouse.html">Advanced Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sys.html">LEDs and Battery Monitoring</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Approximate Engineering - Input</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Profiling and Testing Controllers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="profiling-and-testing-controllers">
+<span id="profiling"></span><h1>Profiling and Testing Controllers<a class="headerlink" href="#profiling-and-testing-controllers" title="Permalink to this headline">¶</a></h1>
+<p>As of version 2.6.0, this library supports YAML based controller definitions. Some of these are bundled in the library
+itself, but you can also add new ones to <cite>~/.approxeng.input</cite>. The library will create this directory if it isn’t
+already present.</p>
+<p>A profile defines a set of mappings based on a vendor and product identifier, and can be used to map a simple controller
+which satisfies the following:</p>
+<ul class="simple">
+<li><p>The controller corresponds to a single device in <cite>/dev/input</cite>. Most controllers do, it’s only really controllers with
+a lot of additional axes such as motion sensors which use multiple nodes - if you have one of these controllers and
+it’s not supported already you’ll need to write a custom class, which is a more involved process.</p></li>
+<li><p>The controller doesn’t have, or you don’t care about, extra facilities such as LEDs.</p></li>
+<li><p>The controller is PS3-like, and has a similar or roughly compatible layout. It doesn’t have to be identical, but the
+profiling tool will attempt to find those controls and won’t allow for others.</p></li>
+</ul>
+<p>This means you couldn’t sensible profile the DualShock4 controller, as it has an RGB LED, trackpad, motion sensors etc.
+You can, however, profile the rock candy, xbox or similar controllers as they’re much simpler devices (both of these
+are actually already profiled though).</p>
+<p>A profile in your home directory will override anything in the library. This means that if your controller is supported
+but is giving you incorrect mappings, you can fix that yourself. This can happen because of different bluetooth or
+kernel versions on the computer side, or from minor hardware revisions the manufacturer hasn’t bothered to document
+on the controller side!</p>
+<div class="section" id="id1">
+<h2>Profiling<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>To run the profiler, you need to have already installed this library, and have it accessible from your current Python.
+If you’ve done that, either globally or in an active virtual environment, you should be able to launch the profiler
+by pairing or otherwise connecting your controller, then typing <cite>approxeng_input_profile</cite> in your shell. This should
+give you a list of available controllers, select the one you want to profile by typing the corresponding number:</p>
+<img alt="_images/profiling_1.png" src="_images/profiling_1.png" />
+<p>Selecting a device here brings up the interactive profiling interface:</p>
+<img alt="_images/profiling_2.png" src="_images/profiling_2.png" />
+<p>Within this interface you can press keys to jump to each control in turn, then manipulate the control on the controller
+that you want to map to that control in the software.</p>
+<p>For buttons, just press the button. If you’ve got a mapping you don’t want, navigate to it and hit the backspace key on
+your keyboard to remove it.</p>
+<p>For analogue axes (lx, ly, rx, ry, lt, rt), select the axis and then move the stick or trigger on your controller to its
+full extent, trying to keep other movements to a minimum. The profiler will look for the axis with the most movement, so
+it’s not a problem if you move the stick sideways a bit when trying to set the Y axis, for example.</p>
+<p>For d-pad buttons, you will want to try mapping them as buttons, but don’t be surprised if that doesn’t work. If you
+don’t get a response when you try to set e.g. <cite>dleft</cite> as a button, you need to use the <cite>dx</cite> and <cite>dy</cite> axes instead. These
+are configured to look for digital axes and won’t respond until you press both buttons on that axis, i.e. for <cite>dx</cite> you
+need to press the left and right d-pad buttons.</p>
+<p>The analogue triggers may or may not exist on your controller. Similarly, they may or may not act as buttons - don’t
+worry if you don’t have a button for an analogue trigger, as long as the button mapping is left unset the library will
+create a virtual button which is triggered at 20% activation of the analogue axis.</p>
+<p>All analogue axes (sticks and triggers) should be at their minimum value when left or down (for sticks) or unpressed
+(for triggers). You can see the current value of the most moved axis when you’re doing the mapping - if this is the
+wrong way around (and it often is for vertical analogue axes) you can press SPACE to toggle inversion of the axis.</p>
+<p>If for some reason you need to disable an axis, perhaps because you accidentally mapped something that shouldn’t have
+been mapped, you can select that axis and use BACKSPACE to lock it. Unlock it by selecting it and hitting BACKSPACE
+again.</p>
+<p>When you’ve finished mapping as many controls as possible, use <cite>CTRL-C</cite> to exit. This will quit the profiling tool and
+save the results in the file shown in the GUI. You can do two things with this file:</p>
+<ol class="arabic simple">
+<li><p>You can copy it into <cite>~/.approxeng.input/</cite>, this will make it immediately available to your code</p></li>
+<li><p>You can create an issue on github and attach it if you think it would be useful to have it included for other users
+(this would be much appreciated, please include as much information as possible about the kind of controller the
+mapping represents, any notes on configuring it etc.)</p></li>
+</ol>
+</div>
+<div class="section" id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>If you’ve copied the YAML file into <cite>~/.approxeng.input/</cite> any future uses of the library should pick it up. You can test
+this by running the <cite>approxeng_input_show_controls</cite> tool from the command line, this will hopefully then show your newly
+configured controller and allow you to check everything’s working as you expect.</p>
+<img alt="_images/profiling_3.png" src="_images/profiling_3.png" />
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api.html" class="btn btn-neutral float-right" title="API Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="bluetooth.html" class="btn btn-neutral float-left" title="Pairing Controllers over Bluetooth" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
+      <span class="lastupdated">
+        Last updated on Jan 14, 2021.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

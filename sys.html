@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>LEDs and Battery Monitoring &mdash; Approximate Engineering - Input 2.5.0 documentation</title>
+  <title>LEDs and Battery Monitoring &mdash; Approximate Engineering - Input 2.6.0 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.5.0 documentation"
+          title="Search within Approximate Engineering - Input 2.6.0 documentation"
           href="_static/opensearch.xml"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                2.5.0
+                2.6.0
               </div>
             
           
@@ -94,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profiling.html">Profiling and Testing Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
@@ -331,188 +332,6 @@ it. While this is fast, because the file is a virtual one, the battery level onl
 only query this property fairly infrequently to avoid excessive IO access. Checking every minute or so is almost
 certainly going to be good enough.</p>
 </div>
-<p>The updated <cite>show_controls.py</cite> script now indicates battery level if the controller supports it (see line 67 below):</p>
-<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">curses</span>
-<span class="kn">import</span> <span class="nn">pprint</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
-
-<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
-
-
-<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">screen</span><span class="p">):</span>
-    <span class="n">curses</span><span class="o">.</span><span class="n">curs_set</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_RED</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLACK</span><span class="p">)</span>
-    <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_GREEN</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLACK</span><span class="p">)</span>
-    <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_YELLOW</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLACK</span><span class="p">)</span>
-    <span class="n">curses</span><span class="o">.</span><span class="n">init_pair</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_MAGENTA</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">COLOR_BLACK</span><span class="p">)</span>
-    <span class="n">curses</span><span class="o">.</span><span class="n">start_color</span><span class="p">()</span>
-    <span class="n">last_presses</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="k">def</span> <span class="nf">red</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-        <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">green</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-        <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">yellow</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-        <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
-
-    <span class="k">def</span> <span class="nf">magenta</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-        <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">curses</span><span class="o">.</span><span class="n">color_pair</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
-
-    <span class="c1"># Loop forever</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">with</span> <span class="n">ControllerResource</span><span class="p">()</span> <span class="k">as</span> <span class="n">joystick</span><span class="p">:</span>
-                <span class="k">while</span> <span class="n">joystick</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
-                    <span class="c1"># Check for presses since the last time we checked</span>
-                    <span class="n">joystick</span><span class="o">.</span><span class="n">check_presses</span><span class="p">()</span>
-
-                    <span class="n">screen</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-
-                    <span class="k">if</span> <span class="n">joystick</span><span class="o">.</span><span class="n">has_presses</span><span class="p">:</span>
-                        <span class="n">last_presses</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">presses</span>
-
-                    <span class="c1"># Print most recent presses set</span>
-                    <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;last presses:&#39;</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">last_presses</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                        <span class="k">for</span> <span class="n">button_name</span> <span class="ow">in</span> <span class="n">last_presses</span><span class="p">:</span>
-                            <span class="n">green</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">button_name</span><span class="p">))</span>
-
-                    <span class="c1"># Print axis values</span>
-                    <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;axes:&#39;</span><span class="p">)</span>
-                    <span class="k">for</span> <span class="n">axis_name</span> <span class="ow">in</span> <span class="n">joystick</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
-                        <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">{}</span><span class="s1">=&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_name</span><span class="p">))</span>
-                        <span class="n">axis_value</span> <span class="o">=</span> <span class="n">joystick</span><span class="p">[</span><span class="n">axis_name</span><span class="p">]</span>
-                        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axis_value</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-                            <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis_value</span><span class="p">)</span>
-                            <span class="k">if</span> <span class="n">axis_value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                                <span class="n">green</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-                            <span class="k">elif</span> <span class="n">axis_value</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-                                <span class="n">red</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-                            <span class="k">else</span><span class="p">:</span>
-                                <span class="n">yellow</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-                        <span class="k">else</span><span class="p">:</span>
-                            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">axis_value</span>
-                            <span class="n">text</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;(</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">y</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span>
-                            <span class="n">magenta</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-
-                    <span class="c1"># Print button hold times</span>
-                    <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;hold times:&#39;</span><span class="p">)</span>
-                    <span class="k">for</span> <span class="n">button_name</span> <span class="ow">in</span> <span class="n">joystick</span><span class="o">.</span><span class="n">buttons</span><span class="o">.</span><span class="n">names</span><span class="p">:</span>
-                        <span class="n">hold_time</span> <span class="o">=</span> <span class="n">joystick</span><span class="p">[</span><span class="n">button_name</span><span class="p">]</span>
-                        <span class="k">if</span> <span class="n">hold_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                            <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">{}</span><span class="s1">=&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">button_name</span><span class="p">))</span>
-                            <span class="n">green</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.1f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hold_time</span><span class="p">))</span>
-
-                    <span class="c1"># Print some details of the controller</span>
-                    <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;controller class: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">joystick</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
-                    <span class="n">battery_level</span> <span class="o">=</span> <span class="n">joystick</span><span class="o">.</span><span class="n">battery_level</span>
-                    <span class="k">if</span> <span class="n">battery_level</span><span class="p">:</span>
-                        <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;battery_level: </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">joystick</span><span class="o">.</span><span class="n">battery_level</span><span class="p">))</span>
-                    <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pprint</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span><span class="n">joystick</span><span class="o">.</span><span class="n">controls</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
-
-                    <span class="n">screen</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
-                    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
-            <span class="n">screen</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-            <span class="n">screen</span><span class="o">.</span><span class="n">addstr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Waiting for controller&#39;</span><span class="p">)</span>
-            <span class="n">screen</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
-            <span class="n">sleep</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-
-
-<span class="n">curses</span><span class="o">.</span><span class="n">wrapper</span><span class="p">(</span><span class="n">main</span><span class="p">)</span>
-</pre></div>
-</td></tr></table></div>
 </div>
 </div>
 
@@ -537,7 +356,7 @@ certainly going to be good enough.</p>
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Nov 19, 2020.
+        Last updated on Jan 14, 2021.
       </span>
 
     </p>

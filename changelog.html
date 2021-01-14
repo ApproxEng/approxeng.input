@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Change Log &mdash; Approximate Engineering - Input 2.5.0 documentation</title>
+  <title>Change Log &mdash; Approximate Engineering - Input 2.6.0 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.5.0 documentation"
+          title="Search within Approximate Engineering - Input 2.6.0 documentation"
           href="_static/opensearch.xml"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.5.0
+                2.6.0
               </div>
             
           
@@ -92,6 +92,7 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-2-6-0">Version 2.6.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-5-0">Version 2.5.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-4-3">Version 2.4.3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-4-2">Version 2.4.2</a></li>
@@ -113,6 +114,7 @@
 <li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="simpleusage.html#standard-names">Standard Names</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="profiling.html">Profiling and Testing Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="addingcontrollers.html">Adding support for a new controller type</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
@@ -192,6 +194,25 @@ addition to the original support for PS3 controllers.</p>
 year also used the library, and my aim is to make this the definitive library for connecting game controllers to
 Python code, especially for robots (but it’ll work elsewhere if needed!)</p>
 </div>
+<div class="section" id="version-2-6-0">
+<h2>Version 2.6.0<a class="headerlink" href="#version-2-6-0" title="Permalink to this headline">¶</a></h2>
+<p>Introduced controller profiling as a way to add new controllers, or fix mappings in existing ones, without requiring
+any code changes. See <a class="reference internal" href="profiling.html#profiling"><span class="std std-ref">Profiling and Testing Controllers</span></a> for more information. Also updated the built-in steam controller class to use
+the native support in recent linux versions. Removed some legacy controller classes as they’ve been replaced with
+profiled versions.</p>
+<p>I’ve also moved some things which were in scripts from there into the main code, and made them accessible as command
+line tools. When the library is correctly installed, you should be able to use the following:</p>
+<ul class="simple">
+<li><p><cite>approxeng_input_show_controls</cite> to test a connected controller</p></li>
+<li><p><cite>approxeng_input_profile</cite> to create a new controller profile</p></li>
+</ul>
+<p>There are also a pair of internal test commands, you’ll only ever want to run these if you’re writing custom controller
+classes, and that should now be a rare event, but they’re here anyway:</p>
+<ul class="simple">
+<li><p><cite>approxeng_input_list_devices</cite> to list all attached evdev device nodes which look vaguely like game controllers</p></li>
+<li><p><cite>approxeng_input_scan_sys</cite> to perform a scan of <cite>/sys</cite> nodes</p></li>
+</ul>
+</div>
 <div class="section" id="version-2-5-0">
 <h2>Version 2.5.0<a class="headerlink" href="#version-2-5-0" title="Permalink to this headline">¶</a></h2>
 <p>Added a new property <cite>releases</cite> to the <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">Controller</span></code></a>, this works in the same
@@ -254,7 +275,7 @@ levels in 2.0.4 to inherit properly unless explicitly set.</p>
 </div>
 <div class="section" id="version-2-0-1">
 <h2>Version 2.0.1<a class="headerlink" href="#version-2-0-1" title="Permalink to this headline">¶</a></h2>
-<p>Added support for the PiHut own brand controller, code from Mike Horne (see <a class="reference internal" href="api/pihut.html#api-pihut"><span class="std std-ref">PiHut Controller Support</span></a>)</p>
+<p>Added support for the PiHut own brand controller, code from Mike Horne</p>
 </div>
 <div class="section" id="version-2-0-0">
 <h2>Version 2.0.0<a class="headerlink" href="#version-2-0-0" title="Permalink to this headline">¶</a></h2>
@@ -309,7 +330,7 @@ clone was dead on arrival…</p>
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Nov 19, 2020.
+        Last updated on Jan 14, 2021.
       </span>
 
     </p>

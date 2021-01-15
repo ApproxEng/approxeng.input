@@ -22,7 +22,7 @@ axes:
   ly:
     code: 1
     invert: true
-    max_value: 65382
+    max_value: 65535
     min_value: 0
   rt:
     code: 9

@@ -36,7 +36,5 @@ You need to create a file in this directory, it can be any name ending with .con
 
 This will blacklist the controller from acting as an input device for your desktop. If you're using a clone of this
 controller rather than the original Nintendo one you may need to change the `MatchProduct` part of the file above to
-match whatever's returned by the `scripts/list_devices.py` script.
+match whatever's returned by the `approxeng_input_list_devices` command.
 
-.. automodule:: approxeng.input.wii
-    :members:

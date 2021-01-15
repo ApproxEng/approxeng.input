@@ -1,0 +1,42 @@
+axes:
+  lx:
+    code: 0
+    invert: false
+    max_value: 1000
+    min_value: -1000
+  ly:
+    code: 1
+    invert: true
+    max_value: 1000
+    min_value: -1000
+  rx:
+    code: 3
+    invert: false
+    max_value: 1000
+    min_value: -1000
+  ry:
+    code: 4
+    invert: true
+    max_value: 1000
+    min_value: -1000
+buttons:
+  circle: 305
+  cross: 304
+  ddown: 545
+  dleft: 546
+  dright: 547
+  dup: 544
+  home: 316
+  l1: 310
+  l2: 312
+  ls: 317
+  r1: 311
+  r2: 313
+  rs: 318
+  select: 314
+  square: 308
+  start: 315
+  triangle: 307
+name: Nintendo Wii Remote Pro Controller
+product: 816
+vendor: 1406

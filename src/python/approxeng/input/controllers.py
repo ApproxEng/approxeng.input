@@ -8,26 +8,21 @@ from typing import List
 
 import yaml
 
-# noinspection PyUnresolvedReferences
 from approxeng.input.dualshock3 import DualShock3
-# noinspection PyUnresolvedReferences
 from approxeng.input.dualshock4 import DualShock4
-# noinspection PyUnresolvedReferences
 from approxeng.input.pihut import PiHut
 from approxeng.input.profiling import Profile
-
-# noinspection PyUnresolvedReferences
 from approxeng.input.sf30pro import SF30Pro
-# noinspection PyUnresolvedReferences
 from approxeng.input.spacemousepro import SpaceMousePro
-# noinspection PyUnresolvedReferences
 from approxeng.input.steamcontroller import SteamController
-# noinspection PyUnresolvedReferences
 from approxeng.input.switch import SwitchJoyConRight, SwitchJoyConLeft
-# noinspection PyUnresolvedReferences
-from approxeng.input.wii import WiiRemotePro
-# noinspection PyUnresolvedReferences
 from approxeng.input.wiimote import WiiMote
+
+# This is used to specify classes to load, as we no longer (as of 2.6.0) do a subclass scan
+# Some of these will be replaced in due course with the new profiles, others require more
+# controls or are special cases in some way and will remain as custom classes
+CUSTOM_CLASSES = [DualShock3, DualShock4, PiHut, SF30Pro, SwitchJoyConLeft, SwitchJoyConRight, WiiMote, SpaceMousePro,
+                  SteamController]
 
 try:
     from evdev import InputDevice, list_devices, ecodes, util
@@ -194,7 +189,7 @@ def get_controller_classes(scan_home=True, additional_locations=None):
     """
 
     def built_in_classes():
-        for controller_class in [DualShock3, DualShock4, SpaceMousePro, SteamController]:
+        for controller_class in CUSTOM_CLASSES:
             for vendor_id, product_id in controller_class.registration_ids():
                 yield f'{vendor_id}-{product_id}', controller_class
 

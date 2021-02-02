@@ -1,4 +1,8 @@
-import importlib.resources as resources
+try:
+    import importlib.resources as resources
+except ModuleNotFoundError:
+    # Use the backport if on python < 3.7
+    import importlib_resources as resources
 import logging
 import os
 import pprint

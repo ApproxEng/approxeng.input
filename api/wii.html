@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Wii Remote Pro Controller Support &mdash; Approximate Engineering - Input 2.6.0 documentation</title>
+  <title>Wii Remote Pro Controller Support &mdash; Approximate Engineering - Input 2.6.1 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.6.0 documentation"
+          title="Search within Approximate Engineering - Input 2.6.1 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.6.0
+                2.6.1
               </div>
             
           
@@ -94,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline.html">Command-line tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../profiling.html">Profiling and Testing Controllers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
@@ -208,40 +209,7 @@ EndSection
 </div>
 <p>This will blacklist the controller from acting as an input device for your desktop. If you’re using a clone of this
 controller rather than the original Nintendo one you may need to change the <cite>MatchProduct</cite> part of the file above to
-match whatever’s returned by the <cite>scripts/list_devices.py</cite> script.</p>
-<span class="target" id="module-approxeng.input.wii"></span><dl class="py class">
-<dt id="approxeng.input.wii.WiiRemotePro">
-<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.wii.</code><code class="sig-name descname">WiiRemotePro</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/wii.html#WiiRemotePro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.wii.WiiRemotePro" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wireless wi-u-pro controller. This theoretically supports battery and LED control, but for some reason doesn’t
-report its hardware ID back to evdev so we can’t associate it with nodes in /sys/class/xxx.</p>
-<dl class="py method">
-<dt id="approxeng.input.wii.WiiRemotePro.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/wii.html#WiiRemotePro.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.wii.WiiRemotePro.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new steam controller</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</p></li>
-<li><p><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> and
-<a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.TriggerAxis</span></code></a> in the controller.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="approxeng.input.wii.WiiRemotePro.registration_ids">
-<em class="property">static </em><code class="sig-name descname">registration_ids</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/wii.html#WiiRemotePro.registration_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.wii.WiiRemotePro.registration_ids" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>list of (vendor_id, product_id) for this controller</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+match whatever’s returned by the <cite>approxeng_input_list_devices</cite> command.</p>
 </div>
 </div>
 
@@ -268,7 +236,7 @@ report its hardware ID back to evdev so we can’t associate it with nodes in /s
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Jan 14, 2021.
+        Last updated on Feb 02, 2021.
       </span>
 
     </p>

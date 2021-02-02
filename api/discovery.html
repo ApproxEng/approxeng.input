@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Controller Discovery - approxeng.input.controllers &mdash; Approximate Engineering - Input 2.6.0 documentation</title>
+  <title>Controller Discovery - approxeng.input.controllers &mdash; Approximate Engineering - Input 2.6.1 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.6.0 documentation"
+          title="Search within Approximate Engineering - Input 2.6.1 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.6.0
+                2.6.1
               </div>
             
           
@@ -94,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commandline.html">Command-line tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../profiling.html">Profiling and Testing Controllers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Documentation</a><ul class="current">
@@ -306,7 +307,7 @@ actually implements them.</p></li>
 
 <dl class="py function">
 <dt id="approxeng.input.controllers.device_verbose_info">
-<code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">device_verbose_info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">device</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://python-evdev.readthedocs.io/en/latest/apidoc.html#evdev.device.InputDevice" title="(in python-evdev v1.3.0)">evdev.device.InputDevice</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#device_verbose_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.device_verbose_info" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">device_verbose_info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">device</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://python-evdev.readthedocs.io/en/latest/apidoc.html#evdev.device.InputDevice" title="(in python-evdev v1.4.0)">evdev.device.InputDevice</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#device_verbose_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.device_verbose_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gather and format as much info as possible about the supplied InputDevice. Used mostly for debugging at this point.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -384,7 +385,7 @@ for additional YAML definitions. If this is a single string it will be wrapped a
 
 <dl class="py function">
 <dt id="approxeng.input.controllers.unique_name">
-<code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">unique_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">device</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://python-evdev.readthedocs.io/en/latest/apidoc.html#evdev.device.InputDevice" title="(in python-evdev v1.3.0)">evdev.device.InputDevice</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3.7/library/stdtypes.html#str" title="(in Python v3.7)">str</a><a class="reference internal" href="../_modules/approxeng/input/controllers.html#unique_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.unique_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">unique_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">device</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://python-evdev.readthedocs.io/en/latest/apidoc.html#evdev.device.InputDevice" title="(in python-evdev v1.4.0)">evdev.device.InputDevice</a></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3.7/library/stdtypes.html#str" title="(in Python v3.7)">str</a><a class="reference internal" href="../_modules/approxeng/input/controllers.html#unique_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.unique_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct a unique name for the device based on, in order if available, the uniq ID, the phys ID and
 finally a concatenation of vendor, product, version and filename.</p>
 <dl class="field-list simple">
@@ -423,7 +424,7 @@ finally a concatenation of vendor, product, version and filename.</p>
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Jan 14, 2021.
+        Last updated on Feb 02, 2021.
       </span>
 
     </p>

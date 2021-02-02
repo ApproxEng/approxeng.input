@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Change Log &mdash; Approximate Engineering - Input 2.6.0 documentation</title>
+  <title>Change Log &mdash; Approximate Engineering - Input 2.6.1 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.6.0 documentation"
+          title="Search within Approximate Engineering - Input 2.6.1 documentation"
           href="_static/opensearch.xml"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -65,7 +65,7 @@
             
             
               <div class="version">
-                2.6.0
+                2.6.1
               </div>
             
           
@@ -92,6 +92,7 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#version-2-6-1">Version 2.6.1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-6-0">Version 2.6.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-5-0">Version 2.5.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#version-2-4-3">Version 2.4.3</a></li>
@@ -113,6 +114,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commandline.html">Command-line tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="profiling.html">Profiling and Testing Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Documentation</a></li>
@@ -193,6 +195,12 @@ addition to the original support for PS3 controllers.</p>
 <p>A newer version was used for my <a class="reference external" href="http://piwars.org">PiWars</a> 2017 entry, this time using a PS4 controller. Several other robots in that
 year also used the library, and my aim is to make this the definitive library for connecting game controllers to
 Python code, especially for robots (but it’ll work elsewhere if needed!)</p>
+</div>
+<div class="section" id="version-2-6-1">
+<h2>Version 2.6.1<a class="headerlink" href="#version-2-6-1" title="Permalink to this headline">¶</a></h2>
+<p>Fix for Python versions prior to 3.7 failing with version 2.6.0 due to a missing system library, we now pick this up and
+make use of a backported version of importlib.resources for earlier Pythons. Also added back in some of the custom
+controller classes that were omitted in 2.6.0, and added documentation for the command line tools.</p>
 </div>
 <div class="section" id="version-2-6-0">
 <h2>Version 2.6.0<a class="headerlink" href="#version-2-6-0" title="Permalink to this headline">¶</a></h2>
@@ -330,7 +338,7 @@ clone was dead on arrival…</p>
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Jan 14, 2021.
+        Last updated on Feb 02, 2021.
       </span>
 
     </p>

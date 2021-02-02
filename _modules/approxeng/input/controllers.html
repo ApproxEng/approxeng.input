@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>approxeng.input.controllers &mdash; Approximate Engineering - Input 2.6.0 documentation</title>
+  <title>approxeng.input.controllers &mdash; Approximate Engineering - Input 2.6.1 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
 
     
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.6.0 documentation"
+          title="Search within Approximate Engineering - Input 2.6.1 documentation"
           href="../../../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                2.6.0
+                2.6.1
               </div>
             
           
@@ -92,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../simpleusage.html">Simple Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../simpleusage.html#standard-names">Standard Names</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commandline.html">Command-line tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../bluetooth.html">Pairing Controllers over Bluetooth</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../profiling.html">Profiling and Testing Controllers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Documentation</a></li>
@@ -165,7 +166,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for approxeng.input.controllers</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">importlib.resources</span> <span class="k">as</span> <span class="nn">resources</span>
+<span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">importlib.resources</span> <span class="k">as</span> <span class="nn">resources</span>
+<span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+    <span class="c1"># Use the backport if on python &lt; 3.7</span>
+    <span class="kn">import</span> <span class="nn">importlib_resources</span> <span class="k">as</span> <span class="nn">resources</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
@@ -175,26 +180,21 @@
 
 <span class="kn">import</span> <span class="nn">yaml</span>
 
-<span class="c1"># noinspection PyUnresolvedReferences</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.dualshock3</span> <span class="kn">import</span> <span class="n">DualShock3</span>
-<span class="c1"># noinspection PyUnresolvedReferences</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.dualshock4</span> <span class="kn">import</span> <span class="n">DualShock4</span>
-<span class="c1"># noinspection PyUnresolvedReferences</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.pihut</span> <span class="kn">import</span> <span class="n">PiHut</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.profiling</span> <span class="kn">import</span> <span class="n">Profile</span>
-
-<span class="c1"># noinspection PyUnresolvedReferences</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.sf30pro</span> <span class="kn">import</span> <span class="n">SF30Pro</span>
-<span class="c1"># noinspection PyUnresolvedReferences</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.spacemousepro</span> <span class="kn">import</span> <span class="n">SpaceMousePro</span>
-<span class="c1"># noinspection PyUnresolvedReferences</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.steamcontroller</span> <span class="kn">import</span> <span class="n">SteamController</span>
-<span class="c1"># noinspection PyUnresolvedReferences</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.switch</span> <span class="kn">import</span> <span class="n">SwitchJoyConRight</span><span class="p">,</span> <span class="n">SwitchJoyConLeft</span>
-<span class="c1"># noinspection PyUnresolvedReferences</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.wii</span> <span class="kn">import</span> <span class="n">WiiRemotePro</span>
-<span class="c1"># noinspection PyUnresolvedReferences</span>
 <span class="kn">from</span> <span class="nn">approxeng.input.wiimote</span> <span class="kn">import</span> <span class="n">WiiMote</span>
+
+<span class="c1"># This is used to specify classes to load, as we no longer (as of 2.6.0) do a subclass scan</span>
+<span class="c1"># Some of these will be replaced in due course with the new profiles, others require more</span>
+<span class="c1"># controls or are special cases in some way and will remain as custom classes</span>
+<span class="n">CUSTOM_CLASSES</span> <span class="o">=</span> <span class="p">[</span><span class="n">DualShock3</span><span class="p">,</span> <span class="n">DualShock4</span><span class="p">,</span> <span class="n">PiHut</span><span class="p">,</span> <span class="n">SF30Pro</span><span class="p">,</span> <span class="n">SwitchJoyConLeft</span><span class="p">,</span> <span class="n">SwitchJoyConRight</span><span class="p">,</span> <span class="n">WiiMote</span><span class="p">,</span> <span class="n">SpaceMousePro</span><span class="p">,</span>
+                  <span class="n">SteamController</span><span class="p">]</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">evdev</span> <span class="kn">import</span> <span class="n">InputDevice</span><span class="p">,</span> <span class="n">list_devices</span><span class="p">,</span> <span class="n">ecodes</span><span class="p">,</span> <span class="n">util</span>
@@ -361,7 +361,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">built_in_classes</span><span class="p">():</span>
-        <span class="k">for</span> <span class="n">controller_class</span> <span class="ow">in</span> <span class="p">[</span><span class="n">DualShock3</span><span class="p">,</span> <span class="n">DualShock4</span><span class="p">,</span> <span class="n">SpaceMousePro</span><span class="p">,</span> <span class="n">SteamController</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">controller_class</span> <span class="ow">in</span> <span class="n">CUSTOM_CLASSES</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">vendor_id</span><span class="p">,</span> <span class="n">product_id</span> <span class="ow">in</span> <span class="n">controller_class</span><span class="o">.</span><span class="n">registration_ids</span><span class="p">():</span>
                 <span class="k">yield</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">vendor_id</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">product_id</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">controller_class</span>
 
@@ -541,7 +541,7 @@
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Jan 14, 2021.
+        Last updated on Feb 02, 2021.
       </span>
 
     </p>

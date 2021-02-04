@@ -106,6 +106,7 @@ Contents
 
     changelog
     simpleusage
+    commandline
     bluetooth
     profiling
     api

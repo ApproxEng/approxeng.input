@@ -13,12 +13,13 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
-Version 2.6.1
--------------
+Version 2.6.1, 2.6.2
+--------------------
 
 Fix for Python versions prior to 3.7 failing with version 2.6.0 due to a missing system library, we now pick this up and
 make use of a backported version of importlib.resources for earlier Pythons. Also added back in some of the custom
-controller classes that were omitted in 2.6.0, and added documentation for the command line tools.
+controller classes that were omitted in 2.6.0, and added documentation for the command line tools. 2.6.2 added in the
+missing YAML controller definitions omitted due to a packaging error.
 
 Version 2.6.0
 -------------

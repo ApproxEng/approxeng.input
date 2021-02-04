@@ -46,6 +46,9 @@ class SpaceMousePro(Controller):
             dead_zone=dead_zone,
             hot_zone=hot_zone)
 
+    def __repr__(self):
+        return '3Dconnexion SpaceMouse Pro'
+
     @staticmethod
     def registration_ids():
         """

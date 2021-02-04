@@ -97,6 +97,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Command-line tools</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#interactive-controller-test">Interactive controller test</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#profile-a-new-controller">Profile a new controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#list-known-controller-types">List known controller types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#list-available-devices">List available devices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#debug-system-device-nodes">Debug system device nodes</a></li>
 </ul>
@@ -193,6 +194,33 @@ directory in the source, it’s been moved to work for anyone installing the lib
 <p>If you’ve got a relatively simple controller but one that’s not already recognised by the library,
 the profiling tool allows you to create a configuration interactively. See <a class="reference internal" href="profiling.html#profiling"><span class="std std-ref">Profiling and Testing Controllers</span></a> for more details.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; approxeng_input_profile
+</pre></div>
+</div>
+</div>
+<div class="section" id="list-known-controller-types">
+<h2>List known controller types<a class="headerlink" href="#list-known-controller-types" title="Permalink to this headline">¶</a></h2>
+<p>Shows all known controller classes, including whether these are custom or profiled along with the corresponding
+product and vendor IDs.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; approxeng_input_classes
+┌────────┬─────────┬───────────────────────────────────────────────────────────────────┬────────────────────┐
+│ Vendor │ Product │ Controller Name                                                   │ Class              │
+├────────┼─────────┼───────────────────────────────────────────────────────────────────┼────────────────────┤
+│ 045e   │ 02ea    │ Microsoft X-Box One S pad                                         │ ProfiledController │
+│ 045e   │ 02fd    │ Xbox Wireless Controller                                          │ ProfiledController │
+│ 046d   │ c62b    │ 3Dconnexion SpaceMouse Pro                                        │ SpaceMousePro      │
+│ 054c   │ <span class="m">0268</span>    │ Sony DualShock3 <span class="o">(</span>Playstation <span class="m">3</span><span class="o">)</span> controller                        │ DualShock3         │
+│ 054c   │ 05c4    │ Sony DualShock4 <span class="o">(</span>Playstation <span class="m">4</span><span class="o">)</span> controller                        │ DualShock4         │
+│ 054c   │ 09cc    │ Sony DualShock4 <span class="o">(</span>Playstation <span class="m">4</span><span class="o">)</span> controller                        │ DualShock4         │
+│ 057e   │ <span class="m">0306</span>    │ Nintendo WiiMote controller                                       │ WiiMote            │
+│ 057e   │ <span class="m">0330</span>    │ Nintendo Wii Remote Pro Controller                                │ ProfiledController │
+│ 057e   │ <span class="m">2006</span>    │ Nintendo Switch JoyCon controller <span class="o">(</span>Left<span class="o">)</span>                          │ SwitchJoyConLeft   │
+│ 057e   │ <span class="m">2007</span>    │ Nintendo Switch JoyCon controller <span class="o">(</span>Right<span class="o">)</span>                         │ SwitchJoyConRight  │
+│ 0e6f   │ <span class="m">0128</span>    │ Performance Designed Products Rock Candy Wireless Gamepad <span class="k">for</span> PS3 │ ProfiledController │
+│ <span class="m">2563</span>   │ <span class="m">0526</span>    │ PiHut PS3-alike controller                                        │ PiHut              │
+│ <span class="m">2563</span>   │ <span class="m">0575</span>    │ PiHut PS3-alike controller                                        │ PiHut              │
+│ 28de   │ <span class="m">1142</span>    │ Valve Steam Controller                                            │ SteamController    │
+│ 2dc8   │ <span class="m">6100</span>    │ 8Bitdo SF30 Pro                                                   │ SF30Pro            │
+└────────┴─────────┴───────────────────────────────────────────────────────────────────┴────────────────────┘
 </pre></div>
 </div>
 </div>

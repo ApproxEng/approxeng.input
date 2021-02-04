@@ -31,6 +31,36 @@ the profiling tool allows you to create a configuration interactively. See :ref:
 
     > approxeng_input_profile
 
+List known controller types
+---------------------------
+
+Shows all known controller classes, including whether these are custom or profiled along with the corresponding
+product and vendor IDs.
+
+.. code-block:: bash
+
+    > approxeng_input_classes
+    ┌────────┬─────────┬───────────────────────────────────────────────────────────────────┬────────────────────┐
+    │ Vendor │ Product │ Controller Name                                                   │ Class              │
+    ├────────┼─────────┼───────────────────────────────────────────────────────────────────┼────────────────────┤
+    │ 045e   │ 02ea    │ Microsoft X-Box One S pad                                         │ ProfiledController │
+    │ 045e   │ 02fd    │ Xbox Wireless Controller                                          │ ProfiledController │
+    │ 046d   │ c62b    │ 3Dconnexion SpaceMouse Pro                                        │ SpaceMousePro      │
+    │ 054c   │ 0268    │ Sony DualShock3 (Playstation 3) controller                        │ DualShock3         │
+    │ 054c   │ 05c4    │ Sony DualShock4 (Playstation 4) controller                        │ DualShock4         │
+    │ 054c   │ 09cc    │ Sony DualShock4 (Playstation 4) controller                        │ DualShock4         │
+    │ 057e   │ 0306    │ Nintendo WiiMote controller                                       │ WiiMote            │
+    │ 057e   │ 0330    │ Nintendo Wii Remote Pro Controller                                │ ProfiledController │
+    │ 057e   │ 2006    │ Nintendo Switch JoyCon controller (Left)                          │ SwitchJoyConLeft   │
+    │ 057e   │ 2007    │ Nintendo Switch JoyCon controller (Right)                         │ SwitchJoyConRight  │
+    │ 0e6f   │ 0128    │ Performance Designed Products Rock Candy Wireless Gamepad for PS3 │ ProfiledController │
+    │ 2563   │ 0526    │ PiHut PS3-alike controller                                        │ PiHut              │
+    │ 2563   │ 0575    │ PiHut PS3-alike controller                                        │ PiHut              │
+    │ 28de   │ 1142    │ Valve Steam Controller                                            │ SteamController    │
+    │ 2dc8   │ 6100    │ 8Bitdo SF30 Pro                                                   │ SF30Pro            │
+    └────────┴─────────┴───────────────────────────────────────────────────────────────────┴────────────────────┘
+
+
 List available devices
 ----------------------
 

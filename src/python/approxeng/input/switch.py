@@ -134,6 +134,8 @@ class SwitchPro(Controller):
                 CentredAxis("Left Vertical", -32767, 32767, 1, sname="ly"),
                 CentredAxis("Right Horizontal", -32767, 32767, 3, sname="rx"),
                 CentredAxis("Right Vertical", -32767, 32767, 4, sname="ry"),
+                CentredAxis("DPad Horizontal", -1, 1, 16, sname="dx"),
+                CentredAxis("DPad Vertical", -1, 1, 17, sname="dy"),
             ],
             dead_zone=dead_zone,
             hot_zone=hot_zone,

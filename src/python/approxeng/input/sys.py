@@ -115,9 +115,9 @@ def scan_system():
                     elif name == 'PHYS' and value:
                         phys = value.split('/')[0]
             if hid_uniq:
-                return hid_uniq
+                return hid_uniq.upper()
             elif phys:
-                return phys
+                return phys.upper()
         except FileNotFoundError:
             pass
         return None

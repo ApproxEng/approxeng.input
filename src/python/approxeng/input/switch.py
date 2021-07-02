@@ -1,6 +1,6 @@
 from approxeng.input import Controller, Button, CentredAxis
 
-__all__ = ['SwitchJoyConLeft', 'SwitchJoyConRight']
+__all__ = ["SwitchJoyConLeft", "SwitchJoyConRight", "SwitchPro"]
 
 
 class SwitchJoyConLeft(Controller):
@@ -35,21 +35,21 @@ class SwitchJoyConLeft(Controller):
                 Button("SL", 308, sname="l1"),
                 Button("SR", 309, sname="r1"),
                 CentredAxis("Left Horizontal", -1, 1, 16, sname="lx"),
-                CentredAxis("Left Vertical", 1, -1, 17, sname="ly")
-
+                CentredAxis("Left Vertical", 1, -1, 17, sname="ly"),
             ],
             dead_zone=dead_zone,
-            hot_zone=hot_zone)
+            hot_zone=hot_zone,
+        )
 
     @staticmethod
     def registration_ids():
         """
         :return: list of (vendor_id, product_id) for this controller
         """
-        return [(0x57e, 0x2006)]
+        return [(0x57E, 0x2006)]
 
     def __repr__(self):
-        return 'Nintendo Switch JoyCon controller (Left)'
+        return "Nintendo Switch JoyCon controller (Left)"
 
 
 class SwitchJoyConRight(Controller):
@@ -82,17 +82,69 @@ class SwitchJoyConRight(Controller):
                 Button("SL", 308, sname="l1"),
                 Button("SR", 309, sname="r1"),
                 CentredAxis("Left Horizontal", -1, 1, 16, sname="lx"),
-                CentredAxis("Left Vertical", 1, -1, 17, sname="ly")
+                CentredAxis("Left Vertical", 1, -1, 17, sname="ly"),
             ],
             dead_zone=dead_zone,
-            hot_zone=hot_zone)
+            hot_zone=hot_zone,
+        )
 
     @staticmethod
     def registration_ids():
         """
         :return: list of (vendor_id, product_id) for this controller
         """
-        return [(0x57e, 0x2007)]
+        return [(0x57E, 0x2007)]
 
     def __repr__(self):
-        return 'Nintendo Switch JoyCon controller (Right)'
+        return "Nintendo Switch JoyCon controller (Right)"
+
+
+class SwitchPro(Controller):
+    """
+    Nintendo Switch Pro controller
+    """
+
+    def __init__(self, dead_zone=0.05, hot_zone=0.05):
+        """
+        Create a new Nintendo Switch Pro controller instance
+
+        :param float dead_zone:
+            Used to set the dead zone for each :class:`approxeng.input.CentredAxis` and
+            :class:`approxeng.input.TriggerAxis` in the controller.
+        :param float hot_zone:
+            Used to set the hot zone for each :class:`approxeng.input.CentredAxis` and
+            :class:`approxeng.input.TriggerAxis` in the controller.
+        """
+        super(SwitchPro, self).__init__(
+            controls=[
+                Button("X", 307, sname="triangle"),
+                Button("Y", 308, sname="square"),
+                Button("B", 304, sname="cross"),
+                Button("A", 305, sname="circle"),
+                Button("Left Stick", 317, sname="ls"),
+                Button("Right Stick", 318, sname='rs'),
+                Button("Home", 316, sname="home"),
+                Button("Minus", 314, sname='select'),
+                Button("Plus", 315, sname="start"),
+                Button("SL", 310, sname="l1"),
+                Button("SR", 311, sname="r1"),
+                Button("Left Trigger", 312, sname='l2'),
+                Button("Right Trigger", 313, sname='r2'),
+                CentredAxis("Left Horizontal", -32767, 32767, 0, sname="lx"),
+                CentredAxis("Left Vertical", -32767, 32767, 1, sname="ly"),
+                CentredAxis("Right Horizontal", -32767, 32767, 3, sname="rx"),
+                CentredAxis("Right Vertical", -32767, 32767, 4, sname="ry"),
+            ],
+            dead_zone=dead_zone,
+            hot_zone=hot_zone,
+        )
+
+    @staticmethod
+    def registration_ids():
+        """
+        :return: list of (vendor_id, product_id) for this controller
+        """
+        return [(0x57E, 0x2009)]
+
+    def __repr__(self):
+        return "Nintendo Switch Pro controller"

@@ -19,14 +19,14 @@ from approxeng.input.profiling import Profile
 from approxeng.input.sf30pro import SF30Pro
 from approxeng.input.spacemousepro import SpaceMousePro
 from approxeng.input.steamcontroller import SteamController
-from approxeng.input.switch import SwitchJoyConRight, SwitchJoyConLeft
+from approxeng.input.switch import SwitchJoyConRight, SwitchJoyConLeft, SwitchPro
 from approxeng.input.wiimote import WiiMote
 
 # This is used to specify classes to load, as we no longer (as of 2.6.0) do a subclass scan
 # Some of these will be replaced in due course with the new profiles, others require more
 # controls or are special cases in some way and will remain as custom classes
-CUSTOM_CLASSES = [DualShock3, DualShock4, PiHut, SF30Pro, SwitchJoyConLeft, SwitchJoyConRight, WiiMote, SpaceMousePro,
-                  SteamController]
+CUSTOM_CLASSES = [DualShock3, DualShock4, PiHut, SF30Pro, SwitchJoyConLeft, SwitchJoyConRight, SwitchPro, WiiMote,
+                  SpaceMousePro, SteamController]
 
 try:
     from evdev import InputDevice, list_devices, ecodes, util

@@ -12,6 +12,7 @@ A Python 3 library to handle game controllers. At the moment it can work with th
 8) 8Bitdo SF30Pro
 9) Wired 3dConnexion Spacemouse Pro (yes, really)
 10) Steam Controller
+11) Switch Pro Contoller
 
 See the full documentation [here](http://approxeng.github.io/approxeng.input/)
 

@@ -7,18 +7,20 @@ import approxeng.input.sys as sys
 from approxeng.input.controllers import print_devices, find_all_controllers
 from approxeng.input.selectbinder import ControllerResource
 
-logging.basicConfig(level=logging.DEBUG)
 
 def sys_scan():
+    logging.basicConfig(level=logging.DEBUG)
     pp = pprint.PrettyPrinter(indent=2, width=100)
     pp.pprint(sys.scan_system())
 
 
 def list_devices():
+    logging.basicConfig(level=logging.DEBUG)
     print_devices()
 
 
 def list_discoveries():
+    logging.basicConfig(level=logging.DEBUG)
     for discovery in find_all_controllers():
         logging.info('found a thing')
         print(discovery)

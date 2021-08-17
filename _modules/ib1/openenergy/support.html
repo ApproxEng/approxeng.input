@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ib1.openenergy.support &mdash; Open Energy Infrastructure Support 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Open Energy Infrastructure Support 0.0.1 documentation"
+          href="../../../_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0C3945" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Open Energy Infrastructure Support
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../service_provider.html">Accessing OE Shared Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_provider.html">Providing OE Shared Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ssl_dev.html">Local Data Provider Development Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">Python API : ib1.openenergy.support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Open Energy Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Open Energy Infrastructure Support</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ib1.openenergy.support</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ib1.openenergy.support</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">email.utils</span>
+<span class="kn">import</span> <span class="nn">http.client</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span><span class="p">,</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span><span class="p">,</span> <span class="n">strftime</span><span class="p">,</span> <span class="n">gmtime</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+
+<span class="kn">import</span> <span class="nn">flask</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">hashes</span>
+<span class="kn">from</span> <span class="nn">requests.auth</span> <span class="kn">import</span> <span class="n">AuthBase</span>
+
+<span class="kn">from</span> <span class="nn">ib1.openenergy.support.func</span> <span class="kn">import</span> <span class="n">timed_lru_cache</span>
+
+<span class="n">LOG</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;ib1.oe.support&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="httpclient_logging_patch"><a class="viewcode-back" href="../../../api.html#ib1.openenergy.support.httpclient_logging_patch">[docs]</a><span class="k">def</span> <span class="nf">httpclient_logging_patch</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enable HTTPConnection debug logging to the logging framework&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">httpclient_log</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;http.client&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+
+    <span class="c1"># mask the print() built-in in the http.client module to use</span>
+    <span class="c1"># logging instead</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">print</span> <span class="o">=</span> <span class="n">httpclient_log</span>
+    <span class="c1"># enable debugging</span>
+    <span class="n">http</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">HTTPConnection</span><span class="o">.</span><span class="n">debuglevel</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="FAPISession"><a class="viewcode-back" href="../../../api.html#ib1.openenergy.support.FAPISession">[docs]</a><span class="k">class</span> <span class="nc">FAPISession</span><span class="p">(</span><span class="n">AuthBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Similar to a requests session, but handles management of a single access token. It acquires the token when required,</span>
+<span class="sd">    manages token expiry etc. Implicitly uses client-credentials, there&#39;s no user consent or similar involved.</span>
+
+<span class="sd">    Can also be used as a requests authenticator</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FAPISession.__init__"><a class="viewcode-back" href="../../../api.html#ib1.openenergy.support.FAPISession.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client_id</span><span class="p">,</span> <span class="n">token_url</span><span class="p">,</span> <span class="n">requested_scopes</span><span class="p">,</span> <span class="n">private_key</span><span class="p">,</span> <span class="n">certificate</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build a new FAPI session. This doesn&#39;t immediately trigger any requests to the token</span>
+<span class="sd">        endpoint, these are made when the session is accessed, and only if needed.</span>
+
+<span class="sd">        :param token_url:</span>
+<span class="sd">            URL to the token endpoint of an authorization server, i.e. for the raidiam UAT sandbox this is</span>
+<span class="sd">            https://matls-auth.directory.energydata.org.uk/token</span>
+<span class="sd">        :param requested_scopes:</span>
+<span class="sd">            Scopes requested for this session</span>
+<span class="sd">        :param private_key:</span>
+<span class="sd">            Location of private key used for MTLS</span>
+<span class="sd">        :param certificate:</span>
+<span class="sd">            Location of certificate used for MTLS</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">cert</span> <span class="o">=</span> <span class="n">certificate</span><span class="p">,</span> <span class="n">private_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_session</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plain_session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_plain_session</span><span class="o">.</span><span class="n">cert</span> <span class="o">=</span> <span class="n">certificate</span><span class="p">,</span> <span class="n">private_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_token</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span> <span class="o">=</span> <span class="n">requested_scopes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">token_url</span> <span class="o">=</span> <span class="n">token_url</span></div>
+
+<div class="viewcode-block" id="FAPISession.clear_token"><a class="viewcode-back" href="../../../api.html#ib1.openenergy.support.FAPISession.clear_token">[docs]</a>    <span class="k">def</span> <span class="nf">clear_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Explicitly clear the current token, if present. This will force a refresh the next time</span>
+<span class="sd">        the session is accessed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_token</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">access_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_token</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Internal method to fetch a new bearer token if necessary and return it. A new token is</span>
+<span class="sd">        obtained if there either isn&#39;t one, or we have one but it&#39;s expired</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">            String representation of the access token</span>
+<span class="sd">        :raises requests.HTTPError:</span>
+<span class="sd">            if the token acquisition fails for any reason, this method raises the corresponding</span>
+<span class="sd">            HTTPError from the requests librar</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token</span><span class="p">[</span><span class="s1">&#39;expiry_time&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">now</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plain_session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">token_url</span><span class="p">,</span>
+                                                <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;client_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span>
+                                                      <span class="s1">&#39;scope&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="p">,</span>
+                                                      <span class="s1">&#39;grant_type&#39;</span><span class="p">:</span> <span class="s1">&#39;client_credentials&#39;</span><span class="p">})</span>
+            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+                <span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;_get_token - response is </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;expires_in&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_token</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;access_token&#39;</span><span class="p">:</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;access_token&#39;</span><span class="p">],</span>
+                                   <span class="s1">&#39;expiry_time&#39;</span><span class="p">:</span> <span class="n">now</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;expires_in&#39;</span><span class="p">])}</span>
+                    <span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s1">&#39;_get_token - got access token, expires at &#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b </span><span class="si">%d</span><span class="s2"> %Y %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">gmtime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_token</span><span class="p">[</span><span class="s2">&quot;expiry_time&quot;</span><span class="p">]))</span><span class="si">}</span><span class="s1">, &#39;</span>
+                        <span class="sa">f</span><span class="s1">&#39;scope=</span><span class="se">\&#39;</span><span class="si">{</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;scope&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="s2">&quot;scope&quot;</span> <span class="ow">in</span> <span class="n">d</span> <span class="k">else</span> <span class="s2">&quot;NONE&quot;</span><span class="si">}</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;_get_token - no expiry time specified in token response </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_token</span><span class="p">[</span><span class="s1">&#39;access_token&#39;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a configured requests.Session set up with the necessary bearer token and client</span>
+<span class="sd">        certificates to make a MTLS request to a secured endpoint. Also assigns a new unique</span>
+<span class="sd">        x-fapi-interaction-id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_session</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">plain_session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        For convenience, a session configured with the private and public key pair to use TLS but without</span>
+<span class="sd">        the token management. Use this for calling regular endpoints such as the token introspection one.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plain_session</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Used when acting as an authenticator, including when the authenticated session is accessed. Responsible</span>
+<span class="sd">        for allocating a unique interaction ID per call as well as supplying (or acquiring) the bearer token and</span>
+<span class="sd">        including it in the request as needed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Bearer </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_token</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+                          <span class="s1">&#39;x-fapi-interaction-id&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())})</span>
+        <span class="k">return</span> <span class="n">r</span></div>
+
+
+<div class="viewcode-block" id="build_error_response"><a class="viewcode-back" href="../../../api.html#ib1.openenergy.support.build_error_response">[docs]</a><span class="k">def</span> <span class="nf">build_error_response</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">uri</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    RFC 6750 has a slightly odd way to complain about invalid tokens! This is used in the token authenticator</span>
+<span class="sd">    class to build responses for invalid or missing tokens.</span>
+
+<span class="sd">    :param error:</span>
+<span class="sd">        One of &#39;invalid request&#39;, &#39;invalid token&#39;, or &#39;insufficient scope&#39;</span>
+<span class="sd">    :param code:</span>
+<span class="sd">        HTTP status code</span>
+<span class="sd">    :param description:</span>
+<span class="sd">        Description of the error</span>
+<span class="sd">    :param uri:</span>
+<span class="sd">        URL of the page describing the error in detail</span>
+<span class="sd">    :param scope:</span>
+<span class="sd">        Scopes required to access the protected resource</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">Response</span><span class="p">()</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">code</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+        <span class="p">{</span><span class="s1">&#39;WWW-Authenticate&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span>
+                             <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;error=&quot;</span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s1">&quot;, &#39;</span> <span class="k">if</span> <span class="n">error</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span>
+                             <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;error_description=&quot;</span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s1">&quot;, &#39;</span> <span class="k">if</span> <span class="n">description</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span>
+                             <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;error_uri=&quot;</span><span class="si">{</span><span class="n">uri</span><span class="si">}</span><span class="s1">&quot;, &#39;</span> <span class="k">if</span> <span class="n">uri</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span>
+                             <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;scope=&quot;</span><span class="si">{</span><span class="n">scope</span><span class="si">}</span><span class="s1">&quot;&#39;</span> <span class="k">if</span> <span class="n">scope</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">),</span>
+         <span class="s1">&#39;Cache-Control&#39;</span><span class="p">:</span> <span class="s1">&#39;no-store&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;Pragma&#39;</span><span class="p">:</span> <span class="s1">&#39;no-cache&#39;</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="AccessTokenValidator"><a class="viewcode-back" href="../../../api.html#ib1.openenergy.support.AccessTokenValidator">[docs]</a><span class="k">class</span> <span class="nc">AccessTokenValidator</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform checks on a presented bearer token as defined in section 6.2.1 here</span>
+<span class="sd">    https://openid.net/specs/openid-financial-api-part-1-1_0-final.html#accessing-protected-resources</span>
+
+<span class="sd">    Uses https://tools.ietf.org/html/rfc7662 - OAuth 2.0 Token Introspection to check a supplied bearer token</span>
+<span class="sd">    against an introspection endpoint for part 6.2.1.13</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">LOG</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;ib1.oe.support.validator&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AccessTokenValidator.__init__"><a class="viewcode-back" href="../../../api.html#ib1.openenergy.support.AccessTokenValidator.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">introspection_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">client_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">private_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">certificate</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                 <span class="n">client_cert_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">require_certificate_binding</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a new access token validator. In this context the data provider attempting to validate an access token</span>
+<span class="sd">        is acting as a client to the directory&#39;s API, so client_id, private_key and certificate are those of the</span>
+<span class="sd">        data provider and not the client requesting data from it. These are not the transport keys, they&#39;re the ones</span>
+<span class="sd">        issued by the directory.</span>
+
+<span class="sd">        :param introspection_url:</span>
+<span class="sd">            URL of the oauth2 introspection endpoint</span>
+<span class="sd">        :param client_id:</span>
+<span class="sd">            OAuth client ID of the data provider, used to authenticate with the introspection endpoint</span>
+<span class="sd">        :param private_key:</span>
+<span class="sd">            Location of the private key of the data provider, used in the client auth for the introspection endpoint</span>
+<span class="sd">        :param certificate:</span>
+<span class="sd">            Location of the public key of the data provider, used in the client auth for the introspection endpoint</span>
+<span class="sd">        :param client_cert_parser:</span>
+<span class="sd">            A zero argument function which returns an X509 object for the active client certificate, or none if no</span>
+<span class="sd">            certificate is present. Defaults to a simple implementation that pulls the cert out of the flask environment</span>
+<span class="sd">            as provided by the local dev mode runner in flask_ssl_dev.py, but should be replaced when running in</span>
+<span class="sd">            production mode behind e.g. nginx</span>
+<span class="sd">        :param require_certificate_binding:</span>
+<span class="sd">            Defaults to true (and is required to be true for FAPI!), this can be set to false for testing in cases</span>
+<span class="sd">            where the authz server is not providing the CNF claims in its token introspection response. If set to</span>
+<span class="sd">            false, no certificate to token binding check is performed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">cert</span> <span class="o">=</span> <span class="n">certificate</span><span class="p">,</span> <span class="n">private_key</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">introspection_url</span> <span class="o">=</span> <span class="n">introspection_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="n">client_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">require_certificate_binding</span> <span class="o">=</span> <span class="n">require_certificate_binding</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">require_certificate_binding</span><span class="p">:</span>
+            <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;certificate to token binding is not enabled, do not use this in a production context!&#39;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">dev_cert_parser</span><span class="p">():</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Default function to pull x509 certs out of the environment, they&#39;re inserted there by the runner in</span>
+<span class="sd">            flask_ssl_dev, but this should only be used in a development environment.</span>
+<span class="sd">            :return:</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="s1">&#39;peercert&#39;</span> <span class="ow">in</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;peercert&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">client_cert_parser</span><span class="p">:</span>
+            <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;using dev ssl cert extractor, if not running in local dev mode this is an error&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cert_parser</span> <span class="o">=</span> <span class="n">client_cert_parser</span> <span class="ow">or</span> <span class="n">dev_cert_parser</span></div>
+
+<div class="viewcode-block" id="AccessTokenValidator.inspect_token"><a class="viewcode-back" href="../../../api.html#ib1.openenergy.support.AccessTokenValidator.inspect_token">[docs]</a>    <span class="nd">@timed_lru_cache</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">inspect_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Send an access token to the introspection endpoint, returning the introspection response</span>
+
+<span class="sd">        :param token:</span>
+<span class="sd">            access token as received as authorization in a request to the data provider&#39;s API</span>
+<span class="sd">        :return:</span>
+<span class="sd">            object containing parsed JSON response from the introspection endpoint</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Note - MTLS requires the addition of the client_id to the POST body as the certificate doesn&#39;t</span>
+        <span class="c1"># contain this information. File under &#39;things that are not immediately obvious about OAuth2...&#39;</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">introspection_url</span><span class="p">,</span>
+                                     <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;token&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+                                           <span class="s1">&#39;client_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_id</span><span class="p">})</span>
+        <span class="c1"># If this failed for some reason, raise the appropriate error. This can happen if we&#39;re not</span>
+        <span class="c1"># properly authenticated against the token introspection endpoint itself, it won&#39;t happen if we</span>
+        <span class="c1"># have an invalid or expired token.</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AccessTokenValidator.introspects"><a class="viewcode-back" href="../../../api.html#ib1.openenergy.support.AccessTokenValidator.introspects">[docs]</a>    <span class="k">def</span> <span class="nf">introspects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build a decorator that can be used on flask routes to automatically introspect on any</span>
+<span class="sd">        provided bearer tokens, passing the resulting object into g.introspection_response. If</span>
+<span class="sd">        the introspection indicates a failed validation, the underlying route will not be called</span>
+<span class="sd">        at all and an appropriate error response will be sent.</span>
+
+<span class="sd">        Introspection fails if:</span>
+<span class="sd">            1. Querying the token introspection endpoint fails</span>
+<span class="sd">            2. A token is returned with active: false</span>
+<span class="sd">            3. Scope is specified, and the required scope is not in the token scopes</span>
+<span class="sd">            4. Issued time is in the future</span>
+<span class="sd">            5. Expiry time is in the past</span>
+<span class="sd">            6. Certificate binding is enabled (default) and the fingerprint of the presented client cert</span>
+<span class="sd">               isn&#39;t a match for the claim in the introspection response</span>
+
+<span class="sd">        If introspection succeeds, the decorated function is called and the Date and x-fapi-interaction-id headers</span>
+<span class="sd">        injected into the response before returning.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">f</span><span class="p">:</span>
+            <span class="c1"># If function not specified, decorate self, effectively wrapping the decorator in a</span>
+            <span class="c1"># second decorator which already includes the scopes argument</span>
+            <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">introspects</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">decorated_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+            <span class="c1"># Deny access to non-MTLS connections</span>
+            <span class="n">cert</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cert_parser</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">cert</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;no client cert presented&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">build_error_response</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="mi">401</span><span class="p">)</span>
+
+            <span class="c1"># Require authorization header with bearer token</span>
+            <span class="k">if</span> <span class="s1">&#39;Authorization&#39;</span> <span class="ow">in</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+                <span class="n">token_header</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Authorization&#39;</span><span class="p">)</span>
+                <span class="c1"># Check that this is a bearer token header</span>
+                <span class="k">if</span> <span class="n">token_header</span><span class="o">.</span><span class="n">lower</span><span class="p">()[:</span><span class="mi">7</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;bearer &#39;</span><span class="p">:</span>
+                    <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Authorization header does not contain a bearer token&#39;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">build_error_response</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="mi">401</span><span class="p">)</span>
+                <span class="c1"># Extract the actual token</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="n">token_header</span><span class="p">[</span><span class="mi">7</span><span class="p">:]</span>
+                <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;token was </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">i_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inspect_token</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+
+                <span class="c1"># All valid introspection responses contain &#39;active&#39;, as the default behaviour</span>
+                <span class="c1"># for an invalid token is to create a simple JSON {&#39;active&#39;:false} response</span>
+                <span class="k">if</span> <span class="s1">&#39;active&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">i_response</span><span class="p">:</span>
+                    <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid introspection response, does not contain &quot;valid&quot;&#39;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">build_error_response</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="s1">&#39;invalid_request&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+
+                <span class="c1"># The response should specify that the token is active</span>
+                <span class="k">if</span> <span class="n">i_response</span><span class="p">[</span><span class="s1">&#39;active&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
+                    <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;token introspection failed, token is not valid&#39;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">build_error_response</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="s1">&#39;invalid_token&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+
+                <span class="c1"># Check token issued and expiry times. This is necessary because we cache the token introspection</span>
+                <span class="c1"># response, so it&#39;s possible to have a token which is marked as valid but is no longer live due to</span>
+                <span class="c1"># having become invalid within the caching period.</span>
+                <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+                <span class="k">if</span> <span class="s1">&#39;iat&#39;</span> <span class="ow">in</span> <span class="n">i_response</span><span class="p">:</span>
+                    <span class="c1"># Issue time must be in the past</span>
+                    <span class="k">if</span> <span class="n">now</span> <span class="o">&lt;</span> <span class="n">i_response</span><span class="p">[</span><span class="s1">&#39;iat&#39;</span><span class="p">]:</span>
+                        <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;token issued in the future&#39;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="n">build_error_response</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="s1">&#39;invalid_token&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s1">&#39;exp&#39;</span> <span class="ow">in</span> <span class="n">i_response</span><span class="p">:</span>
+                    <span class="c1"># Expiry time must be in the future</span>
+                    <span class="k">if</span> <span class="n">now</span> <span class="o">&gt;</span> <span class="n">i_response</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">]:</span>
+                        <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;token expired&#39;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="n">build_error_response</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="s1">&#39;invalid_token&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+
+                <span class="c1"># If the token response contains a certificate binding then check it against the</span>
+                <span class="c1"># current client cert. See https://tools.ietf.org/html/rfc8705</span>
+                <span class="k">if</span> <span class="s1">&#39;cnf&#39;</span> <span class="ow">in</span> <span class="n">i_response</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">require_certificate_binding</span><span class="p">:</span>
+                    <span class="n">sha256</span> <span class="o">=</span> <span class="n">i_response</span><span class="p">[</span><span class="s1">&#39;cnf&#39;</span><span class="p">][</span><span class="s1">&#39;x5t#S256&#39;</span><span class="p">]</span>
+
+                    <span class="nb">hash</span> <span class="o">=</span> <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
+                    <span class="n">fingerprint</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">cert</span><span class="o">.</span><span class="n">fingerprint</span><span class="p">(</span><span class="nb">hash</span><span class="p">))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="nb">hash</span><span class="p">,</span> <span class="n">cert</span><span class="o">.</span><span class="n">fingerprint</span><span class="p">(</span><span class="nb">hash</span><span class="p">))</span>
+                    <span class="c1"># TODO - there&#39;s something not right about this, we&#39;re getting mismatches with the directory</span>
+
+                    <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s1">&#39;token introspection response contains certificate thumbprint </span><span class="si">{</span><span class="n">sha256</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+                    <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s1">&#39;client cert presented has thumbprint </span><span class="si">{</span><span class="n">fingerprint</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">require_certificate_binding</span><span class="p">:</span>
+                        <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;No cnf claim in token response, unable to proceed!&#39;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="n">build_error_response</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="s1">&#39;invalid_token&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="mi">401</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+
+                <span class="c1"># If we required a particular scope, check that it&#39;s in the list of scopes</span>
+                <span class="c1"># defined for this token. Scope comparison is case insensitive</span>
+                <span class="k">if</span> <span class="n">scope</span><span class="p">:</span>
+                    <span class="n">token_scopes</span> <span class="o">=</span> <span class="n">i_response</span><span class="p">[</span><span class="s1">&#39;scope&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+                    <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;found scopes in token </span><span class="si">{</span><span class="n">token_scopes</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">scope</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">token_scopes</span><span class="p">:</span>
+                        <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;scope </span><span class="se">\&#39;</span><span class="si">{</span><span class="n">scope</span><span class="si">}</span><span class="se">\&#39;</span><span class="s1"> not in token scopes </span><span class="si">{</span><span class="n">token_scopes</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="n">build_error_response</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="s1">&#39;insufficient_scope&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="mi">403</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">scope</span><span class="p">)</span>
+
+                <span class="c1"># Token checks passed, put the token response in g.token_introspection</span>
+                <span class="n">flask</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">introspection_response</span> <span class="o">=</span> <span class="n">i_response</span>
+
+                <span class="c1"># Call the underlying function, ensure it&#39;s a response object</span>
+                <span class="n">response</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">make_response</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+                <span class="c1"># FAPI requires that the resource server set the date header in the response</span>
+                <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">email</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">formatdate</span><span class="p">()</span>
+
+                <span class="c1"># Get FAPI interaction ID if set, or create a new one otherwise</span>
+                <span class="k">if</span> <span class="s1">&#39;x-fapi-interaction-id&#39;</span> <span class="ow">in</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+                    <span class="n">fii</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;x-fapi-interaction-id&#39;</span><span class="p">]</span>
+                    <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;x-fapi-interaction-id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fii</span>
+                    <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;using existing interaction ID = </span><span class="si">{</span><span class="n">fii</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s1">&#39;x-fapi-interaction-id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+                <span class="k">return</span> <span class="n">response</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># No authentication provided</span>
+                <span class="n">AccessTokenValidator</span><span class="o">.</span><span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;no token presented&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">build_error_response</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="mi">401</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">decorated_function</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+<p>
+    &#169; Copyright <a href="https://opencorporates.com/companies/gb/12156788">Icebreaker One Limited</a>.
+    <span class="lastupdated">
+        Last updated on Apr 28, 2021.
+      </span>
+
+</p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -224,7 +224,7 @@
 <span class="sd">    =============  ================</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SteamController.__init__"><a class="viewcode-back" href="../../../api/steamcontroller.html#approxeng.input.steamcontroller.SteamController.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+<div class="viewcode-block" id="SteamController.__init__"><a class="viewcode-back" href="../../../api/steamcontroller.html#approxeng.input.steamcontroller.SteamController.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SteamController</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">controls</span><span class="o">=</span><span class="p">[</span>
                 <span class="n">Button</span><span class="p">(</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="mi">307</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;square&#39;</span><span class="p">),</span>
@@ -258,7 +258,8 @@
                 <span class="n">TriggerAxis</span><span class="p">(</span><span class="s2">&quot;Right Trigger&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;rt&#39;</span><span class="p">)</span>
             <span class="p">],</span>
             <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
-            <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span></div>
+            <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">registration_ids</span><span class="p">():</span>
@@ -281,7 +282,7 @@
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Feb 04, 2021.
+        Last updated on Aug 17, 2021.
       </span>
 
     </p>

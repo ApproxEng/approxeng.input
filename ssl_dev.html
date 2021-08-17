@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Local Data Provider Development Mode &mdash; Open Energy Infrastructure Support 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Open Energy Infrastructure Support 0.0.1 documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python API : ib1.openenergy.support" href="api.html" />
+    <link rel="prev" title="Providing OE Shared Data" href="data_provider.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0C3945" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Open Energy Infrastructure Support
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service_provider.html">Accessing OE Shared Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_provider.html">Providing OE Shared Data</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Local Data Provider Development Mode</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#obtaining-a-valid-server-certificate">Obtaining a valid server certificate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-in-dev-mode">Running in dev mode</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Python API : ib1.openenergy.support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Open Energy Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Open Energy Infrastructure Support</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Local Data Provider Development Mode</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="local-data-provider-development-mode">
+<h1>Local Data Provider Development Mode<a class="headerlink" href="#local-data-provider-development-mode" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please note! This should not be used in production. It is solely to help make your life simpler, when developing a
+<a class="reference internal" href="glossary.html#term-Data-Provider"><span class="xref std std-term">data provider</span></a>, by allowing you to run everything locally with full SSL support enabled.</p>
+</div>
+<p>You may want to run your <a class="reference external" href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a> app locally when testing, but the security requirements of <a class="reference internal" href="glossary.html#term-Open-Energy-Phase-3"><span class="xref std std-term">OE3</span></a> mean you really need
+to use HTTPS, and have everything validate correctly. In addition, to make use of the <a class="reference internal" href="api.html#ib1.openenergy.support.AccessTokenValidator" title="ib1.openenergy.support.AccessTokenValidator"><code class="xref any py py-class docutils literal notranslate"><span class="pre">AccessTokenValidator</span></code></a> you need
+any test clients to present valid client certificates. This can all get rather messy, so this library includes a couple
+of helper functions to allow you to run your app locally using Flask’s built-in development server.</p>
+<div class="section" id="obtaining-a-valid-server-certificate">
+<h2>Obtaining a valid server certificate<a class="headerlink" href="#obtaining-a-valid-server-certificate" title="Permalink to this headline">¶</a></h2>
+<p>To run on <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code> you will need a corresponding SSL certificate, and you’ll need to get the
+signing chain for that certificate into Python’s list of trusted CAs. For this we recommend the minimal CA project
+that can be found at <a class="reference external" href="https://github.com/jsha/minica">https://github.com/jsha/minica</a> - this will create a certificate for your server as well as a root
+certificate. You need to add this root certificate to the <code class="docutils literal notranslate"><span class="pre">certifi</span></code> CA, assuming your root is called <code class="docutils literal notranslate"><span class="pre">minica.pem</span></code>
+(the default) you can install it with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt; cat minica.pem &gt;&gt; <span class="sb">`</span>python3 -m certifi<span class="sb">`</span>
+</pre></div>
+</div>
+<p>This must be done on any virtual environment that’s going to make calls <em>to</em> your server as it will be used when
+validating the server certificate. Ensure that you have any virtual environment activated before running this command,
+it will install into whatever python is currently active.</p>
+</div>
+<div class="section" id="running-in-dev-mode">
+<h2>Running in dev mode<a class="headerlink" href="#running-in-dev-mode" title="Permalink to this headline">¶</a></h2>
+<p>Once you have a certificate for your server to hand, and have installed the appropriate root cert, you can use the
+helper functions in <a class="reference internal" href="api.html#module-ib1.openenergy.support.flask_ssl_dev" title="ib1.openenergy.support.flask_ssl_dev"><code class="xref any py py-mod docutils literal notranslate"><span class="pre">ib1.openenergy.support.flask_ssl_dev</span></code></a> to run your app.</p>
+<p>The function <a class="reference internal" href="api.html#ib1.openenergy.support.flask_ssl_dev.get_command_line_ssl_args" title="ib1.openenergy.support.flask_ssl_dev.get_command_line_ssl_args"><code class="xref any py py-func docutils literal notranslate"><span class="pre">get_command_line_ssl_args</span></code></a> can be used to parse command line arguments and add help functionality, putting
+this in your app then calling it with <code class="docutils literal notranslate"><span class="pre">myapp.py</span> <span class="pre">--help</span></code> will produce output similar to this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tom@sparkles:~/Desktop/certs$ python myapp.py --help
+usage: app.py <span class="o">[</span>-h<span class="o">]</span> <span class="o">[</span>-sk SERVER_PRIVATE_KEY<span class="o">]</span> <span class="o">[</span>-sc SERVER_CERTIFICATE<span class="o">]</span> <span class="o">[</span>-ck CLIENT_PRIVATE_KEY<span class="o">]</span>
+              <span class="o">[</span>-cc CLIENT_CERTIFICATE<span class="o">]</span> <span class="o">[</span>-cid CLIENT_ID<span class="o">]</span>
+
+optional arguments:
+  -h, --help            show this <span class="nb">help</span> message and <span class="nb">exit</span>
+  -sk SERVER_PRIVATE_KEY, --server_private_key SERVER_PRIVATE_KEY
+                        Server private key file, default <span class="s2">&quot;127.0.0.1/key.pem&quot;</span>
+  -sc SERVER_CERTIFICATE, --server_certificate SERVER_CERTIFICATE
+                        Server certificate file, default <span class="s2">&quot;127.0.0.1/cert.pem&quot;</span>
+  -ck CLIENT_PRIVATE_KEY, --client_private_key CLIENT_PRIVATE_KEY
+                        Client private key file, default <span class="s2">&quot;a.key&quot;</span>
+  -cc CLIENT_CERTIFICATE, --client_certificate CLIENT_CERTIFICATE
+                        Client certificate file, default <span class="s2">&quot;a.pem&quot;</span>
+  -cid CLIENT_ID, --client_id CLIENT_ID
+                        OAuth2 client ID <span class="k">for</span> calls made from this app
+</pre></div>
+</div>
+<p>You can set defaults for certificate locations and client ID in the call to <a class="reference internal" href="api.html#ib1.openenergy.support.flask_ssl_dev.get_command_line_ssl_args" title="ib1.openenergy.support.flask_ssl_dev.get_command_line_ssl_args"><code class="xref any py py-func docutils literal notranslate"><span class="pre">get_command_line_ssl_args</span></code></a>. This function
+produces a <a class="reference internal" href="api.html#ib1.openenergy.support.flask_ssl_dev.SSLOptions" title="ib1.openenergy.support.flask_ssl_dev.SSLOptions"><code class="xref any py py-class docutils literal notranslate"><span class="pre">SSLOptions</span></code></a> object from which properties can be extracted to actually run your app with <a class="reference internal" href="api.html#ib1.openenergy.support.flask_ssl_dev.run_app" title="ib1.openenergy.support.flask_ssl_dev.run_app"><code class="xref any py py-func docutils literal notranslate"><span class="pre">run_app</span></code></a></p>
+<p>The example data provider from <a class="reference internal" href="data_provider.html#providing-oe-shared-data"><span class="std std-ref">Providing OE Shared Data</span></a>, repeated below, uses <a class="reference internal" href="api.html#ib1.openenergy.support.flask_ssl_dev.get_command_line_ssl_args" title="ib1.openenergy.support.flask_ssl_dev.get_command_line_ssl_args"><code class="xref any py py-func docutils literal notranslate"><span class="pre">get_command_line_ssl_args</span></code></a> on line 12
+to get locations of certificate files as well as the OAuth2 client ID, these are then passed both to the
+<a class="reference internal" href="api.html#ib1.openenergy.support.AccessTokenValidator" title="ib1.openenergy.support.AccessTokenValidator"><code class="xref any py py-class docutils literal notranslate"><span class="pre">AccessTokenValidator</span></code></a> on line 18 and the call to actually run the app with <a class="reference internal" href="api.html#ib1.openenergy.support.flask_ssl_dev.run_app" title="ib1.openenergy.support.flask_ssl_dev.run_app"><code class="xref any py py-func docutils literal notranslate"><span class="pre">run_app</span></code></a> on line 40.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">flask</span>
+
+<span class="kn">from</span> <span class="nn">ib1.openenergy.support</span> <span class="kn">import</span> <span class="n">AccessTokenValidator</span>
+<span class="kn">from</span> <span class="nn">ib1.openenergy.support.flask_ssl_dev</span> <span class="kn">import</span> <span class="n">get_command_line_ssl_args</span><span class="p">,</span> <span class="n">run_app</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+<span class="n">LOG</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;ib1.oe.testapp&#39;</span><span class="p">)</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="n">get_command_line_ssl_args</span><span class="p">(</span><span class="n">default_client_private_key</span><span class="o">=</span><span class="s1">&#39;a.key&#39;</span><span class="p">,</span>
+                                    <span class="n">default_client_certificate</span><span class="o">=</span><span class="s1">&#39;a.pem&#39;</span><span class="p">,</span>
+                                    <span class="n">default_server_private_key</span><span class="o">=</span><span class="s1">&#39;127.0.0.1/key.pem&#39;</span><span class="p">,</span>
+                                    <span class="n">default_server_certificate</span><span class="o">=</span><span class="s1">&#39;127.0.0.1/cert.pem&#39;</span><span class="p">,</span>
+                                    <span class="n">default_client_id</span><span class="o">=</span><span class="s1">&#39;kZuAsn7UYZ98WWh29hDPf&#39;</span><span class="p">)</span>
+
+<span class="n">validator</span> <span class="o">=</span> <span class="n">AccessTokenValidator</span><span class="p">(</span><span class="n">client_id</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span> <span class="n">certificate</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">client_certificate</span><span class="p">,</span>
+                                 <span class="n">private_key</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">client_private_key</span><span class="p">,</span>
+                                 <span class="n">introspection_url</span><span class="o">=</span><span class="s1">&#39;https://matls-auth.directory.energydata.org.uk/token/introspection&#39;</span><span class="p">)</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="nd">@validator</span><span class="o">.</span><span class="n">introspects</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s1">&#39;directory:software&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">homepage</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a very simple route that doesn&#39;t do much, but as it&#39;s decorated with the validator</span>
+<span class="sd">    token introspection endpoint it will trigger inspection of the supplied bearer token via the</span>
+<span class="sd">    directory introspection point, and the resultant object will be passed in to the route.</span>
+
+<span class="sd">    :param introspection_respose:</span>
+<span class="sd">        Introspection result from a supplied bearer token, or None if no token was supplied</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;home: received MTLS HTTPS request from </span><span class="si">{</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">remote_addr</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;home: token introspection response is </span><span class="si">{</span><span class="n">flask</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">introspection_response</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Success&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#39;</span>
+
+
+<span class="n">run_app</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="n">app</span><span class="p">,</span>
+        <span class="n">server_private_key</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">server_private_key</span><span class="p">,</span>
+        <span class="n">server_certificate</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">server_certificate</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="api.html" class="btn btn-neutral float-right" title="Python API : ib1.openenergy.support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="data_provider.html" class="btn btn-neutral float-left" title="Providing OE Shared Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+<p>
+    &#169; Copyright <a href="https://opencorporates.com/companies/gb/12156788">Icebreaker One Limited</a>.
+    <span class="lastupdated">
+        Last updated on Apr 28, 2021.
+      </span>
+
+</p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

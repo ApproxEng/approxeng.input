@@ -189,7 +189,7 @@ controls. While this controller does require a specific USB dongle, unlike most 
 it is able to report disconnections - the device nodes only appear if the controller is turned on.</p>
 <span class="target" id="module-approxeng.input.steamcontroller"></span><dl class="py class">
 <dt id="approxeng.input.steamcontroller.SteamController">
-<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.steamcontroller.</code><code class="sig-name descname">SteamController</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.steamcontroller.</code><code class="sig-name descname">SteamController</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wireless steam controller. As of Jan 2021 this works with modern linux installations without
 any messing around, and supports a lot of extra controls as a result!</p>
 <p>The unusual controls are as follows, firstly buttons. Note that both the trackpads have
@@ -309,7 +309,7 @@ triggers on the middle trigger buttons:</p>
 </table>
 <dl class="py method">
 <dt id="approxeng.input.steamcontroller.SteamController.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populate the controller name, button set and axis set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -329,6 +329,7 @@ leave the older mappings named simply by their code, and only use this to handle
 such as motion sensors.</p></li>
 <li><p><strong>dead_zone</strong> – If specified, this is applied to all axes</p></li>
 <li><p><strong>hot_zone</strong> – If specified, this is applied to all axes</p></li>
+<li><p><strong>ff_device</strong> – If specified, this is a force feedback compatible device node, defaults to None</p></li>
 </ul>
 </dd>
 </dl>
@@ -361,7 +362,7 @@ such as motion sensors.</p></li>
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Feb 04, 2021.
+        Last updated on Aug 17, 2021.
       </span>
 
     </p>

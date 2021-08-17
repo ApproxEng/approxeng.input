@@ -187,7 +187,7 @@
 <span class="sd">    know you&#39;ll need to code specifically for it!</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SpaceMousePro.__init__"><a class="viewcode-back" href="../../../api/spacemousepro.html#approxeng.input.spacemousepro.SpaceMousePro.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+<div class="viewcode-block" id="SpaceMousePro.__init__"><a class="viewcode-back" href="../../../api/spacemousepro.html#approxeng.input.spacemousepro.SpaceMousePro.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">hot_zone</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SpaceMousePro</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">controls</span><span class="o">=</span><span class="p">[</span>
             <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;lx&#39;</span><span class="p">),</span>
             <span class="n">CentredAxis</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="o">-</span><span class="mi">350</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;ly&#39;</span><span class="p">),</span>
@@ -212,7 +212,8 @@
             <span class="n">Button</span><span class="p">(</span><span class="s1">&#39;Fit&#39;</span><span class="p">,</span> <span class="mi">257</span><span class="p">,</span> <span class="n">sname</span><span class="o">=</span><span class="s1">&#39;fit&#39;</span><span class="p">)</span>
         <span class="p">],</span>
             <span class="n">dead_zone</span><span class="o">=</span><span class="n">dead_zone</span><span class="p">,</span>
-            <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">)</span></div>
+            <span class="n">hot_zone</span><span class="o">=</span><span class="n">hot_zone</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;3Dconnexion SpaceMouse Pro&#39;</span>
@@ -238,7 +239,7 @@
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Feb 04, 2021.
+        Last updated on Aug 17, 2021.
       </span>
 
     </p>

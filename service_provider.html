@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Accessing OE Shared Data &mdash; Open Energy Infrastructure Support 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Open Energy Infrastructure Support 0.0.1 documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Providing OE Shared Data" href="data_provider.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0C3945" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Open Energy Infrastructure Support
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Accessing OE Shared Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-client">Example client</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_provider.html">Providing OE Shared Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ssl_dev.html">Local Data Provider Development Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Python API : ib1.openenergy.support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Open Energy Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Open Energy Infrastructure Support</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Accessing OE Shared Data</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="accessing-oe-shared-data">
+<h1>Accessing OE Shared Data<a class="headerlink" href="#accessing-oe-shared-data" title="Permalink to this headline">¶</a></h1>
+<p>In order to access an <a class="reference internal" href="glossary.html#term-Open-Energy-Phase-3"><span class="xref std std-term">OE3</span></a> shared data API, a client must comply with the <a class="reference external" href="https://openid.net/wg/fapi/">Financial Grade API</a> specification, in
+particular it must:</p>
+<ol class="arabic simple">
+<li><p>Connect using MTLS, presenting a client certificate when requested</p></li>
+<li><p>Present a valid OAuth2 bearer token previously obtained from the authorization server</p></li>
+</ol>
+<p>Tokens are short-lived, opaque, and bound to the certificate of the client which requested them.</p>
+<p>This library provides a class <a class="reference internal" href="api.html#ib1.openenergy.support.FAPISession" title="ib1.openenergy.support.FAPISession"><code class="xref any py py-class docutils literal notranslate"><span class="pre">ib1.openenergy.support.FAPISession</span></code></a> which automatically acquires tokens when needed (on
+first access, or when a token has expired), and configures the necessary header information required to successfully
+call a protected endpoint.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To make requests, you must have previously generated an appropriate private key, uploaded the corresponding certificate
+signing request to our authorization server, and downloaded the resultant certificate. You will also need the OAuth
+client ID corresponding to this certificate.</p>
+</div>
+<p>Once you have this information (if you are one of our trial users you should already know how to obtain this, if not
+please ask us!) you can configure the <a class="reference internal" href="api.html#ib1.openenergy.support.FAPISession" title="ib1.openenergy.support.FAPISession"><code class="xref any py py-class docutils literal notranslate"><span class="pre">FAPISession</span></code></a> with:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">private_key</span></code> : The file path of the private key</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">certificate</span></code> : The file path of the certificate</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">client_id</span></code> : The OAuth client ID</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">token_url</span></code> : The URL of the token endpoint of the authorization server</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">requested_scopes</span></code> : The OAuth2 scopes to request for any tokens. This should be a string, if multiple scopes are
+required they should be separated by spaces within this string</p></li>
+</ul>
+<p>Once configured, it exposes a property <a class="reference internal" href="api.html#ib1.openenergy.support.FAPISession.session" title="ib1.openenergy.support.FAPISession.session"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">session</span></code></a>. This is a <a class="reference external" href="https://docs.python-requests.org/en/master/">Requests</a>
+<a class="reference external" href="https://docs.python-requests.org/en/master/api/#requests.Session" title="(in Requests v2.25.1)"><code class="xref any docutils literal notranslate"><span class="pre">Session</span></code></a> instance - use this the same way you’d use it in any other context (i.e. with
+<a class="reference external" href="https://docs.python-requests.org/en/master/api/#requests.Session.get" title="(in Requests v2.25.1)"><code class="xref any docutils literal notranslate"><span class="pre">get</span></code></a>, <a class="reference external" href="https://docs.python-requests.org/en/master/api/#requests.Session.post" title="(in Requests v2.25.1)"><code class="xref any docutils literal notranslate"><span class="pre">post</span></code></a> etc), the library will take care of token acquisition and
+transport, using the key pair provided both to call the token endpoint and to call the actual resource server.</p>
+<div class="section" id="example-client">
+<h2>Example client<a class="headerlink" href="#example-client" title="Permalink to this headline">¶</a></h2>
+<p>The code below shows how to set up the <a class="reference internal" href="api.html#ib1.openenergy.support.FAPISession" title="ib1.openenergy.support.FAPISession"><code class="xref any py py-class docutils literal notranslate"><span class="pre">FAPISession</span></code></a>, enable better HTTP logging (including timestamps), and make a call
+to the trivial data provider defined in the <a class="reference internal" href="data_provider.html#example-data-provider"><span class="std std-ref">Example data provider</span></a>:</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">ib1.openenergy.support</span> <span class="kn">import</span> <span class="n">FAPISession</span><span class="p">,</span> <span class="n">httpclient_logging_patch</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(levelname)-8s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
+                    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span>
+                    <span class="n">datefmt</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span>
+
+<span class="n">httpclient_logging_patch</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+<span class="c1"># Set up a session, this will get a token from the directory when needed</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">FAPISession</span><span class="p">(</span><span class="n">client_id</span><span class="o">=</span><span class="s1">&#39;kZuAsn7UYZ98WWh29hDPf&#39;</span><span class="p">,</span>
+                <span class="n">token_url</span><span class="o">=</span><span class="s1">&#39;https://matls-auth.directory.energydata.org.uk/token&#39;</span><span class="p">,</span>
+                <span class="n">requested_scopes</span><span class="o">=</span><span class="s1">&#39;directory:software foo&#39;</span><span class="p">,</span>
+                <span class="n">private_key</span><span class="o">=</span><span class="s1">&#39;/home/tom/Desktop/certs/a.key&#39;</span><span class="p">,</span>
+                <span class="n">certificate</span><span class="o">=</span><span class="s1">&#39;/home/tom/Desktop/certs/a.pem&#39;</span><span class="p">)</span>
+
+<span class="c1"># Call the server running on localhost, this assumes the server in &#39;app.py&#39; is running</span>
+<span class="n">f</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;https://127.0.0.1:5000&#39;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>As you can see, other than the instantiation of the <a class="reference internal" href="api.html#ib1.openenergy.support.FAPISession" title="ib1.openenergy.support.FAPISession"><code class="xref any py py-class docutils literal notranslate"><span class="pre">FAPISession</span></code></a> on line 12, this is identical to using <a class="reference external" href="https://docs.python-requests.org/en/master/">Requests</a> to
+access an unsecured HTTP server, all the token management is handled automatically for you.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="data_provider.html" class="btn btn-neutral float-right" title="Providing OE Shared Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+<p>
+    &#169; Copyright <a href="https://opencorporates.com/companies/gb/12156788">Icebreaker One Limited</a>.
+    <span class="lastupdated">
+        Last updated on Apr 28, 2021.
+      </span>
+
+</p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

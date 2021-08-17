@@ -169,8 +169,9 @@
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">functools</span>
 
-<span class="kn">from</span> <span class="nn">evdev</span> <span class="kn">import</span> <span class="n">InputEvent</span>
+<span class="kn">from</span> <span class="nn">evdev</span> <span class="kn">import</span> <span class="n">InputEvent</span><span class="p">,</span> <span class="n">ff</span><span class="p">,</span> <span class="n">ecodes</span>
 
 <span class="kn">from</span> <span class="nn">approxeng.input.sys</span> <span class="kn">import</span> <span class="n">sys_nodes</span>
 
@@ -286,7 +287,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Controller.__init__"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">controls</span><span class="p">,</span> <span class="n">node_mappings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dead_zone</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">hot_zone</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                 <span class="n">hot_zone</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ff_device</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Populate the controller name, button set and axis set.</span>
 
@@ -309,6 +310,8 @@
 <span class="sd">            If specified, this is applied to all axes</span>
 <span class="sd">        :param hot_zone:</span>
 <span class="sd">            If specified, this is applied to all axes</span>
+<span class="sd">        :param ff_device:</span>
+<span class="sd">            If specified, this is a force feedback compatible device node, defaults to None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axes</span> <span class="o">=</span> <span class="n">Axes</span><span class="p">([</span><span class="n">control</span> <span class="k">for</span> <span class="n">control</span> <span class="ow">in</span> <span class="n">controls</span> <span class="k">if</span>
                           <span class="nb">isinstance</span><span class="p">(</span><span class="n">control</span><span class="p">,</span> <span class="n">CentredAxis</span><span class="p">)</span> <span class="ow">or</span>
@@ -327,6 +330,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">node_mappings</span> <span class="o">=</span> <span class="n">node_mappings</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device_unique_name</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exception</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ff_device</span> <span class="o">=</span> <span class="n">ff_device</span>
 
         <span class="k">class</span> <span class="nc">ControllerStream</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
             <span class="sd">&quot;&quot;&quot;</span>
@@ -353,6 +358,57 @@
                 <span class="k">return</span> <span class="n">generator</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">stream</span> <span class="o">=</span> <span class="n">ControllerStream</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">_build_effect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">milliseconds</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">strong_magnitude</span><span class="o">=</span><span class="mh">0x0000</span><span class="p">,</span> <span class="n">weak_magnitude</span><span class="o">=</span><span class="mh">0xffff</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compile and send a new force feedback effect, caching so we don&#39;t over-fill whatever memory the device</span>
+<span class="sd">        is using to store effect programs. I&#39;ve no idea whether this is actually an issue but why risk it?</span>
+
+<span class="sd">        :param milliseconds:</span>
+<span class="sd">            milliseconds to run the effect</span>
+<span class="sd">        :param strong_magnitude:</span>
+<span class="sd">            strong magnitude, defaults to 0x0000</span>
+<span class="sd">        :param weak_magnitude:</span>
+<span class="sd">            weak magnitude, defaults to 0xffff (no, I don&#39;t know why these are swapped either, just following the</span>
+<span class="sd">            examples!)</span>
+<span class="sd">        :raise ValueError:</span>
+<span class="sd">            if the controller does not have a force-feedback compatible device node</span>
+<span class="sd">        :return:</span>
+<span class="sd">            id of the upload effect block, this is then used later to actually trigger the effect</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff_device</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;compiling new force feedback effect&#39;</span><span class="p">)</span>
+            <span class="n">effect</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">Effect</span><span class="p">(</span>
+                <span class="n">ecodes</span><span class="o">.</span><span class="n">FF_RUMBLE</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="n">ff</span><span class="o">.</span><span class="n">Trigger</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">ff</span><span class="o">.</span><span class="n">Replay</span><span class="p">(</span><span class="n">milliseconds</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">ff</span><span class="o">.</span><span class="n">EffectType</span><span class="p">(</span>
+                    <span class="n">ff_rumble_effect</span><span class="o">=</span><span class="n">ff</span><span class="o">.</span><span class="n">Rumble</span><span class="p">(</span><span class="n">strong_magnitude</span><span class="o">=</span><span class="n">strong_magnitude</span><span class="p">,</span> <span class="n">weak_magnitude</span><span class="o">=</span><span class="n">weak_magnitude</span><span class="p">))</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff_device</span><span class="o">.</span><span class="n">upload_effect</span><span class="p">(</span><span class="n">effect</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;no force-feedback node, unable to compile effect&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Controller.rumble"><a class="viewcode-back" href="../../api/input.html#approxeng.input.Controller.rumble">[docs]</a>    <span class="k">def</span> <span class="nf">rumble</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">milliseconds</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Trigger a force-feedback effect, compiling and sending to the device if necessary first, otherwise using</span>
+<span class="sd">        an existing effect that&#39;s already been compiled.</span>
+
+<span class="sd">        :param milliseconds:</span>
+<span class="sd">            milliseconds of rumbling required</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff_device</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;controller go brrrr&#39;</span><span class="p">)</span>
+            <span class="n">effect_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_effect</span><span class="p">(</span><span class="n">milliseconds</span><span class="o">=</span><span class="n">milliseconds</span><span class="p">)</span>
+            <span class="n">repeat_count</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ff_device</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ecodes</span><span class="o">.</span><span class="n">EV_FF</span><span class="p">,</span> <span class="n">effect_id</span><span class="p">,</span> <span class="n">repeat_count</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;no force-feedback node for this controller&#39;</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">has_force_feedback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ff_device</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">sys_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">{}:</span>
@@ -1367,7 +1423,7 @@
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Feb 04, 2021.
+        Last updated on Aug 17, 2021.
       </span>
 
     </p>

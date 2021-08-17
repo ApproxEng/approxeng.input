@@ -291,10 +291,18 @@ of these methods in your own code when you call them).</p>
 20
 21
 22
-23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+23
+24
+25
+26
+27
+28</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
 
 <span class="kn">from</span> <span class="nn">approxeng.input.dualshock4</span> <span class="kn">import</span> <span class="n">DualShock4</span>
-<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span><span class="p">,</span> <span class="n">ControllerRequirement</span>
+<span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span><span class="p">,</span> <span class="n">ControllerRequirement</span><span class="p">,</span> <span class="n">ControllerNotFoundError</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
 
 <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
     <span class="n">hue</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -310,7 +318,9 @@ of these methods in your own code when you call them).</p>
                 <span class="n">hue</span> <span class="o">=</span> <span class="n">hue</span> <span class="o">+</span> <span class="mf">0.01</span>
                 <span class="k">if</span> <span class="n">hue</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
                     <span class="n">hue</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+                    <span class="c1"># Vibrate the controller for 200ms every time we loop round the hue wheel</span>
+                    <span class="n">ds4</span><span class="o">.</span><span class="n">rumble</span><span class="p">(</span><span class="n">milliseconds</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">ControllerNotFoundError</span><span class="p">:</span>
         <span class="c1"># No DS4 controller found, wait for a bit and try again</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Waiting for a DS4 controller connection&#39;</span><span class="p">)</span>
         <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -357,7 +367,7 @@ certainly going to be good enough.</p>
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Feb 04, 2021.
+        Last updated on Aug 17, 2021.
       </span>
 
     </p>

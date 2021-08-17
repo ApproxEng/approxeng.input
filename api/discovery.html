@@ -257,13 +257,20 @@ to bind again.</p>
 <span id="discovery-api"></span><h2>Discovery API<a class="headerlink" href="#module-approxeng.input.controllers" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="approxeng.input.controllers.ControllerDiscovery">
-<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">ControllerDiscovery</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">controller</span></em>, <em class="sig-param"><span class="n">devices</span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerDiscovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerDiscovery" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">ControllerDiscovery</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">controller_class</span></em>, <em class="sig-param"><span class="n">controller_constructor_args</span></em>, <em class="sig-param"><span class="n">devices</span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerDiscovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerDiscovery" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents a single discovered controller attached to the host. Ordered, with controllers with more axes and buttons
-being given a higher ordering, then falling back to the assigned name.</p>
+being given a higher ordering, and controllers with force feedback higher than those without, then falling back to
+the assigned name.</p>
 <dl class="py method">
 <dt id="approxeng.input.controllers.ControllerDiscovery.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">controller</span></em>, <em class="sig-param"><span class="n">devices</span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerDiscovery.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerDiscovery.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">controller_class</span></em>, <em class="sig-param"><span class="n">controller_constructor_args</span></em>, <em class="sig-param"><span class="n">devices</span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerDiscovery.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerDiscovery.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="approxeng.input.controllers.ControllerDiscovery.has_ff">
+<em class="property">property </em><code class="sig-name descname">has_ff</code><a class="headerlink" href="#approxeng.input.controllers.ControllerDiscovery.has_ff" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if there’s a force feedback compatible device in this discovery’s device list, False otherwise</p>
 </dd></dl>
 
 </dd></dl>
@@ -276,13 +283,13 @@ being given a higher ordering, then falling back to the assigned name.</p>
 
 <dl class="py class">
 <dt id="approxeng.input.controllers.ControllerRequirement">
-<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">ControllerRequirement</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">require_class</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">require_snames</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerRequirement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerRequirement" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.controllers.</code><code class="sig-name descname">ControllerRequirement</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">require_class</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">require_snames</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">require_ff</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerRequirement"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerRequirement" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents a requirement for a single controller, allowing restriction on type. We might add more filtering options
 later, such as requiring a minimum number of axes, or the presence of a particular control. If you want that now,
 you can subclass this and pass it into the find_matching_controllers and similar functions.</p>
 <dl class="py method">
 <dt id="approxeng.input.controllers.ControllerRequirement.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">require_class</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">require_snames</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerRequirement.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerRequirement.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">require_class</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">require_snames</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">require_ff</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/controllers.html#ControllerRequirement.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.controllers.ControllerRequirement.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new requirement</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -292,6 +299,7 @@ this class will be accepted. Defaults to None, accepting any available controlle
 <li><p><strong>require_snames</strong> – If specified, this should be a list of strings containing snames of controls (buttons or axes) that must be
 present in the controller. Use this when you know what controls you need but don’t mind which controller
 actually implements them.</p></li>
+<li><p><strong>require_ff</strong> – If true, requires controllers with at least one force-feedback compatible device node</p></li>
 </ul>
 </dd>
 </dl>
@@ -424,7 +432,7 @@ finally a concatenation of vendor, product, version and filename.</p>
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Feb 04, 2021.
+        Last updated on Aug 17, 2021.
       </span>
 
     </p>

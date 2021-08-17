@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Providing OE Shared Data &mdash; Open Energy Infrastructure Support 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="search" type="application/opensearchdescription+xml"
+          title="Search within Open Energy Infrastructure Support 0.0.1 documentation"
+          href="_static/opensearch.xml"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Local Data Provider Development Mode" href="ssl_dev.html" />
+    <link rel="prev" title="Accessing OE Shared Data" href="service_provider.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #0C3945" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Open Energy Infrastructure Support
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="service_provider.html">Accessing OE Shared Data</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Providing OE Shared Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-data-provider">Example data provider</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#client-certificate-extraction">Client certificate extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-the-validator">Using the validator</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ssl_dev.html">Local Data Provider Development Mode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Python API : ib1.openenergy.support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">Open Energy Glossary</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Open Energy Infrastructure Support</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Providing OE Shared Data</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="providing-oe-shared-data">
+<h1>Providing OE Shared Data<a class="headerlink" href="#providing-oe-shared-data" title="Permalink to this headline">¶</a></h1>
+<p>To participate in the <a class="reference internal" href="glossary.html#term-Open-Energy-Phase-3"><span class="xref std std-term">OE3</span></a> ecosystem as a provider of shared data, a <a class="reference internal" href="glossary.html#term-Data-Provider"><span class="xref std std-term">data provider</span></a> (<a class="reference internal" href="glossary.html#term-Data-Provider"><span class="xref std std-term">DP</span></a>) must expose an HTTP
+<a class="reference internal" href="glossary.html#term-Application-programming-interface"><span class="xref std std-term">API</span></a> secured by the <a class="reference external" href="https://openid.net/wg/fapi/">Financial Grade API</a> (FAPI) standard. This standard is complex, building as it does on top of
+OAuth2 and then OpenID Connect, but within the context of Open Energy a provider must:</p>
+<ol class="arabic simple">
+<li><p>Require MTLS, requesting a client certificate as part of any API call</p></li>
+<li><p>Require a bearer token</p></li>
+<li><p>Validate the supplied token before any other processing is performed</p></li>
+</ol>
+<p>In our case, the third of the above is done by calling the token introspection endpoint of our authorization server and
+parsing and processing the response to ensure that the supplied token is valid, live, and belongs to the presenting
+client. Only once these checks have passed should your API process the request (and it may then make use of other
+information from the token introspection response to determine access control if appropriate).</p>
+<p>To simplify this process, the library provides a class <a class="reference internal" href="api.html#ib1.openenergy.support.AccessTokenValidator" title="ib1.openenergy.support.AccessTokenValidator"><code class="xref any py py-class docutils literal notranslate"><span class="pre">ib1.openenergy.support.AccessTokenValidator</span></code></a> which encapsulates
+the process of checking that a request has presented a valid access token. When correctly instantiated, the
+<a class="reference internal" href="api.html#ib1.openenergy.support.AccessTokenValidator.introspects" title="ib1.openenergy.support.AccessTokenValidator.introspects"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">AccessTokenValidator.introspects</span></code></a> can be used as a decorator on regular <a class="reference external" href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a> routes to automatically perform these
+checks before your route handler is called.</p>
+<div class="section" id="example-data-provider">
+<h2>Example data provider<a class="headerlink" href="#example-data-provider" title="Permalink to this headline">¶</a></h2>
+<p>The example below shows the simplest possible secure application. It configures an instance of
+<a class="reference internal" href="api.html#ib1.openenergy.support.AccessTokenValidator" title="ib1.openenergy.support.AccessTokenValidator"><code class="xref any py py-class docutils literal notranslate"><span class="pre">AccessTokenValidator</span></code></a> with:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">introspection_url</span></code> : The URL of the token introspection endpoint on the authorization server</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">client_id</span></code> : OAuth2 client ID used when making requests to the introspection endpoint</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">private_key</span></code> : Location on disk of the private key used when making requests to the introspection endpoint</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">certificate</span></code> : Location on disk of the certificate used when making requests to the introspection endpoint</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although we’re configuring a server here, we need to set up the validator with the necessary credentials to access
+the authorization server as a <strong>client</strong>, hence the <code class="docutils literal notranslate"><span class="pre">client_id</span></code>, <code class="docutils literal notranslate"><span class="pre">private_key</span></code> and <code class="docutils literal notranslate"><span class="pre">certificate</span></code> arguments.
+If you’re a participant in Open Energy you should already have this information, if you do not then please ask us!</p>
+</div>
+<div class="section" id="client-certificate-extraction">
+<h3>Client certificate extraction<a class="headerlink" href="#client-certificate-extraction" title="Permalink to this headline">¶</a></h3>
+<p>Part of the validation process is to check that the token was originally issued to the same client as is now trying to
+use it. To do this we compare the thumbprint of the presented client certificate with the corresponding claim in the
+token introspection response, but there is no standard way for an application server to access the client certificate.</p>
+<p>In this example, we are using the default mechanism designed to work with the built-in local SSL runner (see
+<a class="reference internal" href="ssl_dev.html#local-data-provider-development-mode"><span class="std std-ref">Local Data Provider Development Mode</span></a>) but in any production context you will not be using this and will need to
+configure some kind of certificate pass-through. This is typically done by terminating the MTLS connection elsewhere
+and configuring that termination point to push the certificate information into a header which is then accessible to
+your application.</p>
+<p>To support this, the <a class="reference internal" href="api.html#ib1.openenergy.support.AccessTokenValidator" title="ib1.openenergy.support.AccessTokenValidator"><code class="xref any py py-class docutils literal notranslate"><span class="pre">AccessTokenValidator</span></code></a> takes an additional, optional, initialisation argument:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">client_cert_parser</span></code> : a Zero argument function which returns an instance of <a class="reference external" href="https://cryptography.io/en/stable/x509/reference.html#cryptography.x509.Certificate" title="(in Cryptography v3.4.7)"><code class="xref any docutils literal notranslate"><span class="pre">cryptography.x509.Certificate</span></code></a>
+containing the presented client certificate.</p></li>
+</ul>
+</div>
+<div class="section" id="using-the-validator">
+<h3>Using the validator<a class="headerlink" href="#using-the-validator" title="Permalink to this headline">¶</a></h3>
+<p>The configured <a class="reference internal" href="api.html#ib1.openenergy.support.AccessTokenValidator" title="ib1.openenergy.support.AccessTokenValidator"><code class="xref any py py-class docutils literal notranslate"><span class="pre">AccessTokenValidator</span></code></a> is used to decorate a simple flask route within the app. The decorator takes an
+optional <code class="docutils literal notranslate"><span class="pre">scope</span></code> argument, if provided then only tokens containing the specified scope will be regarded as valid.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">flask</span>
+
+<span class="kn">from</span> <span class="nn">ib1.openenergy.support</span> <span class="kn">import</span> <span class="n">AccessTokenValidator</span>
+<span class="kn">from</span> <span class="nn">ib1.openenergy.support.flask_ssl_dev</span> <span class="kn">import</span> <span class="n">get_command_line_ssl_args</span><span class="p">,</span> <span class="n">run_app</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+<span class="n">LOG</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;ib1.oe.testapp&#39;</span><span class="p">)</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="n">get_command_line_ssl_args</span><span class="p">(</span><span class="n">default_client_private_key</span><span class="o">=</span><span class="s1">&#39;a.key&#39;</span><span class="p">,</span>
+                                    <span class="n">default_client_certificate</span><span class="o">=</span><span class="s1">&#39;a.pem&#39;</span><span class="p">,</span>
+                                    <span class="n">default_server_private_key</span><span class="o">=</span><span class="s1">&#39;127.0.0.1/key.pem&#39;</span><span class="p">,</span>
+                                    <span class="n">default_server_certificate</span><span class="o">=</span><span class="s1">&#39;127.0.0.1/cert.pem&#39;</span><span class="p">,</span>
+                                    <span class="n">default_client_id</span><span class="o">=</span><span class="s1">&#39;kZuAsn7UYZ98WWh29hDPf&#39;</span><span class="p">)</span>
+
+<span class="n">validator</span> <span class="o">=</span> <span class="n">AccessTokenValidator</span><span class="p">(</span><span class="n">client_id</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">client_id</span><span class="p">,</span> <span class="n">certificate</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">client_certificate</span><span class="p">,</span>
+                                 <span class="n">private_key</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">client_private_key</span><span class="p">,</span>
+                                 <span class="n">introspection_url</span><span class="o">=</span><span class="s1">&#39;https://matls-auth.directory.energydata.org.uk/token/introspection&#39;</span><span class="p">)</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">flask</span><span class="o">.</span><span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+<span class="nd">@validator</span><span class="o">.</span><span class="n">introspects</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s1">&#39;directory:software&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">homepage</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This is a very simple route that doesn&#39;t do much, but as it&#39;s decorated with the validator</span>
+<span class="sd">    token introspection endpoint it will trigger inspection of the supplied bearer token via the</span>
+<span class="sd">    directory introspection point, and the resultant object will be passed in to the route.</span>
+
+<span class="sd">    :param introspection_respose:</span>
+<span class="sd">        Introspection result from a supplied bearer token, or None if no token was supplied</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;home: received MTLS HTTPS request from </span><span class="si">{</span><span class="n">flask</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">remote_addr</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">LOG</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;home: token introspection response is </span><span class="si">{</span><span class="n">flask</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">introspection_response</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Success&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#39;</span>
+
+
+<span class="n">run_app</span><span class="p">(</span><span class="n">app</span><span class="o">=</span><span class="n">app</span><span class="p">,</span>
+        <span class="n">server_private_key</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">server_private_key</span><span class="p">,</span>
+        <span class="n">server_certificate</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">server_certificate</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>The simple route defined on line 26 has been decorated with <code class="docutils literal notranslate"><span class="pre">&#64;validator.introspects(scope='directory:software')</span></code>,
+within the <code class="docutils literal notranslate"><span class="pre">&#64;app.route('/')</span></code> decorator. When this route is accessed, the library will examine the request, checking
+for presence of a client certificate, presence of a bearer token, then passing that token to the introspection endpoint
+and checking the response for validity. The response is cached for 60 seconds by the library for performance, so
+repeated calls from the same client will only be validated once (although token liveness is calculated per call based
+on the expiry time specified in the introspection response).</p>
+<p>Within your decorated route, you can access the actual introspection response through <a class="reference external" href="https://flask.palletsprojects.com/en/1.1.x/api/#flask.g" title="(in Flask v1.1.x)"><code class="xref any docutils literal notranslate"><span class="pre">flask.g</span></code></a> as
+<code class="docutils literal notranslate"><span class="pre">flask.g.introspection_response</span></code>, you may need to use this to determine whether to grant the client access to a
+given piece of data it’s requesting within that route.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This example also includes the necessary extra logic to run locally in dev mode, see
+<a class="reference internal" href="ssl_dev.html#local-data-provider-development-mode"><span class="std std-ref">Local Data Provider Development Mode</span></a> for more details. Normally you wouldn’t need the logic on line 12, or the
+command to run the app on line 40 as you’d be running the <a class="reference external" href="https://flask.palletsprojects.com/en/1.1.x/">Flask</a> app in a server such as <a class="reference external" href="https://gunicorn.org/">gunicorn</a> and behind a
+front-end system like <a class="reference external" href="https://www.nginx.com/">NGINX</a>.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="ssl_dev.html" class="btn btn-neutral float-right" title="Local Data Provider Development Mode" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="service_provider.html" class="btn btn-neutral float-left" title="Accessing OE Shared Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+<p>
+    &#169; Copyright <a href="https://opencorporates.com/companies/gb/12156788">Icebreaker One Limited</a>.
+    <span class="lastupdated">
+        Last updated on Apr 28, 2021.
+      </span>
+
+</p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

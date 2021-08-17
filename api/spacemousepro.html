@@ -190,7 +190,7 @@ very different from the other joypad style controllers it doesn’t have the sam
 source for the driver to see exactly what controls are supported.</p>
 <span class="target" id="module-approxeng.input.spacemousepro"></span><dl class="py class">
 <dt id="approxeng.input.spacemousepro.SpaceMousePro">
-<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.spacemousepro.</code><code class="sig-name descname">SpaceMousePro</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.01</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.spacemousepro.</code><code class="sig-name descname">SpaceMousePro</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro" title="Permalink to this definition">¶</a></dt>
 <dd><p>Driver for the wired SpaceMouse Pro from 3dConnexion. This controller has a single six-axis puck which can respond
 to motion in all available axes, as well as a set of buttons. Buttons 1-4 seem to act differently to the others,
 they don’t generate events on presses consistently so while they do work they should be used with caution. Other
@@ -204,7 +204,7 @@ buttons or axes, and there’s no right joystick x and y. On the other hand, if 
 know you’ll need to code specifically for it!</p>
 <dl class="py method">
 <dt id="approxeng.input.spacemousepro.SpaceMousePro.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.01</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populate the controller name, button set and axis set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -224,6 +224,7 @@ leave the older mappings named simply by their code, and only use this to handle
 such as motion sensors.</p></li>
 <li><p><strong>dead_zone</strong> – If specified, this is applied to all axes</p></li>
 <li><p><strong>hot_zone</strong> – If specified, this is applied to all axes</p></li>
+<li><p><strong>ff_device</strong> – If specified, this is a force feedback compatible device node, defaults to None</p></li>
 </ul>
 </dd>
 </dl>
@@ -266,7 +267,7 @@ such as motion sensors.</p></li>
         
         &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
       <span class="lastupdated">
-        Last updated on Feb 04, 2021.
+        Last updated on Aug 17, 2021.
       </span>
 
     </p>

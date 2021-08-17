@@ -395,3 +395,11 @@ pitch          ---        ---
 roll           ---        ---
 yaw_rate       ---        ---
 =============  =========  =========
+
+Force feedback effects
+**********************
+
+As of version `2.6.3` you can drive the rumble mechanism of any controller which supports it through the :meth:`~approxeng.input.Controller.rumble`
+method on :class:`~approxeng.input.Controller`. It takes a number of milliseconds for the effect, defaulting to 1000 for a one second
+vibration.
+

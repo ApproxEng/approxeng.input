@@ -16,7 +16,7 @@ Change Log
 Version 2.6.3
 -------------
 
-Added force feedback support through the :meth`rumble` method on the :class:`~approxeng.input.Controller`. Added fixes for missing LED
+Added force feedback support through the :meth:`~approxeng.input.Controller.rumble` method on the :class:`~approxeng.input.Controller`. Added fixes for missing LED
 nodes in ``/sys`` from `SainSaar <https://github.com/sainsaar>`_, see `PR39 <https://github.com/ApproxEng/approxeng.input/pull/39>`_
 for details.
 

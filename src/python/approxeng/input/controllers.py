@@ -42,19 +42,33 @@ logger = logging.getLogger(name='approxeng.input.controllers')
 class ControllerDiscovery:
     """
     Represents a single discovered controller attached to the host. Ordered, with controllers with more axes and buttons
-    being given a higher ordering, then falling back to the assigned name.
+    being given a higher ordering, and controllers with force feedback higher than those without, then falling back to
+    the assigned name.
     """
 
-    def __init__(self, controller, devices, name):
-        self.controller = controller
+    def __init__(self, controller_class, controller_constructor_args, devices, name):
         if not isinstance(devices, list):
             self.devices = [devices]
         else:
             self.devices = devices
         self.name = name
+        self.ff_device = None
+        for device in self.devices:
+            if ecodes.EV_FF in device.capabilities():
+                self.ff_device = device
+                break
+        self.controller = controller_class(ff_device=self.ff_device, **controller_constructor_args)
+
+    @property
+    def has_ff(self):
+        """
+        True if there's a force feedback compatible device in this discovery's device list, False otherwise
+        """
+        return self.ff_device is not None
 
     def __repr__(self):
-        return '{}({})'.format(self.controller.__class__.__name__, ','.join(device.fn for device in self.devices))
+        return '{}(devices=[{}], ff={})'.format(self.controller.__class__.__name__,
+                                            ','.join(device.fn for device in self.devices), self.has_ff)
 
     def __eq__(self, other):
         return self.controller.__class__.__name__ == other.controller.__class__.__name__ and self.name == other.name
@@ -68,6 +82,8 @@ class ControllerDiscovery:
             return self_axes < other_axes
         elif self_buttons != other_buttons:
             return self_buttons < other_buttons
+        if self.has_ff != other.has_ff:
+            return (1 if self.has_ff else 0) < (1 if other.has_ff else 0)
         return self.name < other.name
 
 
@@ -78,7 +94,7 @@ class ControllerRequirement:
     you can subclass this and pass it into the find_matching_controllers and similar functions.
     """
 
-    def __init__(self, require_class=None, require_snames=None):
+    def __init__(self, require_class=None, require_snames=None, require_ff=False):
         """
         Create a new requirement
 
@@ -89,9 +105,12 @@ class ControllerRequirement:
             If specified, this should be a list of strings containing snames of controls (buttons or axes) that must be
             present in the controller. Use this when you know what controls you need but don't mind which controller
             actually implements them.
+        :param require_ff:
+            If true, requires controllers with at least one force-feedback compatible device node
         """
         self.require_class = require_class
         self.snames = require_snames
+        self.require_ff = require_ff
 
     def accept(self, discovery: ControllerDiscovery):
         """
@@ -104,6 +123,8 @@ class ControllerRequirement:
             for sname in self.snames:
                 if sname not in all_controls:
                     return False
+        if self.require_ff and discovery.has_ff is False:
+            return False
         return True
 
 
@@ -150,7 +171,7 @@ def find_matching_controllers(*requirements, **kwargs) -> List[ControllerDiscove
     if requirements is None or len(requirements) == 0:
         requirements = [ControllerRequirement()]
 
-    def pop_controller(r: ControllerRequirement, discoveries: [ControllerDiscovery]) -> ControllerDiscovery:
+    def pop_controller(r: ControllerRequirement, discoveries: List[ControllerDiscovery]) -> ControllerDiscovery:
         """
         Find a single controller matching the supplied requirement from a list of ControllerDiscovery instances
 
@@ -260,7 +281,8 @@ def find_all_controllers(**kwargs) -> List[ControllerDiscovery]:
                            controller_constructor(e) is not None)}
 
     controllers = sorted(
-        ControllerDiscovery(controller=controller_constructor(devices[0])(**kwargs), devices=devices, name=name) for
+        ControllerDiscovery(controller_class=controller_constructor(devices[0]), controller_constructor_args=kwargs,
+                            devices=devices, name=name) for
         name, devices in devices_by_name.items())
 
     return controllers
@@ -332,7 +354,13 @@ def print_devices():
     Simple test function which prints out all devices found by evdev
     """
     for d in get_valid_devices():
-        pp = pprint.PrettyPrinter(indent=2, width=100)
+        class MyPrettyPrinter(pprint.PrettyPrinter):
+            def format(self, object, context, maxlevels, level):
+                if isinstance(object, int):
+                    return '0x{:X}'.format(object), True, False
+                return super().format(object, context, maxlevels, level)
+
+        pp = MyPrettyPrinter(indent=2, width=100)
         pp.pprint(device_verbose_info(d))
 
 

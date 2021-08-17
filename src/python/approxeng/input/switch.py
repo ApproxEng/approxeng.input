@@ -10,7 +10,7 @@ class SwitchJoyConLeft(Controller):
     with the righthand controller.
     """
 
-    def __init__(self, dead_zone=0.05, hot_zone=0.05):
+    def __init__(self, dead_zone=0.05, hot_zone=0.05, **kwargs):
         """
         Create a new Nintendo Switch Joycon controller instance
 
@@ -39,7 +39,8 @@ class SwitchJoyConLeft(Controller):
 
             ],
             dead_zone=dead_zone,
-            hot_zone=hot_zone)
+            hot_zone=hot_zone,
+            **kwargs)
 
     @staticmethod
     def registration_ids():
@@ -59,7 +60,7 @@ class SwitchJoyConRight(Controller):
     with the lefthand controller.
     """
 
-    def __init__(self, dead_zone=0.05, hot_zone=0.05):
+    def __init__(self, dead_zone=0.05, hot_zone=0.05, **kwargs):
         """
         Create a new Nintendo Switch Joycon controller instance
 
@@ -85,7 +86,8 @@ class SwitchJoyConRight(Controller):
                 CentredAxis("Left Vertical", 1, -1, 17, sname="ly")
             ],
             dead_zone=dead_zone,
-            hot_zone=hot_zone)
+            hot_zone=hot_zone,
+            **kwargs)
 
     @staticmethod
     def registration_ids():

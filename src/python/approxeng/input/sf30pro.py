@@ -8,7 +8,7 @@ class SF30Pro(Controller):
     Driver for the 8BitDo SF30 Pro, courtesy of Tom Brougthon (tabroughton on github)
     """
 
-    def __init__(self, dead_zone=0.05, hot_zone=0.05):
+    def __init__(self, dead_zone=0.05, hot_zone=0.05, **kwargs):
         """
         Create a new SF30 Pro driver
 
@@ -42,7 +42,8 @@ class SF30Pro(Controller):
                 Button("Right Stick", 318, sname='rs')
             ],
             dead_zone=dead_zone,
-            hot_zone=hot_zone)
+            hot_zone=hot_zone,
+            **kwargs)
 
     @staticmethod
     def registration_ids():

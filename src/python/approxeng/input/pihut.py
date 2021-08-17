@@ -8,7 +8,7 @@ class PiHut(Controller):
     Driver for the PiHut PS3-alike controller
     """
 
-    def __init__(self, dead_zone=0.05, hot_zone=0.05):
+    def __init__(self, dead_zone=0.05, hot_zone=0.05, **kwargs):
         """
         Discover and initialise a PiHut controller connected to this computer.
 
@@ -42,7 +42,8 @@ class PiHut(Controller):
                 BinaryAxis("D-pad Vertical", 17, b1name='dup', b2name='ddown')
             ],
             dead_zone=dead_zone,
-            hot_zone=hot_zone)
+            hot_zone=hot_zone,
+            **kwargs)
 
     @staticmethod
     def registration_ids():

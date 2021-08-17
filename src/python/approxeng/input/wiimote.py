@@ -8,7 +8,7 @@ class WiiMote(Controller):
     Driver for the Nintendo WiiMote controller, the WiiMote
     """
 
-    def __init__(self, dead_zone=0.05, hot_zone=0.05):
+    def __init__(self, dead_zone=0.05, hot_zone=0.05, **kwargs):
         """
         Create a new WiiMote driver
 
@@ -47,7 +47,8 @@ class WiiMote(Controller):
                 Button("Classic zl", 312, sname="l2"),
             ],
             dead_zone=dead_zone,
-            hot_zone=hot_zone)
+            hot_zone=hot_zone,
+            **kwargs)
 
     @staticmethod
     def registration_ids():

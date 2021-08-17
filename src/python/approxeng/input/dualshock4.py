@@ -14,7 +14,7 @@ class DualShock4(Controller):
     Driver for the Sony PlayStation 4 controller, the DualShock4
     """
 
-    def __init__(self, dead_zone=0.05, hot_zone=0.05):
+    def __init__(self, dead_zone=0.05, hot_zone=0.05, **kwargs):
         """
         Create a new DualShock4 driver
 
@@ -59,7 +59,8 @@ class DualShock4(Controller):
                 'Wireless Controller Touchpad': 'touch',
                 'Wireless Controller Motion Sensors': 'motion'},
             dead_zone=dead_zone,
-            hot_zone=hot_zone)
+            hot_zone=hot_zone,
+            **kwargs)
         self.axes['roll'].hot_zone = 0.2
         self.axes['pitch'].hot_zone = 0.2
 

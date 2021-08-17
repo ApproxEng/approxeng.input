@@ -254,10 +254,11 @@ class Profile:
 
         class ProfiledController(Controller):
 
-            def __init__(self, dead_zone=0.05, hot_zone=0.05):
+            def __init__(self, dead_zone=0.05, hot_zone=0.05, **kwargs):
                 super(ProfiledController, self).__init__(controls=profile.controls,
                                                          dead_zone=dead_zone,
-                                                         hot_zone=hot_zone)
+                                                         hot_zone=hot_zone,
+                                                         **kwargs)
 
             @staticmethod
             def registration_ids():

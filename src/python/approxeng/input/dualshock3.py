@@ -8,7 +8,7 @@ class DualShock3(Controller):
     Driver for the Sony PlayStation 3 controller, the DualShock3
     """
 
-    def __init__(self, dead_zone=0.05, hot_zone=0.0):
+    def __init__(self, dead_zone=0.05, hot_zone=0.0, **kwargs):
         """
         Discover and initialise a PS3 SixAxis controller connected to this computer.
 
@@ -46,7 +46,8 @@ class DualShock3(Controller):
         ],
             node_mappings={'Sony PLAYSTATION(R)3 Controller Motion Sensors': 'motion'},
             dead_zone=dead_zone,
-            hot_zone=hot_zone)
+            hot_zone=hot_zone,
+            **kwargs)
         self.axes['roll'].hot_zone = 0.2
         self.axes['pitch'].hot_zone = 0.2
 

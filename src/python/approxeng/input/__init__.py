@@ -3,8 +3,9 @@ from abc import ABC, abstractmethod
 from math import sqrt
 from time import time
 from typing import Optional, Union, Tuple
+import functools
 
-from evdev import InputEvent
+from evdev import InputEvent, ff, ecodes
 
 from approxeng.input.sys import sys_nodes
 
@@ -120,7 +121,7 @@ class Controller(ABC):
     """
 
     def __init__(self, controls, node_mappings=None, dead_zone=None,
-                 hot_zone=None):
+                 hot_zone=None, ff_device=None):
         """
         Populate the controller name, button set and axis set.
 
@@ -143,6 +144,8 @@ class Controller(ABC):
             If specified, this is applied to all axes
         :param hot_zone:
             If specified, this is applied to all axes
+        :param ff_device:
+            If specified, this is a force feedback compatible device node, defaults to None
         """
         self.axes = Axes([control for control in controls if
                           isinstance(control, CentredAxis) or
@@ -161,6 +164,8 @@ class Controller(ABC):
         self.node_mappings = node_mappings
         self.device_unique_name = None
         self.exception = None
+
+        self.ff_device = ff_device
 
         class ControllerStream(object):
             """
@@ -187,6 +192,57 @@ class Controller(ABC):
                 return generator()
 
         self.stream = ControllerStream(self)
+
+    @functools.lru_cache(maxsize=None)
+    def _build_effect(self, milliseconds=1000, strong_magnitude=0x0000, weak_magnitude=0xffff) -> int:
+        """
+        Compile and send a new force feedback effect, caching so we don't over-fill whatever memory the device
+        is using to store effect programs. I've no idea whether this is actually an issue but why risk it?
+
+        :param milliseconds:
+            milliseconds to run the effect
+        :param strong_magnitude:
+            strong magnitude, defaults to 0x0000
+        :param weak_magnitude:
+            weak magnitude, defaults to 0xffff (no, I don't know why these are swapped either, just following the
+            examples!)
+        :raise ValueError:
+            if the controller does not have a force-feedback compatible device node
+        :return:
+            id of the upload effect block, this is then used later to actually trigger the effect
+        """
+        if self.ff_device:
+            logger.info('compiling new force feedback effect')
+            effect = ff.Effect(
+                ecodes.FF_RUMBLE, -1, 0,
+                ff.Trigger(0, 0),
+                ff.Replay(milliseconds, 0),
+                ff.EffectType(
+                    ff_rumble_effect=ff.Rumble(strong_magnitude=strong_magnitude, weak_magnitude=weak_magnitude))
+            )
+            return self.ff_device.upload_effect(effect)
+        else:
+            raise ValueError('no force-feedback node, unable to compile effect')
+
+    def rumble(self, milliseconds=1000):
+        """
+        Trigger a force-feedback effect, compiling and sending to the device if necessary first, otherwise using
+        an existing effect that's already been compiled.
+
+        :param milliseconds:
+            milliseconds of rumbling required
+        """
+        if self.ff_device:
+            logger.debug('controller go brrrr')
+            effect_id = self._build_effect(milliseconds=milliseconds)
+            repeat_count = 1
+            self.ff_device.write(ecodes.EV_FF, effect_id, repeat_count)
+        else:
+            logger.warning('no force-feedback node for this controller')
+
+    @property
+    def has_force_feedback(self):
+        return self.ff_device is not None
 
     @property
     def sys_nodes(self) -> {}:

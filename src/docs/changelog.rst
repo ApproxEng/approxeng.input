@@ -13,6 +13,13 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
+Version 2.6.3
+-------------
+
+Added force feedback support through the :meth`rumble` method on the :class:`~approxeng.input.Controller`. Added fixes for missing LED
+nodes in ``/sys`` from `SainSaar <https://github.com/sainsaar>`_, see `PR39 <https://github.com/ApproxEng/approxeng.input/pull/39>`_
+for details.
+
 Version 2.6.1, 2.6.2
 --------------------
 

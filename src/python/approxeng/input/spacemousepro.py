@@ -19,7 +19,7 @@ class SpaceMousePro(Controller):
     know you'll need to code specifically for it!
     """
 
-    def __init__(self, dead_zone=0.05, hot_zone=0.01):
+    def __init__(self, dead_zone=0.05, hot_zone=0.01, **kwargs):
         super(SpaceMousePro, self).__init__(controls=[
             CentredAxis('X', -350, 350, 0, sname='lx'),
             CentredAxis('Y', 350, -350, 1, sname='ly'),
@@ -44,7 +44,8 @@ class SpaceMousePro(Controller):
             Button('Fit', 257, sname='fit')
         ],
             dead_zone=dead_zone,
-            hot_zone=hot_zone)
+            hot_zone=hot_zone,
+            **kwargs)
 
     def __repr__(self):
         return '3Dconnexion SpaceMouse Pro'

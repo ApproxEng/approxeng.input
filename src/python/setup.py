@@ -7,7 +7,7 @@ from setuptools import setup, find_namespace_packages
 # Docs are built with 'make html' in the docs directory parallel to this one
 setup(
     name='approxeng.input',
-    version='2.6.2',
+    version='2.6.3',
     description='Python game controller support using evDev for Raspberry Pi and other Linux systems',
     classifiers=['Programming Language :: Python :: 3.5'],
     url='https://github.com/ApproxEng/approxeng.input/',
@@ -26,4 +26,5 @@ setup(
                                       'approxeng_input_show_controls=approxeng.input.gui.console:show_controls',
                                       'approxeng_input_list_devices=approxeng.input.gui.console:list_devices',
                                       'approxeng_input_scan_sys=approxeng.input.gui.console:sys_scan',
-                                      'approxeng_input_classes=approxeng.input.gui.controllerclasses:show_controller_classes']})
+                                      'approxeng_input_classes=approxeng.input.gui.controllerclasses:show_controller_classes',
+                                      'approxeng_input_list_discoveries=approxeng.input.gui.console:list_discoveries']})

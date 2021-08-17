@@ -1,7 +1,10 @@
+import logging
 from time import sleep
 
 from approxeng.input.dualshock4 import DualShock4
-from approxeng.input.selectbinder import ControllerResource, ControllerRequirement
+from approxeng.input.selectbinder import ControllerResource, ControllerRequirement, ControllerNotFoundError
+
+logging.basicConfig(level=logging.DEBUG)
 
 while True:
     hue = 0.0
@@ -17,7 +20,9 @@ while True:
                 hue = hue + 0.01
                 if hue > 1.0:
                     hue = 0.0
-    except IOError:
+                    # Vibrate the controller for 200ms every time we loop round the hue wheel
+                    ds4.rumble(milliseconds=200)
+    except ControllerNotFoundError:
         # No DS4 controller found, wait for a bit and try again
         print('Waiting for a DS4 controller connection')
         sleep(1)

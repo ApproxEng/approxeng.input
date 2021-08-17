@@ -1,11 +1,13 @@
 import curses
+import logging
 import pprint
 from time import sleep
 
 import approxeng.input.sys as sys
-from approxeng.input.controllers import print_devices
+from approxeng.input.controllers import print_devices, find_all_controllers
 from approxeng.input.selectbinder import ControllerResource
 
+logging.basicConfig(level=logging.DEBUG)
 
 def sys_scan():
     pp = pprint.PrettyPrinter(indent=2, width=100)
@@ -14,6 +16,13 @@ def sys_scan():
 
 def list_devices():
     print_devices()
+
+
+def list_discoveries():
+    for discovery in find_all_controllers():
+        logging.info('found a thing')
+        print(discovery)
+        logging.info('done finding a thing')
 
 
 def show_controls():

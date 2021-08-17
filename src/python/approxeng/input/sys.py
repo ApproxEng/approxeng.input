@@ -4,7 +4,7 @@ from typing import Optional
 
 logger = logging.getLogger(name='approxeng.input.sys')
 
-__CACHED_SCAN__ = None
+__CACHED_SCAN__: Optional[dict] = None
 
 
 def scan_cache(force_update=False):

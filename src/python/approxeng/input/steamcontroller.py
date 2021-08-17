@@ -56,7 +56,7 @@ class SteamController(Controller):
     =============  ================
     """
 
-    def __init__(self, dead_zone=0.1, hot_zone=0.05):
+    def __init__(self, dead_zone=0.1, hot_zone=0.05, **kwargs):
         super(SteamController, self).__init__(
             controls=[
                 Button("X", 307, sname='square'),
@@ -90,7 +90,8 @@ class SteamController(Controller):
                 TriggerAxis("Right Trigger", 0, 255, 20, sname='rt')
             ],
             dead_zone=dead_zone,
-            hot_zone=hot_zone)
+            hot_zone=hot_zone,
+            **kwargs)
 
     @staticmethod
     def registration_ids():

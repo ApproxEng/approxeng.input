@@ -1,0 +1,58 @@
+axes:
+  dx:
+    code: 16
+    invert: false
+    max_value: 1
+    min_value: -1
+  dy:
+    code: 17
+    invert: false
+    max_value: 1
+    min_value: -1
+  lt:
+    code: 10
+    invert: false
+    max_value: 255
+    min_value: 0
+  lx:
+    code: 0
+    invert: false
+    max_value: 255
+    min_value: 0
+  ly:
+    code: 1
+    invert: false
+    max_value: 255
+    min_value: 0
+  rt:
+    code: 9
+    invert: false
+    max_value: 255
+    min_value: 0
+  rx:
+    code: 2
+    invert: false
+    max_value: 255
+    min_value: 0
+  ry:
+    code: 5
+    invert: false
+    max_value: 255
+    min_value: 0
+buttons:
+  circle: 305
+  cross: 304
+  home: 316
+  l1: 310
+  ls: 317
+  r1: 311
+  rs: 318
+  select: 314
+  start: 315
+  square: 307
+  triangle: 308
+#  assistant: 704
+#  snapshot: 705
+name: Google LLC Stadia Controller rev. A
+product: 37888
+vendor: 6353

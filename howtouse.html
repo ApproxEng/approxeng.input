@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Advanced Usage Guide &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5248d183"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -93,7 +97,7 @@
            <div itemprop="articleBody">
              
   <section id="advanced-usage-guide">
-<h1>Advanced Usage Guide<a class="headerlink" href="#advanced-usage-guide" title="Link to this heading">¶</a></h1>
+<h1>Advanced Usage Guide<a class="headerlink" href="#advanced-usage-guide" title="Link to this heading"></a></h1>
 <p>This module contains general support for game controllers. It includes the top level classes such as buttons and
 joystick axes which are used for any kind of controller, particular controllers and binding mechanisms are implemented
 in sub-modules. The key classes shared across all controllers are:</p>
@@ -120,7 +124,7 @@ how long a button has been held down.</p></li>
 ‘axes’. These will come in handy later!</p></li>
 </ul>
 <section id="constructing-and-binding-a-controller">
-<h2>Constructing and Binding a Controller<a class="headerlink" href="#constructing-and-binding-a-controller" title="Link to this heading">¶</a></h2>
+<h2>Constructing and Binding a Controller<a class="headerlink" href="#constructing-and-binding-a-controller" title="Link to this heading"></a></h2>
 <p>Once your controller is physically connected to the computer (whether by USB, bluetooth, or magic) and you have a
 corresponding entry in the dev filesystem, you need to create an object to receive and interpret events from the
 hardware, and you need to set up a mechanism by which events will be sent to that object. The object in this case will
@@ -150,7 +154,7 @@ you’ve discovered the appropriate controllers you use the binding API to attac
 the binding process are described at <a class="reference internal" href="api/selectbinder.html#binding-reference-label"><span class="std std-ref">Binding - approxeng.input.selectbinder</span></a>.</p>
 </section>
 <section id="handling-buttons">
-<h2>Handling Buttons<a class="headerlink" href="#handling-buttons" title="Link to this heading">¶</a></h2>
+<h2>Handling Buttons<a class="headerlink" href="#handling-buttons" title="Link to this heading"></a></h2>
 <p>There are two styles of button handler. The simplest, and the one you’re likely to use in almost all cases, is a polling
 mechanism - you can ask the Controller object what buttons have been pressed since you last asked that question. This
 is easy to use, you don’t have to worry you’ll miss a button press because you were off doing something else, and it
@@ -163,7 +167,7 @@ longer need to do this - it was used primarily for cases where e.g. a button sho
 a robot and bounce the system back to some safe state, but there are better ways to do this. Nonetheless, this mechanism
 is still present and you can use it if you really need to.</p>
 <section id="handling-button-presses-as-events">
-<h3>Handling Button Presses as Events<a class="headerlink" href="#handling-button-presses-as-events" title="Link to this heading">¶</a></h3>
+<h3>Handling Button Presses as Events<a class="headerlink" href="#handling-button-presses-as-events" title="Link to this heading"></a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Only use this method if you are absolutely sure it’s what you need. Callback functions will be called from the event
@@ -204,7 +208,7 @@ probably just want to know whether a button was pressed since you last checked.<
 </section>
 </section>
 <section id="more-about-analogue-axes">
-<h2>More about Analogue Axes<a class="headerlink" href="#more-about-analogue-axes" title="Link to this heading">¶</a></h2>
+<h2>More about Analogue Axes<a class="headerlink" href="#more-about-analogue-axes" title="Link to this heading"></a></h2>
 <p>Analogue axes on the controller are those which can vary continuously over their range. Typically these are joysticks
 and triggers. This code maps all axes either to a range from -1.0 to 1.0 (for centred axes such as joysticks) or from
 0.0 to 1.0 (for things like triggers where the resting point is at one end of the range of movement). Joysticks are

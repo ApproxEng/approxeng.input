@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Command-line tools &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5248d183"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -92,12 +96,12 @@
            <div itemprop="articleBody">
              
   <section id="command-line-tools">
-<h1>Command-line tools<a class="headerlink" href="#command-line-tools" title="Link to this heading">¶</a></h1>
+<h1>Command-line tools<a class="headerlink" href="#command-line-tools" title="Link to this heading"></a></h1>
 <p>When installed, this library provides a set of command-line tools. Note that if you’re running in a virtual environment
 you’ll need to activate the environment before these are available. They can be run like any other command from a
 terminal, and do not require a windowing system so you should be able to run these remotely over SSH, for example.</p>
 <section id="interactive-controller-test">
-<h2>Interactive controller test<a class="headerlink" href="#interactive-controller-test" title="Link to this heading">¶</a></h2>
+<h2>Interactive controller test<a class="headerlink" href="#interactive-controller-test" title="Link to this heading"></a></h2>
 <p>The <cite>approxeng_input_show_controls</cite> tool will wait for the first controller to connect, then show a curses-based GUI
 where you can test reception of axis and button events. It’s also a good way to check that a newly profiled controller
 is behaving as expected. In previous versions of the library this was something you could run from the <cite>scripts</cite>
@@ -109,7 +113,7 @@ directory in the source, it’s been moved to work for anyone installing the lib
 <img alt="_images/showcontrols.png" src="_images/showcontrols.png" />
 </section>
 <section id="profile-a-new-controller">
-<h2>Profile a new controller<a class="headerlink" href="#profile-a-new-controller" title="Link to this heading">¶</a></h2>
+<h2>Profile a new controller<a class="headerlink" href="#profile-a-new-controller" title="Link to this heading"></a></h2>
 <p>If you’ve got a relatively simple controller but one that’s not already recognised by the library,
 the profiling tool allows you to create a configuration interactively. See <a class="reference internal" href="profiling.html#profiling"><span class="std std-ref">Profiling and Testing Controllers</span></a> for more details.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>approxeng_input_profile
@@ -117,7 +121,7 @@ the profiling tool allows you to create a configuration interactively. See <a cl
 </div>
 </section>
 <section id="list-known-controller-types">
-<h2>List known controller types<a class="headerlink" href="#list-known-controller-types" title="Link to this heading">¶</a></h2>
+<h2>List known controller types<a class="headerlink" href="#list-known-controller-types" title="Link to this heading"></a></h2>
 <p>Shows all known controller classes, including whether these are custom or profiled along with the corresponding
 product and vendor IDs.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>approxeng_input_classes
@@ -144,7 +148,7 @@ product and vendor IDs.</p>
 </div>
 </section>
 <section id="list-available-devices">
-<h2>List available devices<a class="headerlink" href="#list-available-devices" title="Link to this heading">¶</a></h2>
+<h2>List available devices<a class="headerlink" href="#list-available-devices" title="Link to this heading"></a></h2>
 <p>As a quick check to see what joystick-like devices exist on your system, you can do this:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>approxeng_input_list_devices
 <span class="o">{</span><span class="w"> </span><span class="s1">&#39;axes&#39;</span>:<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s1">&#39;ABS_HAT0X&#39;</span>:<span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="s1">&#39;code&#39;</span>:<span class="w"> </span><span class="m">16</span>,
@@ -206,7 +210,7 @@ need to do this if you’re having issues getting something to work with the lib
 device isn’t connecting properly.</p>
 </section>
 <section id="debug-system-device-nodes">
-<h2>Debug system device nodes<a class="headerlink" href="#debug-system-device-nodes" title="Link to this heading">¶</a></h2>
+<h2>Debug system device nodes<a class="headerlink" href="#debug-system-device-nodes" title="Link to this heading"></a></h2>
 <p>You almost certainly do not need this, but if you’re writing a controller class for something with extra LEDs, this
 command will show the available LED and power system devices for everything currently connected:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&gt;<span class="w"> </span>approxeng_input_scan_sys

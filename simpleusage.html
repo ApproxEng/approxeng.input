@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simple Usage &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5248d183"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -101,12 +105,12 @@
            <div itemprop="articleBody">
              
   <section id="simple-usage">
-<span id="simple-api"></span><h1>Simple Usage<a class="headerlink" href="#simple-usage" title="Link to this heading">¶</a></h1>
+<span id="simple-api"></span><h1>Simple Usage<a class="headerlink" href="#simple-usage" title="Link to this heading"></a></h1>
 <p>In version 2.0 of this library, the API has been simplified and made more Python-like. Rather than having to fetch
 nested objects containing axis and button information, all the most common operations are now available as methods and
 attributes of the controller class itself. Read on…</p>
 <section id="connecting-to-a-controller">
-<h2>Connecting to a controller<a class="headerlink" href="#connecting-to-a-controller" title="Link to this heading">¶</a></h2>
+<h2>Connecting to a controller<a class="headerlink" href="#connecting-to-a-controller" title="Link to this heading"></a></h2>
 <p>To connect to a controller you do the following (including error handling):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
@@ -145,7 +149,7 @@ controllers have ‘cross’, ‘circle’ etc the API defines a standard set of
 the PS3 controller as it happens, mostly because that’s the one I first used when I started writing the library!).</p>
 </section>
 <section id="connecting-to-multiple-controllers">
-<h2>Connecting to multiple controllers<a class="headerlink" href="#connecting-to-multiple-controllers" title="Link to this heading">¶</a></h2>
+<h2>Connecting to multiple controllers<a class="headerlink" href="#connecting-to-multiple-controllers" title="Link to this heading"></a></h2>
 <p>To connect to multiple controllers, or to be more specific about the types and capabilities of controllers you need,
 see <a class="reference internal" href="api/discovery.html#discovery-reference-label"><span class="std std-ref">Controller Discovery - approxeng.input.controllers</span></a>. The example below shows binding to two controllers, the first of which must be
 a PS3 controller, the second of which must have a left X and Y axis:</p>
@@ -172,7 +176,7 @@ a PS3 controller, the second of which must have a left X and Y axis:</p>
 </div>
 </section>
 <section id="reading-analogue-axes">
-<h2>Reading Analogue Axes<a class="headerlink" href="#reading-analogue-axes" title="Link to this heading">¶</a></h2>
+<h2>Reading Analogue Axes<a class="headerlink" href="#reading-analogue-axes" title="Link to this heading"></a></h2>
 <p>Analogue axes are those which vary continuously, allowing for fine control of motion. Unlike buttons, which are either
 on or off, an analogue axis has a floating point value associated with its current position.</p>
 <blockquote>
@@ -199,7 +203,7 @@ handling from the first example, but you should still do it!):</p>
 case all that stuff is taken care of in the background and you just have to read the information you want from the
 joystick object.</p>
 <section id="circular-analogue-axes">
-<h3>Circular Analogue Axes<a class="headerlink" href="#circular-analogue-axes" title="Link to this heading">¶</a></h3>
+<h3>Circular Analogue Axes<a class="headerlink" href="#circular-analogue-axes" title="Link to this heading"></a></h3>
 <p>As of version 2.4, if a controller defines pairs of <cite>(lx,ly)</cite>, or <cite>(rx,ry)</cite>, a new virtual axis is created called <cite>l</cite> or
 <cite>r</cite> respectively. This is an instance of <a class="reference internal" href="api/input.html#approxeng.input.CircularCentredAxis" title="approxeng.input.CircularCentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">CircularCentredAxis</span></code></a>. Unlike other axes which return
 a single floating point value, this axis type returns a tuple of <cite>(x,y)</cite> floats. Obviously you could do this yourself
@@ -229,7 +233,7 @@ see which setting feels best for you.</p>
 </section>
 </section>
 <section id="checking-for-held-buttons">
-<h2>Checking for Held Buttons<a class="headerlink" href="#checking-for-held-buttons" title="Link to this heading">¶</a></h2>
+<h2>Checking for Held Buttons<a class="headerlink" href="#checking-for-held-buttons" title="Link to this heading"></a></h2>
 <p>You can also check whether a button is currently held, and, if so, how long it’s been held for to-date in seconds:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
 
@@ -249,7 +253,7 @@ see which setting feels best for you.</p>
 </div>
 </section>
 <section id="reading-multiple-axis-or-button-hold-values">
-<h2>Reading multiple Axis or Button Hold values<a class="headerlink" href="#reading-multiple-axis-or-button-hold-values" title="Link to this heading">¶</a></h2>
+<h2>Reading multiple Axis or Button Hold values<a class="headerlink" href="#reading-multiple-axis-or-button-hold-values" title="Link to this heading"></a></h2>
 <p>You can read multiple axis values and button hold times in a single call, simply by passing multiple names into the
 call (you can, as the example below shows, query a mix of button hold times and axis values in one call):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">approxeng.input.selectbinder</span> <span class="kn">import</span> <span class="n">ControllerResource</span>
@@ -265,7 +269,7 @@ call (you can, as the example below shows, query a mix of button hold times and 
 </div>
 </section>
 <section id="querying-button-presses">
-<span id="poll-presses-label"></span><h2>Querying Button Presses<a class="headerlink" href="#querying-button-presses" title="Link to this heading">¶</a></h2>
+<span id="poll-presses-label"></span><h2>Querying Button Presses<a class="headerlink" href="#querying-button-presses" title="Link to this heading"></a></h2>
 <p>Another common requirement you’ll have will be to find out whether the user pressed a button, even if they’re not
 currently holding it down. This sounds obvious, but in fact it’s slightly more subtle - what you really want to know is
 whether the user pressed a button at any point since you last asked this question! That way, even if you don’t ask very
@@ -329,7 +333,7 @@ has not changed, you can only access the button releases through the parent cont
 </section>
 </section>
 <section id="standard-names">
-<span id="sname-label"></span><h1>Standard Names<a class="headerlink" href="#standard-names" title="Link to this heading">¶</a></h1>
+<span id="sname-label"></span><h1>Standard Names<a class="headerlink" href="#standard-names" title="Link to this heading"></a></h1>
 <p>Most of the controllers supported by this library are fairly similar - they have two analogue joysticks, a bunch of
 buttons, some triggers etc. It would be helpful therefore to be able to make use of one controller type but make it as
 easy as possible to use others without substantial code changes in your own code.</p>
@@ -343,7 +347,7 @@ to you.</p>
 <p>A look at the source for each of the controller subclasses should make it obvious what names are available, but the
 standard ones are as follows:</p>
 <section id="button-names">
-<h2>Button Names<a class="headerlink" href="#button-names" title="Link to this heading">¶</a></h2>
+<h2>Button Names<a class="headerlink" href="#button-names" title="Link to this heading"></a></h2>
 <table class="docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p>Standard name</p></td>
@@ -586,7 +590,7 @@ so we call it <cite>triangle</cite>, whereas the XBox controller has a <cite>Y</
 </div>
 </section>
 <section id="axis-names">
-<h2>Axis Names<a class="headerlink" href="#axis-names" title="Link to this heading">¶</a></h2>
+<h2>Axis Names<a class="headerlink" href="#axis-names" title="Link to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>With a new kernel (4.13 upwards, tested with 4.15) the Sony controllers expose their motion events in a way we can
@@ -749,7 +753,7 @@ in 2.1.0 of this library onwards.</p>
 </table>
 </section>
 <section id="force-feedback-effects">
-<h2>Force feedback effects<a class="headerlink" href="#force-feedback-effects" title="Link to this heading">¶</a></h2>
+<h2>Force feedback effects<a class="headerlink" href="#force-feedback-effects" title="Link to this heading"></a></h2>
 <p>As of version <cite>2.6.3</cite> you can drive the rumble mechanism of any controller which supports it through the <a class="reference internal" href="api/input.html#approxeng.input.Controller.rumble" title="approxeng.input.Controller.rumble"><code class="xref py py-meth docutils literal notranslate"><span class="pre">rumble()</span></code></a>
 method on <a class="reference internal" href="api/input.html#approxeng.input.Controller" title="approxeng.input.Controller"><code class="xref py py-class docutils literal notranslate"><span class="pre">Controller</span></code></a>. It takes a number of milliseconds for the effect, defaulting to 1000 for a one second
 vibration.</p>

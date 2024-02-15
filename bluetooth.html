@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pairing Controllers over Bluetooth &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5248d183"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -89,7 +93,7 @@
            <div itemprop="articleBody">
              
   <section id="pairing-controllers-over-bluetooth">
-<span id="bluetooth"></span><h1>Pairing Controllers over Bluetooth<a class="headerlink" href="#pairing-controllers-over-bluetooth" title="Link to this heading">¶</a></h1>
+<span id="bluetooth"></span><h1>Pairing Controllers over Bluetooth<a class="headerlink" href="#pairing-controllers-over-bluetooth" title="Link to this heading"></a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The XBox One S controller is the only XBox controller with bluetooth support. This won’t work for regular (older)
@@ -100,7 +104,7 @@ connected to the controller, see <a class="reference internal" href="api/xboxone
 is a one-time process (controllers will, once paired, connect automatically) you could use the graphical tools to pair
 the controller in the first place, but I prefer to run everything on my robots without a display so this is how I do it.</p>
 <section id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">¶</a></h2>
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h2>
 <p>A standard Raspberry Pi will now come with the necessary bluetooth services installed and running, largely because both
 the Pi3 and Pi Zero W have built-in bluetooth and wifi chips. This guide assumes you’re using one of these newer
 versions, if you aren’t you may need to explicitly install the bluetooth stack:</p>
@@ -113,7 +117,7 @@ pi@raspberrypi<span class="w"> </span>~<span class="w"> </span>$<span class="w">
 life more predictable by actually pulling the plug and waiting a few seconds.</p>
 </section>
 <section id="pairing-with-bluetoothctl">
-<h2>Pairing with Bluetoothctl<a class="headerlink" href="#pairing-with-bluetoothctl" title="Link to this heading">¶</a></h2>
+<h2>Pairing with Bluetoothctl<a class="headerlink" href="#pairing-with-bluetoothctl" title="Link to this heading"></a></h2>
 <p>Once you have a working bluetooth stack, you can use the bluetoothctl command to configure it. You don’t need to run
 this as root, just use your regular user account.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pi@raspberrypi<span class="w"> </span>~<span class="w"> </span>$<span class="w"> </span>bluetoothctl

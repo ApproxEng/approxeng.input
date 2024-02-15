@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Adding support for a new controller type &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5248d183"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -89,7 +93,7 @@
            <div itemprop="articleBody">
              
   <section id="adding-support-for-a-new-controller-type">
-<h1>Adding support for a new controller type<a class="headerlink" href="#adding-support-for-a-new-controller-type" title="Link to this heading">¶</a></h1>
+<h1>Adding support for a new controller type<a class="headerlink" href="#adding-support-for-a-new-controller-type" title="Link to this heading"></a></h1>
 <p>The library supports a number of controllers but it’s quite possible, given the variety of cheap clones on the market,
 that your particular controller isn’t one of them. Your first check should be, for relatively simple controllers,
 whether you can create a controller profile, see <a class="reference internal" href="profiling.html#profiling"><span class="std std-ref">Profiling and Testing Controllers</span></a> - this approach needs no coding and is quick and
@@ -98,7 +102,7 @@ largely error-proof.</p>
 controller, you’ll need to implement a new controller class and either add it yourself to a local copy of this library,
 or submit it as a change request along with the corresponding documentation.</p>
 <section id="finding-your-product-and-vendor-id">
-<h2>Finding your product and vendor ID<a class="headerlink" href="#finding-your-product-and-vendor-id" title="Link to this heading">¶</a></h2>
+<h2>Finding your product and vendor ID<a class="headerlink" href="#finding-your-product-and-vendor-id" title="Link to this heading"></a></h2>
 <p>Once you have a controller paired over bluetooth, or, in the case of those with specific dongles, otherwise connected,
 you can run the <cite>approxeng_input_list_devices</cite> command to print out a list of all connected devices, including the
 vendor and product identifiers. For example, with my XBox One controller paired and connected I see this:</p>
@@ -115,7 +119,7 @@ vendor and product identifiers. For example, with my XBox One controller paired 
 <p>In general this should show you enough information to identify the controller you’ve just connected and get the details.</p>
 </section>
 <section id="writing-a-new-controller-class">
-<h2>Writing a new controller class<a class="headerlink" href="#writing-a-new-controller-class" title="Link to this heading">¶</a></h2>
+<h2>Writing a new controller class<a class="headerlink" href="#writing-a-new-controller-class" title="Link to this heading"></a></h2>
 <p>It’s possible you have a controller which is completely different to the ones the library already supports. This might
 be because it’s something we’ve just never got our hands on, or because the manufacturer has decided to produce a clone
 controller with completely different codes for buttons or axes (it happens!). In this case you’ll need to create a new

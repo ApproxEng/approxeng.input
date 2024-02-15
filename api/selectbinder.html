@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Binding - approxeng.input.selectbinder &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../_static/documentation_options.js?v=5248d183"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -104,7 +108,7 @@
            <div itemprop="articleBody">
              
   <section id="binding-approxeng-input-selectbinder">
-<span id="binding-reference-label"></span><h1>Binding - approxeng.input.selectbinder<a class="headerlink" href="#binding-approxeng-input-selectbinder" title="Link to this heading">¶</a></h1>
+<span id="binding-reference-label"></span><h1>Binding - approxeng.input.selectbinder<a class="headerlink" href="#binding-approxeng-input-selectbinder" title="Link to this heading"></a></h1>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This has been re-written almost entirely in version 2.3. The simplest usage of the controller resource remains
@@ -162,11 +166,11 @@ controller discovery, or by specifying multiple controller requirements to the <
 </div>
 <dl class="py class" id="module-approxeng.input.selectbinder">
 <dt class="sig sig-object py" id="approxeng.input.selectbinder.ControllerResource">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">approxeng.input.selectbinder.</span></span><span class="sig-name descname"><span class="pre">ControllerResource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">requirements</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#ControllerResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.selectbinder.ControllerResource" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">approxeng.input.selectbinder.</span></span><span class="sig-name descname"><span class="pre">ControllerResource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">requirements</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#ControllerResource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.selectbinder.ControllerResource" title="Link to this definition"></a></dt>
 <dd><p>General resource which binds one or more controllers on entry and unbinds the event listening thread on exit.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="approxeng.input.selectbinder.ControllerResource.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">requirements</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#ControllerResource.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.selectbinder.ControllerResource.__init__" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">requirements</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#ControllerResource.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.selectbinder.ControllerResource.__init__" title="Link to this definition"></a></dt>
 <dd><p>Create a new resource to bind and access one or more controllers. If no additional arguments are supplied this
 will find the first controller of any kind enabled by the library. Otherwise the requirements must be provided
 as a list of ControllerRequirement</p>
@@ -175,7 +179,7 @@ as a list of ControllerRequirement</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>requirements</strong> (<a class="reference internal" href="discovery.html#approxeng.input.controllers.ControllerRequirement" title="approxeng.input.controllers.ControllerRequirement"><em>ControllerRequirement</em></a>) – ControllerRequirement instances used, in order, to find and bind controllers. If empty this will
 be equivalent to supplying a single unfiltered requirement and will match the first specified controller.</p></li>
-<li><p><strong>print_events</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Defaults to False, if set to True then all events picked up by the binder will be printed to stdout. Use
+<li><p><strong>print_events</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Defaults to False, if set to True then all events picked up by the binder will be printed to stdout. Use
 this when you’re trying to figure out what events correspond to what axes and buttons!</p></li>
 <li><p><strong>kwargs</strong> – Any addition keyword arguments are passed to the constructors for the controller classes. This is useful
 particularly to specify e.g. dead and hot zone ranges on discovery.</p></li>
@@ -191,14 +195,14 @@ particularly to specify e.g. dead and hot zone ranges on discovery.</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="approxeng.input.selectbinder.bind_controllers">
-<span class="sig-prename descclassname"><span class="pre">approxeng.input.selectbinder.</span></span><span class="sig-name descname"><span class="pre">bind_controllers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">discoveries</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#bind_controllers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.selectbinder.bind_controllers" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">approxeng.input.selectbinder.</span></span><span class="sig-name descname"><span class="pre">bind_controllers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">discoveries</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/selectbinder.html#bind_controllers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.selectbinder.bind_controllers" title="Link to this definition"></a></dt>
 <dd><p>Bind a controller or controllers to a set of evdev InputDevice instances, starting a thread to keep those
 controllers in sync with the state of the hardware.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>discoveries</strong> (<a class="reference internal" href="discovery.html#approxeng.input.controllers.ControllerDiscovery" title="approxeng.input.controllers.ControllerDiscovery"><em>ControllerDiscovery</em></a>) – ControllerDiscovery instances specifying the controllers and their associated input devices</p></li>
-<li><p><strong>print_events</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Defaults to False, if set to True then all events picked up by this binder will be printed to stdout</p></li>
+<li><p><strong>print_events</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Defaults to False, if set to True then all events picked up by this binder will be printed to stdout</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

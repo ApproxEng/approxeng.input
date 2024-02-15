@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Wired SpaceMouse Pro Support &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../_static/documentation_options.js?v=5248d183"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -104,11 +108,11 @@
            <div itemprop="articleBody">
              
   <section id="wired-spacemouse-pro-support">
-<span id="api-spacemousepro"></span><h1>Wired SpaceMouse Pro Support<a class="headerlink" href="#wired-spacemouse-pro-support" title="Link to this heading">¶</a></h1>
+<span id="api-spacemousepro"></span><h1>Wired SpaceMouse Pro Support<a class="headerlink" href="#wired-spacemouse-pro-support" title="Link to this heading"></a></h1>
 <figure class="align-default" id="id1">
 <img alt="../_images/spacemousepro.jpg" src="../_images/spacemousepro.jpg" />
 <figcaption>
-<p><span class="caption-text">SpaceMouse Pro Controller</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+<p><span class="caption-text">SpaceMouse Pro Controller</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>This is a driver for the 3dConnexion SpaceMouse Pro, I’ve only tested this with the wired version. Maybe not so useful
@@ -117,7 +121,7 @@ very different from the other joypad style controllers it doesn’t have the sam
 source for the driver to see exactly what controls are supported.</p>
 <dl class="py class" id="module-approxeng.input.spacemousepro">
 <dt class="sig sig-object py" id="approxeng.input.spacemousepro.SpaceMousePro">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">approxeng.input.spacemousepro.</span></span><span class="sig-name descname"><span class="pre">SpaceMousePro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">approxeng.input.spacemousepro.</span></span><span class="sig-name descname"><span class="pre">SpaceMousePro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro" title="Link to this definition"></a></dt>
 <dd><p>Driver for the wired SpaceMouse Pro from 3dConnexion. This controller has a single six-axis puck which can respond
 to motion in all available axes, as well as a set of buttons. Buttons 1-4 seem to act differently to the others,
 they don’t generate events on presses consistently so while they do work they should be used with caution. Other
@@ -131,7 +135,7 @@ buttons or axes, and there’s no right joystick x and y. On the other hand, if 
 know you’ll need to code specifically for it!</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="approxeng.input.spacemousepro.SpaceMousePro.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro.__init__" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro.__init__" title="Link to this definition"></a></dt>
 <dd><p>Populate the controller name, button set and axis set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -159,7 +163,7 @@ such as motion sensors.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="approxeng.input.spacemousepro.SpaceMousePro.registration_ids">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">registration_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro.registration_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro.registration_ids" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">registration_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/spacemousepro.html#SpaceMousePro.registration_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.spacemousepro.SpaceMousePro.registration_ids" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list of (vendor_id, product_id) for this controller</p>

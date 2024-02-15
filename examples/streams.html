@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Streaming Axis and Button Hold values &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../_static/documentation_options.js?v=5248d183"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -92,7 +96,7 @@
            <div itemprop="articleBody">
              
   <section id="streaming-axis-and-button-hold-values">
-<span id="example-stream"></span><h1>Streaming Axis and Button Hold values<a class="headerlink" href="#streaming-axis-and-button-hold-values" title="Link to this heading">¶</a></h1>
+<span id="example-stream"></span><h1>Streaming Axis and Button Hold values<a class="headerlink" href="#streaming-axis-and-button-hold-values" title="Link to this heading"></a></h1>
 <p>Some other APIs, most notably <a class="reference external" href="http://gpiozero.readthedocs.io/en/stable/index.html">Gpiozero</a>, can configure devices to read from iterators over data such as axis values. To
 use this facility we need to be able to produce generators (iterators which work over lazily evaluated, potentially
 infinite, sets of data) containing streams of axis and button hold values. These generators can then be set as the

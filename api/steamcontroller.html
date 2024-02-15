@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Steam Controller Support &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../_static/documentation_options.js?v=5248d183"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -103,11 +107,11 @@
            <div itemprop="articleBody">
              
   <section id="steam-controller-support">
-<span id="api-steamcontroller"></span><h1>Steam Controller Support<a class="headerlink" href="#steam-controller-support" title="Link to this heading">¶</a></h1>
+<span id="api-steamcontroller"></span><h1>Steam Controller Support<a class="headerlink" href="#steam-controller-support" title="Link to this heading"></a></h1>
 <figure class="align-default" id="id1">
 <img alt="../_images/steam-controller.jpg" src="../_images/steam-controller.jpg" />
 <figcaption>
-<p><span class="caption-text">Steam Controller</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Steam Controller</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <p>As of version 2.6.0, the library supports the steam controller natively, meaning you can access all its
@@ -115,7 +119,7 @@ controls. While this controller does require a specific USB dongle, unlike most 
 it is able to report disconnections - the device nodes only appear if the controller is turned on.</p>
 <dl class="py class" id="module-approxeng.input.steamcontroller">
 <dt class="sig sig-object py" id="approxeng.input.steamcontroller.SteamController">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">approxeng.input.steamcontroller.</span></span><span class="sig-name descname"><span class="pre">SteamController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">approxeng.input.steamcontroller.</span></span><span class="sig-name descname"><span class="pre">SteamController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController" title="Link to this definition"></a></dt>
 <dd><p>Wireless steam controller. As of Jan 2021 this works with modern linux installations without
 any messing around, and supports a lot of extra controls as a result!</p>
 <p>The unusual controls are as follows, firstly buttons. Note that both the trackpads have
@@ -227,7 +231,7 @@ triggers on the middle trigger buttons:</p>
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="approxeng.input.steamcontroller.SteamController.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController.__init__" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController.__init__" title="Link to this definition"></a></dt>
 <dd><p>Populate the controller name, button set and axis set.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

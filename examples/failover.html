@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Controller Failover &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../_static/documentation_options.js?v=5248d183"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -92,7 +96,7 @@
            <div itemprop="articleBody">
              
   <section id="controller-failover">
-<span id="example-failover"></span><h1>Controller Failover<a class="headerlink" href="#controller-failover" title="Link to this heading">¶</a></h1>
+<span id="example-failover"></span><h1>Controller Failover<a class="headerlink" href="#controller-failover" title="Link to this heading"></a></h1>
 <p>New in version 1.0.7 is the ability to detect when a controller has disconnected. This means you can write code which will
 not only wait for a controller, but will gracefully handle the controller failing (generally from going out of range or
 batteries dying!). Because the simplest form of the controller resource or explicit binding will bind to any available

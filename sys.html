@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LEDs and Battery Monitoring &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5248d183"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -89,12 +93,12 @@
            <div itemprop="articleBody">
              
   <section id="leds-and-battery-monitoring">
-<span id="sys"></span><h1>LEDs and Battery Monitoring<a class="headerlink" href="#leds-and-battery-monitoring" title="Link to this heading">¶</a></h1>
+<span id="sys"></span><h1>LEDs and Battery Monitoring<a class="headerlink" href="#leds-and-battery-monitoring" title="Link to this heading"></a></h1>
 <p>New in version 2.2 is the ability to control the LEDs, and read the battery level, of some controllers. In this initial
 release the library supports LEDs on the PS3 and PS4 controllers, and battery monitoring for the PS3, PS4 and XB1 with
 the last of those only reporting battery levels when connected over bluetooth.</p>
 <section id="enabling-access-to-leds">
-<h2>Enabling access to LEDs<a class="headerlink" href="#enabling-access-to-leds" title="Link to this heading">¶</a></h2>
+<h2>Enabling access to LEDs<a class="headerlink" href="#enabling-access-to-leds" title="Link to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You must do the steps below if you want to write to LED state on your controller. If you do not, it will not work
@@ -127,7 +131,7 @@ any new nodes corresponding to LEDs will be writeable for users in the <cite>led
 a member of that group.</p>
 </section>
 <section id="writing-to-leds">
-<h2>Writing to LEDs<a class="headerlink" href="#writing-to-leds" title="Link to this heading">¶</a></h2>
+<h2>Writing to LEDs<a class="headerlink" href="#writing-to-leds" title="Link to this heading"></a></h2>
 <p>There is no single standard API used to write to LEDs, because each controller is different. If your controller supports
 this, and in version 2.2 this is restricted to the DS3 and DS4 controllers, it will be described in the documentation
 for the controller class itself. Specifically, for the DS3 controller you can control each individual red LED to be on
@@ -194,7 +198,7 @@ of these methods in your own code when you call them).</p>
 </div>
 </section>
 <section id="reading-battery-levels">
-<h2>Reading Battery Levels<a class="headerlink" href="#reading-battery-levels" title="Link to this heading">¶</a></h2>
+<h2>Reading Battery Levels<a class="headerlink" href="#reading-battery-levels" title="Link to this heading"></a></h2>
 <p>Controllers now all have a property <cite>battery_level</cite>. Controllers that support battery monitoring (currently the DS3, DS4
 and XB1 controller when connected wirelessly) will return a floating point value between 0.0 (empty) and 1.0 (full) to
 indicate the battery level of the associated controller. Controllers that do not support this feature will return None,

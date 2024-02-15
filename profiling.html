@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Profiling and Testing Controllers &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5248d183"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -89,7 +93,7 @@
            <div itemprop="articleBody">
              
   <section id="profiling-and-testing-controllers">
-<span id="profiling"></span><h1>Profiling and Testing Controllers<a class="headerlink" href="#profiling-and-testing-controllers" title="Link to this heading">¶</a></h1>
+<span id="profiling"></span><h1>Profiling and Testing Controllers<a class="headerlink" href="#profiling-and-testing-controllers" title="Link to this heading"></a></h1>
 <p>As of version 2.6.0, this library supports YAML based controller definitions. Some of these are bundled in the library
 itself, but you can also add new ones to <cite>~/.approxeng.input</cite>. The library will create this directory if it isn’t
 already present.</p>
@@ -111,7 +115,7 @@ but is giving you incorrect mappings, you can fix that yourself. This can happen
 kernel versions on the computer side, or from minor hardware revisions the manufacturer hasn’t bothered to document
 on the controller side!</p>
 <section id="id1">
-<h2>Profiling<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<h2>Profiling<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
 <p>To run the profiler, you need to have already installed this library, and have it accessible from your current Python.
 If you’ve done that, either globally or in an active virtual environment, you should be able to launch the profiler
 by pairing or otherwise connecting your controller, then typing <cite>approxeng_input_profile</cite> in your shell. This should
@@ -149,7 +153,7 @@ mapping represents, any notes on configuring it etc.)</p></li>
 </ol>
 </section>
 <section id="testing">
-<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading">¶</a></h2>
+<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h2>
 <p>If you’ve copied the YAML file into <cite>~/.approxeng.input/</cite> any future uses of the library should pick it up. You can test
 this by running the <cite>approxeng_input_show_controls</cite> tool from the command line, this will hopefully then show your newly
 configured controller and allow you to check everything’s working as you expect.</p>

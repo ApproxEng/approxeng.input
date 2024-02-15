@@ -5,13 +5,17 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PlayStation 3 Controller Support &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
-      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
 
   
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="../_static/documentation_options.js?v=5248d183"></script>
         <script src="../_static/doctools.js?v=888ff710"></script>
         <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -110,11 +114,11 @@
            <div itemprop="articleBody">
              
   <section id="playstation-3-controller-support">
-<span id="api-dualshock3"></span><h1>PlayStation 3 Controller Support<a class="headerlink" href="#playstation-3-controller-support" title="Link to this heading">¶</a></h1>
+<span id="api-dualshock3"></span><h1>PlayStation 3 Controller Support<a class="headerlink" href="#playstation-3-controller-support" title="Link to this heading"></a></h1>
 <figure class="align-default" id="id1">
 <img alt="../_images/ps3.jpg" src="../_images/ps3.jpg" />
 <figcaption>
-<p><span class="caption-text">DualShock 3 Controller</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+<p><span class="caption-text">DualShock 3 Controller</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
@@ -129,7 +133,7 @@ an option. This guide therefore is largely for those who have existing controlle
 guide and skip to the ‘pairing with new BlueZ’ section.</p>
 </div>
 <section id="newer-bluez-versions">
-<h2>Newer BlueZ versions<a class="headerlink" href="#newer-bluez-versions" title="Link to this heading">¶</a></h2>
+<h2>Newer BlueZ versions<a class="headerlink" href="#newer-bluez-versions" title="Link to this heading"></a></h2>
 <p>Most of the information on this page applies only to older bluetooth versions. If you have a newer version of BlueZ and
 have also compiled or otherwise installed the sixaxis plugin, the pairing process is much simpler. Tested with a custom
 build of BlueZ 5.49.</p>
@@ -141,7 +145,7 @@ build of BlueZ 5.49.</p>
 </ol>
 </section>
 <section id="a-note-on-pairing">
-<h2>A note on pairing<a class="headerlink" href="#a-note-on-pairing" title="Link to this heading">¶</a></h2>
+<h2>A note on pairing<a class="headerlink" href="#a-note-on-pairing" title="Link to this heading"></a></h2>
 <p>One of the reasons the SixAxis isn’t as easy as it could be to use is how pairing works. Normal bluetooth devices will
 establish a link between the device and the host once, then the host can initiate connection using this previously
 stored information. In the case of the SixAxis, it’s actually the controller that initiates the process, so we have to
@@ -149,13 +153,13 @@ do some setup beforehand. We need to tell the controller to which bluetooth host
 need to tell the host (the Pi) that it should allow the controller’s connection.</p>
 </section>
 <section id="hardware">
-<h2>Hardware<a class="headerlink" href="#hardware" title="Link to this heading">¶</a></h2>
+<h2>Hardware<a class="headerlink" href="#hardware" title="Link to this heading"></a></h2>
 <p>This guide assumes you’re using a Raspberry Pi (I’m using a Pi 2, but there’s no reason this wouldn’t work with older
 ones). You’ll also need a USB bluetooth dongle and, obviously, a SixAxis controller. I’ve only tried this with genuine
 Sony ones, many of the cheaper ones you’ll find online are clones, they should work but YMMV (experimentation suggests
 that you’ll be extremely lucky to make one of the clones work, go for the genuine ones!)</p>
 <section id="bluetooth-dongles">
-<h3>Bluetooth dongles<a class="headerlink" href="#bluetooth-dongles" title="Link to this heading">¶</a></h3>
+<h3>Bluetooth dongles<a class="headerlink" href="#bluetooth-dongles" title="Link to this heading"></a></h3>
 <p>Some people are finding this guide does not work. I suspect this is down to the bluetooth dongle, having eliminated
 everything else in the process. The one I’m using is an Asus USB-BT400, it’s tiny and supports all the current Bluetooth
 standards. If you get this to work with a different dongle can you let me know on twitter at &#64;approx_eng_ and I’ll add
@@ -167,7 +171,7 @@ it to this list:</p>
 </section>
 </section>
 <section id="software">
-<h2>Software<a class="headerlink" href="#software" title="Link to this heading">¶</a></h2>
+<h2>Software<a class="headerlink" href="#software" title="Link to this heading"></a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This is assuming you’re starting from a clean installation of the Jessie based Raspbian. Other
@@ -189,7 +193,7 @@ pi@raspberrypi<span class="w"> </span>~<span class="w"> </span>$<span class="w">
 reconnect. This may be overkill, but it’s been the best way I’ve found to consistently have the next steps succeed.</p>
 </section>
 <section id="pairing">
-<h2>Pairing<a class="headerlink" href="#pairing" title="Link to this heading">¶</a></h2>
+<h2>Pairing<a class="headerlink" href="#pairing" title="Link to this heading"></a></h2>
 <p>Get and build the command line pairing tool:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pi@raspberrypi<span class="w"> </span>~<span class="w"> </span>$<span class="w"> </span>wget<span class="w"> </span>http://www.pabr.org/sixlinux/sixpair.c
 pi@raspberrypi<span class="w"> </span>~<span class="w"> </span>$<span class="w"> </span>gcc<span class="w"> </span>-o<span class="w"> </span>sixpair<span class="w"> </span>sixpair.c<span class="w"> </span>-lusb
@@ -260,17 +264,17 @@ button on the controller. Pressing and holding this button will shut the control
 timeout so be sure to turn the controller off when you’re not going to be using it for a while.</p>
 <dl class="py class" id="module-approxeng.input.dualshock3">
 <dt class="sig sig-object py" id="approxeng.input.dualshock3.DualShock3">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">approxeng.input.dualshock3.</span></span><span class="sig-name descname"><span class="pre">DualShock3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">approxeng.input.dualshock3.</span></span><span class="sig-name descname"><span class="pre">DualShock3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3" title="Link to this definition"></a></dt>
 <dd><p>Driver for the Sony PlayStation 3 controller, the DualShock3</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="approxeng.input.dualshock3.DualShock3.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.__init__" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.__init__" title="Link to this definition"></a></dt>
 <dd><p>Discover and initialise a PS3 SixAxis controller connected to this computer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> in the controller.</p></li>
-<li><p><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/3.7/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> in the controller.</p></li>
+<li><p><strong>dead_zone</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Used to set the dead zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> in the controller.</p></li>
+<li><p><strong>hot_zone</strong> (<a class="reference external" href="https://docs.python.org/3.11/library/functions.html#float" title="(in Python v3.11)"><em>float</em></a>) – Used to set the hot zone for each <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">approxeng.input.CentredAxis</span></code></a> in the controller.</p></li>
 </ul>
 </dd>
 </dl>
@@ -278,7 +282,7 @@ timeout so be sure to turn the controller off when you’re not going to be usin
 
 <dl class="py method">
 <dt class="sig sig-object py" id="approxeng.input.dualshock3.DualShock3.registration_ids">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">registration_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.registration_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.registration_ids" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">registration_ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.registration_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.registration_ids" title="Link to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list of (vendor_id, product_id) for this controller</p>
@@ -288,7 +292,7 @@ timeout so be sure to turn the controller off when you’re not going to be usin
 
 <dl class="py method">
 <dt class="sig sig-object py" id="approxeng.input.dualshock3.DualShock3.set_led">
-<span class="sig-name descname"><span class="pre">set_led</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">led_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">led_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.set_led"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.set_led" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set_led</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">led_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">led_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/dualshock3.html#DualShock3.set_led"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.dualshock3.DualShock3.set_led" title="Link to this definition"></a></dt>
 <dd><p>Set front-panel controller LEDs. The DS3 controller has four, labelled, LEDs on the front panel that can
 be either on or off.</p>
 <dl class="field-list simple">

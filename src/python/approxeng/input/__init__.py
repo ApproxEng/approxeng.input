@@ -245,7 +245,7 @@ class Controller(ABC):
         return self.ff_device is not None
 
     @property
-    def sys_nodes(self) -> {}:
+    def sys_nodes(self) -> dict:
         """
         Returns a dict of discovered sys nodes representing power and LED status for this controller. If the controller
         isn't bound to a physical device, or there aren't LED or power nodes available this returns an empty dict.
@@ -394,7 +394,7 @@ class Controller(ABC):
         return self.buttons.releases
 
     @property
-    def controls(self) -> {}:
+    def controls(self) -> dict:
         """
         :return:
             A dict containing all the names of controls on this controller, this takes the form of a dict with two
@@ -493,7 +493,7 @@ class Axes(object):
         return list("{}={}".format(axis.name, axis.value) for axis in self.axes_by_code.values()).__str__()
 
     @property
-    def names(self) -> [str]:
+    def names(self) -> list[str]:
         """
         The snames of all axis objects
         """

@@ -13,6 +13,11 @@ Change Log
     year also used the library, and my aim is to make this the definitive library for connecting game controllers to
     Python code, especially for robots (but it'll work elsewhere if needed!)
 
+Version 2.6.4
+-------------
+
+Change to dependencies to allow installation on recent Rasbpery Pi OS versions
+
 Version 2.6.3
 -------------
 

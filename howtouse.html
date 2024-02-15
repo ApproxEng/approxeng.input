@@ -1,42 +1,23 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Advanced Usage Guide &mdash; Approximate Engineering - Input 2.6.3 documentation</title>
-  
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
-
-  
-  
-  
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Usage Guide &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
+      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
 
   
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+        <script src="_static/documentation_options.js?v=5248d183"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.6.3 documentation"
+          title="Search within Approximate Engineering - Input 2.6.4 documentation"
           href="_static/opensearch.xml"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -44,52 +25,28 @@
     <link rel="prev" title="Tiny4WD Robot Drive" href="examples/tiny4wd.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Approximate Engineering - Input
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            Approximate Engineering - Input
           </a>
-
-          
-            
-            
               <div class="version">
-                2.6.3
+                2.6.4
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="simpleusage.html">Simple Usage</a></li>
@@ -112,69 +69,31 @@
 <li class="toctree-l1"><a class="reference internal" href="sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Approximate Engineering - Input</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>Advanced Usage Guide</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Advanced Usage Guide</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="advanced-usage-guide">
-<h1>Advanced Usage Guide<a class="headerlink" href="#advanced-usage-guide" title="Permalink to this headline">¶</a></h1>
+             
+  <section id="advanced-usage-guide">
+<h1>Advanced Usage Guide<a class="headerlink" href="#advanced-usage-guide" title="Link to this heading">¶</a></h1>
 <p>This module contains general support for game controllers. It includes the top level classes such as buttons and
 joystick axes which are used for any kind of controller, particular controllers and binding mechanisms are implemented
 in sub-modules. The key classes shared across all controllers are:</p>
@@ -200,8 +119,8 @@ how long a button has been held down.</p></li>
 <a class="reference internal" href="api/input.html#approxeng.input.Buttons" title="approxeng.input.Buttons"><code class="xref py py-class docutils literal notranslate"><span class="pre">Buttons</span></code></a> instance called ‘buttons’, and an <a class="reference internal" href="api/input.html#approxeng.input.Axes" title="approxeng.input.Axes"><code class="xref py py-class docutils literal notranslate"><span class="pre">Axes</span></code></a> instance called
 ‘axes’. These will come in handy later!</p></li>
 </ul>
-<div class="section" id="constructing-and-binding-a-controller">
-<h2>Constructing and Binding a Controller<a class="headerlink" href="#constructing-and-binding-a-controller" title="Permalink to this headline">¶</a></h2>
+<section id="constructing-and-binding-a-controller">
+<h2>Constructing and Binding a Controller<a class="headerlink" href="#constructing-and-binding-a-controller" title="Link to this heading">¶</a></h2>
 <p>Once your controller is physically connected to the computer (whether by USB, bluetooth, or magic) and you have a
 corresponding entry in the dev filesystem, you need to create an object to receive and interpret events from the
 hardware, and you need to set up a mechanism by which events will be sent to that object. The object in this case will
@@ -229,9 +148,9 @@ specific kind of controller to become available - handy if, say, you really have
 got a rock candy dongle plugged in. The details of the discovery process are at <a class="reference internal" href="api/discovery.html#discovery-reference-label"><span class="std std-ref">Controller Discovery - approxeng.input.controllers</span></a>, once
 you’ve discovered the appropriate controllers you use the binding API to attach to their event streams; the details of
 the binding process are described at <a class="reference internal" href="api/selectbinder.html#binding-reference-label"><span class="std std-ref">Binding - approxeng.input.selectbinder</span></a>.</p>
-</div>
-<div class="section" id="handling-buttons">
-<h2>Handling Buttons<a class="headerlink" href="#handling-buttons" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="handling-buttons">
+<h2>Handling Buttons<a class="headerlink" href="#handling-buttons" title="Link to this heading">¶</a></h2>
 <p>There are two styles of button handler. The simplest, and the one you’re likely to use in almost all cases, is a polling
 mechanism - you can ask the Controller object what buttons have been pressed since you last asked that question. This
 is easy to use, you don’t have to worry you’ll miss a button press because you were off doing something else, and it
@@ -243,8 +162,8 @@ button has been held. Handy for where you want the magnitude of a response to be
 longer need to do this - it was used primarily for cases where e.g. a button should interrupt whatever was going on with
 a robot and bounce the system back to some safe state, but there are better ways to do this. Nonetheless, this mechanism
 is still present and you can use it if you really need to.</p>
-<div class="section" id="handling-button-presses-as-events">
-<h3>Handling Button Presses as Events<a class="headerlink" href="#handling-button-presses-as-events" title="Permalink to this headline">¶</a></h3>
+<section id="handling-button-presses-as-events">
+<h3>Handling Button Presses as Events<a class="headerlink" href="#handling-button-presses-as-events" title="Link to this heading">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Only use this method if you are absolutely sure it’s what you need. Callback functions will be called from the event
@@ -282,10 +201,10 @@ way to do things (for example, you might want a handler which reset the centre p
 be best done as a handler because it could be called at any time from anywhere else in your code and you wouldn’t have
 to worry about it). If, however, you’re in a polling loop such as Triangula’s task framework or PyGame’s event loop you
 probably just want to know whether a button was pressed since you last checked.</p>
-</div>
-</div>
-<div class="section" id="more-about-analogue-axes">
-<h2>More about Analogue Axes<a class="headerlink" href="#more-about-analogue-axes" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="more-about-analogue-axes">
+<h2>More about Analogue Axes<a class="headerlink" href="#more-about-analogue-axes" title="Link to this heading">¶</a></h2>
 <p>Analogue axes on the controller are those which can vary continuously over their range. Typically these are joysticks
 and triggers. This code maps all axes either to a range from -1.0 to 1.0 (for centred axes such as joysticks) or from
 0.0 to 1.0 (for things like triggers where the resting point is at one end of the range of movement). Joysticks are
@@ -331,66 +250,40 @@ above 0.8 will return a corrected value of 1.0, and those below 0.1 will return 
 applies, except that values below -0.8 will return -1.0 and those above -0.1 will return 0.0</p></li>
 </ul>
 <p>To obtain the corrected values for an axis you need to retrieve the ‘value’ property on the axis object.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="sys.html" class="btn btn-neutral float-right" title="LEDs and Battery Monitoring" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="examples/tiny4wd.html" class="btn btn-neutral float-left" title="Tiny4WD Robot Drive" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples/tiny4wd.html" class="btn btn-neutral float-left" title="Tiny4WD Robot Drive" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sys.html" class="btn btn-neutral float-right" title="LEDs and Battery Monitoring" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        
-        &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
-      <span class="lastupdated">
-        Last updated on Aug 17, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2017 to 2024 Tom Oinn.
+      <span class="lastupdated">Last updated on Feb 15, 2024.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

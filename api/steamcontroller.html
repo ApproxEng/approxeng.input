@@ -1,42 +1,23 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Steam Controller Support &mdash; Approximate Engineering - Input 2.6.3 documentation</title>
-  
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
-
-  
-  
-  
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Steam Controller Support &mdash; Approximate Engineering - Input 2.6.4 documentation</title>
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
 
   
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+        <script src="../_static/documentation_options.js?v=5248d183"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="search" type="application/opensearchdescription+xml"
-          title="Search within Approximate Engineering - Input 2.6.3 documentation"
+          title="Search within Approximate Engineering - Input 2.6.4 documentation"
           href="../_static/opensearch.xml"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -44,52 +25,28 @@
     <link rel="prev" title="XBox-One S Controller Support" href="xboxone.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Approximate Engineering - Input
           
-
-          
+          <a href="../index.html" class="icon icon-home">
+            Approximate Engineering - Input
           </a>
-
-          
-            
-            
               <div class="version">
-                2.6.3
+                2.6.4
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../simpleusage.html">Simple Usage</a></li>
@@ -104,7 +61,13 @@
 <li class="toctree-l2"><a class="reference internal" href="dualshock3.html">PlayStation 3 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dualshock4.html">PlayStation 4 Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="xboxone.html">XBox-One S Controller Support</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Steam Controller Support</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Steam Controller Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#approxeng.input.steamcontroller.SteamController"><code class="docutils literal notranslate"><span class="pre">SteamController</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#approxeng.input.steamcontroller.SteamController.__init__"><code class="docutils literal notranslate"><span class="pre">SteamController.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="wii.html">Wii Remote Pro Controller Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacemousepro.html">Wired SpaceMouse Pro Support</a></li>
 </ul>
@@ -115,81 +78,44 @@
 <li class="toctree-l1"><a class="reference internal" href="../sys.html">LEDs and Battery Monitoring</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Approximate Engineering - Input</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../api.html">API Documentation</a> &raquo;</li>
-        
-      <li>Steam Controller Support</li>
-    
-    
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Documentation</a></li>
+      <li class="breadcrumb-item active">Steam Controller Support</li>
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="steam-controller-support">
-<span id="api-steamcontroller"></span><h1>Steam Controller Support<a class="headerlink" href="#steam-controller-support" title="Permalink to this headline">¶</a></h1>
-<div class="figure align-default" id="id1">
+             
+  <section id="steam-controller-support">
+<span id="api-steamcontroller"></span><h1>Steam Controller Support<a class="headerlink" href="#steam-controller-support" title="Link to this heading">¶</a></h1>
+<figure class="align-default" id="id1">
 <img alt="../_images/steam-controller.jpg" src="../_images/steam-controller.jpg" />
-<p class="caption"><span class="caption-text">Steam Controller</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
-</div>
+<figcaption>
+<p><span class="caption-text">Steam Controller</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 <p>As of version 2.6.0, the library supports the steam controller natively, meaning you can access all its
 controls. While this controller does require a specific USB dongle, unlike most dongle-based controllers
 it is able to report disconnections - the device nodes only appear if the controller is turned on.</p>
-<span class="target" id="module-approxeng.input.steamcontroller"></span><dl class="py class">
-<dt id="approxeng.input.steamcontroller.SteamController">
-<em class="property">class </em><code class="sig-prename descclassname">approxeng.input.steamcontroller.</code><code class="sig-name descname">SteamController</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController" title="Permalink to this definition">¶</a></dt>
+<dl class="py class" id="module-approxeng.input.steamcontroller">
+<dt class="sig sig-object py" id="approxeng.input.steamcontroller.SteamController">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">approxeng.input.steamcontroller.</span></span><span class="sig-name descname"><span class="pre">SteamController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController" title="Link to this definition">¶</a></dt>
 <dd><p>Wireless steam controller. As of Jan 2021 this works with modern linux installations without
 any messing around, and supports a lot of extra controls as a result!</p>
 <p>The unusual controls are as follows, firstly buttons. Note that both the trackpads have
@@ -197,10 +123,6 @@ touch buttons as well as the click (on the right trackpad) and the d-pad ‘butt
 left one. The controller doesn’t have a true d-pad, but you can use the left trackpad in
 place of one (although it’s heavy to activate)</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 67%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>Standard name</p></td>
 <td><p>Steam Controller</p></td>
@@ -273,10 +195,6 @@ place of one (although it’s heavy to activate)</p>
 <p>The controller has three xy axes with corresponding circular axes as well as analogue
 triggers on the middle trigger buttons:</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 34%" />
-<col style="width: 66%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p>Standard name</p></td>
 <td><p>Steam Controller</p></td>
@@ -308,11 +226,11 @@ triggers on the middle trigger buttons:</p>
 </tbody>
 </table>
 <dl class="py method">
-<dt id="approxeng.input.steamcontroller.SteamController.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dead_zone</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hot_zone</span><span class="o">=</span><span class="default_value">0.05</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController.__init__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="approxeng.input.steamcontroller.SteamController.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dead_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hot_zone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/approxeng/input/steamcontroller.html#SteamController.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#approxeng.input.steamcontroller.SteamController.__init__" title="Link to this definition">¶</a></dt>
 <dd><p>Populate the controller name, button set and axis set.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>controls</strong> – A list of <a class="reference internal" href="input.html#approxeng.input.Button" title="approxeng.input.Button"><code class="xref py py-class docutils literal notranslate"><span class="pre">Button</span></code></a>, <a class="reference internal" href="input.html#approxeng.input.CentredAxis" title="approxeng.input.CentredAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">CentredAxis</span></code></a>,
 <a class="reference internal" href="input.html#approxeng.input.TriggerAxis" title="approxeng.input.TriggerAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">TriggerAxis</span></code></a> and <a class="reference internal" href="input.html#approxeng.input.BinaryAxis" title="approxeng.input.BinaryAxis"><code class="xref py py-class docutils literal notranslate"><span class="pre">BinaryAxis</span></code></a> instances</p></li>
@@ -337,65 +255,39 @@ such as motion sensors.</p></li>
 
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="wii.html" class="btn btn-neutral float-right" title="Wii Remote Pro Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="xboxone.html" class="btn btn-neutral float-left" title="XBox-One S Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="xboxone.html" class="btn btn-neutral float-left" title="XBox-One S Controller Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="wii.html" class="btn btn-neutral float-right" title="Wii Remote Pro Controller Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        
-        &copy; Copyright 2017, 2018, 2019, 2020 Tom Oinn
-      <span class="lastupdated">
-        Last updated on Aug 17, 2021.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2017 to 2024 Tom Oinn.
+      <span class="lastupdated">Last updated on Feb 15, 2024.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

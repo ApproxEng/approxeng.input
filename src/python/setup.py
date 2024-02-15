@@ -15,7 +15,7 @@ setup(
     author_email='tomoinn@gmail.com',
     license='ASL2.0',
     packages=find_namespace_packages(),
-    install_requires=['evdev==1.2.0', 'pyyaml==5.4'],
+    install_requires=['evdev==1.2.0', 'pyyaml==6.0.1'],
     extras_require={':python_version<"3.7"': ['importlib-resources']},
     package_data={'approxeng.input.yaml_controllers': ['*.yaml']},
     test_suite='nose.collector',
